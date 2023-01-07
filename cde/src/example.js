@@ -12,11 +12,14 @@
     try {
         const person1Name = 'Alice';
         const person2Name = 'David';
+        const URL = 'https://api.stackexchange.com/2.3/users/6309/timeline?fromdate=1661990400&todate=1664582400&site=stackoverflow';
 
         await createFriendship(driver, person1Name, person2Name);
 
         await findPerson(driver, person1Name);
         await findPerson(driver, person2Name);
+        await test("bonsoir");
+
     } catch (error) {
         console.error(`Something went wrong: ${error}`);
     } finally {
@@ -87,11 +90,11 @@
         try {
             const requete = `MERGE (q:Question { title: $title })`;
             
-            const readResult = await session.executeRead(tx =>
+            const writeResult = await session.executeWrite(tx =>
                 tx.run(requete, { title })
             );
     
-            readResult.records.forEach(record => {
+            writeResult.records.forEach(record => {
                 console.log(`Found question: ${record.get('title')}`)
             });
         } catch (error) {
@@ -101,12 +104,7 @@
         }
     }
 
-})();
-
-
-const URL = 'https://api.stackexchange.com/2.3/users/6309/timeline?fromdate=1661990400&todate=1664582400&site=stackoverflow';
-
-    async function makeApiCall(){
+    async function makeApiCall(URL){
         const result = await fetch(URL)
                     result.json().then(data=>{
                         const titre = data.items[0].title
@@ -116,5 +114,10 @@ const URL = 'https://api.stackexchange.com/2.3/users/6309/timeline?fromdate=1661
                     })
     }
 
-    makeApiCall();
+})();
+
+
+
+
+    
 
