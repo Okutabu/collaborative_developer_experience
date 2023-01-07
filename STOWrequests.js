@@ -1,15 +1,24 @@
+function fetch(url){
+    var request = require('sync-request')
+    var res = request('GET', url)
+    var string = res.getBody('utf8')
+    var json = JSON.parse(string)
+
+    return json
+}
 
                                                     //mettre ici l'id du user souhaité 
 const URL = 'https://api.stackexchange.com/2.3/users/3741589/timeline?fromdate=1656979200&todate=1672876800&site=stackoverflow&filter=!4-q5axL*s.NyACS38';
 
 async function GET_QUESTIONS(postid, posttype){
 
+
     const URL2 = 'https://api.stackexchange.com/2.3/questions/'+postid+'?order=desc&sort=activity&site=stackoverflow'
     const result = await fetch(URL2)
 
     result.json().then( data => {
-        console.log("\n");
-        console.log(posttype);
+        //console.log("\n");
+        //console.log(posttype);
         
         //let tags = data.items
         let tags = data.items[0].tags
@@ -18,7 +27,7 @@ async function GET_QUESTIONS(postid, posttype){
             console.log(tag);
         };
         */
-        console.log(tags)
+        //console.log(tags)
         return tags
     })
 }
@@ -36,7 +45,7 @@ async function GET_ANSWERS(postid, posttype){
 async function GET_USER_TAGS(){
 
     const result = await fetch(URL)
-    let tags = []
+    let tags = [];
 
     result.json().then( data => {
         const items = data.items;
@@ -53,8 +62,7 @@ async function GET_USER_TAGS(){
     return tags
 }
 
-
-let tags = GET_USER_TAGS()
+let tags = GET_USER_TAGS();
 console.log(tags);
 
 //GET_USER
