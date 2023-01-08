@@ -74,12 +74,15 @@ console.log(allUsers);
     async function insert_user(user) {
 
         const session = driver.session({ database: 'neo4j' });
+        const id = user.id
+        const name = user.name
     
         try {
-            const requete = `MERGE (u:User { id: $user.id, name: $user.name } )`;
+
+            const requete = `MERGE (u:User { id: $id, name: $name } )`;
             
             const writeResult = await session.executeWrite(tx =>
-                tx.run(requete, { user })
+                tx.run(requete, { id, name })
             );
     
             writeResult.records.forEach(record => {
@@ -96,8 +99,8 @@ console.log(allUsers);
     
         try {
 
-            for(user of allUsers){
-                await insert_user(user);
+            for(userInfo of allUsers){
+                await insert_user(userInfo);
             }
             
         } catch (error) {

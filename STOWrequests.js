@@ -163,6 +163,7 @@ exports.get_all_users = function (){
     }
     return users
 }
-
+/*
 let info = get_all_users()
 console.log(info)
+*/
