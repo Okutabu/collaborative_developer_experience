@@ -13,6 +13,8 @@ function fetch(url){
     var string = res.getBody('utf8')
     var json = JSON.parse(string)
 
+    console.log("   fetching : " + url)
+
     return json
 }
 
@@ -39,7 +41,7 @@ function get_questions_tags(postid, posttype){
     }) */
 
     var data = fetch(URL2)
-    console.log("   fetching : " + URL2)
+    
     //sleep(1000)
     return data.items[0].tags
 }
@@ -55,7 +57,6 @@ function get_answers_tags(postid, posttype){
         return get_questions_tags(data.items[0].question_id, posttype);
     }) */
     var data = fetch(URL3)
-    console.log("   fetching : " + URL3)
     return get_questions_tags(data.items[0].question_id, posttype)
 }
 
@@ -83,7 +84,6 @@ function get_user_tags(idUser, start, end){
     const URL = 'https://api.stackexchange.com/2.3/users/' + idUser + '/timeline?fromdate='+start+'&todate='+end+'&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg((&filter=!4-q5axL*s.NyACS38';
     
     var data = fetch(URL)
-    console.log("   fetching : " + URL)
     const items = data.items;
     
     for (item of items){
@@ -134,5 +134,32 @@ exports.get_users_tags = function (start, end){
     return tags
 }
 
-// let allTags = get_users_tags("1673130000","1673136000")
-// console.log(allTags)
+
+
+function get_user_info(idUser){
+
+    const URL = 'https://api.stackexchange.com/2.3/users/'+ idUser +'?site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg(('
+
+    console.log("GET user : " + idUser)
+    const data = fetch(URL)
+    
+    let user = {
+        id: idUser,
+        name: data.items[0].display_name
+    }
+
+    return user
+}
+
+function get_all_users(){
+
+    let users = []
+    user.list_id.map(id => id.toString())
+
+    for(user of user.list_id){
+        
+    }
+}
+
+let info = get_all_users()
+console.log(info)
