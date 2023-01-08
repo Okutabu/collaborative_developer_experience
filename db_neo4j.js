@@ -1,7 +1,10 @@
 var requete = require('./STOWrequests');
 
-let allTags = requete.get_users_tags("1673130000","1673136000")
-console.log(allTags);
+//let allTags = requete.get_users_tags("1673130000","1673136000")
+//console.log(allTags);
+
+let allUsers = requete.get_all_users();
+console.log(allUsers);
 
 (async() => {
     const neo4j = require('neo4j-driver');
@@ -16,7 +19,8 @@ console.log(allTags);
 
     try {
 
-        await insert_tags(allTags);
+        await insert_users(allUsers);
+        //await insert_tags(allTags);
         //await test("TagName");
         //await makeApiCall();
 
@@ -66,6 +70,42 @@ console.log(allTags);
             console.error(`Something went wrong: ${error}`);
         }
     }
+
+    async function insert_user(user) {
+
+        const session = driver.session({ database: 'neo4j' });
+    
+        try {
+            const requete = `MERGE (u:User { id: $user.id, name: $user.name } )`;
+            
+            const writeResult = await session.executeWrite(tx =>
+                tx.run(requete, { user })
+            );
+    
+            writeResult.records.forEach(record => {
+                console.log(`Found user: ${record.get('user')}`)
+            });
+        } catch (error) {
+            console.error(`Something went wrong: ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+    async function insert_users(allUsers) {
+    
+        try {
+
+            for(user of allUsers){
+                await insert_user(user);
+            }
+            
+        } catch (error) {
+            console.error(`Something went wrong: ${error}`);
+        }
+    }
+
+
 
 })();
 
