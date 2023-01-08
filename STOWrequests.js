@@ -60,7 +60,7 @@ function get_answers_tags(postid, posttype){
 }
 
 
-function get_user_tags(idUser){
+function get_user_tags(idUser, start, end){
     //3741589
     let tags = [];
 
@@ -78,8 +78,9 @@ function get_user_tags(idUser){
         }
     }) */
 
+
     
-    const URL = 'https://api.stackexchange.com/2.3/users/' + idUser + '/timeline?fromdate=1656979200&todate=1672876800&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg((&filter=!4-q5axL*s.NyACS38';
+    const URL = 'https://api.stackexchange.com/2.3/users/' + idUser + '/timeline?fromdate='+start+'&todate='+end+'&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg((&filter=!4-q5axL*s.NyACS38';
     
     var data = fetch(URL)
     console.log("   fetching : " + URL)
@@ -90,10 +91,13 @@ function get_user_tags(idUser){
         let id = item.post_id
         let type = item.post_type
 
-        if(type == "answer"){
-            tags.push(get_answers_tags(id, type));
-        } else {
-            tags.push(get_questions_tags(id, type));
+        if(id !== undefined){
+
+            if(type == "answer"){
+                tags.push(get_answers_tags(id, type));
+            } else {
+                tags.push(get_questions_tags(id, type));
+            }
         }
 
         //sleep(1000)
@@ -109,7 +113,7 @@ console.log(tags);
 
 //récupère tous les tags sous forme de liste d'objet
 
-function get_users_tags(){
+function get_users_tags(start, end){
 
     let tags = []
 
@@ -118,17 +122,17 @@ function get_users_tags(){
     for(let i =0; i < user.list_id.length ; i++){
 
         let id = user.list_id[i]
-        
+        console.log("GET tags of : " + id)
         let tagUser = {
             user : id,
-            tags : get_user_tags(id)
+            tags : get_user_tags(id, start, end)
         }
-        console.log("GET tags of : " + id)
+        console.log("\n")
         tags.push(tagUser)
 
     }
     return tags
 }
 
-let allTags = get_users_tags()
+let allTags = get_users_tags("1670544000","1673136000")
 console.log(allTags)
