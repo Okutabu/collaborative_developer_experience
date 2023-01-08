@@ -1,4 +1,6 @@
 
+import { list_id } from './users.js'
+
 //effectue un GET de l'url et renvoie un JSON
 function fetch(url){
 
@@ -33,6 +35,7 @@ function get_questions_tags(postid, posttype){
     }) */
 
     var data = fetch(URL2)
+    console.log("   fetching : " + URL2)
     return data.items[0].tags
 }
 
@@ -47,6 +50,7 @@ function get_answers_tags(postid, posttype){
         return get_questions_tags(data.items[0].question_id, posttype);
     }) */
     var data = fetch(URL3)
+    console.log("   fetching : " + URL3)
     return get_questions_tags(data.items[0].question_id, posttype)
 }
 
@@ -73,7 +77,7 @@ function get_user_tags(idUser){
     const URL = 'https://api.stackexchange.com/2.3/users/' + idUser + '/timeline?fromdate=1656979200&todate=1672876800&site=stackoverflow&filter=!4-q5axL*s.NyACS38';
     
     var data = fetch(URL)
-    
+    console.log("   fetching : " + URL)
     const items = data.items;
     
     for (item of items){
@@ -90,9 +94,34 @@ function get_user_tags(idUser){
 
     return tags
 }
-
+/*
 let tags = get_user_tags("3741589");
 console.log(tags);
+*/
 
-//GET_USER
 
+//récupère tous les tags sous forme de liste d'objet
+
+function get_users_tags(){
+
+    let tags = []
+
+    list_id.map(id => id.toString())
+
+    for(let i =0; i < list_id.length ; i++){
+
+        let id = list_id[i]
+        
+        let tagUser = {
+            user : id,
+            tags : get_user_tags(id)
+        }
+        console.log("GET tags of : " + id)
+        tags.push(tagUser)
+
+    }
+    return tags
+}
+
+let allTags = get_users_tags()
+console.log(allTags)
