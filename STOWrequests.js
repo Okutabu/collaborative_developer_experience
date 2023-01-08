@@ -10,7 +10,7 @@ function fetch(url){
                                                     //mettre ici l'id du user souhaité 
 const URL = 'https://api.stackexchange.com/2.3/users/3741589/timeline?fromdate=1656979200&todate=1672876800&site=stackoverflow&filter=!4-q5axL*s.NyACS38';
 
-function GET_QUESTIONS(postid, posttype){
+function get_questions_tags(postid, posttype){
 
 
     const URL2 = 'https://api.stackexchange.com/2.3/questions/'+postid+'?order=desc&sort=activity&site=stackoverflow'
@@ -37,21 +37,21 @@ function GET_QUESTIONS(postid, posttype){
 }
 
 
-function GET_ANSWERS(postid, posttype){
+function get_answers_tags(postid, posttype){
 
     const URL3 = 'https://api.stackexchange.com/2.3/answers/'+postid+'?order=desc&sort=activity&site=stackoverflow'
     
     /* const result = await fetch(URL3)
 
     result.json().then( data => { 
-        return GET_QUESTIONS(data.items[0].question_id, posttype);
+        return get_questions_tags(data.items[0].question_id, posttype);
     }) */
     var data = fetch(URL3)
-    return GET_QUESTIONS(data.items[0].question_id, posttype)
+    return get_questions_tags(data.items[0].question_id, posttype)
 }
 
 
-function GET_USER_TAGS(){
+function get_user_tags(){
 
     let tags = [];
 
@@ -64,23 +64,23 @@ function GET_USER_TAGS(){
             if(item.post_type == "answer"){
                 tags.push(GET_ANSWERS(item.post_id, item.post_type));
             } else {
-                tags.push(GET_QUESTIONS(item.post_id, item.post_type));
+                tags.push(get_questions_tags(item.post_id, item.post_type));
             }
         }
     }) */
 
     var data = fetch(URL)
     const items = data.items;
-    
+
     for (item of items){
         //console.log(data.items[i].post_type)
         let id = item.post_id
         let type = item.post_type
 
         if(type == "answer"){
-            tags.push(GET_ANSWERS(id, type));
+            tags.push(get_answers_tags(id, type));
         } else {
-            tags.push(GET_QUESTIONS(id, type));
+            tags.push(get_questions_tags(id, type));
         }
     }
 
@@ -88,7 +88,7 @@ function GET_USER_TAGS(){
 }
 
 
-let tags = GET_USER_TAGS();
+let tags = get_user_tags();
 console.log(tags);
 
 //GET_USER
