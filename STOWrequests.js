@@ -151,14 +151,17 @@ function get_user_info(idUser){
     return user
 }
 
-function get_all_users(){
+exports.get_all_users = function (){
 
     let users = []
     user.list_id.map(id => id.toString())
 
-    for(user of user.list_id){
-        
+    for(let i =0; i < user.list_id.length; i++){
+
+        let userInfo = get_user_info(user.list_id[i])
+        users.push(userInfo)
     }
+    return users
 }
 
 let info = get_all_users()
