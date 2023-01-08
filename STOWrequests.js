@@ -1,5 +1,9 @@
 
-import { list_id } from './users.js'
+const user = require('./users.js')
+
+async function sleep(times){
+    await new Promise(resolve => setTimeout(resolve, times));
+} 
 
 //effectue un GET de l'url et renvoie un JSON
 function fetch(url){
@@ -15,7 +19,7 @@ function fetch(url){
 function get_questions_tags(postid, posttype){
 
 
-    const URL2 = 'https://api.stackexchange.com/2.3/questions/'+postid+'?order=desc&sort=activity&site=stackoverflow'
+    const URL2 = 'https://api.stackexchange.com/2.3/questions/'+postid+'?order=desc&sort=activity&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg(('
     
     /* const result = await fetch(URL2)
 
@@ -36,13 +40,14 @@ function get_questions_tags(postid, posttype){
 
     var data = fetch(URL2)
     console.log("   fetching : " + URL2)
+    //sleep(1000)
     return data.items[0].tags
 }
 
 
 function get_answers_tags(postid, posttype){
 
-    const URL3 = 'https://api.stackexchange.com/2.3/answers/'+postid+'?order=desc&sort=activity&site=stackoverflow'
+    const URL3 = 'https://api.stackexchange.com/2.3/answers/'+postid+'?order=desc&sort=activity&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg(('
     
     /* const result = await fetch(URL3)
 
@@ -74,7 +79,7 @@ function get_user_tags(idUser){
     }) */
 
     
-    const URL = 'https://api.stackexchange.com/2.3/users/' + idUser + '/timeline?fromdate=1656979200&todate=1672876800&site=stackoverflow&filter=!4-q5axL*s.NyACS38';
+    const URL = 'https://api.stackexchange.com/2.3/users/' + idUser + '/timeline?fromdate=1656979200&todate=1672876800&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg((&filter=!4-q5axL*s.NyACS38';
     
     var data = fetch(URL)
     console.log("   fetching : " + URL)
@@ -90,6 +95,8 @@ function get_user_tags(idUser){
         } else {
             tags.push(get_questions_tags(id, type));
         }
+
+        //sleep(1000)
     }
 
     return tags
@@ -106,11 +113,11 @@ function get_users_tags(){
 
     let tags = []
 
-    list_id.map(id => id.toString())
+    user.list_id.map(id => id.toString())
 
-    for(let i =0; i < list_id.length ; i++){
+    for(let i =0; i < user.list_id.length ; i++){
 
-        let id = list_id[i]
+        let id = user.list_id[i]
         
         let tagUser = {
             user : id,
