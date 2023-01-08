@@ -113,7 +113,7 @@ console.log(tags);
 
 //récupère tous les tags sous forme de liste d'objet
 
-function get_users_tags(start, end){
+exports.get_users_tags = function (start, end){
 
     let tags = []
 
@@ -134,5 +134,5 @@ function get_users_tags(start, end){
     return tags
 }
 
-let allTags = get_users_tags("1670544000","1673136000")
-console.log(allTags)
+// let allTags = get_users_tags("1673130000","1673136000")
+// console.log(allTags)
