@@ -1,4 +1,7 @@
+
+//effectue un GET de l'url et renvoie un JSON
 function fetch(url){
+
     var request = require('sync-request')
     var res = request('GET', url)
     var string = res.getBody('utf8')
@@ -6,9 +9,6 @@ function fetch(url){
 
     return json
 }
-
-                                                    //mettre ici l'id du user souhaité 
-const URL = 'https://api.stackexchange.com/2.3/users/3741589/timeline?fromdate=1656979200&todate=1672876800&site=stackoverflow&filter=!4-q5axL*s.NyACS38';
 
 function get_questions_tags(postid, posttype){
 
@@ -51,8 +51,8 @@ function get_answers_tags(postid, posttype){
 }
 
 
-function get_user_tags(){
-
+function get_user_tags(idUser){
+    //3741589
     let tags = [];
 
     /* const result = await fetch(URL)
@@ -69,9 +69,13 @@ function get_user_tags(){
         }
     }) */
 
+    
+    const URL = 'https://api.stackexchange.com/2.3/users/' + idUser + '/timeline?fromdate=1656979200&todate=1672876800&site=stackoverflow&filter=!4-q5axL*s.NyACS38';
+    
     var data = fetch(URL)
+    
     const items = data.items;
-
+    
     for (item of items){
         //console.log(data.items[i].post_type)
         let id = item.post_id
@@ -87,8 +91,8 @@ function get_user_tags(){
     return tags
 }
 
-
-let tags = get_user_tags();
+let tags = get_user_tags("3741589");
 console.log(tags);
 
 //GET_USER
+
