@@ -7,8 +7,8 @@ var profil = require('./calculateur');
 //let allUsers = requete.get_all_users();
 //console.log(allUsers);
 
-let allProfils = profil.get_users_profils();
-console.log(allProfils);
+/* let allProfils = profil.get_users_profils();
+console.log(allProfils); */
 
 (async() => {
     const neo4j = require('neo4j-driver');
@@ -23,7 +23,16 @@ console.log(allProfils);
 
     try {
 
-        await insert_profils(allProfils);
+        console.log("Utilisateurs similaires à 63009 :");
+        await find_similar_user(driver, 6309)
+        console.log("\n");
+
+        console.log("Utilisateurs similaires à 65387 :");
+        await find_similar_user(driver, 65387)
+        console.log("\n");
+
+
+        //await insert_profils(allProfils);
         //await insert_users(allUsers);
         //await insert_tags(allTags);
         //await test("TagName");
@@ -168,6 +177,44 @@ console.log(allProfils);
             await session.close();
         }
     }
+
+    async function find_similar_user(driver, idUser) {
+        
+        const session = driver.session({ database: 'neo4j' });
+
+        try {
+            const readQuery = `MATCH (u1:User {id:$idUser})-[r1:INTERACT]->(t:Tag)<-[r2:INTERACT]-(u2)
+                               WHERE r1.ratio > 10 AND r2.ratio > 10
+                               RETURN u1.id AS User1, r1.ratio AS PoidsU1, u2.id AS User2, r2.ratio AS PoidsU2, t.title AS Tag
+                               ORDER BY PoidsU1 + PoidsU2 DESC
+                               LIMIT 5`;
+            
+            const readResult = await session.executeRead(tx =>
+                tx.run(readQuery, { idUser })
+            );
+
+            /* readResult.records.forEach(record => {
+                console.log(`Found person: ${record.get('name')}`)
+            }); */
+            console.log(readResult.records);
+
+
+
+        } catch (error) {
+            console.error(`Something went wrong: ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+    /*
+    Requete reco UserCase :
+    MATCH (u:User {id:6309})-[r:INTERACT]->(t:Tag)<-[r1:INTERACT]-(u2)
+    WHERE r1.ratio > 10 AND r.ratio > 10
+    RETURN u.id, r.ratio AS pourcentage, u2.id, r1.ratio, t.title
+    ORDER BY pourcentage + r1.ratio DESC
+    LIMIT 10
+    */
 
 
 })();
