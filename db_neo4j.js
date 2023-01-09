@@ -3,8 +3,8 @@ var requete = require('./STOWrequests');
 //let allTags = requete.get_users_tags("1673130000","1673136000")
 //console.log(allTags);
 
-let allUsers = requete.get_all_users();
-console.log(allUsers);
+//let allUsers = requete.get_all_users();
+//console.log(allUsers);
 
 (async() => {
     const neo4j = require('neo4j-driver');
@@ -19,7 +19,7 @@ console.log(allUsers);
 
     try {
 
-        await insert_users(allUsers);
+        //await insert_users(allUsers);
         //await insert_tags(allTags);
         //await test("TagName");
         //await makeApiCall();
