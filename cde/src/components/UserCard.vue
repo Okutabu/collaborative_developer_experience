@@ -1,5 +1,13 @@
 <script>
+
+import Chart from './Chart.vue'
+
 export default {
+
+    components: {
+    Chart
+  },
+
     props: ['data'],
     setup(props) {
         const propsname = props.data.name
@@ -22,10 +30,7 @@ export default {
         </div>
         <div class="user_stats">
             <p>stats</p>
-            <p>stats</p>
-            <p>stats</p>
-            <p>stats</p>
-            <p>stats</p>
+        <div> <Chart /> </div>
         </div>
     </div>
 
@@ -39,8 +44,8 @@ export default {
     justify-content: center;
     background-color: white;
     border-radius: 10px;
-    width: 300px;
-    height: 400px;
+    width: 600px;
+    height: 600px;
     box-shadow: 0 0 10px 0 rgba(151, 144, 144, 0.2);
     margin: 10px;
 }
