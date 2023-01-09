@@ -1,10 +1,14 @@
 var requete = require('./STOWrequests');
+var profil = require('./calculateur');
 
 //let allTags = requete.get_users_tags("1673130000","1673136000")
 //console.log(allTags);
 
 //let allUsers = requete.get_all_users();
 //console.log(allUsers);
+
+let allProfils = profil.get_users_profils();
+console.log(allProfils);
 
 (async() => {
     const neo4j = require('neo4j-driver');
@@ -19,6 +23,7 @@ var requete = require('./STOWrequests');
 
     try {
 
+        await insert_profils(allProfils);
         //await insert_users(allUsers);
         //await insert_tags(allTags);
         //await test("TagName");
@@ -37,7 +42,7 @@ var requete = require('./STOWrequests');
         const session = driver.session({ database: 'neo4j' });
     
         try {
-            const requete = `MERGE (t:Tags { title: $title })`;
+            const requete = `MERGE (t:Tag { title: $title })`;
             
             const writeResult = await session.executeWrite(tx =>
                 tx.run(requete, { title })
@@ -57,14 +62,10 @@ var requete = require('./STOWrequests');
     
         try {
 
-            for(userInfo of allTags){
-                for(tags of userInfo.tags){
-                    for(tag of tags){
-                        await insert_tag(tag);
-                    }
-                }
-
+            for (let tag in allTags){
+                await insert_tag(tag);
             }
+        
             
         } catch (error) {
             console.error(`Something went wrong: ${error}`);
@@ -74,15 +75,13 @@ var requete = require('./STOWrequests');
     async function insert_user(user) {
 
         const session = driver.session({ database: 'neo4j' });
-        const id = user.id
-        const name = user.name
     
         try {
 
-            const requete = `MERGE (u:User { id: $id, name: $name } )`;
+            const requete = `MERGE (u:User { id: $user} )`;
             
             const writeResult = await session.executeWrite(tx =>
-                tx.run(requete, { id, name })
+                tx.run(requete, { user })
             );
     
             writeResult.records.forEach(record => {
@@ -108,6 +107,67 @@ var requete = require('./STOWrequests');
         }
     }
 
+    async function insert_profil(profil) {
+
+        const session = driver.session({ database: 'neo4j' });
+        const id = profil.user
+        const tags = profil.tags
+    
+        try {
+
+            await insert_user(id);
+            await insert_tags(tags);
+
+            for ( tag in tags){
+                await create_relation(id, tag, tags[tag]);
+            }
+
+        } catch (error) {
+            console.error(`Something went wrong: ${error}`);
+        }
+    }
+
+
+    async function insert_profils(allProfils) {
+    
+        try {
+
+            for(profilInfo of allProfils){
+                await insert_profil(profilInfo);
+            }
+            
+        } catch (error) {
+            console.error(`Something went wrong: ${error}`);
+        }
+    }
+
+    async function create_relation(idUser, tag, info){
+
+        let pourcentageTag = info[0];
+        let nbRelations = info[1];
+
+        const session = driver.session({ database: 'neo4j' });
+    
+        try {
+
+            const requete = `MATCH (u:User{id : $idUser}), (t:Tag{title : $tag})
+                             MERGE (u)-[r:INTERACT]->(t)
+                             SET r.ratio = $pourcentageTag,
+                             r.nbInteractions = $nbRelations`;
+            
+            const writeResult = await session.executeWrite(tx =>
+                tx.run(requete, { idUser, tag, pourcentageTag, nbRelations })
+            );
+    
+            writeResult.records.forEach(record => {
+                console.log(`Found user: ${record.get('user')}`)
+            });
+        } catch (error) {
+            console.error(`Something went wrong: ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
 
 
 })();
