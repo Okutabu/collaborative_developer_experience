@@ -2,6 +2,7 @@
 import UserCard from './components/UserCard.vue'
 import UserCardSimplified from './components/UserCardSimplified.vue'
 
+let data = {name: "somehting", id:23445}// fetch data from API
 </script>
 
 <template>
@@ -9,7 +10,7 @@ import UserCardSimplified from './components/UserCardSimplified.vue'
   <main>
     <div class="container_app">
       <div class="container_selected_user">
-        <UserCard />
+        <UserCard :data={data} />
       </div>
       <div class="container_recommended_user">
         <UserCardSimplified />
