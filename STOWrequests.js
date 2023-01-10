@@ -6,7 +6,7 @@ async function sleep(times){
 } 
 
 //effectue un GET de l'url et renvoie un JSON
-function fetch(url){
+/* function fetch(url){
 
     var request = require('sync-request')
     var res = request('GET', url)
@@ -16,7 +16,7 @@ function fetch(url){
     console.log("   fetching : " + url)
 
     return json
-}
+} */
 
 function get_questions_tags(postid, posttype){
 
@@ -167,3 +167,32 @@ exports.get_all_users = function (){
 let info = get_all_users()
 console.log(info)
 */
+
+async function get_user(dev, tab){
+
+    const URL = 'https://api.stackexchange.com/2.3/users/'+ dev.id +'?site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg(('
+
+    console.log("GET user : " + dev.id)
+
+    var result = await fetch(URL)
+    
+
+   
+
+    result.json().then( data => { 
+        tab.push(data.items[0].display_name);
+    })
+}
+
+try{
+    var dev = {
+        id: '6309',
+        name: ""
+    }
+    let tab = [];
+    console.log(dev)
+    get_user(dev, tab);
+    console.log(tab);
+}catch(err){
+    console.log(err);
+}
