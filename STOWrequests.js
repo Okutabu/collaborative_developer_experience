@@ -1,6 +1,40 @@
 
 const user = require('./users.js')
 
+
+/*
+Un tableau de users à renvoyer
+{
+    "users": [
+        {
+            "id": 12345,
+            "activities": [
+                {
+                    "type": "question",
+                    "tags": ["javascript", "jquery", "ajax"]
+                },
+                {
+                    "type": "answer",
+                    "tags": ["python", "django", "orm"]
+                }
+            ]
+        },
+        {
+            "id": 67890,
+            "activities": [
+                {
+                    "type": "question",
+                    "tags": ["c#", "asp.net", "mvc"]
+                },
+                {
+                    "type": "answer",
+                    "tags": ["java", "spring", "rest"]
+                }
+            ]
+        }
+    ]
+}
+*/
 async function sleep(times){
     await new Promise(resolve => setTimeout(resolve, times));
 } 
@@ -183,6 +217,8 @@ async function get_user(dev, tab){
         tab.push(data.items[0].display_name);
     })
 }
+
+
 
 try{
     var dev = {
