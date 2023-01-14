@@ -80,6 +80,14 @@ function get_questions_tags(postid, posttype){
     return data.items[0].tags
 }
 
+async function get_questions_tags_async(postid, posttype){
+
+    const promise = fetch('https://api.stackexchange.com/2.3/questions/'+postid+'?order=desc&sort=activity&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg((')
+      .then(response => response.json())
+
+    const data = await promise;
+    return data.items[0].tags
+}
 
 function get_answers_tags(postid, posttype){
 
@@ -92,6 +100,15 @@ function get_answers_tags(postid, posttype){
     }) */
     var data = fetch(URL3)
     return get_questions_tags(data.items[0].question_id, posttype)
+}
+
+async function get_answers_tags_async(postid, posttype){
+
+    const promise = fetch('https://api.stackexchange.com/2.3/answers/'+postid+'?order=desc&sort=activity&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg((')
+      .then(response => response.json())
+
+    const data = await promise;
+    return get_questions_tags_async(data.items[0].question_id, posttype);
 }
 
 
@@ -168,6 +185,33 @@ exports.get_users_tags = function (start, end){
     return tags
 }
 
+async function get_user_tags_async(idUser, start, end) {
+
+    let tags = [];
+
+    const promise = fetch('https://api.stackexchange.com/2.3/users/' + idUser + '/timeline?fromdate='+start+'&todate='+end+'&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg((&filter=!4-q5axL*s.NyACS38')
+      .then(response => response.json())
+  
+    const data = await promise;
+    
+    for (const item of data.items) {
+        console.log(item);
+
+        let id = item.post_id
+        let type = item.post_type
+
+        if(id !== undefined){
+
+            if(type == "answer"){
+                tags.push(get_answers_tags_async(id, type));
+            } else {
+                tags.push(get_questions_tags_async(id, type));
+            }
+        }
+    }
+
+    return tags;
+  }
 
 
 function get_user_info(idUser){
@@ -232,3 +276,8 @@ try{
 }catch(err){
     console.log(err);
 }
+
+
+
+let allTags = get_user_tags_async("6309","1670000000","1673136000");
+console.log(allTags);
