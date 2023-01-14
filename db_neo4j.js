@@ -217,6 +217,19 @@ console.log(allProfils); */
     */
 
 
+    /*
+    Requete reco userCase1 avec cosinus : 
+    MATCH (user1:User {id:6309})-[data1:INTERACT]->(t:Tag)<-[data2:INTERACT]-(user2:User)
+    WHERE data1.ratio > 2 and data2.ratio > 5
+    WITH SUM(data1.ratio * data2.ratio) AS data1data2Product,
+    SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(data1.ratio)| data1Dot + a^2)) AS data1Length,
+    SQRT(REDUCE(data2Dot = 0.0, b IN COLLECT(data2.ratio)| data2Dot + b^2)) AS data2Length,
+    user1, user2
+    RETURN user1.id, user2.id, data1data2Product / (data1Length * data2Length) AS sim
+    ORDER BY sim DESC
+    */
+
+
 })();
 
 
