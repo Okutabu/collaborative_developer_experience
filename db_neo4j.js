@@ -23,12 +23,20 @@ console.log(allProfils); */
 
     try {
 
-        console.log("Utilisateurs similaires à 63009 :");
-        await find_similar_user(driver, 6309)
+        console.log("Utilisateurs similaires à 6309 :");
+        await find_similar_user(driver, 6309);
         console.log("\n");
 
         console.log("Utilisateurs similaires à 65387 :");
-        await find_similar_user(driver, 65387)
+        await find_similar_user(driver, 65387);
+        console.log("\n");
+
+        console.log("Utilisateurs similaires à 6309 avec la similarité de cosinus :");
+        await cosinus_similarity(driver, 6309);
+        console.log("\n");
+
+        console.log("Utilisateurs similaires à 65387 avec la similarité de cosinus :");
+        await cosinus_similarity(driver, 65387);
         console.log("\n");
 
 
@@ -199,6 +207,34 @@ console.log(allProfils); */
             console.log(readResult.records);
 
 
+
+        } catch (error) {
+            console.error(`Something went wrong: ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+    async function cosinus_similarity(driver, idUser) {
+        
+        const session = driver.session({ database: 'neo4j' });
+
+        try {
+            const readQuery = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(t:Tag)<-[data2:INTERACT]-(user2:User)
+                               WHERE data1.ratio > 2 and data2.ratio > 5
+                               WITH SUM(data1.ratio * data2.ratio) AS data1data2Product,
+                               SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(data1.ratio)| data1Dot + a^2)) AS data1Length,
+                               SQRT(REDUCE(data2Dot = 0.0, b IN COLLECT(data2.ratio)| data2Dot + b^2)) AS data2Length,
+                               user1, user2
+                               RETURN user1.id AS User1, user2.id AS User2, data1data2Product / (data1Length * data2Length) AS similarite
+                               ORDER BY similarite DESC
+                               LIMIT 5`;
+            
+            const readResult = await session.executeRead(tx =>
+                tx.run(readQuery, { idUser })
+            );
+
+            console.log(readResult.records);
 
         } catch (error) {
             console.error(`Something went wrong: ${error}`);
