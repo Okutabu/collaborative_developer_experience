@@ -105,8 +105,8 @@ async function get_questions_tags_async(postid, posttype){
     const data = await response.json();
     
     let activities = {
-        TypePost : posttype,
-        Tags : data.items[0].tags
+        typePost : posttype,
+        tags : data.items[0].tags
     }
     
     return activities;
@@ -253,11 +253,15 @@ async function get_user_tags_async(idUser, start, end) {
             }
         }
     }
-
     console.log(activities);
-    
     return activities;
   }
+
+
+async function get_users_tags_async(start, end){
+
+}
+
 
 // Permet de récupérer toutes les informations d'un utilisateur.
 // Renvoie un objet user contenant le nom et l'id de l'utilisateur.
@@ -275,7 +279,7 @@ function get_user_info(idUser){
 
     return user
 }
-// Récupère les id de tous les user provenant d'un autre fichier.
+// Récupère les id et les noms de tous les user provenant d'un autre fichier.
 exports.get_all_users = function (){
 
     let users = []
@@ -302,7 +306,7 @@ async function get_user(dev, tab){
 
     console.log("GET user : " + dev.id)
 
-    var result = await Paul(URL)
+    var result = await fetch(URL)
     
 
    
@@ -311,25 +315,6 @@ async function get_user(dev, tab){
         tab.push(data.items[0].display_name);
     })
 }
-
-
-/*
-try{
-    var dev = {
-        id: '6309',
-        name: ""
-    }
-    let tab = [];
-    console.log(dev)
-    get_user(dev, tab);
-    console.log(tab);
-}catch(err){
-    console.log(err);
-}
-*/
-
-
-
 
 
 
@@ -346,11 +331,11 @@ async function test(){
     
 }
 
-                test()
-                .then(data => {
-                    console.log(data);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+test()
+.then(data => {
+    console.log(data);
+})
+.catch(error => {
+    console.log(error);
+});
 
