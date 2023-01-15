@@ -16,7 +16,7 @@ const name3 = ref('Paul')
 const reco1 = ref('Expert neo4j')
 const reco2 = ref('Debutant CSS')
 
-let data = {name: "somehting", id:23445}// fetch data from API
+const data = {name: "somehting", id:23445}// fetch data from API
 </script>
 
 <template>
@@ -75,7 +75,7 @@ let data = {name: "somehting", id:23445}// fetch data from API
 }
 
 .container_main {
-  background-color: #d8d9db;
+  background-color: #ebebed;
   grid-area: main;
   border-top-left-radius: 10px;
 }
