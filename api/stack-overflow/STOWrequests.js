@@ -79,22 +79,23 @@ function get_questions_tags(postid, posttype){
     let activities = {
         TypePost : posttype,
         Tags : data.items[0].tags
+
     }
+    
     return activities
 }
 
 async function get_questions_tags_async(postid, posttype){
 
-    const promise = fetch('https://api.stackexchange.com/2.3/questions/'+postid+'?order=desc&sort=activity&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg((')
-      .then(response => response.json())
-
-    const data = await promise;
-
+    const response = await fetch('https://api.stackexchange.com/2.3/questions/'+postid+'?order=desc&sort=activity&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg((')
+    const data = await response.json();
+    
     let activities = {
         TypePost : posttype,
         Tags : data.items[0].tags
     }
-    return activities
+    
+    return activities;
 }
 
 function get_answers_tags(postid, posttype){
@@ -116,6 +117,7 @@ async function get_answers_tags_async(postid, posttype){
       .then(response => response.json())
 
     const data = await promise;
+
     return get_questions_tags_async(data.items[0].question_id, posttype);
 }
 
@@ -203,7 +205,6 @@ async function get_user_tags_async(idUser, start, end) {
     const data = await promise;
     
     for (const item of data.items) {
-        console.log(item);
 
         let id = item.post_id
         let type = item.post_type
@@ -211,13 +212,27 @@ async function get_user_tags_async(idUser, start, end) {
         if(id !== undefined){
 
             if(type == "answer"){
-                activities.push(get_answers_tags_async(id, type));
+                get_answers_tags_async(id, type)
+                .then(data => {
+                    activities.push(data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
             } else {
-                activities.push(get_questions_tags_async(id, type));
+                get_questions_tags_async(id, type)
+                .then(data => {
+                    activities.push(data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
             }
         }
     }
 
+    console.log(activities);
+    
     return activities;
   }
 
@@ -286,9 +301,29 @@ try{
 }
 */
 
-/*
-let allTags = get_user_tags_async("6309","1670000000","1673136000");
-console.log(allTags);
-*/
-let allTags = get_user_tags("6309","1670000000","1673136000");
-console.log(allTags);
+
+
+
+
+
+async function sleep(ms) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+  }
+
+async function test(){
+    let allTags = get_user_tags_async("6309","1670000000","1673136000");
+    await sleep(2000);
+    return allTags;
+    
+}
+
+                test()
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+
