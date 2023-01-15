@@ -95,7 +95,7 @@ console.log(allProfils); */
 
             for(profilInfo of allProfils){
                 const id = profilInfo.user
-                const tagsInfo = profilInfo.tags
+                const tagsInfo = profilInfo.activities.Tags
                 
                 await insert_user(id);
                 await insert_tags(tags);
