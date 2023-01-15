@@ -21,6 +21,21 @@ function calculatePercentages(arr) {
     return percentages;
   }
 
+  function calculateFrequencyOfItemsAppearingTogetherFromArrayOfArraysOfItem(arr) {
+    let counts = {};
+  
+    for (let subarr of arr) {
+      for (let i = 0; i < subarr.length; i++) {
+        for (let j = i + 1; j < subarr.length; j++) {
+          let key = subarr[i] + ' ' + subarr[j];
+          counts[key] = (counts[key] || 0) + 1;
+        }
+      }
+    }
+  
+    return counts;
+  }
+
 
    exports.get_users_profils = function (){
     let allTags = requete.get_users_tags("1673130000","1673136000");

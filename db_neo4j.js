@@ -1,4 +1,4 @@
-var requete = require('./STOWrequests');
+var requete = require('./api/stack-overflow/STOWrequests');
 var profil = require('./calculateur');
 
 //let allTags = requete.get_users_tags("1673130000","1673136000")
