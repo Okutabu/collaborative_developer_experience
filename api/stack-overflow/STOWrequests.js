@@ -1,5 +1,5 @@
 
-const user = require('./users.js')
+const user = require('../../users.js')
 
 
 /*
