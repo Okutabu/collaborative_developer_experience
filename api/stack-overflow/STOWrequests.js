@@ -44,9 +44,16 @@ Un tableau de users à renvoyer
 */
 
 //Permet de temporiser une requête
-async function sleep(times){
-    await new Promise(resolve => setTimeout(resolve, times));
-} 
+async function sleep(time){
+    await new Promise(resolve => setTimeout(resolve, time));
+}
+/*
+async function sleep(ms) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+}
+*/
 
 //effectue un GET de l'url et renvoie un JSON
 function Paul(url){
@@ -102,6 +109,8 @@ function get_questions_tags(postid, posttype){
 async function get_questions_tags_async(postid, posttype){
 
     const response = await fetch('https://api.stackexchange.com/2.3/questions/'+postid+'?order=desc&sort=activity&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg((')
+    //.then(response => response.json())
+    //console.log(response)
     const data = await response.json();
     
     let activities = {
@@ -259,7 +268,20 @@ async function get_user_tags_async(idUser, start, end) {
 
 
 async function get_users_tags_async(start, end){
+    let users = []
 
+    user.list_id.map(id => id.toString())
+
+    for(let i=0; i < /* user.list_id.length */ 100; i++){
+        let userInfo = {
+            id : user.list_id[i],
+            activities : await get_user_tags_async(user.list_id[i], start, end)
+        }
+
+        users.push(userInfo)
+    }
+
+    return users
 }
 
 
@@ -308,9 +330,6 @@ async function get_user(dev, tab){
 
     var result = await fetch(URL)
     
-
-   
-
     result.json().then( data => { 
         tab.push(data.items[0].display_name);
     })
@@ -318,11 +337,6 @@ async function get_user(dev, tab){
 
 
 
-async function sleep(ms) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, ms);
-    });
-  }
 
 async function test(){
     let allTags = get_user_tags_async("6309","1670000000","1673136000");
@@ -331,11 +345,23 @@ async function test(){
     
 }
 
-test()
+
+
+get_user_tags_async("6309", "1670000000", "1673136000")
+.then(data =>{ 
+    console.log(data);
+})
+.catch(error => {
+    console.log(error);
+})
+
+
+/*
+get_users_tags_async("1670000000", "1673136000")
 .then(data => {
     console.log(data);
 })
 .catch(error => {
     console.log(error);
 });
-
+*/
