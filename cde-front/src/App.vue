@@ -33,6 +33,7 @@ let data = {name: "somehting", id:23445}// fetch data from API
 
 <style scoped>
 
+
 .container_app {
   margin: 0;
   padding: 0;
@@ -42,7 +43,7 @@ let data = {name: "somehting", id:23445}// fetch data from API
   grid-template:
     [header-left] "nav head" 1fr [header-right]
     [main-left] "nav  main" 1fr [main-right]
-    / 30% 1fr;
+    / 20% 1fr;
 }
 
   
@@ -51,7 +52,7 @@ let data = {name: "somehting", id:23445}// fetch data from API
   margin-top: 10px;
   background-color: white;
   grid-area: head;
-  height: 200px;
+  height: 100px;
 }
 
 
@@ -64,12 +65,26 @@ let data = {name: "somehting", id:23445}// fetch data from API
 .container_main {
   background-color: #d8d9db;
   grid-area: main;
+  border-top-left-radius: 10px;
 }
 
-.container_recommend_user {
+.container_recommended_user{
+  height: 100%;
   display: flex;
-
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding:40px 0; 
 }
+
+.container_selected_user{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding:40px 0; 
+}
+
 
 
 </style>

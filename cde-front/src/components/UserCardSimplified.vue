@@ -4,8 +4,9 @@
 
     <div class="container_user_card">
         <div class="container_user_info">
+            .
             <div class="user_picture">
-                <img src="../assets/logo.svg" alt="">
+                <img src="../assets/head.svg" alt="">
             </div>
             <div class="user_description">
                 <p>name</p>
@@ -25,7 +26,7 @@
     justify-content: center;
     background-color: white;
     border-radius: 10px;
-    width: 200px;
+    width: 300px;
     height: 200px;
     box-shadow: 0 0 10px 0 rgba(151, 144, 144, 0.2);
     margin: 10px;
@@ -38,7 +39,6 @@
     justify-content: center;
     width: 100%;
     height: 50%;
-    /* background-color: red; */
 }
 
 .container_user_card img{
