@@ -1,17 +1,28 @@
-<script></script>
+<script setup>
+
+const props = defineProps({
+  nom: String,
+  type: String,
+  reco : String
+})
+
+</script>
 
 <template>
 
     <div class="container_user_card">
         <div class="container_user_info">
-            .
             <div class="user_picture">
                 <img src="../assets/head.svg" alt="">
             </div>
-            <div class="user_description">
-                <p>name</p>
-                <p>age</p>
-                <p>description</p>
+            <div class="presentation">
+                <div class="user_description">
+                    <p>{{ nom || 'Loading ...' }}</p> <!-- nom -->
+                    <p>{{ type || 'Loading ...'}}</p>   <!-- type -->
+                </div>
+                <div class="user_attribut">
+                    <p>{{ reco || 'Loading ...'}}</p>
+                </div>
             </div>
         </div>
     </div>
@@ -32,6 +43,11 @@
     margin: 10px;
 }
 
+.user_description {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 .container_user_info {
     display: flex;
     flex-direction: row;

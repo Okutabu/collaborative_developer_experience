@@ -10,16 +10,16 @@
         </div>
         <div class="container_navbar_actions">
             <div class="container_navbar_actions_item">
-                <a href="">recommendation</a>
+                <p>recommendation</p>
             </div>
             <div class="container_navbar_actions_item">
-                <a href="">Profil</a>
+                <p>Profil</p>
             </div>
             <div class="container_navbar_actions_item">
-                <a href="">Messages</a>
+                <p>Messages</p>
             </div>
             <div class="container_navbar_actions_item">
-                <a href="">Deconnexion</a>
+                <p>Deconnexion</p>
             </div>
         </div>
     </div>
@@ -32,7 +32,6 @@
 .container_navbar {
     height: auto;
     margin-top: 20px;
-    text-align: center;
 }
 
 .container_navbar_logo {
@@ -47,10 +46,26 @@
 .container_navbar_actions {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
     width: 100%;
     height: 100%;
+    
+}
+
+.container_navbar_actions_item{
+    border: solid black 1px;
+    margin-top: 50px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    width: 80%;
+    margin-left: 10%;
+}
+
+.container_navbar_actions_item:hover{
+    background-color: black;
+    transition-duration: 0.5s;
+    color: white;
 }
 
 

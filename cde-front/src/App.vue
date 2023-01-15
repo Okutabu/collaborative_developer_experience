@@ -4,6 +4,18 @@ import UserCardSimplified from './components/UserCardSimplified.vue'
 import Header from './components/Header.vue'
 import Navbar from './components/Navbar.vue'
 
+import { ref } from 'vue'
+
+// fetch data from API
+
+const name1 = ref('Ortavio') 
+const type1 = ref('Helper')
+const name2 = ref('Baptiste') 
+const type2 = ref('To help')
+const name3 = ref('Paul')
+const reco1 = ref('Expert neo4j')
+const reco2 = ref('Debutant CSS')
+
 let data = {name: "somehting", id:23445}// fetch data from API
 </script>
 
@@ -18,9 +30,9 @@ let data = {name: "somehting", id:23445}// fetch data from API
     <main>
       <div class="container_main">
         <div class="container_recommended_user">
-          <UserCardSimplified />
-          <UserCardSimplified />
-          <UserCardSimplified />
+          <UserCardSimplified :nom="name1" :type="type1" :reco="reco1"/>
+          <UserCardSimplified :nom="name2" :type="type2" :reco="reco1"/>
+          <UserCardSimplified :nom="name3" :type="type1" :reco="reco2"/>
         </div>
         <div class="container_selected_user">
           <UserCard :data={data} />
