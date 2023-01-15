@@ -1,5 +1,6 @@
 var requete = require('./api/stack-overflow/STOWrequests');
 var profil = require('./calculateur');
+import { RATIO_SIMILARITY, COSINUS_SIMILARITY } from 'similarityQueries.js';
 
 //let allTags = requete.get_users_tags("1673130000","1673136000")
 //console.log(allTags);
@@ -19,32 +20,29 @@ console.log(allProfils); */
     
     // To learn more about the driver: https://neo4j.com/docs/javascript-manual/current/client-applications/#js-driver-driver-object
     const driver = neo4j.driver(uri, neo4j.auth.basic(user, password));
-    
 
     try {
 
         console.log("Utilisateurs similaires à 6309 :");
-        await find_similar_user(driver, 6309);
+        await find_similar_user(driver, 6309, RATIO_SIMILARITY);
         console.log("\n");
 
         console.log("Utilisateurs similaires à 65387 :");
-        await find_similar_user(driver, 65387);
+        await find_similar_user(driver, 65387, RATIO_SIMILARITY);
         console.log("\n");
 
         console.log("Utilisateurs similaires à 6309 avec la similarité de cosinus :");
-        await cosinus_similarity(driver, 6309);
+        await find_similar_user(driver, 6309, COSINUS_SIMILARITY);
         console.log("\n");
 
         console.log("Utilisateurs similaires à 65387 avec la similarité de cosinus :");
-        await cosinus_similarity(driver, 65387);
+        await find_similar_user(driver, 65387, COSINUS_SIMILARITY);
         console.log("\n");
 
 
         //await insert_profils(allProfils);
         //await insert_users(allUsers);
         //await insert_tags(allTags);
-        //await test("TagName");
-        //await makeApiCall();
 
     } catch (error) {
         console.error(`Something went wrong: ${error}`);
@@ -54,60 +52,26 @@ console.log(allProfils); */
     }
 
 
-    async function insert_tag(title) {
-
-        const session = driver.session({ database: 'neo4j' });
-    
-        try {
-            const requete = `MERGE (t:Tag { title: $title })`;
-            
-            const writeResult = await session.executeWrite(tx =>
-                tx.run(requete, { title })
-            );
-    
-            writeResult.records.forEach(record => {
-                console.log(`Found tag: ${record.get('tag')}`)
-            });
-        } catch (error) {
-            console.error(`Something went wrong: ${error}`);
-        } finally {
-            await session.close();
-        }
-    }
-
     async function insert_tags(allTags) {
     
         try {
 
             for (let tag in allTags){
-                await insert_tag(tag);
+                const requete = `MERGE (t:Tag { title: $title })`;
+            
+                const writeResult = await session.executeWrite(tx =>
+                    tx.run(requete, { tag })
+                );
+        
+                writeResult.records.forEach(record => {
+                    console.log(`Found tag: ${record.get('tag')}`)
+            });
+
             }
         
             
         } catch (error) {
-            console.error(`Something went wrong: ${error}`);
-        }
-    }
-
-    async function insert_user(user) {
-
-        const session = driver.session({ database: 'neo4j' });
-    
-        try {
-
-            const requete = `MERGE (u:User { id: $user} )`;
-            
-            const writeResult = await session.executeWrite(tx =>
-                tx.run(requete, { user })
-            );
-    
-            writeResult.records.forEach(record => {
-                console.log(`Found user: ${record.get('user')}`)
-            });
-        } catch (error) {
-            console.error(`Something went wrong: ${error}`);
-        } finally {
-            await session.close();
+            console.error(`Something went wrong, Tags could not be inserted : ${error}`);
         }
     }
 
@@ -116,49 +80,46 @@ console.log(allProfils); */
         try {
 
             for(userInfo of allUsers){
-                await insert_user(userInfo);
+                const requete = `MERGE (u:User { id: $user} )`;
+            
+            const writeResult = await session.executeWrite(tx =>
+                tx.run(requete, { userInfo })
+            );
+    
+            writeResult.records.forEach(record => {
+                console.log(`Found user: ${record.get('user')}`)
+            });
             }
             
         } catch (error) {
-            console.error(`Something went wrong: ${error}`);
-        }
-    }
-
-    async function insert_profil(profil) {
-
-        const session = driver.session({ database: 'neo4j' });
-        const id = profil.user
-        const tags = profil.tags
-    
-        try {
-
-            await insert_user(id);
-            await insert_tags(tags);
-
-            for ( tag in tags){
-                await create_relation(id, tag, tags[tag]);
-            }
-
-        } catch (error) {
-            console.error(`Something went wrong: ${error}`);
+            console.error(`Something went wrong, Users could not be inserted : ${error}`);
         }
     }
 
 
     async function insert_profils(allProfils) {
-    
+
+        const session = driver.session({ database: 'neo4j' });
         try {
 
             for(profilInfo of allProfils){
-                await insert_profil(profilInfo);
+                const id = profilInfo.user
+                const tagsInfo = profilInfo.tags
+                
+                await insert_user(id);
+                await insert_tags(tags);
+
+                for ( tag in tagsInfo){
+                    await create_relation_interact(id, tag, tagsInfo[tag]);
+                }
             }
             
         } catch (error) {
-            console.error(`Something went wrong: ${error}`);
+            console.error(`Something went wrong, profiles could not be inserted : ${error}`);
         }
     }
 
-    async function create_relation(idUser, tag, info){
+    async function create_relation_interact(idUser, tag, info){
 
         let pourcentageTag = info[0];
         let nbRelations = info[1];
@@ -186,16 +147,12 @@ console.log(allProfils); */
         }
     }
 
-    async function find_similar_user(driver, idUser) {
+    async function find_similar_user(driver, idUser, query) {
         
         const session = driver.session({ database: 'neo4j' });
 
         try {
-            const readQuery = `MATCH (u1:User {id:$idUser})-[r1:INTERACT]->(t:Tag)<-[r2:INTERACT]-(u2)
-                               WHERE r1.ratio > 10 AND r2.ratio > 10
-                               RETURN u1.id AS User1, r1.ratio AS PoidsU1, u2.id AS User2, r2.ratio AS PoidsU2, t.title AS Tag
-                               ORDER BY PoidsU1 + PoidsU2 DESC
-                               LIMIT 5`;
+            const readQuery = query;
             
             const readResult = await session.executeRead(tx =>
                 tx.run(readQuery, { idUser })
@@ -206,64 +163,12 @@ console.log(allProfils); */
             }); */
             console.log(readResult.records);
 
-
-
         } catch (error) {
             console.error(`Something went wrong: ${error}`);
         } finally {
             await session.close();
         }
     }
-
-    async function cosinus_similarity(driver, idUser) {
-        
-        const session = driver.session({ database: 'neo4j' });
-
-        try {
-            const readQuery = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(t:Tag)<-[data2:INTERACT]-(user2:User)
-                               WHERE data1.ratio > 2 and data2.ratio > 5
-                               WITH SUM(data1.ratio * data2.ratio) AS data1data2Product,
-                               SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(data1.ratio)| data1Dot + a^2)) AS data1Length,
-                               SQRT(REDUCE(data2Dot = 0.0, b IN COLLECT(data2.ratio)| data2Dot + b^2)) AS data2Length,
-                               user1, user2
-                               RETURN user1.id AS User1, user2.id AS User2, data1data2Product / (data1Length * data2Length) AS similarite
-                               ORDER BY similarite DESC
-                               LIMIT 5`;
-            
-            const readResult = await session.executeRead(tx =>
-                tx.run(readQuery, { idUser })
-            );
-
-            console.log(readResult.records);
-
-        } catch (error) {
-            console.error(`Something went wrong: ${error}`);
-        } finally {
-            await session.close();
-        }
-    }
-
-    /*
-    Requete reco UserCase :
-    MATCH (u:User {id:6309})-[r:INTERACT]->(t:Tag)<-[r1:INTERACT]-(u2)
-    WHERE r1.ratio > 10 AND r.ratio > 10
-    RETURN u.id, r.ratio AS pourcentage, u2.id, r1.ratio, t.title
-    ORDER BY pourcentage + r1.ratio DESC
-    LIMIT 10
-    */
-
-
-    /*
-    Requete reco userCase1 avec cosinus : 
-    MATCH (user1:User {id:6309})-[data1:INTERACT]->(t:Tag)<-[data2:INTERACT]-(user2:User)
-    WHERE data1.ratio > 2 and data2.ratio > 5
-    WITH SUM(data1.ratio * data2.ratio) AS data1data2Product,
-    SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(data1.ratio)| data1Dot + a^2)) AS data1Length,
-    SQRT(REDUCE(data2Dot = 0.0, b IN COLLECT(data2.ratio)| data2Dot + b^2)) AS data2Length,
-    user1, user2
-    RETURN user1.id, user2.id, data1data2Product / (data1Length * data2Length) AS sim
-    ORDER BY sim DESC
-    */
 
 
 })();
