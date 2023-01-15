@@ -37,18 +37,7 @@ export default {
 </template>
 
 <style>
-.container_user_card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-    border-radius: 10px;
-    width: 600px;
-    height: 600px;
-    box-shadow: 0 0 10px 0 rgba(151, 144, 144, 0.2);
-    margin: 10px;
-}
+
 
 .container_user_info {
     display: flex;
@@ -72,4 +61,6 @@ export default {
     display: flex;
     justify-content: space-around;
 }
+
+
 </style>
