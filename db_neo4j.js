@@ -23,8 +23,8 @@ console.log(allProfils); */
 
     try {
 
-        compareSimilarityResultsForOneUser(driver, 6309);
-        compareSimilarityResultsForOneUser(driver, 65387);
+        compareSimilarityResultsForUser(driver, 6309);
+        compareSimilarityResultsForUser(driver, 65387);
 
         //await insert_profils(allProfils);
         //await insert_users(allUsers);
@@ -37,7 +37,7 @@ console.log(allProfils); */
         await driver.close();
     }
 
-    async function compareSimilarityResultsForOneUser(driver, userId){
+    async function compareSimilarityResultsForUser(driver, userId){
         const similarityQueryList = [RATIO_SIMILARITY, COSINUS_SIMILARITY];
         for (let similarityQuery of similarityQueryList){
            await find_similar_user(driver, userId, similarityQuery);
@@ -160,7 +160,6 @@ console.log(allProfils); */
             await session.close();
         }
     }
-
 
 })();
 
