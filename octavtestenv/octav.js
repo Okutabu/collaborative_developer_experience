@@ -21,3 +21,20 @@ function calculatePercentages(arr) {
 let percentages = calculatePercentages(items);
 let sortedArr = Object.entries(percentages).sort((a, b) => a[1][0]-b[1][0]).reverse();
 console.log(sortedArr);
+
+function calculateFrequencyOfItemsAppearingTogetherFromArrayOfArraysOfItem(arr) {
+    let counts = {};
+  
+    for (let subarr of arr) {
+      for (let i = 0; i < subarr.length; i++) {
+        for (let j = i + 1; j < subarr.length; j++) {
+          let key = subarr[i] + ' ' + subarr[j];
+          counts[key] = (counts[key] || 0) + 1;
+        }
+      }
+    }
+  
+    return counts;
+  }
+
+  let frequencies = calculateFrequencyOfItemsAppearingTogetherFromArrayOfArraysOfItem(items);
