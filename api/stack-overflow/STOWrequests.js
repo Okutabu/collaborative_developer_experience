@@ -1,3 +1,10 @@
+/*
+
+Contient les requêtes à l'API StackExchange de Stack OverFlow. On commence tout d'abord par récupérer les id des utilisateurs contenu dans un autre fichier
+puis on vient récupèrer la liste d'activité de chaque utilisateur dans une tranche de temps donnée. A partir de cette liste d'activité, on accède à chaque
+réponse et question posé par un utilisateur et on récupère les tags liés à ceux-ci.
+
+*/
 
 const user = require('../../users.js')
 
@@ -35,6 +42,8 @@ Un tableau de users à renvoyer
     ]
 }
 */
+
+//Permet de temporiser une requête
 async function sleep(times){
     await new Promise(resolve => setTimeout(resolve, times));
 } 
@@ -52,6 +61,8 @@ function Paul(url){
     return json
 } 
 
+// Permet de récupérer les tags d'une question et d'insérer le résultat dans un objet.
+// La fonction renvoie un objet qui possède le type de l'activité de l'utilisateur et les tags correspondant.
 function get_questions_tags(postid, posttype){
 
 
@@ -83,6 +94,9 @@ function get_questions_tags(postid, posttype){
     return activities
 }
 
+//Version asynchrone de la fonction
+// Permet de récupérer les tags d'une question et d'insérer le résultat dans un objet.
+// La fonction renvoie un objet qui possède le type de l'activité de l'utilisateur et les tags correspondant.
 async function get_questions_tags_async(postid, posttype){
 
     const promise = fetch('https://api.stackexchange.com/2.3/questions/'+postid+'?order=desc&sort=activity&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg((')
@@ -97,6 +111,8 @@ async function get_questions_tags_async(postid, posttype){
     return activities
 }
 
+// Fonction intermédiaire qui permet de récupérer le post d'origine contenant les tags de la réponse.
+// Exécute la fonction get_questions_tags avec le type answer.
 function get_answers_tags(postid, posttype){
 
     const URL3 = 'https://api.stackexchange.com/2.3/answers/'+postid+'?order=desc&sort=activity&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg(('
@@ -110,6 +126,9 @@ function get_answers_tags(postid, posttype){
     return get_questions_tags(data.items[0].question_id, posttype)
 }
 
+// Version Asynchrone de la fonction
+// Fonction intermédiaire qui permet de récupérer le post d'origine contenant les tags de la réponse.
+// Exécute la fonction get_questions_tags avec le type answer.
 async function get_answers_tags_async(postid, posttype){
 
     const promise = fetch('https://api.stackexchange.com/2.3/answers/'+postid+'?order=desc&sort=activity&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg((')
@@ -119,7 +138,8 @@ async function get_answers_tags_async(postid, posttype){
     return get_questions_tags_async(data.items[0].question_id, posttype);
 }
 
-
+// Permet de récupérer la liste d'activité d'un utilisateur et d'éxécuter la fonction correspondant au bon type de post.
+// Renvoie la liste d'activité de l'utilisateur.
 function get_user_tags(idUser, start, end){
     //3741589
     let activities = [];
@@ -193,6 +213,9 @@ exports.get_users_tags = function (start, end){
     return tags
 }
 
+// Version asynchrone de la fonction
+// Permet de récupérer la liste d'activité d'un utilisateur et d'éxécuter la fonction correspondant au bon type de post.
+// Renvoie la liste d'activité de l'utilisateur.
 async function get_user_tags_async(idUser, start, end) {
 
     let activities = [];
@@ -221,7 +244,8 @@ async function get_user_tags_async(idUser, start, end) {
     return activities;
   }
 
-
+// Permet de récupérer toutes les informations d'un utilisateur.
+// Renvoie un objet user contenant le nom et l'id de l'utilisateur.
 function get_user_info(idUser){
 
     const URL = 'https://api.stackexchange.com/2.3/users/'+ idUser +'?site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg(('
@@ -236,7 +260,7 @@ function get_user_info(idUser){
 
     return user
 }
-
+// Récupère les id de tous les user provenant d'un autre fichier.
 exports.get_all_users = function (){
 
     let users = []
@@ -254,6 +278,9 @@ let info = get_all_users()
 console.log(info)
 */
 
+// Version asynchrone de la fonction.
+// Permet de récupérer toutes les informations d'un utilisateur.
+// Renvoie un objet user contenant le nom et l'id de l'utilisateur.
 async function get_user(dev, tab){
 
     const URL = 'https://api.stackexchange.com/2.3/users/'+ dev.id +'?site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg(('
