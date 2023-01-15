@@ -23,22 +23,8 @@ console.log(allProfils); */
 
     try {
 
-        console.log("Utilisateurs similaires à 6309 :");
-        await find_similar_user(driver, 6309, RATIO_SIMILARITY);
-        console.log("\n");
-
-        console.log("Utilisateurs similaires à 65387 :");
-        await find_similar_user(driver, 65387, RATIO_SIMILARITY);
-        console.log("\n");
-
-        console.log("Utilisateurs similaires à 6309 avec la similarité de cosinus :");
-        await find_similar_user(driver, 6309, COSINUS_SIMILARITY);
-        console.log("\n");
-
-        console.log("Utilisateurs similaires à 65387 avec la similarité de cosinus :");
-        await find_similar_user(driver, 65387, COSINUS_SIMILARITY);
-        console.log("\n");
-
+        compareSimilarityResultsForOneUser(driver, 6309);
+        compareSimilarityResultsForOneUser(driver, 65387);
 
         //await insert_profils(allProfils);
         //await insert_users(allUsers);
@@ -51,6 +37,12 @@ console.log(allProfils); */
         await driver.close();
     }
 
+    async function compareSimilarityResultsForOneUser(driver, userId){
+        const similarityQueryList = [RATIO_SIMILARITY, COSINUS_SIMILARITY];
+        for (let similarityQuery of similarityQueryList){
+           await find_similar_user(driver, userId, similarityQuery);
+        }
+    }
 
     async function insert_tags(allTags) {
     
@@ -68,7 +60,6 @@ console.log(allProfils); */
             });
 
             }
-        
             
         } catch (error) {
             console.error(`Something went wrong, Tags could not be inserted : ${error}`);
@@ -161,7 +152,7 @@ console.log(allProfils); */
             /* readResult.records.forEach(record => {
                 console.log(`Found person: ${record.get('name')}`)
             }); */
-            console.log(readResult.records);
+            console.log(readResult.records+ "\n");
 
         } catch (error) {
             console.error(`Something went wrong: ${error}`);
