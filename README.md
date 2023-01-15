@@ -2,9 +2,13 @@
 ------
 
 Modules à installer :
-  - npm install sync-request
-  - npm install neo4j-driver
-  - npm install node-fetch
+  - sync-request
+  - neo4j-driver
+  - node-fetch
+
+Ils sont tous spécifiés dans le JSON 'package'
+pour les installer automatiquement il faut rentrer la commande suivante:
+`npm install` ou `npm i`
 
 Technologies
 --
