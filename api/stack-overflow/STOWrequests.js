@@ -40,7 +40,7 @@ async function sleep(times){
 } 
 
 //effectue un GET de l'url et renvoie un JSON
-/* function fetch(url){
+function Paul(url){
 
     var request = require('sync-request')
     var res = request('GET', url)
@@ -50,7 +50,7 @@ async function sleep(times){
     console.log("   fetching : " + url)
 
     return json
-} */
+} 
 
 function get_questions_tags(postid, posttype){
 
@@ -74,10 +74,13 @@ function get_questions_tags(postid, posttype){
         return tags
     }) */
 
-    var data = fetch(URL2)
-    
-    //sleep(1000)
-    return data.items[0].tags
+    var data = Paul(URL2)
+
+    let activities = {
+        TypePost : posttype,
+        Tags : data.items[0].tags
+    }
+    return activities
 }
 
 async function get_questions_tags_async(postid, posttype){
@@ -86,7 +89,12 @@ async function get_questions_tags_async(postid, posttype){
       .then(response => response.json())
 
     const data = await promise;
-    return data.items[0].tags
+
+    let activities = {
+        TypePost : posttype,
+        Tags : data.items[0].tags
+    }
+    return activities
 }
 
 function get_answers_tags(postid, posttype){
@@ -98,7 +106,7 @@ function get_answers_tags(postid, posttype){
     result.json().then( data => { 
         return get_questions_tags(data.items[0].question_id, posttype);
     }) */
-    var data = fetch(URL3)
+    var data = Paul(URL3)
     return get_questions_tags(data.items[0].question_id, posttype)
 }
 
@@ -114,7 +122,7 @@ async function get_answers_tags_async(postid, posttype){
 
 function get_user_tags(idUser, start, end){
     //3741589
-    let tags = [];
+    let activities = [];
 
     /* const result = await fetch(URL)
     result.json().then( data => {
@@ -134,7 +142,7 @@ function get_user_tags(idUser, start, end){
     
     const URL = 'https://api.stackexchange.com/2.3/users/' + idUser + '/timeline?fromdate='+start+'&todate='+end+'&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg((&filter=!4-q5axL*s.NyACS38';
     
-    var data = fetch(URL)
+    var data = Paul(URL)
     const items = data.items;
     
     for (item of items){
@@ -145,16 +153,16 @@ function get_user_tags(idUser, start, end){
         if(id !== undefined){
 
             if(type == "answer"){
-                tags.push(get_answers_tags(id, type));
+                activities.push(get_answers_tags(id, type));
             } else {
-                tags.push(get_questions_tags(id, type));
+                activities.push(get_questions_tags(id, type));
             }
         }
 
         //sleep(1000)
     }
 
-    return tags
+    return activities
 }
 /*
 let tags = get_user_tags("3741589");
@@ -176,7 +184,7 @@ exports.get_users_tags = function (start, end){
         console.log("GET tags of : " + id)
         let tagUser = {
             user : id,
-            tags : get_user_tags(id, start, end)
+            activities : get_user_tags(id, start, end)
         }
         console.log("\n")
         tags.push(tagUser)
@@ -187,7 +195,7 @@ exports.get_users_tags = function (start, end){
 
 async function get_user_tags_async(idUser, start, end) {
 
-    let tags = [];
+    let activities = [];
 
     const promise = fetch('https://api.stackexchange.com/2.3/users/' + idUser + '/timeline?fromdate='+start+'&todate='+end+'&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg((&filter=!4-q5axL*s.NyACS38')
       .then(response => response.json())
@@ -203,14 +211,14 @@ async function get_user_tags_async(idUser, start, end) {
         if(id !== undefined){
 
             if(type == "answer"){
-                tags.push(get_answers_tags_async(id, type));
+                activities.push(get_answers_tags_async(id, type));
             } else {
-                tags.push(get_questions_tags_async(id, type));
+                activities.push(get_questions_tags_async(id, type));
             }
         }
     }
 
-    return tags;
+    return activities;
   }
 
 
@@ -219,7 +227,7 @@ function get_user_info(idUser){
     const URL = 'https://api.stackexchange.com/2.3/users/'+ idUser +'?site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg(('
 
     console.log("GET user : " + idUser)
-    const data = fetch(URL)
+    const data = Paul(URL)
     
     let user = {
         id: idUser,
@@ -252,7 +260,7 @@ async function get_user(dev, tab){
 
     console.log("GET user : " + dev.id)
 
-    var result = await fetch(URL)
+    var result = await Paul(URL)
     
 
    
@@ -263,7 +271,7 @@ async function get_user(dev, tab){
 }
 
 
-
+/*
 try{
     var dev = {
         id: '6309',
@@ -276,8 +284,11 @@ try{
 }catch(err){
     console.log(err);
 }
+*/
 
-
-
+/*
 let allTags = get_user_tags_async("6309","1670000000","1673136000");
+console.log(allTags);
+*/
+let allTags = get_user_tags("6309","1670000000","1673136000");
 console.log(allTags);
