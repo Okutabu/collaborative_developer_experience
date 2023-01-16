@@ -6,6 +6,11 @@ import Navbar from './components/Navbar.vue'
 
 import { ref } from 'vue'
 
+
+
+
+
+
 // fetch data from API
 
 const name1 = ref('Ortavio') 
