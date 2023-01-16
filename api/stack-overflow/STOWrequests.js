@@ -129,7 +129,7 @@ async function get_user_tags_async(idUser, start, end) {
 }
 
 
-async function get_users_tags_async(start, end){
+exports.get_users_tags_async = async function (start, end){
     let users = []
 
     user.list_id.map(id => id.toString());
