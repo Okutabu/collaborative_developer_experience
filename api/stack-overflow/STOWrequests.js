@@ -106,7 +106,7 @@ async function get_user_tags_async(idUser, start, end) {
         if(id !== undefined){
 
             if(type == "answer"){
-                get_answers_tags_async(id, type)
+                await get_answers_tags_async(id, type)
                 .then(data => {
                     activities.push(data);
                 })
@@ -114,7 +114,7 @@ async function get_user_tags_async(idUser, start, end) {
                     console.log(error);
                 });
             } else {
-                get_questions_tags_async(id, type)
+                await get_questions_tags_async(id, type)
                 .then(data => {
                     activities.push(data);
                 })
@@ -124,7 +124,7 @@ async function get_user_tags_async(idUser, start, end) {
             }
         }
     }
-    console.log(activities);
+    
     return activities;
 }
 
@@ -132,17 +132,19 @@ async function get_user_tags_async(idUser, start, end) {
 async function get_users_tags_async(start, end){
     let users = []
 
-    user.list_id.map(id => id.toString())
+    user.list_id.map(id => id.toString());
 
     for(let i=0; i < /* user.list_id.length */ 100; i++){
-        let userInfo = {
+        let userInfo =  {
             id : user.list_id[i],
             activities : await get_user_tags_async(user.list_id[i], start, end)
         }
 
-        users.push(userInfo)
+        await sleep(1000);
+        console.log(userInfo);
+        users.push(userInfo); ;
     }
-
+  
     return users
 }
 
@@ -162,22 +164,25 @@ async function get_user(dev, tab){
     })
 }
 
-async function test(){
-    let allTags = get_user_tags_async("6309","1670000000","1673136000");
-    await sleep(2000);
-    return allTags;
+// async function test(){
+//     let allTags = get_users_tags_async("1673130000","1673136000");
+//     await sleep(2000);
+//     return allTags;
     
-}
+// }
+(async() => {
+    let res = await get_users_tags_async("1668610633","1673881033");
+    console.log(res);
+})();
 
-//get_user_tags_async("6309", "1670000000", "1673136000")
-test().then(data =>{ 
-    let time = new Date()
-    console.log(time.getTime());
-    console.log(data);
-})
-.catch(error => {
-    console.log(error);
-})
+// test().then(data =>{ 
+//     let time = new Date()
+//     console.log(time.getTime());
+//     console.log(data);
+// })
+// .catch(error => {
+//     console.log(error);
+// })
 
 
 /*
