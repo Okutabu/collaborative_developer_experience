@@ -1,5 +1,5 @@
-var requete = require('./api/stack-overflow/STOWrequests');
-var profil = require('./calculateur');
+var requete = require('../api/stack-overflow/STOWrequests');
+var profil = require('../calculateur');
 import { RATIO_SIMILARITY, COSINUS_SIMILARITY } from 'similarityQueries.js';
 
 //let allTags = requete.get_users_tags("1673130000","1673136000")
