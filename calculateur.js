@@ -1,7 +1,17 @@
 var requete = require('./STOWrequests');
 
+function createAnArrayOfArraysFromTwoArraysOfArrays(arr1, arr2) {
+  let arr = arr1;
+
+  for (let i = 0; i < arr2.length; i++) {
+    arr.push(arr2[i]);
+  }
+
+  return arr;
+
+}
+
 function calculatePercentages(arr) {
-    
     
     let counts = {};
   
@@ -15,11 +25,66 @@ function calculatePercentages(arr) {
     let percentages = {};
   
     for (let item in counts) {
-      percentages[item] = [(counts[item] / total) * 100, (counts[item])];
+      percentages[item] = (counts[item] / total) * 100;
     }
   
     return percentages;
   }
+
+  function calculateNumber(arr) {
+    
+    let counts = {};
+  
+    for (let subarr of arr) {
+      for (let item of subarr) {
+        counts[item] = (counts[item] || 0) + 1;
+      }
+    }
+  
+    let total = arr.flat().length;
+    let nbOccurences = {};
+  
+    for (let item in counts) {
+      nbOccurences[item] = counts[item];
+    }
+  
+    return nbOccurences;
+  }
+
+  function createUserObjectListFromArrayOfUsers(arrayOfUsers) {
+    var info = [];
+    for (let user of arrayOfUsers) {
+      info.push(createUserObject(user));
+    }
+
+  }
+
+  function createUserObject(user) {
+    var info = {
+      id: user.id,
+    };
+    InsertIntoInfoFromActivities(info, user.activities)
+  }
+
+    function InsertIntoInfoFromActivities(info, activities){
+      arrayOfQuestionTags = [];
+      arrayOfAnswerTags = [];
+      for(let interaction of activities){
+        if(interaction.type == "question"){
+          arrayOfQuestionTags.push(interaction.tags)
+        } else if(interaction.type == "answer"){
+          arrayOfAnswerTags.push(interaction.tags)
+        }
+      }
+      info.question = calculateNumber(arrayOfQuestionTags);
+      info.answer = calculateNumber(arrayOfAnswerTags);
+
+      let arrayOfTags = createAnArrayOfArraysFromTwoArraysOfArrays(arrayOfQuestionTags, arrayOfAnswerTags);
+      info.ratio = calculatePercentages(arrayOfTags);
+
+  }
+
+  
 
   function calculateFrequencyOfItemsAppearingTogetherFromArrayOfArraysOfItem(arr) {
     let counts = {};

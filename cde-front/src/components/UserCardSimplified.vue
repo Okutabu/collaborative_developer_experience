@@ -45,33 +45,25 @@ const props = defineProps({
     align-items: center;
 }
 .container_user_info {
-    display: grid;
-    grid-template-columns: 2fr 3fr;
-    grid-template-rows: 1fr;
-    grid-template-areas: "user_picture name" "user_picture type" "reco reco";
-    width: 100%;
-    height: 100%;
+    display: flex;
     
     
 }
 
 .user_picture {
-    border: solid black 1px;
-    grid-area: user_picture;
+  
 }
 
 .name {
-    border: solid black 1px;
-    grid-area: name;
+    font-size: 1.5em;
 }
 
 .type {
-    border: solid black 1px;
-    grid-area: type;
+    font-size: 1em;
 }
 
-.reco {border: solid black 1px;
-    grid-area: reco;
+.reco {
+    font-size: 2em;
 }
 
 .user_picture img{
