@@ -134,16 +134,18 @@ exports.get_users_tags_async = async function (start, end){
 
     user.list_id.map(id => id.toString());
 
-    for(let i=0; i < user.list_id.length; i++){
+    for(let i=1; i < /*user.list_id.length*/ 5; i++){
+
+        let state = i / user.list_id.length * 100
+        console.log("Collecting datas of " + `${user.list_id[i]}` + " : "+state + " %");
         let userInfo =  {
             id : user.list_id[i],
             activities : await get_user_tags_async(user.list_id[i], start, end)
         }
 
         await sleep(1000);
-        let state = i / user.list_id.length * 100
-        console.log( "Collecting datas : " +state + " %");
-        console.log(userInfo);
+        
+        //console.log(userInfo);
 
         users.push(userInfo); ;
     }
@@ -166,9 +168,10 @@ async function get_user(dev, tab){
     })
 }
 
-
+/*
 (async() => {
     let res = await get_users_tags_async("1668610633","1673881033");
     console.log(res);
 })();
+*/
 
