@@ -1,6 +1,6 @@
-var requete = require('../api/stack-overflow/STOWrequests');
-var profil = require('../calculateur');
-import { RATIO_SIMILARITY, COSINUS_SIMILARITY } from 'similarityQueries.js';
+//var requete = require('../api/stack-overflow/STOWrequests');
+//var profil = require('../calculateur');
+//import { RATIO_SIMILARITY, COSINUS_SIMILARITY } from 'similarityQueries.js';
 
 //let allTags = requete.get_users_tags("1673130000","1673136000")
 //console.log(allTags);
@@ -11,24 +11,24 @@ import { RATIO_SIMILARITY, COSINUS_SIMILARITY } from 'similarityQueries.js';
 /* let allProfils = profil.get_users_profils();
 console.log(allProfils); */
 
-let user =       
+const user63 =       
   {
-    "id": 12345,
+    "id": 6309,
     "ratio":{
         "typescript": 19.56,
         "java": 2.8
     },
     "question":{
-        "typescript": 2,
+        "github": 2,
         "java": 10
 
     },
     "answer":{
-        "typescript": 2,
+        "github": 2,
         "java": 10
 
     }
-}
+};
 
 (async() => {
     const neo4j = require('neo4j-driver');
@@ -42,7 +42,8 @@ let user =
 
     try {
 
-        link_user_question(user);
+        await link_user_question(user63);
+        await link_user_reponse(user63);
 
         //compareSimilarityResultsForUser(driver, 6309);
         //compareSimilarityResultsForUser(driver, 65387);
@@ -146,7 +147,7 @@ let user =
             const requete = `MATCH (u:User{id : $idUser}), (t:Tag{title : $tag})
                              MERGE (u)-[r:INTERACT]->(t)
                              SET r.ratio = $pourcentageTag,
-                             r.nbInteractions = $nbRelations`;
+                             r.nbInteractions = toInteger($nbRelations)`;
             
             const writeResult = await session.executeWrite(tx =>
                 tx.run(requete, { idUser, tag, pourcentageTag, nbRelations })
@@ -186,38 +187,21 @@ let user =
     }
 
     async function link_user_question(user){
-        /*
-        {
-            "id": 12345,
-            "ratio":{
-                ["typescript", 19.56],
-                ["java", 2.8]
 
-            },
-            "question":{
-                ["typescript", 2],
-                ["java", 10]
-
-            },
-            "answer":{
-                ["typescript", 2],
-                ["java", 10]
-
-            }
-        }
-        */
        let id = user.id
        let questions = user.question;
+
+       const session = driver.session({ database: 'neo4j' });
     
         try {
 
             for (let tag in questions){
-
+                console.log(tag);
                 let nb = questions[tag]
 
                 const requete = `MATCH (u:User{id : $id}), (t:Tag{title : $tag})
                                  MERGE (u)-[r:ASKED]->(t)
-                                 SET r.number = $nb`;
+                                 SET r.number = toInteger($nb)`;
             
                 const writeResult = await session.executeWrite(tx =>
                     tx.run(requete, { tag, id, nb })
@@ -225,15 +209,50 @@ let user =
         
                 writeResult.records.forEach(record => {
                     console.log(`Found tag: ${record.get('tag')}`)
-            });
+                });
 
             }
             
         } catch (error) {
             console.error(`Something went wrong, Tags could not be inserted : ${error}`);
+        }finally {
+            await session.close();
         }
     }
 
+    async function link_user_reponse(user){
+        
+        let id = user.id
+        let answer = user.answer;
+ 
+        const session = driver.session({ database: 'neo4j' });
+     
+         try {
+ 
+             for (let tag in answer){
+                 console.log(tag);
+                 let nb = answer[tag]
+ 
+                 const requete = `MATCH (u:User{id : $id}), (t:Tag{title : $tag})
+                                  MERGE (u)-[r:ANSWERED]->(t)
+                                  SET r.number = toInteger($nb)`;
+             
+                 const writeResult = await session.executeWrite(tx =>
+                     tx.run(requete, { tag, id, nb })
+                 );
+         
+                 writeResult.records.forEach(record => {
+                     console.log(`Found tag: ${record.get('tag')}`)
+                 });
+ 
+             }
+             
+         } catch (error) {
+             console.error(`Something went wrong, Tags could not be inserted : ${error}`);
+         }finally {
+             await session.close();
+         }
+     }
 
 })();
 
