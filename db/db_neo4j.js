@@ -8,9 +8,6 @@ var profil = require('../calculateur');
 //let allUsers = requete.get_all_users();
 //console.log(allUsers);
 
-let allProfils = profil.get_users_profils();
-console.log(allProfils);
-
 /*
 const user63 =       
   {
@@ -41,6 +38,9 @@ const user63 =
     
     // To learn more about the driver: https://neo4j.com/docs/javascript-manual/current/client-applications/#js-driver-driver-object
     const driver = neo4j.driver(uri, neo4j.auth.basic(user, password));
+
+    let allProfils = await profil.get_users_profils();
+    console.log(allProfils);
 
     try {
 

@@ -117,7 +117,7 @@ function calculateFrequencyOfItemsAppearingTogetherFromArrayOfArraysOfItem(arr) 
 */
 
 
-get_users_profils = async function (){
+exports.get_users_profils = async function (){
 
     let profils = await requete.get_users_tags_async("1668610633","1673881033");
     
@@ -131,10 +131,10 @@ get_users_profils = async function (){
 
 
 
-(async() => {
+// (async() => {
     
-    let tab = await get_users_profils();
-    console.log(tab);
-    console.log(tab[0]);
+//     let tab = await get_users_profils();
+//     console.log(tab);
+//     console.log(tab[0]);
 
-})();
+// })();
