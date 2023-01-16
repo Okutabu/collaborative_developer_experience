@@ -39,20 +39,26 @@ const user63 =
     // To learn more about the driver: https://neo4j.com/docs/javascript-manual/current/client-applications/#js-driver-driver-object
     const driver = neo4j.driver(uri, neo4j.auth.basic(user, password));
 
-    let allProfils = await profil.get_users_profils();
-    console.log(allProfils);
-
     try {
 
-        await link_user_question(user63);
-        await link_user_reponse(user63);
+
+        //récupère les "profils" de tous les utilisateurs
+        let allProfils = await profil.get_users_profils();
+
+        //console.log(allProfils);
+
+
+        await insert_profils(allProfils);
+
+        //await link_user_question(user63);
+        //await link_user_reponse(user63);
 
         //compareSimilarityResultsForUser(driver, 6309);
         //compareSimilarityResultsForUser(driver, 65387);
 
-        //await insert_profils(allProfils);
+        
         //await insert_users(allUsers);
-        //await insert_tags(allTags);
+        
 
     } catch (error) {
         console.error(`Something went wrong: ${error}`);
@@ -72,7 +78,6 @@ const user63 =
     }
 
     async function insert_tags(allTags) {
-    
         try {
 
             for (let tag in allTags){
@@ -81,64 +86,61 @@ const user63 =
                 const writeResult = await session.executeWrite(tx =>
                     tx.run(requete, { tag })
                 );
-        
                 writeResult.records.forEach(record => {
                     console.log(`Found tag: ${record.get('tag')}`)
-            });
-
+                });
             }
-            
         } catch (error) {
             console.error(`Something went wrong, Tags could not be inserted : ${error}`);
         }
     }
 
-    async function insert_users(allUsers) {
-    
-        try {
 
-            for(userInfo of allUsers){
-                const requete = `MERGE (u:User { id: $user} )`;
+    async function insert_user(userProfil) {
+
+        const session = driver.session({ database: 'neo4j' });
+
+        try {
             
+            const id = userProfil.id
+            const requete = `MERGE (u:User { id: $id} )`;
+        
             const writeResult = await session.executeWrite(tx =>
-                tx.run(requete, { userInfo })
+                tx.run(requete, { id })
             );
-    
+
             writeResult.records.forEach(record => {
                 console.log(`Found user: ${record.get('user')}`)
             });
-            }
+        
+        } catch (error) {
+            console.error(`Something went wrong, Users could not be inserted : ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+
+    async function insert_users(allUsers) {
+        try {
+            for(userInfo of allUsers){
+                const requete = `MERGE (u:User { id: $user} )`;
             
+                const writeResult = await session.executeWrite(tx =>
+                    tx.run(requete, { userInfo })
+                );
+    
+                writeResult.records.forEach(record => {
+                    console.log(`Found user: ${record.get('user')}`)
+                });
+            }
         } catch (error) {
             console.error(`Something went wrong, Users could not be inserted : ${error}`);
         }
     }
 
 
-    async function insert_profils(allProfils) {
-
-        const session = driver.session({ database: 'neo4j' });
-        try {
-
-            for(profilInfo of allProfils){
-                const id = profilInfo.user
-                const tagsInfo = profilInfo.activities.Tags
-                
-                await insert_user(id);
-                await insert_tags(tags);
-
-                for ( tag in tagsInfo){
-                    await create_relation_interact(id, tag, tagsInfo[tag]);
-                }
-            }
-            
-        } catch (error) {
-            console.error(`Something went wrong, profiles could not be inserted : ${error}`);
-        }
-    }
-
-    async function create_relation_interact(idUser, tag, info){
-
+    async function create_interact_link(idUser, tag, info){
         let pourcentageTag = info[0];
         let nbRelations = info[1];
 
@@ -154,7 +156,6 @@ const user63 =
             const writeResult = await session.executeWrite(tx =>
                 tx.run(requete, { idUser, tag, pourcentageTag, nbRelations })
             );
-    
             writeResult.records.forEach(record => {
                 console.log(`Found user: ${record.get('user')}`)
             });
@@ -165,64 +166,41 @@ const user63 =
         }
     }
 
-    async function find_similar_user(driver, idUser, query) {
-        
+    async function create_asked_link(user){
+
+        let id = user.id
+        let questions = user.question;
+ 
         const session = driver.session({ database: 'neo4j' });
-
-        try {
-            const readQuery = query;
-            
-            const readResult = await session.executeRead(tx =>
-                tx.run(readQuery, { idUser })
-            );
-
-            /* readResult.records.forEach(record => {
-                console.log(`Found person: ${record.get('name')}`)
-            }); */
-            console.log(readResult.records+ "\n");
-
-        } catch (error) {
-            console.error(`Something went wrong: ${error}`);
-        } finally {
-            await session.close();
-        }
+     
+         try {
+ 
+             for (let tag in questions){
+                 console.log(tag);
+                 let nb = questions[tag]
+ 
+                 const requete = `MATCH (u:User{id : $id}), (t:Tag{title : $tag})
+                                  MERGE (u)-[r:ASKED]->(t)
+                                  SET r.number = toInteger($nb)`;
+             
+                 const writeResult = await session.executeWrite(tx =>
+                     tx.run(requete, { tag, id, nb })
+                 );
+         
+                 writeResult.records.forEach(record => {
+                     console.log(`Found tag: ${record.get('tag')}`)
+                 });
+ 
+             }
+             
+         } catch (error) {
+             console.error(`Something went wrong, Tags could not be inserted : ${error}`);
+         }finally {
+             await session.close();
+         }
     }
 
-    async function link_user_question(user){
-
-       let id = user.id
-       let questions = user.question;
-
-       const session = driver.session({ database: 'neo4j' });
-    
-        try {
-
-            for (let tag in questions){
-                console.log(tag);
-                let nb = questions[tag]
-
-                const requete = `MATCH (u:User{id : $id}), (t:Tag{title : $tag})
-                                 MERGE (u)-[r:ASKED]->(t)
-                                 SET r.number = toInteger($nb)`;
-            
-                const writeResult = await session.executeWrite(tx =>
-                    tx.run(requete, { tag, id, nb })
-                );
-        
-                writeResult.records.forEach(record => {
-                    console.log(`Found tag: ${record.get('tag')}`)
-                });
-
-            }
-            
-        } catch (error) {
-            console.error(`Something went wrong, Tags could not be inserted : ${error}`);
-        }finally {
-            await session.close();
-        }
-    }
-
-    async function link_user_reponse(user){
+    async function create_answered_link(user){
         
         let id = user.id
         let answer = user.answer;
@@ -254,7 +232,70 @@ const user63 =
          }finally {
              await session.close();
          }
-     }
+    }
+
+
+    //permet d'inserer tous les utilisateurs, tous les tags, et de créer les relations
+    async function insert_profils(allProfils) {
+
+        const session = driver.session({ database: 'neo4j' });
+        try {
+
+            for(profilInfo of allProfils){
+
+                const id = profilInfo.user
+                console.log(`Inserting ${id}...`)
+
+                let allTags = [];
+                for(let tag in profilInfo.interact){
+                    allTags.push(tag);
+                }
+                                
+                await insert_user(id);
+                await insert_tags(allTags);
+
+                for (let tag in allTags){
+                    await create_interact_link(id, tag, tagsInfo[tag]);
+                    await create_asked_link(profilInfo);
+                    await create_answered_link(profilInfo);
+                }
+            }
+            
+        } catch (error) {
+            console.error(`Something went wrong, profiles could not be inserted : ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+
+
+    
+
+    async function find_similar_user(driver, idUser, query) {
+        
+        const session = driver.session({ database: 'neo4j' });
+
+        try {
+            const readQuery = query;
+            
+            const readResult = await session.executeRead(tx =>
+                tx.run(readQuery, { idUser })
+            );
+
+            /* readResult.records.forEach(record => {
+                console.log(`Found person: ${record.get('name')}`)
+            }); */
+            console.log(readResult.records + "\n");
+
+        } catch (error) {
+            console.error(`Something went wrong: ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+    
 
 })();
 
