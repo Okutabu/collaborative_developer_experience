@@ -53,54 +53,6 @@ async function sleep(ms) {
 }
 */
 
-//effectue un GET de l'url et renvoie un JSON
-function Paul(url){
-
-    var request = require('sync-request')
-    var res = request('GET', url)
-    var string = res.getBody('utf8')
-    var json = JSON.parse(string)
-
-    console.log("   fetching : " + url)
-
-    return json
-} 
-
-// Permet de récupérer les tags d'une question et d'insérer le résultat dans un objet.
-// La fonction renvoie un objet qui possède le type de l'activité de l'utilisateur et les tags correspondant.
-function get_questions_tags(postid, posttype){
-
-
-    const URL2 = 'https://api.stackexchange.com/2.3/questions/'+postid+'?order=desc&sort=activity&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg(('
-    
-    /* const result = await fetch(URL2)
-
-    result.json().then( data => {
-        //console.log("\n");
-        //console.log(posttype);
-        
-        //let tags = data.items
-        let tags = data.items[0].tags
-        
-        for (tag of tags){
-            console.log(tag);
-        };
-        
-        //console.log(tags)
-        return tags
-    }) */
-
-    var data = Paul(URL2)
-
-    let activities = {
-        TypePost : posttype,
-        Tags : data.items[0].tags
-
-    }
-    
-    return activities
-}
-
 //Version asynchrone de la fonction
 // Permet de récupérer les tags d'une question et d'insérer le résultat dans un objet.
 // La fonction renvoie un objet qui possède le type de l'activité de l'utilisateur et les tags correspondant.
@@ -119,20 +71,6 @@ async function get_questions_tags_async(postid, posttype){
     return activities;
 }
 
-// Fonction intermédiaire qui permet de récupérer le post d'origine contenant les tags de la réponse.
-// Exécute la fonction get_questions_tags avec le type answer.
-function get_answers_tags(postid, posttype){
-
-    const URL3 = 'https://api.stackexchange.com/2.3/answers/'+postid+'?order=desc&sort=activity&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg(('
-    
-    /* const result = await fetch(URL3)
-
-    result.json().then( data => { 
-        return get_questions_tags(data.items[0].question_id, posttype);
-    }) */
-    var data = Paul(URL3)
-    return get_questions_tags(data.items[0].question_id, posttype)
-}
 
 // Version Asynchrone de la fonction
 // Fonction intermédiaire qui permet de récupérer le post d'origine contenant les tags de la réponse.
@@ -147,80 +85,6 @@ async function get_answers_tags_async(postid, posttype){
     return get_questions_tags_async(data.items[0].question_id, posttype);
 }
 
-// Permet de récupérer la liste d'activité d'un utilisateur et d'éxécuter la fonction correspondant au bon type de post.
-// Renvoie la liste d'activité de l'utilisateur.
-function get_user_tags(idUser, start, end){
-    //3741589
-    let activities = [];
-
-    /* const result = await fetch(URL)
-    result.json().then( data => {
-        const items = data.items;
-        
-        for (item of items){
-            //console.log(data.items[i].post_type)
-            if(item.post_type == "answer"){
-                tags.push(GET_ANSWERS(item.post_id, item.post_type));
-            } else {
-                tags.push(get_questions_tags(item.post_id, item.post_type));
-            }
-        }
-    }) */
-
-
-    
-    const URL = 'https://api.stackexchange.com/2.3/users/' + idUser + '/timeline?fromdate='+start+'&todate='+end+'&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg((&filter=!4-q5axL*s.NyACS38';
-    
-    var data = Paul(URL)
-    const items = data.items;
-    
-    for (item of items){
-        //console.log(data.items[i].post_type)
-        let id = item.post_id
-        let type = item.post_type
-
-        if(id !== undefined){
-
-            if(type == "answer"){
-                activities.push(get_answers_tags(id, type));
-            } else {
-                activities.push(get_questions_tags(id, type));
-            }
-        }
-
-        //sleep(1000)
-    }
-
-    return activities
-}
-/*
-let tags = get_user_tags("3741589");
-console.log(tags);
-*/
-
-
-//récupère tous les tags sous forme de liste d'objet
-
-exports.get_users_tags = function (start, end){
-
-    let tags = []
-
-    user.list_id.map(id => id.toString())
-
-    for(let i =0; i < user.list_id.length ; i++){
-
-        let id = user.list_id[i]
-        console.log("GET tags of : " + id)
-        let tagUser = {
-            user : id,
-            activities : get_user_tags(id, start, end)
-        }
-        console.log("\n")
-        tags.push(tagUser)
-
-    }
-    return tags
-}
 
 // Version asynchrone de la fonction
 // Permet de récupérer la liste d'activité d'un utilisateur et d'éxécuter la fonction correspondant au bon type de post.
@@ -262,7 +126,7 @@ async function get_user_tags_async(idUser, start, end) {
     }
     console.log(activities);
     return activities;
-  }
+}
 
 
 async function get_users_tags_async(start, end){
@@ -282,41 +146,6 @@ async function get_users_tags_async(start, end){
     return users
 }
 
-
-// Permet de récupérer toutes les informations d'un utilisateur.
-// Renvoie un objet user contenant le nom et l'id de l'utilisateur.
-function get_user_info(idUser){
-
-    const URL = 'https://api.stackexchange.com/2.3/users/'+ idUser +'?site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg(('
-
-    console.log("GET user : " + idUser)
-    const data = Paul(URL)
-    
-    let user = {
-        id: idUser,
-        name: data.items[0].display_name
-    }
-
-    return user
-}
-// Récupère les id et les noms de tous les user provenant d'un autre fichier.
-exports.get_all_users = function (){
-
-    let users = []
-    user.list_id.map(id => id.toString())
-
-    for(let i =0; i < user.list_id.length; i++){
-
-        let userInfo = get_user_info(user.list_id[i])
-        users.push(userInfo)
-    }
-    return users
-}
-/*
-let info = get_all_users()
-console.log(info)
-*/
-
 // Version asynchrone de la fonction.
 // Permet de récupérer toutes les informations d'un utilisateur.
 // Renvoie un objet user contenant le nom et l'id de l'utilisateur.
@@ -333,17 +162,12 @@ async function get_user(dev, tab){
     })
 }
 
-
-
-
 async function test(){
     let allTags = get_user_tags_async("6309","1670000000","1673136000");
     await sleep(2000);
     return allTags;
     
 }
-
-
 
 //get_user_tags_async("6309", "1670000000", "1673136000")
 test().then(data =>{ 
