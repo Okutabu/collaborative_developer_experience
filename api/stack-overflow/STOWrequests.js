@@ -135,7 +135,7 @@ exports.get_users_tags_async = async function (start, end){
     console.log("Converting IDs to string ...");
     user.list_id.map(id => id.toString());
 
-    for(let i=0; i < /*user.list_id.length*/ 100; i++){
+    for(let i=0; i < user.list_id.length; i++){
 
         let state = i / user.list_id.length * 100
         console.log("Collecting datas of " + `${user.list_id[i]}` + " : "+state + " %");

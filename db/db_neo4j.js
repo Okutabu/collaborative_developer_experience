@@ -47,7 +47,7 @@ const user63 =
 
         //console.log(allProfils);
 
-
+        //permet d'insérer tous les profils et les relations dans la bdd
         await insert_profils(allProfils);
 
         //await link_user_question(user63);
@@ -78,10 +78,13 @@ const user63 =
     }
 
     async function insert_tags(allTags) {
+
+        const session = driver.session({ database: 'neo4j' });
         try {
 
-            for (let tag in allTags){
-                const requete = `MERGE (t:Tag { title: $title })`;
+            for (let tag of allTags){
+                
+                const requete = `MERGE (t:Tag { title: $tag })`;
             
                 const writeResult = await session.executeWrite(tx =>
                     tx.run(requete, { tag })
@@ -92,17 +95,17 @@ const user63 =
             }
         } catch (error) {
             console.error(`Something went wrong, Tags could not be inserted : ${error}`);
+        } finally {
+            await session.close();
         }
     }
 
 
-    async function insert_user(userProfil) {
+    async function insert_user(id) {
 
         const session = driver.session({ database: 'neo4j' });
-
         try {
             
-            const id = userProfil.id
             const requete = `MERGE (u:User { id: $id} )`;
         
             const writeResult = await session.executeWrite(tx =>
@@ -110,17 +113,17 @@ const user63 =
             );
 
             writeResult.records.forEach(record => {
-                console.log(`Found user: ${record.get('user')}`)
+                console.log(`Found user: ${record.get('id')}`)
             });
         
         } catch (error) {
-            console.error(`Something went wrong, Users could not be inserted : ${error}`);
+            console.error(`Something went wrong, User could not be inserted : ${error}`);
         } finally {
             await session.close();
         }
     }
 
-
+    /*
     async function insert_users(allUsers) {
         try {
             for(userInfo of allUsers){
@@ -138,23 +141,27 @@ const user63 =
             console.error(`Something went wrong, Users could not be inserted : ${error}`);
         }
     }
+    */
 
 
     async function create_interact_link(idUser, tag, info){
+        /*
         let pourcentageTag = info[0];
         let nbRelations = info[1];
+        */
 
         const session = driver.session({ database: 'neo4j' });
     
         try {
 
-            const requete = `MATCH (u:User{id : $idUser}), (t:Tag{title : $tag})
+            const requete = `MATCH (u:User{id : $idUser}), (t:Tag {title : $tag})
                              MERGE (u)-[r:INTERACT]->(t)
-                             SET r.ratio = $pourcentageTag,
-                             r.nbInteractions = toInteger($nbRelations)`;
+                             SET r.ratio = toInteger($info)`;
+                             /*,
+                             r.nbInteractions = toInteger($nbRelations)`;*/
             
             const writeResult = await session.executeWrite(tx =>
-                tx.run(requete, { idUser, tag, pourcentageTag, nbRelations })
+                tx.run(requete, { idUser, tag, info})
             );
             writeResult.records.forEach(record => {
                 console.log(`Found user: ${record.get('user')}`)
@@ -176,7 +183,7 @@ const user63 =
          try {
  
              for (let tag in questions){
-                 console.log(tag);
+                 //console.log(tag);
                  let nb = questions[tag]
  
                  const requete = `MATCH (u:User{id : $id}), (t:Tag{title : $tag})
@@ -210,7 +217,7 @@ const user63 =
          try {
  
              for (let tag in answer){
-                 console.log(tag);
+                 //console.log(tag);
                  let nb = answer[tag]
  
                  const requete = `MATCH (u:User{id : $id}), (t:Tag{title : $tag})
@@ -243,8 +250,8 @@ const user63 =
 
             for(profilInfo of allProfils){
 
-                const id = profilInfo.user
-                console.log(`Inserting ${id}...`)
+                const id = profilInfo.id;
+                console.log(`Inserting ${id}...`);
 
                 let allTags = [];
                 for(let tag in profilInfo.interact){
@@ -253,11 +260,11 @@ const user63 =
                                 
                 await insert_user(id);
                 await insert_tags(allTags);
+                await create_asked_link(profilInfo);
+                await create_answered_link(profilInfo);
 
-                for (let tag in allTags){
-                    await create_interact_link(id, tag, tagsInfo[tag]);
-                    await create_asked_link(profilInfo);
-                    await create_answered_link(profilInfo);
+                for (let tag of allTags){
+                    await create_interact_link(id, tag, profilInfo.interact[tag]);
                 }
             }
             
