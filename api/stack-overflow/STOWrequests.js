@@ -345,8 +345,10 @@ async function test(){
 
 
 
-get_user_tags_async("6309", "1670000000", "1673136000")
-.then(data =>{ 
+//get_user_tags_async("6309", "1670000000", "1673136000")
+test().then(data =>{ 
+    let time = new Date()
+    console.log(time.getTime());
     console.log(data);
 })
 .catch(error => {
