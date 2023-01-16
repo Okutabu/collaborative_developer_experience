@@ -1,5 +1,5 @@
 //var requete = require('../api/stack-overflow/STOWrequests');
-//var profil = require('../calculateur');
+var profil = require('../calculateur');
 //import { RATIO_SIMILARITY, COSINUS_SIMILARITY } from 'similarityQueries.js';
 
 //let allTags = requete.get_users_tags("1673130000","1673136000")
@@ -8,13 +8,14 @@
 //let allUsers = requete.get_all_users();
 //console.log(allUsers);
 
-/* let allProfils = profil.get_users_profils();
-console.log(allProfils); */
+let allProfils = profil.get_users_profils();
+console.log(allProfils);
 
+/*
 const user63 =       
   {
     "id": 6309,
-    "ratio":{
+    "interact":{
         "typescript": 19.56,
         "java": 2.8
     },
@@ -29,6 +30,7 @@ const user63 =
 
     }
 };
+*/
 
 (async() => {
     const neo4j = require('neo4j-driver');
