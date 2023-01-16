@@ -11,6 +11,25 @@ import { RATIO_SIMILARITY, COSINUS_SIMILARITY } from 'similarityQueries.js';
 /* let allProfils = profil.get_users_profils();
 console.log(allProfils); */
 
+let user =       
+  {
+    "id": 12345,
+    "ratio":{
+        "typescript": 19.56,
+        "java": 2.8
+    },
+    "question":{
+        "typescript": 2,
+        "java": 10
+
+    },
+    "answer":{
+        "typescript": 2,
+        "java": 10
+
+    }
+}
+
 (async() => {
     const neo4j = require('neo4j-driver');
 
@@ -23,8 +42,10 @@ console.log(allProfils); */
 
     try {
 
-        compareSimilarityResultsForUser(driver, 6309);
-        compareSimilarityResultsForUser(driver, 65387);
+        link_user_question(user);
+
+        //compareSimilarityResultsForUser(driver, 6309);
+        //compareSimilarityResultsForUser(driver, 65387);
 
         //await insert_profils(allProfils);
         //await insert_users(allUsers);
@@ -36,6 +57,9 @@ console.log(allProfils); */
         // Don't forget to close the driver connection when you're finished with it.
         await driver.close();
     }
+
+
+
 
     async function compareSimilarityResultsForUser(driver, userId){
         const similarityQueryList = [RATIO_SIMILARITY, COSINUS_SIMILARITY];
@@ -160,6 +184,56 @@ console.log(allProfils); */
             await session.close();
         }
     }
+
+    async function link_user_question(user){
+        /*
+        {
+            "id": 12345,
+            "ratio":{
+                ["typescript", 19.56],
+                ["java", 2.8]
+
+            },
+            "question":{
+                ["typescript", 2],
+                ["java", 10]
+
+            },
+            "answer":{
+                ["typescript", 2],
+                ["java", 10]
+
+            }
+        }
+        */
+       let id = user.id
+       let questions = user.question;
+    
+        try {
+
+            for (let tag in questions){
+
+                let nb = questions[tag]
+
+                const requete = `MATCH (u:User{id : $id}), (t:Tag{title : $tag})
+                                 MERGE (u)-[r:ASKED]->(t)
+                                 SET r.number = $nb`;
+            
+                const writeResult = await session.executeWrite(tx =>
+                    tx.run(requete, { tag, id, nb })
+                );
+        
+                writeResult.records.forEach(record => {
+                    console.log(`Found tag: ${record.get('tag')}`)
+            });
+
+            }
+            
+        } catch (error) {
+            console.error(`Something went wrong, Tags could not be inserted : ${error}`);
+        }
+    }
+
 
 })();
 
