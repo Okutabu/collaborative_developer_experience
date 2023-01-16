@@ -134,17 +134,19 @@ exports.get_users_tags_async = async function (start, end){
 
     user.list_id.map(id => id.toString());
 
-    for(let i=0; i < /* user.list_id.length */ 100; i++){
+    for(let i=0; i < user.list_id.length; i++){
         let userInfo =  {
             id : user.list_id[i],
             activities : await get_user_tags_async(user.list_id[i], start, end)
         }
 
         await sleep(1000);
+        let state = i / user.list_id.length * 100
+        console.log( "Collecting datas : " +state + " %");
         console.log(userInfo);
+
         users.push(userInfo); ;
     }
-  
     return users
 }
 
@@ -164,33 +166,9 @@ async function get_user(dev, tab){
     })
 }
 
-// async function test(){
-//     let allTags = get_users_tags_async("1673130000","1673136000");
-//     await sleep(2000);
-//     return allTags;
-    
-// }
+
 (async() => {
     let res = await get_users_tags_async("1668610633","1673881033");
     console.log(res);
 })();
 
-// test().then(data =>{ 
-//     let time = new Date()
-//     console.log(time.getTime());
-//     console.log(data);
-// })
-// .catch(error => {
-//     console.log(error);
-// })
-
-
-/*
-get_users_tags_async("1670000000", "1673136000")
-.then(data => {
-    console.log(data);
-})
-.catch(error => {
-    console.log(error);
-});
-*/
