@@ -1,6 +1,6 @@
 //var requete = require('../api/stack-overflow/STOWrequests');
 var profil = require('../calculateur');
-const { COSINUS_SIMILARITY, RATIO_SIMILARITY } = require('./similarityQueries');
+const { COSINUS_SIMILARITY, RATIO_SIMILARITY, QUESTION_SIMILARITY, ANSWER_SIMILARITY } = require('./similarityQueries');
 //import { RATIO_SIMILARITY, COSINUS_SIMILARITY } from 'similarityQueries.js';
 
 //let allTags = requete.get_users_tags("1673130000","1673136000")
@@ -54,10 +54,10 @@ const user63 =
         //await link_user_question(user63);
         //await link_user_reponse(user63);
 
-        //compareSimilarityResultsForUser(driver, 6309);
-        //compareSimilarityResultsForUser(driver, 65387);
+        //compareSimilarityResultsForUser(6309);
+        //compareSimilarityResultsForUser(65387);
 
-        //find_similar_user(driver, 6309, COSINUS_SIMILARITY);
+        //find_similar_user(6309, COSINUS_SIMILARITY);
 
 
         //Cosinus fonctionnel seulement en fonction des interactions
@@ -88,10 +88,10 @@ const user63 =
 
 
 
-    async function compareSimilarityResultsForUser(driver, userId){
+    async function compareSimilarityResultsForUser(userId){
         const similarityQueryList = [RATIO_SIMILARITY, COSINUS_SIMILARITY];
         for (let similarityQuery of similarityQueryList){
-           await find_similar_user(driver, userId, similarityQuery);
+           await find_similar_user(userId, similarityQuery);
         }
     }
 
@@ -297,7 +297,7 @@ const user63 =
 
     
 
-    async function find_similar_user(driver, idUser, query) {
+    async function find_similar_user(idUser, query) {
         
         const session = driver.session({ database: 'neo4j' });
 
@@ -326,15 +326,7 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try {
-            const readQuery = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(t:Tag)<-[data2:INTERACT]-(user2:User)
-                               WHERE data1.ratio > 2 and data2.ratio > 4
-                               WITH SUM(data1.ratio * data2.ratio) AS data1data2Product,
-                               SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(data1.ratio)| data1Dot + a^2)) AS data1Length,
-                               SQRT(REDUCE(data2Dot = 0.0, b IN COLLECT(data2.ratio)| data2Dot + b^2)) AS data2Length,
-                               user1, user2
-                               RETURN DISTINCT user1.id AS User1, user2.id AS User2, data1data2Product / (data1Length * data2Length) AS similarite
-                               ORDER BY similarite DESC
-                               LIMIT 5`;
+            const readQuery = COSINUS_SIMILARITY;
 
             const readResult = await session.executeRead(tx =>
                 tx.run(readQuery, { idUser })
@@ -355,17 +347,7 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try {
-            const readQuery = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(t:Tag)<-[data2:INTERACT]-(user2:User)
-                                WHERE data1.ratio > 2 and data2.ratio > 4
-                                WITH SUM(data1.ratio * data2.ratio) AS data1data2Product,
-                                SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(data1.ratio)| data1Dot + a^2)) AS data1Length,
-                                SQRT(REDUCE(data2Dot = 0.0, b IN COLLECT(data2.ratio)| data2Dot + b^2)) AS data2Length,
-                                user1, user2
-                                MATCH (user1)-[a:ASKED]->(t2:Tag)<-[a2:ANSWERED]-(user2)
-                                WHERE data1data2Product / (data1Length * data2Length) > 0.5
-                                RETURN DISTINCT user1.id AS User1, user2.id AS User2, data1data2Product / (data1Length * data2Length) AS similarite
-                                ORDER BY similarite DESC
-                                LIMIT 5`;
+            const readQuery = QUESTION_SIMILARITY;
 
             const readResult = await session.executeRead(tx =>
                 tx.run(readQuery, { idUser })
@@ -386,17 +368,7 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try {
-            const readQuery = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(t:Tag)<-[data2:INTERACT]-(user2:User)
-                                WHERE data1.ratio > 2 and data2.ratio > 4
-                                WITH SUM(data1.ratio * data2.ratio) AS data1data2Product,
-                                SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(data1.ratio)| data1Dot + a^2)) AS data1Length,
-                                SQRT(REDUCE(data2Dot = 0.0, b IN COLLECT(data2.ratio)| data2Dot + b^2)) AS data2Length,
-                                user1, user2
-                                MATCH (user1)-[a:ANSWERED]->(t2:Tag)<-[a2:ASKED]-(user2)
-                                WHERE data1data2Product / (data1Length * data2Length) > 0.5
-                                RETURN DISTINCT user1.id AS User1, user2.id AS User2, data1data2Product / (data1Length * data2Length) AS similarite
-                                ORDER BY similarite DESC
-                                LIMIT 5`;
+            const readQuery = ANSWER_SIMILARITY;
 
             const readResult = await session.executeRead(tx =>
                 tx.run(readQuery, { idUser })
