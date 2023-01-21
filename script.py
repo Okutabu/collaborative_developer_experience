@@ -2,6 +2,7 @@ import random
 #TODO: Affiner le script qui génère des données de test: 100000 utilisateurs
 #TODO: Ajouter les contraintes sur les données générées
 #TODO: Ajouter le calcul de proximité entre les tags
+#TODO: Donner une unité de mesure à la distance pour chaque métrique
 
 user_list = []
 nb_votes_range = (0, 100)
@@ -10,6 +11,7 @@ nb_votes_range = (0, 100)
 #3 le nombre de tags ne doit pas exceder le nombre de tags par question (1-5) multiplié par le nombre de questions
 #4 les gens peuvent poser des questions sur des tags et repondre sur d'autres meme si c'est rare (supposition)
 #5 les gens peuvent commenter des questions et des reponses meme si c'est rare (supposition)
+
 
 for i in range(100000):
     user = {}
@@ -63,9 +65,9 @@ for i in range(100000):
             nb_answers_accepted = random.randint(0, nb_jetons_answer_accepted)
             nb_answers_upvoted = random.randint(0, nb_jetons_answer_upvoted)
             nb_answers_downvoted = random.randint(0, nb_jetons_answer_downvoted)
-            user['answer_tag_{}'.format(i)] = nb_answers
+            # a finir / transformer en fonction
+            #user['answer_tag_{}'.format(i)] = nb_answers 
 
-        nb_answers = random.randint(0, nb_jetons_answers)
-        nb_answers_accepted = random.randint(0, nb_jetons_answer_accepted)
-        nb_answers_upvoted = random.randint(0, nb_jetons_answer_upvoted)
-        user['answer_tag_{}'.format(i)] = nb_answers  #first few tags are more popular
+#Pour recommender les utilisateurs les plus similaires à un utilisateur donné on peut utiliser la similarité cosinus
+#Parcequ'elle fait abstraction de la magnitude/norme des vecteurs
+
