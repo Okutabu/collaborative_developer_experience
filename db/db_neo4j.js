@@ -50,12 +50,12 @@ const user63 =
 
 
         //récupère les "profils" de tous les utilisateurs
-        //let allProfils = await profil.get_users_profils();
+        let allProfils = await profil.get_users_profils();
 
         //console.log(allProfils);
 
         //permet d'insérer tous les profils et les relations dans la bdd
-        //await insert_profils(allProfils);
+        await insert_profils(allProfils);
 
         //await link_user_question(user63);
         //await link_user_reponse(user63);
@@ -67,19 +67,19 @@ const user63 =
 
 
         //Cosinus fonctionnel seulement en fonction des interactions
-        console.log("Utilisateurs similaires à 6309 avec la similarité de cosinus :");
-        await cosinus_similarity(6309);
-        console.log("\n");
+        // console.log("Utilisateurs similaires à 6309 avec la similarité de cosinus :");
+        // await cosinus_similarity(6309);
+        // console.log("\n");
 
         //Trouver un utilisateur similaire qui repond à des questions sur un sujets où l'on pose de questions
-        console.log("Utilisateurs similaires à 6309 qui repondent aux mêmes sujets que les questions qu'il pose :");
-        await question_similarity(6309);
-        console.log("\n");
+        // console.log("Utilisateurs similaires à 6309 qui repondent aux mêmes sujets que les questions qu'il pose :");
+        // await question_similarity(6309);
+        // console.log("\n");
     
         //Trouver un utilisateur similaire qui pose des questions sur les sujets où l'utilisateur repond
-        console.log("Utilisateurs similaires à 6309 qui posent des questions sur les sujets auxquels il repond :");
-        await answer_similarity(6309);
-        console.log("\n");
+        // console.log("Utilisateurs similaires à 6309 qui posent des questions sur les sujets auxquels il repond :");
+        // await answer_similarity(6309);
+        // console.log("\n");
 
         //await insert_users(allUsers);
         
@@ -174,18 +174,28 @@ const user63 =
         let nbRelations = info[1];
         */
 
+        let questions = user.question
+
         const session = driver.session({ database: 'neo4j' });
     
         try {
 
+
+            for (let tag in questions){
+                //console.log(tag);
+                let nbQ = questions[tag]
+                let nbA= answer[tag]
+
             const requete = `MATCH (u:User{id : $idUser}), (t:Tag {title : $tag})
                              MERGE (u)-[r:INTERACT]->(t)
-                             SET r.ratio = toInteger($info)`;
+                             SET r.ratio = toInteger($info),s
+                             r.nbQuestions = toInteger($nbQ),
+                             r.nbAnswers = toInteger($nbA)`;
                              /*,
                              r.nbInteractions = toInteger($nbRelations)`;*/
             
             const writeResult = await session.executeWrite(tx =>
-                tx.run(requete, { idUser, tag, info})
+                tx.run(requete, { idUser, tag, info, nbQ, nbA})
             );
             writeResult.records.forEach(record => {
                 console.log(`Found user: ${record.get('user')}`)
