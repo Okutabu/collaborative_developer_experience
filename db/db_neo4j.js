@@ -186,7 +186,7 @@ const user63 =
                 let nbQ = questions[tag]
                 let nbA= answer[tag]
 
-            const requete = `MATCH (u:User{id : $idUser}), (t:Tag {title : $tag})
+                const requete = `MATCH (u:User{id : $idUser}), (t:Tag {title : $tag})
                              MERGE (u)-[r:INTERACT]->(t)
                              SET r.ratio = toInteger($info),s
                              r.nbQuestions = toInteger($nbQ),
@@ -194,12 +194,13 @@ const user63 =
                              /*,
                              r.nbInteractions = toInteger($nbRelations)`;*/
             
-            const writeResult = await session.executeWrite(tx =>
-                tx.run(requete, { idUser, tag, info, nbQ, nbA})
-            );
-            writeResult.records.forEach(record => {
-                console.log(`Found user: ${record.get('user')}`)
-            });
+                const writeResult = await session.executeWrite(tx =>
+                    tx.run(requete, { idUser, tag, info, nbQ, nbA})
+                );
+                writeResult.records.forEach(record => {
+                    console.log(`Found user: ${record.get('user')}`)
+                });
+            }
         } catch (error) {
             console.error(`Something went wrong: ${error}`);
         } finally {
