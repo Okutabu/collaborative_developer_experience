@@ -168,40 +168,42 @@ const user63 =
     */
 
 
-    async function create_interact_link(idUser, info){
+    async function create_interact_link(idUser, tag, info){
         /*
         let pourcentageTag = info[0];
         let nbRelations = info[1];
         */
-
-        let questions = user.question
-        let answers = user.answer
-
+        console.log("\n");
+        console.log(info);
+        console.log(tag);
         const session = driver.session({ database: 'neo4j' });
     
         try {
 
-            for (let tag in info.interact){
-                //console.log(tag);
 
-                let nbQ = info.questions[tag]
-                let nbA= info.answer[tag]
+            ratio = info.interact[tag] ? info.interact[tag] : 0;
+            nbQ = info.question[tag] ? info.question[tag] : 0;
+            nbA = info.answer[tag] ? info.answer[tag] : 0;
+            console.log(ratio);
+            console.log(nbQ);
+            console.log(nbA);
 
-                const requete = `MATCH (u:User{id : $idUser}), (t:Tag {title : $tag})
-                             MERGE (u)-[r:INTERACT]->(t)
-                             SET r.ratio = toInteger($info),s
-                             r.nbQuestions = toInteger($nbQ),
-                             r.nbAnswers = toInteger($nbA)`;
-                             /*,
-                             r.nbInteractions = toInteger($nbRelations)`;*/
-            
-                const writeResult = await session.executeWrite(tx =>
-                    tx.run(requete, { idUser, tag, info, nbQ, nbA})
-                );
-                writeResult.records.forEach(record => {
-                    console.log(`Found user: ${record.get('user')}`)
-                });
-            }
+
+            const requete = `MATCH (u:User{id : $idUser}), (t:Tag {title : $tag})
+                            MERGE (u)-[r:INTERACT]->(t)
+                            SET r.ratio =  toFloat($ratio),
+                            r.nbQuestions = toInteger($nbQ),
+                            r.nbAnswers = toInteger($nbA)`;
+                            /*,
+                            r.nbInteractions = toInteger($nbRelations)`;*/
+        
+            const writeResult = await session.executeWrite(tx =>
+                tx.run(requete, { idUser, tag, info, nbQ, nbA, ratio})
+            );
+            writeResult.records.forEach(record => {
+                console.log(`Found user: ${record.get('user')}`)
+            });
+
         } catch (error) {
             console.error(`Something went wrong: ${error}`);
         } finally {
@@ -303,7 +305,9 @@ const user63 =
                 await create_asked_link(profilInfo);
                 await create_answered_link(profilInfo);
                 */
-                await create_interact_link(id, profilInfo);
+                for (let tag of allTags){
+                     await create_interact_link(id, tag, profilInfo);
+                }
             
             }
             
