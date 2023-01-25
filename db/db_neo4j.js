@@ -30,6 +30,12 @@ const user63 =
 };
 */
 
+
+
+
+
+
+//----------------------------------------------- MAIN ----------------------------------------------------------------------------------------------
 (async() => {
     const neo4j = require('neo4j-driver');
 
@@ -86,7 +92,7 @@ const user63 =
     }
 
 
-
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     async function compareSimilarityResultsForUser(userId){
         const similarityQueryList = [RATIO_SIMILARITY, COSINUS_SIMILARITY];
@@ -191,6 +197,8 @@ const user63 =
         }
     }
 
+
+    /*
     async function create_asked_link(user){
 
         let id = user.id
@@ -258,6 +266,7 @@ const user63 =
              await session.close();
          }
     }
+    */
 
 
     //permet d'inserer tous les utilisateurs, tous les tags, et de créer les relations
@@ -278,8 +287,10 @@ const user63 =
                                 
                 await insert_user(id);
                 await insert_tags(allTags);
+                /*
                 await create_asked_link(profilInfo);
                 await create_answered_link(profilInfo);
+                */
 
                 for (let tag of allTags){
                     await create_interact_link(id, tag, profilInfo.interact[tag]);
@@ -382,8 +393,6 @@ const user63 =
             await session.close();
         }
     }
-
-
 })();
 
 
