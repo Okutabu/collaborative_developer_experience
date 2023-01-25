@@ -168,23 +168,24 @@ const user63 =
     */
 
 
-    async function create_interact_link(idUser, tag, info){
+    async function create_interact_link(idUser, info){
         /*
         let pourcentageTag = info[0];
         let nbRelations = info[1];
         */
 
         let questions = user.question
+        let answers = user.answer
 
         const session = driver.session({ database: 'neo4j' });
     
         try {
 
-
-            for (let tag in questions){
+            for (let tag in info.interact){
                 //console.log(tag);
-                let nbQ = questions[tag]
-                let nbA= answer[tag]
+
+                let nbQ = info.questions[tag]
+                let nbA= info.answer[tag]
 
                 const requete = `MATCH (u:User{id : $idUser}), (t:Tag {title : $tag})
                              MERGE (u)-[r:INTERACT]->(t)
@@ -302,10 +303,8 @@ const user63 =
                 await create_asked_link(profilInfo);
                 await create_answered_link(profilInfo);
                 */
-
-                for (let tag of allTags){
-                    await create_interact_link(id, tag, profilInfo.interact[tag]);
-                }
+                await create_interact_link(id, profilInfo);
+            
             }
             
         } catch (error) {
