@@ -173,9 +173,8 @@ const user63 =
         let pourcentageTag = info[0];
         let nbRelations = info[1];
         */
-        console.log("\n");
-        console.log(info);
-        console.log(tag);
+    
+        
         const session = driver.session({ database: 'neo4j' });
     
         try {
@@ -184,10 +183,6 @@ const user63 =
             ratio = info.interact[tag] ? info.interact[tag] : 0;
             nbQ = info.question[tag] ? info.question[tag] : 0;
             nbA = info.answer[tag] ? info.answer[tag] : 0;
-            console.log(ratio);
-            console.log(nbQ);
-            console.log(nbA);
-
 
             const requete = `MATCH (u:User{id : $idUser}), (t:Tag {title : $tag})
                             MERGE (u)-[r:INTERACT]->(t)
