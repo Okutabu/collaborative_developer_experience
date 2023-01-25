@@ -25,7 +25,12 @@ function calculatePercentages(arr) {
   let percentages = {};
 
   for (let item in counts) {
-    percentages[item] = (counts[item] / total) * 100;
+    if (counts[item] >0 ){
+      percentages[item] = (counts[item] / total) * 100;
+    }else{
+      percentages[item] = 0;
+    }
+    
   }
 
   return percentages;

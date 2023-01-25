@@ -174,36 +174,39 @@ const user63 =
         let nbRelations = info[1];
         */
     
-        
+
         const session = driver.session({ database: 'neo4j' });
+
+        ratio = info.interact[tag] ? info.interact[tag] : 0;
+        nbQ = info.question[tag] ? info.question[tag] : 0;
+        nbA = info.answer[tag] ? info.answer[tag] : 0;
+
+        if (ratio > 0){
+            
+            try {
+
+                const requete = `MATCH (u:User{id : $idUser}), (t:Tag {title : $tag})
+                                MERGE (u)-[r:INTERACT]->(t)
+                                SET r.ratio =  toFloat($ratio),
+                                r.nbQuestions = toInteger($nbQ),
+                                r.nbAnswers = toInteger($nbA)`;
+                                /*,
+                                r.nbInteractions = toInteger($nbRelations)`;*/
+            
+                const writeResult = await session.executeWrite(tx =>
+                    tx.run(requete, { idUser, tag, info, nbQ, nbA, ratio})
+                );
+                writeResult.records.forEach(record => {
+                    console.log(`Found user: ${record.get('user')}`)
+                });
     
-        try {
-
-
-            ratio = info.interact[tag] ? info.interact[tag] : 0;
-            nbQ = info.question[tag] ? info.question[tag] : 0;
-            nbA = info.answer[tag] ? info.answer[tag] : 0;
-
-            const requete = `MATCH (u:User{id : $idUser}), (t:Tag {title : $tag})
-                            MERGE (u)-[r:INTERACT]->(t)
-                            SET r.ratio =  toFloat($ratio),
-                            r.nbQuestions = toInteger($nbQ),
-                            r.nbAnswers = toInteger($nbA)`;
-                            /*,
-                            r.nbInteractions = toInteger($nbRelations)`;*/
-        
-            const writeResult = await session.executeWrite(tx =>
-                tx.run(requete, { idUser, tag, info, nbQ, nbA, ratio})
-            );
-            writeResult.records.forEach(record => {
-                console.log(`Found user: ${record.get('user')}`)
-            });
-
-        } catch (error) {
-            console.error(`Something went wrong: ${error}`);
-        } finally {
-            await session.close();
+            } catch (error) {
+                console.error(`Something went wrong: ${error}`);
+            } finally {
+                await session.close();
+            }
         }
+        
     }
 
 
