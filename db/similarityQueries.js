@@ -1,9 +1,8 @@
 // COSINUS SIMILARITY
 
-/*
-La similarité de cosinus est une mesure de similarité qui mesure la similarité entre deux vecteurs d'objets, Dans ce cas ci, les vecteurs sont les tags d'un utilisateur.
-*/ 
 
+// La similarité de cosinus est une mesure de similarité qui mesure la similarité entre deux vecteurs d'objets, Dans ce cas ci, 
+// les vecteurs sont les tags d'un utilisateur.
 const COSINUS_SIMILARITY = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(t:Tag)<-[data2:INTERACT]-(user2:User)
                             WHERE data1.ratio > 5 and data2.ratio > 5
                             WITH SUM(data1.ratio * data2.ratio) AS data1data2Product,
@@ -16,13 +15,7 @@ const COSINUS_SIMILARITY = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(t
 
 
 //  COSINUS SIMILARITY
-
 // POURCENTAGE D'INTERACTION AVEC LES TAGS
-
-/**
- * 
- */
-
 const RATIO_SIMILARITY = `MATCH (u1:User {id:$idUser})-[r1:INTERACT]->(t:Tag)<-[r2:INTERACT]-(u2)
                             WHERE r1.ratio > 10 AND r2.ratio > 10
                             RETURN u1.id AS User1, r1.ratio AS PoidsU1, u2.id AS User2, r2.ratio AS PoidsU2, t.title AS Tag
@@ -35,7 +28,6 @@ const RATIO_SIMILARITY = `MATCH (u1:User {id:$idUser})-[r1:INTERACT]->(t:Tag)<-[
 //ANSWER_SIMILARITY
 //Récupère les utilisateurs similaires à l'aide de cosinus (qui interagissent sur les même tags)
 // puis récupère les utilisateurs qui posent des questions sur les sujets auxquels l'utilisateur principal répond
-
 const ANSWER_SIMILARITY = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(t:Tag)<-[data2:INTERACT]-(user2:User)
                             WHERE data1.ratio > 5 and data2.ratio > 5
                             WITH SUM(data1.ratio * data2.ratio) AS data1data2Product,
@@ -67,7 +59,11 @@ const QUESTION_SIMILARITY = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(
                                 ORDER BY similarite DESC
                                 LIMIT 5`;
 
+
+
 (async() => {
+
+    //connexion à auraDB
     const neo4j = require('neo4j-driver');
 
     const uri = 'neo4j+s://47c2d019.databases.neo4j.io';
@@ -83,13 +79,11 @@ const QUESTION_SIMILARITY = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(
 
         //compareSimilarityResultsForUser(6309);
         //compareSimilarityResultsForUser(65387);
-
         //find_similar_user(6309, COSINUS_SIMILARITY);
-
 
         //Cosinus fonctionnel seulement en fonction des interactions
         // console.log("Utilisateurs similaires à 6309 avec la similarité de cosinus :");
-        // await cosinus_similarity(6309);
+        await cosinus_similarity(6309);
         // console.log("\n");
 
         //Trouver un utilisateur similaire qui repond à des questions sur un sujets où l'on pose de questions
@@ -114,8 +108,6 @@ const QUESTION_SIMILARITY = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(
 
 //---------------------------------------------------------------------------------------------------------------------------------------------
 
-
-
     async function find_similar_user(idUser, query) {
         
         const session = driver.session({ database: 'neo4j' });
@@ -123,7 +115,6 @@ const QUESTION_SIMILARITY = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(
         try {
             const readQuery = query;
 
-            
             const readResult = await session.executeRead(tx =>
                 tx.run(readQuery, { idUser })
             );
