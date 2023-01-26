@@ -1,7 +1,5 @@
 //var requete = require('../api/stack-overflow/STOWrequests');
 var profil = require('../calculateur');
-const { COSINUS_SIMILARITY, RATIO_SIMILARITY, QUESTION_SIMILARITY, ANSWER_SIMILARITY } = require('./similarityQueries');
-//import { RATIO_SIMILARITY, COSINUS_SIMILARITY } from 'similarityQueries.js';
 
 //let allTags = requete.get_users_tags("1673130000","1673136000")
 //console.log(allTags);
@@ -31,11 +29,6 @@ const user63 =
 */
 
 
-
-
-
-
-//----------------------------------------------- MAIN ----------------------------------------------------------------------------------------------
 (async() => {
     const neo4j = require('neo4j-driver');
 
@@ -46,6 +39,9 @@ const user63 =
     // To learn more about the driver: https://neo4j.com/docs/javascript-manual/current/client-applications/#js-driver-driver-object
     const driver = neo4j.driver(uri, neo4j.auth.basic(user, password));
 
+
+
+//----------------------------------------------- MAIN ----------------------------------------------------------------------------------------------
     try {
 
 
@@ -57,32 +53,6 @@ const user63 =
         //permet d'insérer tous les profils et les relations dans la bdd
         await insert_profils(allProfils);
 
-        //await link_user_question(user63);
-        //await link_user_reponse(user63);
-
-        //compareSimilarityResultsForUser(6309);
-        //compareSimilarityResultsForUser(65387);
-
-        //find_similar_user(6309, COSINUS_SIMILARITY);
-
-
-        //Cosinus fonctionnel seulement en fonction des interactions
-        // console.log("Utilisateurs similaires à 6309 avec la similarité de cosinus :");
-        // await cosinus_similarity(6309);
-        // console.log("\n");
-
-        //Trouver un utilisateur similaire qui repond à des questions sur un sujets où l'on pose de questions
-        // console.log("Utilisateurs similaires à 6309 qui repondent aux mêmes sujets que les questions qu'il pose :");
-        // await question_similarity(6309);
-        // console.log("\n");
-    
-        //Trouver un utilisateur similaire qui pose des questions sur les sujets où l'utilisateur repond
-        // console.log("Utilisateurs similaires à 6309 qui posent des questions sur les sujets auxquels il repond :");
-        // await answer_similarity(6309);
-        // console.log("\n");
-
-        //await insert_users(allUsers);
-        
 
     } catch (error) {
         console.error(`Something went wrong: ${error}`);
@@ -90,16 +60,11 @@ const user63 =
         // Don't forget to close the driver connection when you're finished with it.
         await driver.close();
     }
-
-
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    async function compareSimilarityResultsForUser(userId){
-        const similarityQueryList = [RATIO_SIMILARITY, COSINUS_SIMILARITY];
-        for (let similarityQuery of similarityQueryList){
-           await find_similar_user(userId, similarityQuery);
-        }
-    }
+
+
+
 
     async function insert_tags(allTags) {
 
@@ -239,96 +204,6 @@ const user63 =
             
         } catch (error) {
             console.error(`Something went wrong, profiles could not be inserted : ${error}`);
-        } finally {
-            await session.close();
-        }
-    }
-
-
-
-    
-
-    async function find_similar_user(idUser, query) {
-        
-        const session = driver.session({ database: 'neo4j' });
-
-        try {
-            const readQuery = query;
-
-            
-            const readResult = await session.executeRead(tx =>
-                tx.run(readQuery, { idUser })
-            );
-
-            /* readResult.records.forEach(record => {
-                console.log(`Found person: ${record.get('name')}`)
-            }); */
-            console.log(readResult.records + "\n");
-
-        } catch (error) {
-            console.error(`Something went wrong: ${error}`);
-        } finally {
-            await session.close();
-        }
-    }
-
-    async function cosinus_similarity(idUser) {
-
-        const session = driver.session({ database: 'neo4j' });
-
-        try {
-            const readQuery = COSINUS_SIMILARITY;
-
-            const readResult = await session.executeRead(tx =>
-                tx.run(readQuery, { idUser })
-            );
-
-            console.log(readResult.records);
-
-        } catch (error) {
-            console.error(`Something went wrong: ${error}`);
-        } finally {
-            await session.close();
-        }
-    }
-
-
-    async function question_similarity(idUser) {
-
-        const session = driver.session({ database: 'neo4j' });
-
-        try {
-            const readQuery = QUESTION_SIMILARITY;
-
-            const readResult = await session.executeRead(tx =>
-                tx.run(readQuery, { idUser })
-            );
-
-            console.log(readResult.records);
-
-        } catch (error) {
-            console.error(`Something went wrong: ${error}`);
-        } finally {
-            await session.close();
-        }
-    }
-    
-
-    async function answer_similarity(idUser) {
-
-        const session = driver.session({ database: 'neo4j' });
-
-        try {
-            const readQuery = ANSWER_SIMILARITY;
-
-            const readResult = await session.executeRead(tx =>
-                tx.run(readQuery, { idUser })
-            );
-
-            console.log(readResult.records);
-
-        } catch (error) {
-            console.error(`Something went wrong: ${error}`);
         } finally {
             await session.close();
         }
