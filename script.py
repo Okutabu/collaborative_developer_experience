@@ -3,6 +3,7 @@ import random
 #TODO: Ajouter les contraintes sur les données générées
 #TODO: Ajouter le calcul de proximité entre les tags
 #TODO: Donner une unité de mesure à la distance pour chaque métrique
+#TODO: supprimer les lignes qui calculent les ratios et remplacer par une boucle
 
 user_list = []
 nb_votes_range = (0, 100)
