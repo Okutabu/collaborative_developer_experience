@@ -60,6 +60,24 @@ const QUESTION_SIMILARITY = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(
                                 LIMIT 5`;
 
 
+//TOP_QUESTIONS_REQUEST
+//Récupère les tags sur lesquels l'utilisateur a répondu à des questions.
+//Renvoi les 3 tops tags
+
+const TOP_QUESTIONS_REQUEST = `MATCH (u:User{id: $idUser})-[i:INTERACT]->(t:Tag)
+                                RETURN u.id as utilisateur, t.title as tag, toFloat(i.nbQuestions) as nbQuestions
+                                ORDER BY nbQuestions DESC
+                                LIMIT 3`;
+
+
+//TOP_ANSWERS_REQUEST
+//Récupère les tags sur lesquels l'utilisateur a posé  des questions.
+//Renvoi les 3 tops tags
+
+const TOP_ANSWERS_REQUEST = `MATCH (u:User{id: $idUser})-[i:INTERACT]->(t:Tag)
+                                RETURN u.id as utilisateur, t.title as tag, toFloat(i.nbAnswers) as nbAnswers
+                                ORDER BY nbAnswers DESC
+                                LIMIT 3`;
 
 (async() => {
 
@@ -83,7 +101,7 @@ const QUESTION_SIMILARITY = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(
 
         //Cosinus fonctionnel seulement en fonction des interactions
         // console.log("Utilisateurs similaires à 6309 avec la similarité de cosinus :");
-        await cosinus_similarity(6309);
+        //await cosinus_similarity(6309);
         // console.log("\n");
 
         //Trouver un utilisateur similaire qui repond à des questions sur un sujets où l'on pose de questions
@@ -95,6 +113,18 @@ const QUESTION_SIMILARITY = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(
         // console.log("Utilisateurs similaires à 6309 qui posent des questions sur les sujets auxquels il repond :");
         // await answer_similarity(6309);
         // console.log("\n");
+
+        //Trouve les tops tags des questions d'un utilisateur
+        console.log("Les 3 tops tags sur lesquels l'utilisateur pose des questions : ");
+        await topTagQuestions(633440);
+        console.log("\n");
+
+
+        //Trouve les tops tags des réponses d'un utilisateur
+        console.log("Les 3 tops tags sur lesquels l'utilisateur répond : ");
+        await topTagAnswers(6309);
+        console.log("\n");
+
 
         //await insert_users(allUsers);
         
@@ -197,6 +227,48 @@ const QUESTION_SIMILARITY = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(
         const similarityQueryList = [RATIO_SIMILARITY, COSINUS_SIMILARITY];
         for (let similarityQuery of similarityQueryList){
            await find_similar_user(userId, similarityQuery);
+        }
+    }
+
+
+    async function topTagQuestions(idUser) {
+
+        const session = driver.session({ database: 'neo4j' });
+
+        try {
+            const readQuery = TOP_QUESTIONS_REQUEST;
+
+            const readResult = await session.executeRead(tx =>
+                tx.run(readQuery, { idUser })
+            );
+
+            console.log(readResult.records);
+
+        } catch (error) {
+            console.error(`Something went wrong: ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+
+    async function topTagAnswers(idUser) {
+
+        const session = driver.session({ database: 'neo4j' });
+
+        try {
+            const readQuery = TOP_ANSWERS_REQUEST;
+
+            const readResult = await session.executeRead(tx =>
+                tx.run(readQuery, { idUser })
+            );
+
+            console.log(readResult.records);
+
+        } catch (error) {
+            console.error(`Something went wrong: ${error}`);
+        } finally {
+            await session.close();
         }
     }
 
