@@ -1,10 +1,3 @@
-// The Cloud Functions for Firebase SDK to create Cloud Functions and set up triggers.
-const functions = require('firebase-functions');
-
-// The Firebase Admin SDK to access Firestore.
-const admin = require('firebase-admin');
-admin.initializeApp();
-
 /*
 
 Contient les requêtes à l'API StackExchange de Stack OverFlow. On commence tout d'abord par récupérer les id des utilisateurs contenu dans un autre fichier
