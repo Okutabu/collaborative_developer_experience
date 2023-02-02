@@ -46,12 +46,20 @@ const user63 =
 
 
         //récupère les "profils" de tous les utilisateurs
-        let allProfils = await profil.get_users_profils();
+        //let allProfils = await profil.get_users_profils();
 
         //console.log(allProfils);
 
         //permet d'insérer tous les profils et les relations dans la bdd
-        await insert_profils(allProfils);
+        //await insert_profils(allProfils);
+        const logan = {
+            "name": "Logan",
+            "surname": "LeG",
+            "mail": "leLleG@gmail.com",
+            "password": "blablabla",
+            "idSTOW": 8965,
+        };
+        await createUser(logan);
 
 
     } catch (error) {
@@ -247,8 +255,4 @@ const user63 =
     }
 })();
 
-
-
-
-    
 
