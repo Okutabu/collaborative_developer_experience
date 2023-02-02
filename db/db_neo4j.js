@@ -63,6 +63,43 @@ const user63 =
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+    async function createUser(member){
+
+        /*
+        const user ={
+            "name": ,
+            "surname":,
+            "mail":,
+            "password":,
+            "idSTOW":,
+            };
+        */
+        const name = member.name;
+        const surname = member.surname;
+        const mail = member.mail;
+        const password = member.password;
+        const idSTOW = member.idSTOW;
+       
+        const session = driver.session({ database: 'neo4j' });
+
+        try {
+
+            const requete = `MERGE (u:User { name: $name, surname: $surname, mail: $mail, password: $password, idSTOW: toInteger($idSTOW) })`;
+        
+            const writeResult = await session.executeWrite(tx =>
+                tx.run(requete, { name, surname, mail, password, idSTOW })
+            );
+            writeResult.records.forEach(record => {
+                console.log(`Found user: ${record.get('user')}`)
+            });
+            
+        } catch (error) {
+            console.error(`Something went wrong, User could not be inserted : ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
 
 
 
