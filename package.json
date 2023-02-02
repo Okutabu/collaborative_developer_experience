@@ -1,8 +1,6 @@
 {
   "dependencies": {
     "fetch": "^1.1.0",
-    "firebase": "^9.15.0",
-    "firebase-tools": "^11.21.0",
     "neo4j-driver": "^5.4.0",
     "node": "^19.4.0",
     "node-fetch": "^3.3.0",
