@@ -1,0 +1,9 @@
+cdebybtm/
+  collector/
+    index.js (batch qui collecte les données de sow et ins-re dans neo4j)
+  back/
+    serveur d'api REST (express) connecté à neo4j
+    POST /users
+    GET /recommendations/helpers
+  front/
+    UI vue qui utilise les APIs REST

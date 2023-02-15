@@ -12,7 +12,7 @@ puis on vient récupèrer la liste d'activité de chaque utilisateur dans une tr
 réponse et question posé par un utilisateur et on récupère les tags liés à ceux-ci.
 
 */
-const user = require('../../users.js')
+const user = require('./users.js')
 
 /*
 Un tableau de users à renvoyer
