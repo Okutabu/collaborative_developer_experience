@@ -18,12 +18,10 @@ const user63 =
     "question":{
         "github": 2,
         "java": 10
-
     },
     "answer":{
         "github": 2,
         "java": 10
-
     }
 };
 */
