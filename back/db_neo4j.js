@@ -97,9 +97,11 @@ const user63 =
             const writeResult = await session.executeWrite(tx =>
                 tx.run(requete, { name, surname, mail, password, idSTOW })
             );
+            /*
             writeResult.records.forEach(record => {
                 console.log(`Found user: ${record.get('u')}`)
             });
+            */
             
         } catch (error) {
             console.error(`Something went wrong, User could not be inserted : ${error}`);
@@ -119,17 +121,17 @@ const user63 =
             const readResult = await session.executeRead(tx =>
                 tx.run(requete, { mail, password})
             );
+            /*
             readResult.records.forEach(record => {
                 console.log(`Found user: ${record.get('u')}`);
             });
+            */
             return readResult.records;
         }catch(error){
             console.error(`Something went wrong, wrong mail or password : ${error}`);
         } finally {
             await session.close();
         }
-       
-        
     }
 
 

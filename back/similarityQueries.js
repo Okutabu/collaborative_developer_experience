@@ -9,16 +9,16 @@ const COSINUS_SIMILARITY = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(t
                             SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(data1.ratio)| data1Dot + a^2)) AS data1Length,
                             SQRT(REDUCE(data2Dot = 0.0, b IN COLLECT(data2.ratio)| data2Dot + b^2)) AS data2Length,
                             user1, user2
-                            RETURN user1.id AS User1, user2.id AS User2, data1data2Product / (data1Length * data2Length) AS similarite
+                            RETURN user2, data1data2Product / (data1Length * data2Length) AS similarite
                             ORDER BY similarite DESC
                             LIMIT 5`;
 
 
 //  COSINUS SIMILARITY
 // POURCENTAGE D'INTERACTION AVEC LES TAGS
-const RATIO_SIMILARITY = `MATCH (u1:User {id:$idUser})-[r1:INTERACT]->(t:Tag)<-[r2:INTERACT]-(u2)
+const RATIO_SIMILARITY = `MATCH (user1:User {id:$idUser})-[r1:INTERACT]->(t:Tag)<-[r2:INTERACT]-(user2)
                             WHERE r1.ratio > 10 AND r2.ratio > 10
-                            RETURN u1.id AS User1, r1.ratio AS PoidsU1, u2.id AS User2, r2.ratio AS PoidsU2, t.title AS Tag
+                            RETURN r1.ratio AS PoidsU1, user2, r2.ratio AS PoidsU2, t.title AS Tag
                             ORDER BY PoidsU1 + PoidsU2 DESC
                             LIMIT 5`;
 
@@ -36,7 +36,7 @@ const ANSWER_SIMILARITY = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(t:
                             user1, user2
                             MATCH (user1)-[i:INTERACT]->(t2:Tag)<-[i2:INTERACT]-(user2)
                             WHERE i.nbAnswers > 5 AND i2.nbQuestions > 5 AND data1data2Product / (data1Length * data2Length) > 0.5
-                            RETURN DISTINCT user1.id AS User1, user2.id AS User2, data1data2Product / (data1Length * data2Length) AS similarite
+                            RETURN DISTINCT user2, data1data2Product / (data1Length * data2Length) AS similarite
                             ORDER BY similarite DESC
                             LIMIT 5`;
 
@@ -79,7 +79,7 @@ const TOP_ANSWERS_REQUEST = `MATCH (u:User{id: $idUser})-[i:INTERACT]->(t:Tag)
                                 ORDER BY nbAnswers DESC
                                 LIMIT 3`;
 
-(async() => {
+//(async() => {
 
     //connexion à auraDB
     const neo4j = require('neo4j-driver');
@@ -93,6 +93,7 @@ const TOP_ANSWERS_REQUEST = `MATCH (u:User{id: $idUser})-[i:INTERACT]->(t:Tag)
 
 
 //----------------------------------------------- MAIN ----------------------------------------------------------------------------------------------    
+    /*
     try {    
 
         //compareSimilarityResultsForUser(6309);
@@ -135,7 +136,7 @@ const TOP_ANSWERS_REQUEST = `MATCH (u:User{id: $idUser})-[i:INTERACT]->(t:Tag)
         // Don't forget to close the driver connection when you're finished with it.
         await driver.close();
     }
-
+    */
 //---------------------------------------------------------------------------------------------------------------------------------------------
 
     async function find_similar_user(idUser, query) {
@@ -152,8 +153,8 @@ const TOP_ANSWERS_REQUEST = `MATCH (u:User{id: $idUser})-[i:INTERACT]->(t:Tag)
             /* readResult.records.forEach(record => {
                 console.log(`Found person: ${record.get('name')}`)
             }); */
-            console.log(readResult.records + "\n");
-
+            return readResult.records;
+           
         } catch (error) {
             console.error(`Something went wrong: ${error}`);
         } finally {
@@ -171,8 +172,8 @@ const TOP_ANSWERS_REQUEST = `MATCH (u:User{id: $idUser})-[i:INTERACT]->(t:Tag)
             const readResult = await session.executeRead(tx =>
                 tx.run(readQuery, { idUser })
             );
-
-            console.log(readResult.records);
+            
+            return readResult.records;
 
         } catch (error) {
             console.error(`Something went wrong: ${error}`);
@@ -193,7 +194,7 @@ const TOP_ANSWERS_REQUEST = `MATCH (u:User{id: $idUser})-[i:INTERACT]->(t:Tag)
                 tx.run(readQuery, { idUser })
             );
 
-            console.log(readResult.records);
+            return readResult.records;
 
         } catch (error) {
             console.error(`Something went wrong: ${error}`);
@@ -214,7 +215,7 @@ const TOP_ANSWERS_REQUEST = `MATCH (u:User{id: $idUser})-[i:INTERACT]->(t:Tag)
                 tx.run(readQuery, { idUser })
             );
 
-            console.log(readResult.records);
+            return readResult.records;
 
         } catch (error) {
             console.error(`Something went wrong: ${error}`);
@@ -272,4 +273,9 @@ const TOP_ANSWERS_REQUEST = `MATCH (u:User{id: $idUser})-[i:INTERACT]->(t:Tag)
         }
     }
 
-})();
+//})();
+
+
+module.exports = {
+    cosinus_similarity, answer_similarity, question_similarity
+};
