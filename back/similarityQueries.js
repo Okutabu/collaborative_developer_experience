@@ -55,7 +55,7 @@ const QUESTION_SIMILARITY = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(
                                 user1, user2
                                 MATCH (user1)-[i:INTERACT]->(t2:Tag)<-[i2:INTERACT]-(user2)
                                 WHERE i.nbQuestions > 5 AND i2.nbAnswers > 5 AND data1data2Product / (data1Length * data2Length) > 0.5
-                                RETURN DISTINCT user1.id AS User1, user2.id AS User2, data1data2Product / (data1Length * data2Length) AS similarite
+                                RETURN DISTINCT user2, data1data2Product / (data1Length * data2Length) AS similarite
                                 ORDER BY similarite DESC
                                 LIMIT 5`;
 
