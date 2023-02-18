@@ -131,4 +131,46 @@ app.get('/user/similarity/cosinus', (req, res) => {
     })();
 });
 
+app.get('/user/similarity/answer', (req, res) => {
+
+    const idSTOW = req.body.idSTOW;
+
+    (async() => {
+        const data = await similarity.answer_similarity(idSTOW);
+        
+        //teste si le tableau est vide
+        if(!data.length){
+            res.status(404).send({
+                answer: "Not found"
+            });
+        }
+        else{
+
+            // à remodifier quand tous les utilisateutrs auront des nom mail...
+            var users = [];
+            data.map( (elem) => {
+                var user = {
+                    idSTOW: elem._fields[0].properties.id,
+                    similarity: elem._fields[1]
+                };
+                users.push(user);
+            });
+
+            /*
+            const user = {
+                name: data[0]._fields[0].properties.name,
+                surname: data[0]._fields[0].properties.surname,
+                mail: data[0]._fields[0].properties.mail,
+                password: data[0]._fields[0].properties.password,
+                idSTOW: data[0]._fields[0].properties.idSTOW.low
+            }
+            */
+        
+            res.status(200).send({
+                answer: users
+            });
+        }
+    })();
+});
+
 
