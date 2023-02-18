@@ -1,4 +1,5 @@
 const express = require('express');
+const db = require('./db_neo4j');
 const app = express();
 const PORT = 8080;
 
@@ -7,6 +8,7 @@ Les endpoints que l'on a besoin:
 
 POST/ user => inscription   //pas de sécurité
 GET / user => connexion     //get le user si ya le bon mdp
+
 
 GET / userSimilaire         // sécurité, si on est connecté
                             // 3 fonctions, similaires
@@ -24,7 +26,11 @@ app.listen(
 app.use(express.json());
 
 //exemple
-app.get('/user', (req, res) => {
+app.get('/user/login', (req, res) => {
+
+    const mail = req.body.mail;
+    const password = req.body.password;
+
     res.status(200).send(
         {
             name: 'AlexOS',
@@ -34,18 +40,18 @@ app.get('/user', (req, res) => {
 });
 
 //post User
-app.post('/user', (req, res) => {
+app.post('/user/register', (req, res) => {
 
     //const { id } = req.params;
-    const { name } = "oui";
-    const { surname } = req.body.surname;
-    const { mail } = req.body.mail;
-    const { password } = req.body.password;
-    const { idSTOW } = req.body.idSTOW;
+    const name = req.body.name;
+    const surname = req.body.surname;
+    const mail = req.body.mail;
+    const password = req.body.password;
+    const idSTOW  = req.body.idSTOW;
 
     
     if(!name){
-        res.status(403).send({message: "ça marche pas"});
+        res.status(403).send({message: name});
     }
 
     user = {
@@ -55,10 +61,10 @@ app.post('/user', (req, res) => {
         password,
         idSTOW
     }
+    
+    db.createUser(user);
 
     res.send({
-        message : "new user created",
-        user
+        message: `${name} was created successfuly`,
     });
-
 });

@@ -1,5 +1,5 @@
 //var requete = require('../api/stack-overflow/STOWrequests');
-var profil = require('../calculateur');
+//var profil = require('../calculateur');
 
 //let allTags = requete.get_users_tags("1673130000","1673136000")
 //console.log(allTags);
@@ -27,7 +27,7 @@ const user63 =
 */
 
 
-(async() => {
+//(async() => {
     const neo4j = require('neo4j-driver');
 
     const uri = 'neo4j+s://47c2d019.databases.neo4j.io';
@@ -40,6 +40,7 @@ const user63 =
 
 
 //----------------------------------------------- MAIN ----------------------------------------------------------------------------------------------
+    /*
     try {
 
 
@@ -66,6 +67,7 @@ const user63 =
         // Don't forget to close the driver connection when you're finished with it.
         await driver.close();
     }
+    */
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -251,6 +253,10 @@ const user63 =
             await session.close();
         }
     }
-})();
+//})();
+
+module.exports = {
+    createUser
+};
 
 
