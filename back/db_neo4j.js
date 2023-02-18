@@ -98,7 +98,7 @@ const user63 =
                 tx.run(requete, { name, surname, mail, password, idSTOW })
             );
             writeResult.records.forEach(record => {
-                console.log(`Found user: ${record.get('user')}`)
+                console.log(`Found user: ${record.get('u')}`)
             });
             
         } catch (error) {
@@ -109,9 +109,10 @@ const user63 =
     }
 
     async function connectUser(mail, password){
-        /*
+
+        const session = driver.session({ database: 'neo4j' });
+
         try{
-            res = [];
             const requete = `Match (u:User{mail: $mail, password: $password})
             return u`;
         
@@ -119,17 +120,15 @@ const user63 =
                 tx.run(requete, { mail, password})
             );
             readResult.records.forEach(record => {
-                console.log(`Found user: ${record.get('user')}`);
-                res.push(record.get('user'));
+                console.log(`Found user: ${record.get('u')}`);
             });
-    
+            return readResult.records;
         }catch(error){
             console.error(`Something went wrong, wrong mail or password : ${error}`);
         } finally {
             await session.close();
         }
-        */
-        return 10;
+       
         
     }
 

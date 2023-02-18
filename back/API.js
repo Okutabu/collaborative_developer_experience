@@ -1,4 +1,4 @@
-const { parseStringStyle } = require('@vue/shared');
+//const { parseStringStyle } = require('@vue/shared');
 const express = require('express');
 const db = require('./db_neo4j');
 const app = express();
@@ -31,18 +31,16 @@ app.get('/user/login', (req, res) => {
 
     const mail = req.body.mail;
     const password = req.body.password;
-    
-    /*
-    ( async () => {
-        user = await db.connectUser(mail, password);
-        console.log(user);
-    });
-    */
-    const user = db.connectUser(mail, password);
 
-    res.status(200).send({
-        message: user
-    });
+    (async() => {
+        const user = await db.connectUser(mail, password);
+
+        res.status(200).send({
+            message: user
+        });
+
+    })();
+    
 });
 
 //post User
