@@ -1,3 +1,4 @@
+const { parseStringStyle } = require('@vue/shared');
 const express = require('express');
 const db = require('./db_neo4j');
 const app = express();
@@ -30,12 +31,15 @@ app.get('/user/login', (req, res) => {
 
     const mail = req.body.mail;
     const password = req.body.password;
+    var user;
+
+    ( async () => {
+        user = await db.connectUser(mail, password);
+        console.log(user);
+    });
 
     res.status(200).send(
-        {
-            name: 'AlexOS',
-            password: 'argtjkahg'
-        }
+        user
     );
 });
 
@@ -65,6 +69,6 @@ app.post('/user/register', (req, res) => {
     db.createUser(user);
 
     res.send({
-        message: `${name} was created successfuly`,
+        message: `${name} was created successfuly`
     });
 });

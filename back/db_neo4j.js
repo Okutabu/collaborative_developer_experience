@@ -108,6 +108,25 @@ const user63 =
         }
     }
 
+    async function connectUser(mail, password){
+        try{
+            const requete = `Match (u:User{mail: $mail, password: $password})
+            return u`;
+        
+            const writeResult = await session.executeWrite(tx =>
+                tx.run(requete, { mail, password})
+            );
+            writeResult.records.forEach(record => {
+                console.log(`Found user: ${record.get('user')}`)
+            });
+        }catch(error){
+            console.error(`Something went wrong, wrong mail or password : ${error}`);
+        } finally {
+            await session.close();
+        }
+        return writeResult.records;
+    }
+
 
 
 
@@ -256,7 +275,7 @@ const user63 =
 //})();
 
 module.exports = {
-    createUser
+    createUser, connectUser
 };
 
 
