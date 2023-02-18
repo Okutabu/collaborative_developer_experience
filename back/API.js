@@ -20,7 +20,7 @@ GET / userSimilaire         // sécurité, si on est connecté
 
 app.listen(
     PORT,
-    () => console.log(`it's alive on http://localhost:${PORT}`)
+    () => console.log(`Server alive on http://localhost:${PORT}`)
 );
 
 //midleware json
@@ -33,14 +33,28 @@ app.get('/user/login', (req, res) => {
     const password = req.body.password;
 
     (async() => {
-        const user = await db.connectUser(mail, password);
+        const data = await db.connectUser(mail, password);
 
-        res.status(200).send({
-            message: user
-        });
-
+        //teste si le tableau est vide
+        if(!data.length){
+            res.status(404).send({
+                answer: "User not found"
+            });
+        }
+        else{
+            const user = {
+                name: data[0]._fields[0].properties.name,
+                surname: data[0]._fields[0].properties.surname,
+                mail: data[0]._fields[0].properties.mail,
+                password: data[0]._fields[0].properties.password
+            }
+        
+            
+            res.status(200).send({
+                answer: user
+            });
+        }
     })();
-    
 });
 
 //post User
@@ -55,7 +69,7 @@ app.post('/user/register', (req, res) => {
 
     
     if(!name){
-        res.status(403).send({message: name});
+        res.status(403).send({answer: name});
     }
 
     user = {
@@ -69,6 +83,6 @@ app.post('/user/register', (req, res) => {
     db.createUser(user);
 
     res.send({
-        message: `${name} was created successfuly`
+        answer: `${name} was created successfuly`
     });
 });
