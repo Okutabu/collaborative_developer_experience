@@ -31,16 +31,18 @@ app.get('/user/login', (req, res) => {
 
     const mail = req.body.mail;
     const password = req.body.password;
-    var user;
-
+    
+    /*
     ( async () => {
         user = await db.connectUser(mail, password);
         console.log(user);
     });
+    */
+    const user = db.connectUser(mail, password);
 
-    res.status(200).send(
-        user
-    );
+    res.status(200).send({
+        message: user
+    });
 });
 
 //post User

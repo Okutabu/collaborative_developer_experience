@@ -109,22 +109,28 @@ const user63 =
     }
 
     async function connectUser(mail, password){
+        /*
         try{
+            res = [];
             const requete = `Match (u:User{mail: $mail, password: $password})
             return u`;
         
-            const writeResult = await session.executeWrite(tx =>
+            const readResult = await session.executeRead(tx =>
                 tx.run(requete, { mail, password})
             );
-            writeResult.records.forEach(record => {
-                console.log(`Found user: ${record.get('user')}`)
+            readResult.records.forEach(record => {
+                console.log(`Found user: ${record.get('user')}`);
+                res.push(record.get('user'));
             });
+    
         }catch(error){
             console.error(`Something went wrong, wrong mail or password : ${error}`);
         } finally {
             await session.close();
         }
-        return writeResult.records;
+        */
+        return 10;
+        
     }
 
 
