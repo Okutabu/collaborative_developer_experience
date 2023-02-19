@@ -212,7 +212,7 @@ app.get('/user/similarity/question', (req, res) => {
     })();
 });
 
-
+// à compléter avec une requete neo4j
 app.get('/user/proficiency', (req, res) => {
 
     const idSTOW = req.body.idSTOW;
