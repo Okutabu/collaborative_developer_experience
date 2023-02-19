@@ -14,7 +14,7 @@ de les enregistrer dans la bdd.
 
 Le front gère l'interface utilisateur.
 
-Et le back est utilisé par le front pour afficher les données de la bdd et proposetr des similarités.
+Et le back est utilisé par le front pour afficher les données de la bdd et proposer des similarités.
 ------
 
 Toutes les dépendances sont spécifiés dans le JSON 'package' de chaque projet node.
