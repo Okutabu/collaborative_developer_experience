@@ -212,34 +212,78 @@ app.get('/user/similarity/question', (req, res) => {
     })();
 });
 
-// à compléter avec une requete neo4j
 app.get('/user/proficiency', (req, res) => {
 
     const idSTOW = req.body.idSTOW;
 
-    if(!idSTOW){
-        res.status(404).send({
-            answer: "Profile not found",
-            userProfile: null,
-            error: -1
-        });
-    }
+    (async() => {
 
-    user = {
-        idSTOW: 9875,
-        technos: [
-            {python: 42.1},
-            {java: 4.2},
-            {"c++": 2},
-            {caml: 34.1},
-            {git: 5.4}
-        ]
-    }
+        const data = await db.getUserTopTags(idSTOW);
 
-    res.status(200).send({
-        answer: "Profile found",
-        userProfile : user,
-        error: 0
-    });
+        if(!idSTOW){
+            res.status(404).send({
+                answer: "Profile not found",
+                userProfile: null,
+                error: -1
+            });
+        }
+        else{
+            var users = [];
+            var technos = [];
+            var test = {
+                idSTOW : idSTOW
+            }
+            users.push(test)
+            data.map( (elem) => {
+                var title = {
+                    techno: elem._fields[0].properties.title,
+                    ratio: elem._fields[1]
+                };
+                technos.push(title);
+            });
+
+            users.push(technos)
+
+            res.status(200).send({
+                answer: "Profile found",
+                userProfile : users,
+                error: 0
+            });
+        }
+
+        // user = {
+        //     "answer": "Profile found",
+        //     "userProfile": [
+        //         {
+        //             "idSTOW": 633440
+        //         },
+        //         [
+        //             {
+        //                 "techno": "laravel",
+        //                 "ratio": 26.582278481012654
+        //             },
+        //             {
+        //                 "techno": "laravel-9",
+        //                 "ratio": 7.59493670886076
+        //             },
+        //             {
+        //                 "techno": "laravel-mix",
+        //                 "ratio": 7.59493670886076
+        //             },
+        //             {
+        //                 "techno": "laravel-8",
+        //                 "ratio": 5.063291139240507
+        //             },
+        //             {
+        //                 "techno": "testing",
+        //                 "ratio": 3.79746835443038
+        //             }
+        //         ]
+        //     ],
+        //     "error": 0
+        // }
+
+        
+    })();
 });
 

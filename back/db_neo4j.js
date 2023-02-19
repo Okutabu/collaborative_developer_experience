@@ -279,10 +279,32 @@ const user63 =
             await session.close();
         }
     }
+
+    async function getUserTopTags(idSTOW){
+
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            // Il faudra penser à changer id par idSTOW quand on refera la bdd
+            const requete = `MATCH(u:User{id: $idSTOW})-[i:INTERACT]-(t:Tag)
+                                WITH i.ratio as topTags, t 
+                                RETURN t, topTags ORDER BY topTags DESC
+                                LIMIT 5`;
+        
+            const readResult = await session.executeRead(tx =>
+                tx.run(requete, { idSTOW })
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong, wrong mail or password : ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
 //})();
 
 module.exports = {
-    createUser, connectUser
+    createUser, connectUser, getUserTopTags
 };
 
 
