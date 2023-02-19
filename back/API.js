@@ -39,7 +39,9 @@ app.get('/user/login', (req, res) => {
         //teste si le tableau est vide
         if(!data.length){
             res.status(404).send({
-                answer: "User not found"
+                answer: "User not found",
+                user : null,
+                error: -1
             });
         }
         else{
@@ -52,7 +54,9 @@ app.get('/user/login', (req, res) => {
             }
         
             res.status(200).send({
-                answer: user
+                answer: "User found",
+                user : user,
+                error: 0
             });
         }
     })();
@@ -70,7 +74,11 @@ app.post('/user/register', (req, res) => {
 
     
     if(!name){
-        res.status(403).send({answer: name});
+        res.status(403).send({
+            answer: "User not created",
+            user: null,
+            error: -1
+        });
     }
 
     user = {
@@ -84,7 +92,9 @@ app.post('/user/register', (req, res) => {
     db.createUser(user);
 
     res.send({
-        answer: `${name} was created successfuly`
+        answer: `${name} was created successfuly`,
+        user: user,
+        error: 0
     });
 });
 
@@ -99,7 +109,9 @@ app.get('/user/similarity/cosinus', (req, res) => {
         //teste si le tableau est vide
         if(!data.length){
             res.status(404).send({
-                answer: "Not found"
+                answer: "Users not found",
+                users: null,
+                error: -1
             });
         }
         else{
@@ -115,7 +127,9 @@ app.get('/user/similarity/cosinus', (req, res) => {
             });
         
             res.status(200).send({
-                answer: users
+                answer: "Users found",
+                users: users,
+                error: 0
             });
         }
     })();
@@ -133,7 +147,9 @@ app.get('/user/similarity/answer', (req, res) => {
         //teste si le tableau est vide
         if(!data.length){
             res.status(404).send({
-                answer: "Not found"
+                answer: "Users not found",
+                users: null,
+                error: -1
             });
         }
         else{
@@ -150,7 +166,9 @@ app.get('/user/similarity/answer', (req, res) => {
             });
 
             res.status(200).send({
-                answer: users
+                answer: "Users found",
+                users: users,
+                error: 0
             });
         }
     })();
@@ -167,7 +185,9 @@ app.get('/user/similarity/question', (req, res) => {
         //teste si le tableau est vide
         if(!data.length){
             res.status(404).send({
-                answer: "Not found"
+                answer: "Not found",
+                users: null,
+                error: -1
             });
         }
         else{
@@ -182,11 +202,43 @@ app.get('/user/similarity/question', (req, res) => {
                 users.push(user);
             });
             
-
             res.status(200).send({
-                answer: users
+                answer: "Users found",
+                users: users,
+                error: 0
             });
         }
     })();
+});
+
+
+app.get('/user/proficiency', (req, res) => {
+
+    const idSTOW = req.body.idSTOW;
+
+    if(!idSTOW){
+        res.status(404).send({
+            answer: "Profile not found",
+            userProfile: null,
+            error: -1
+        });
+    }
+
+    user = {
+        idSTOW: 9875,
+        technos: [
+            {python: 42.1},
+            {java: 4.2},
+            {"c++": 2},
+            {caml: 34.1},
+            {git: 5.4}
+        ]
+    }
+
+    res.status(200).send({
+        answer: "Profile found",
+        userProfile : user,
+        error: 0
+    });
 });
 
