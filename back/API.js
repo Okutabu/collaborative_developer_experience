@@ -11,6 +11,7 @@ Les endpoints que l'on a besoin:
 POST/ user => inscription   //pas de sécurité
 GET / user => connexion     //get le user si ya le bon mdp
 
+GET / user => profiles      //récupérer toutes les technos d'une personne
 
 GET / userSimilaire         // sécurité, si on est connecté
                             // 3 fonctions, similaires
