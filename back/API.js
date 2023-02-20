@@ -122,16 +122,21 @@ app.get('/user/:idSTOW/similarity/cosinus', (req, res) => {
         }
         else{
 
-            var users = [];
+            //on récupère tous les ids
+            var ids = [];
             data.map( (elem) => {
-                var user = {
-                    // à remodifier quand tous les utilisateutrs auront des nom mail...
-                    idSTOW: elem._fields[0].properties.id,
-                    similarity: elem._fields[1]
-                };
-                users.push(user);
+               ids.push(elem._fields[0].properties.id);
             });
-        
+
+
+            //on récupère les profile de tous les 
+            var users = [];
+
+            for(const id of ids){
+                var infos = await db.getUserProficiency(id);
+                users.push(infos);
+            }
+            
             res.status(200).send({
                 answer: "Users found",
                 users: users,
@@ -163,17 +168,8 @@ app.get('/user/:idSTOW/similarity/answer', (req, res) => {
         else{
 
             //on récupère tous les ids
-            //var users = [];
             var ids = [];
             data.map( (elem) => {
-                /*
-                var user = {
-                    // à remodifier quand tous les utilisateutrs auront des nom mail...
-                    idSTOW: elem._fields[0].properties.id,
-                    similarity: elem._fields[1]
-                };
-                users.push(user);
-                */
                ids.push(elem._fields[0].properties.id);
             });
 
@@ -306,15 +302,20 @@ app.get('/user/:idSTOW/similarity/question', (req, res) => {
         }
         else{
             
-            // à remodifier quand tous les utilisateutrs auront des nom mail...
-            var users = [];
+            //on récupère tous les ids
+            var ids = [];
             data.map( (elem) => {
-                var user = {
-                    idSTOW: elem._fields[0].properties.id,
-                    similarity: elem._fields[1]
-                };
-                users.push(user);
+               ids.push(elem._fields[0].properties.id);
             });
+
+
+            //on récupère les profile de tous les 
+            var users = [];
+
+            for(const id of ids){
+                var infos = await db.getUserProficiency(id);
+                users.push(infos);
+            }
             
             res.status(200).send({
                 answer: "Users found",
