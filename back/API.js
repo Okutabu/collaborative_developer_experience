@@ -1,5 +1,6 @@
 //const { parseStringStyle } = require('@vue/shared');
 const express = require('express');
+const cors = require('cors');
 const db = require('./db_neo4j');
 const similarity = require('./similarityQueries');
 const app = express();
@@ -25,9 +26,12 @@ app.listen(
     () => console.log(`Server alive on http://localhost:${PORT}`)
 );
 
-//midleware json
+
+//midleware json, tout est transformé en json après la reception
 app.use(express.json());
 
+//permet de gérer les requêtes provenant de serveurs externes
+app.use(cors());
 
 app.get('/user/login', (req, res) => {
 
