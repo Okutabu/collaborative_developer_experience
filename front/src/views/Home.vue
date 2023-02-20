@@ -12,7 +12,9 @@ const { user } = storeToRefs(authStore);
 const usersStore = useRecoStore();
 const { getUser } = storeToRefs(usersStore);
 
-const name = ref('Ortavio') 
+console.log(getUser)
+
+const name = ref('ortave') 
 const type = ref('Helper')
 const reco = ref('Expert neo4j')
 
@@ -22,7 +24,7 @@ const reco = ref('Expert neo4j')
 <template>
     <div v-if="user">
         <h1>Bonjour {{user.user.surname}} !</h1>
-        <p> Votre id Stack overflow est : {{ user.user.idSTOW }} {{ getUser }}</p>
+        <p> Votre id Stack overflow est : {{ user.user.idSTOW }}</p>
         <p><router-link to="/users">Manage Users</router-link></p>
         <UserCardSimplified :nom="name" :type="type" :reco="reco"/>
     
