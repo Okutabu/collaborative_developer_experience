@@ -3,6 +3,7 @@ import { Form, Field } from 'vee-validate';
 import * as Yup from 'yup';
 
 import { useAuthStore } from '@/stores';
+import { useRecoStore } from '@/stores';
 
 const schema = Yup.object().shape({
     mail: Yup.string().required('Mail is required'),
@@ -13,6 +14,9 @@ async function onSubmit(values) {
     const authStore = useAuthStore();
     const { mail, password } = values;
     await authStore.login(mail, password);
+
+    const usersStore = useRecoStore();
+    await usersStore.getRecommandedUsers();
 }
 </script>
 
