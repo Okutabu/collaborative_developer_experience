@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 
 import { useAlertStore } from '@/stores';
-import { router } from '@/router';
+
 import { fetchWrapper } from '@/helpers';
 
 const API_URL = "http://localhost:8080"
@@ -13,6 +13,7 @@ export const useRecoStore = defineStore({
     id : 'reco',
     state: () => ({
         user: JSON.parse(localStorage.getItem('user')),
+        usersReco : JSON.parse(localStorage.getItem('usersReco')),
         returnUrl: null
     }),
     actions: {
@@ -20,11 +21,9 @@ export const useRecoStore = defineStore({
             try {
             
                 const usersReco = await fetchWrapper.get(`${baseUrl}/${this.user.user.idSTOW}/similarity/answer`);
-                console.log(usersReco);
-                //console.log(this.user);
                 
-
-                
+                // update pinia state
+                this.usersReco = usersReco;
 
                 // store user details and jwt in local storage to keep user logged in between page refreshes
                 localStorage.setItem('usersReco', JSON.stringify(usersReco));

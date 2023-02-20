@@ -10,12 +10,10 @@ const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
 
 const usersStore = useRecoStore();
-const { getUser } = storeToRefs(usersStore);
+const { usersReco } = storeToRefs(usersStore);
 
-console.log(getUser)
-
-const name = ref('ortave') 
-const type = ref('Helper')
+const name = ref('ortav') 
+const type = ref('Repond au même question que moi')
 const reco = ref('Expert neo4j')
 
 
@@ -26,7 +24,7 @@ const reco = ref('Expert neo4j')
         <h1>Bonjour {{user.user.surname}} !</h1>
         <p> Votre id Stack overflow est : {{ user.user.idSTOW }}</p>
         <p><router-link to="/users">Manage Users</router-link></p>
-        <UserCardSimplified :nom="name" :type="type" :reco="reco"/>
+        <UserCardSimplified :nom="usersReco.users[0].idSTOW" :type="type" :reco="reco"/>
     
 
     </div>
