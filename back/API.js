@@ -626,8 +626,6 @@ app.get('/user/:idSTOW/proficiency', (req, res) => {
 
     (async() => {
 
-        const data = await db.getUserTopTags(idSTOW);
-
         if(!idSTOW){
             res.status(404).send({
                 answer: "Profile not found",
@@ -636,22 +634,9 @@ app.get('/user/:idSTOW/proficiency', (req, res) => {
             });
         }
         else{
-            var users = [];
-            var technos = [];
-            var test = {
-                idSTOW : idSTOW
-            }
-            users.push(test)
-            data.map( (elem) => {
-                var title = {
-                    techno: elem._fields[0].properties.title,
-                    ratio: elem._fields[1]
-                };
-                technos.push(title);
-            });
 
-            users.push(technos)
-
+            const users = await db.getUserProficiency(idSTOW);
+            
             res.status(200).send({
                 answer: "Profile found",
                 userProfile : users,
