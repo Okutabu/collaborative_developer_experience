@@ -105,6 +105,7 @@ app.post('/user/register', (req, res) => {
 
 
 app.get('/user/:idSTOW/similarity/cosinus', (req, res) => {
+    // faire les tests avec 6309
 
     const idSTOW = parseInt(req.params.idSTOW);
 
@@ -144,6 +145,8 @@ app.get('/user/:idSTOW/similarity/cosinus', (req, res) => {
 
 app.get('/user/:idSTOW/similarity/answer', (req, res) => {
 
+    // faire les tests avec 6309
+
     const idSTOW = parseInt(req.params.idSTOW);
 
     (async() => {
@@ -182,6 +185,8 @@ app.get('/user/:idSTOW/similarity/answer', (req, res) => {
 
 app.get('/user/:idSTOW/similarity/question', (req, res) => {
 
+    // faire les tests avec 5987
+
     const idSTOW = parseInt(req.params.idSTOW);
 
     (async() => {
@@ -217,6 +222,8 @@ app.get('/user/:idSTOW/similarity/question', (req, res) => {
 });
 
 app.get('/user/:idSTOW/proficiency', (req, res) => {
+
+    // tester avec n'importe qui (6309 / 633440 / 714501)
 
     const idSTOW = parseInt(req.params.idSTOW);
 
