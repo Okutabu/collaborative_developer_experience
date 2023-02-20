@@ -1,6 +1,8 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 
+import UserCardSimplified from '../components/UserCardSimplified.vue';
+
 import { useAuthStore } from '@/stores';
 
 const authStore = useAuthStore();
@@ -13,5 +15,6 @@ const { user } = storeToRefs(authStore);
         <h1>Bonjour {{user.user.surname}} !</h1>
         <p> Votre id Stack overflow est : {{ user.user.idSTOW }}</p>
         <p><router-link to="/users">Manage Users</router-link></p>
+        <UserCardSimplified />
     </div>
 </template>
