@@ -6,17 +6,15 @@ import { useUsersStore, useAlertStore } from '@/stores';
 import { router } from '@/router';
 
 const schema = Yup.object().shape({
-    firstName: Yup.string()
+    surname: Yup.string()
         .required('First Name is required'),
-    lastName: Yup.string()
+    name: Yup.string()
         .required('Last Name is required'),
     mail: Yup.string()
         .required('Mail is required')
         .email('Mail must be a valid email'),
     idSTOW: Yup.string()
         .required('ID STOW is required'),
-    username: Yup.string()
-        .required('Username is required'),
     password: Yup.string()
         .required('Password is required')
         .min(6, 'Password must be at least 6 characters')
@@ -42,19 +40,19 @@ async function onSubmit(values) {
         <div class="card-body">
             <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
                 <div class="form-group">
+                    <label>Email</label>
+                    <Field name="mail" type="mail" class="form-control" :class="{ 'is-invalid': errors.mail }" />
+                    <div class="invalid-feedback">{{ errors.mail }}</div>
+                </div>
+                <div class="form-group">
                     <label>First Name</label>
-                    <Field name="firstName" type="text" class="form-control" :class="{ 'is-invalid': errors.firstName }" />
+                    <Field name="surname" type="text" class="form-control" :class="{ 'is-invalid': errors.firstName }" />
                     <div class="invalid-feedback">{{ errors.firstName }}</div>
                 </div>
                 <div class="form-group">
                     <label>Last Name</label>
-                    <Field name="lastName" type="text" class="form-control" :class="{ 'is-invalid': errors.lastName }" />
+                    <Field name="name" type="text" class="form-control" :class="{ 'is-invalid': errors.lastName }" />
                     <div class="invalid-feedback">{{ errors.lastName }}</div>
-                </div>
-                <div class="form-group">
-                    <label>Username</label>
-                    <Field name="username" type="text" class="form-control" :class="{ 'is-invalid': errors.username }" />
-                    <div class="invalid-feedback">{{ errors.username }}</div>
                 </div>
                 <div class="form-group">
                     <label>Password</label>
@@ -65,11 +63,6 @@ async function onSubmit(values) {
                     <label>Id Stack Overflow</label>
                     <Field name="idSTOW" type="integer" class="form-control" :class="{ 'is-invalid': errors.idSTOW }" />
                     <div class="invalid-feedback">{{ errors.idSTOW }}</div>
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <Field name="mail" type="mail" class="form-control" :class="{ 'is-invalid': errors.mail }" />
-                    <div class="invalid-feedback">{{ errors.mail }}</div>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary" :disabled="isSubmitting">
