@@ -33,7 +33,7 @@ app.use(express.json());
 //permet de gérer les requêtes provenant de serveurs externes
 app.use(cors());
 
-app.get('/user/login', (req, res) => {
+app.post('/user/login', (req, res) => {
 
     const mail = req.body.mail;
     const password = req.body.password;
@@ -104,9 +104,9 @@ app.post('/user/register', (req, res) => {
 });
 
 
-app.get('/user/similarity/cosinus', (req, res) => {
+app.get('/user/:idSTOW/similarity/cosinus', (req, res) => {
 
-    const idSTOW = req.body.idSTOW;
+    const idSTOW = parseInt(req.params.idSTOW);
 
     (async() => {
         const data = await similarity.cosinus_similarity(idSTOW);
@@ -142,9 +142,9 @@ app.get('/user/similarity/cosinus', (req, res) => {
 
 
 
-app.get('/user/similarity/answer', (req, res) => {
+app.get('/user/:idSTOW/similarity/answer', (req, res) => {
 
-    const idSTOW = req.body.idSTOW;
+    const idSTOW = parseInt(req.params.idSTOW);
 
     (async() => {
         const data = await similarity.answer_similarity(idSTOW);
@@ -180,9 +180,9 @@ app.get('/user/similarity/answer', (req, res) => {
 });
 
 
-app.get('/user/similarity/question', (req, res) => {
+app.get('/user/:idSTOW/similarity/question', (req, res) => {
 
-    const idSTOW = req.body.idSTOW;
+    const idSTOW = parseInt(req.params.idSTOW);
 
     (async() => {
         const data = await similarity.question_similarity(idSTOW);
@@ -216,9 +216,9 @@ app.get('/user/similarity/question', (req, res) => {
     })();
 });
 
-app.get('/user/proficiency', (req, res) => {
+app.get('/user/:idSTOW/proficiency', (req, res) => {
 
-    const idSTOW = req.body.idSTOW;
+    const idSTOW = parseInt(req.params.idSTOW);
 
     (async() => {
 
