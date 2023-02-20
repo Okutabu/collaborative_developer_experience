@@ -69,7 +69,7 @@ async function onSubmit(values) {
                 <div class="form-group">
                     <label>Email</label>
                     <Field name="mail" type="mail" class="form-control" :class="{ 'is-invalid': errors.mail }" />
-                    <div class="invalid-feedback">{{ errors.idSTOW }}</div>
+                    <div class="invalid-feedback">{{ errors.mail }}</div>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary" :disabled="isSubmitting">

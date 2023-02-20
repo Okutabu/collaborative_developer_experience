@@ -3,7 +3,6 @@ import { RouterLink, RouterView } from 'vue-router';
 
 import Nav from "./components/Nav.vue";
 import Alert from "./components/Alert.vue";
-import Reserve from "./components/Reserve.vue";
 
 import { useAuthStore } from '@/stores';
 
