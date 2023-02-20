@@ -1,5 +1,5 @@
 <script setup>
-import { Form, Field } from 'vee-validate';
+import { Form, Field, useSubmitForm } from 'vee-validate';
 import * as Yup from 'yup';
 
 import { useUsersStore, useAlertStore } from '@/stores';
@@ -17,14 +17,20 @@ const schema = Yup.object().shape({
         .required('ID STOW is required'),
     password: Yup.string()
         .required('Password is required')
-        .min(6, 'Password must be at least 6 characters')
-
+        .min(6, 'Password must be at least 6 characters'),
+    acceptTerms: Yup.bool()
+                .required('Accept Ts & Cs is required')
 });
 
 async function onSubmit(values) {
     const usersStore = useUsersStore();
     const alertStore = useAlertStore();
     try {
+        
+        // // Vérifier si la case à cocher est cochée
+        // if (!values.myCheckbox) {
+        //     throw new Error('You must accept the terms and conditions');
+        // }
         await usersStore.register(values);
         await router.push('/account/login');
         alertStore.success('Registration successful');
@@ -33,6 +39,7 @@ async function onSubmit(values) {
     }
 }
 </script>
+
 
 <template>
     <div class="card m-3">
@@ -63,6 +70,13 @@ async function onSubmit(values) {
                     <label>Id Stack Overflow</label>
                     <Field name="idSTOW" type="integer" class="form-control" :class="{ 'is-invalid': errors.idSTOW }" />
                     <div class="invalid-feedback">{{ errors.idSTOW }}</div>
+                </div>
+                <div class="form-group form-check">
+                    <Field name="acceptTerms" type="checkbox" id="acceptTerms" :value="true" class="form-check-input" :class="{ 'is-invalid': errors.acceptTerms }" />
+                    <label for="acceptTerms" class="form-check-label">Accept Terms & Conditions*</label>
+                    <p class ="h6"><small>J'accepte que mes données StackOverflow soient utilisées par la plateforme. Celles-ci seront utilisées uniquement par des algorithmes de recommandation et ne seront pas partagées avec des tiers.
+                    </small></p>
+                    <div class="invalid-feedback">{{errors.acceptTerms}}</div>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary" :disabled="isSubmitting">
