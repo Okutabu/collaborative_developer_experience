@@ -11,9 +11,7 @@ const { user } = storeToRefs(authStore);
 
 const usersStore = useRecoStore();
 const { usersReco } = storeToRefs(usersStore);
-
-
-console.log(getUser)
+//usersReco.users[0].idSTOW
 
 const users = [{idSTOW: 20740880, similarity: 1}, {idSTOW: 4198317, similarity: 1}]
 
