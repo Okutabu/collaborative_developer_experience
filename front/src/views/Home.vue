@@ -12,8 +12,13 @@ const { user } = storeToRefs(authStore);
 const usersStore = useRecoStore();
 const { usersReco } = storeToRefs(usersStore);
 
-const name = ref('ortav') 
-const type = ref('Repond au même question que moi')
+
+console.log(getUser)
+
+const users = [{idSTOW: 20740880, similarity: 1}, {idSTOW: 4198317, similarity: 1}]
+
+const name = ref('ortave') 
+const type = ref('Helper')
 const reco = ref('Expert neo4j')
 
 
@@ -21,11 +26,40 @@ const reco = ref('Expert neo4j')
 
 <template>
     <div v-if="user">
-        <h1>Bonjour {{user.user.surname}} !</h1>
-        <p> Votre id Stack overflow est : {{ user.user.idSTOW }}</p>
-        <p><router-link to="/users">Manage Users</router-link></p>
-        <UserCardSimplified :nom="usersReco.users[0].idSTOW" :type="type" :reco="reco"/>
+    <h1>Bonjour {{user.user.surname}} !</h1>
+    <p> Votre id Stack overflow est : {{ user.user.idSTOW }}</p>
+    </div>
+
+    <div class="container-similarities">
+        <div class="container-raw-cosinus-similarity">
+            <span>Utilisateurs similaires:</span>
+            <UserCardSimplified v-for="user in users" :nom=user.idSTOW :type=user.similarity :reco=user.idSTOW />
+            
+        </div>
+        <div class="container-similarity-tag-answers">
+            <span>Utilisateurs qui repondent:</span>
+            <UserCardSimplified v-for="user in users" :nom=user.idSTOW :type=user.similarity :reco=user.idSTOW />
+            
+        </div>
+        <div class="container-similarity-tag-questions">
+            <span>Utilisateurs qui questionnent:</span>
+            <UserCardSimplified v-for="user in users" :nom=user.idSTOW :type=user.similarity :reco=user.idSTOW />
+            
+        </div>
+    </div>
+    
     
 
-    </div>
 </template>
+
+<style>
+
+.container-similarities {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+</style>
