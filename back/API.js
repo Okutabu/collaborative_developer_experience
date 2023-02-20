@@ -43,9 +43,9 @@ app.post('/user/login', (req, res) => {
 
         //teste si le tableau est vide
         if(!data.length){
-            res.status(404).send({
+            res.status(200).send({
                 answer: "User not found",
-                user : null,
+                user : [],
                 error: -1
             });
         }
@@ -79,7 +79,7 @@ app.post('/user/register', (req, res) => {
 
     
     if(!name){
-        res.status(403).send({
+        res.status(404).send({
             answer: "User not created",
             user: null,
             error: -1
@@ -114,9 +114,9 @@ app.get('/user/:idSTOW/similarity/cosinus', (req, res) => {
         
         //teste si le tableau est vide
         if(!data.length){
-            res.status(404).send({
+            res.status(200).send({
                 answer: "Users not found",
-                users: null,
+                users: [],
                 error: -1
             });
         }
@@ -303,9 +303,9 @@ app.get('/user/:idSTOW/similarity/answer', (req, res) => {
         
         //teste si le tableau est vide
         if(!data.length){
-            res.status(404).send({
+            res.status(200).send({
                 answer: "Users not found",
-                users: null,
+                users: [],
                 error: -1
             });
         }
@@ -438,9 +438,9 @@ app.get('/user/:idSTOW/similarity/question', (req, res) => {
         
         //teste si le tableau est vide
         if(!data.length){
-            res.status(404).send({
+            res.status(200).send({
                 answer: "Not found",
-                users: null,
+                users: [],
                 error: -1
             });
         }
