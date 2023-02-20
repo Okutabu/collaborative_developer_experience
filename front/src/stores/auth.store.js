@@ -38,6 +38,9 @@ export const useAuthStore = defineStore({
             this.user = null;
             localStorage.removeItem('user');
             router.push('/account/login');
+            localStorage.removeItem('usersReco');
+            localStorage.removeItem('usersRecoSimilarity');
+            localStorage.removeItem('usersRecoQuestion');
         }
     }
 });
