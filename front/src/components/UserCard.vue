@@ -1,12 +1,11 @@
 <script>
-export default {
+import { defineProps } from 'vue'
 
-
-    props: ['data'],
-    setup(props) {
-        const propsname = props.data.name
-        return { propsname }}
-}
+const props = defineProps({
+  nom: String,
+  type: String,
+  reco : String
+})
 </script>
 
 <template>
@@ -14,9 +13,9 @@ export default {
     <div class="container_user_card">
         <div class="container_user_info">
             <div class="user_description">
-                <p>{{ data }}</p>
-                <p>age</p>
-                <p>description</p>
+                <p>nom</p>
+                <p>type</p>
+                <p>reco</p>
             </div>
         </div>
         <div class="user_stats">

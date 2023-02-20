@@ -2,9 +2,11 @@
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue'
 import UserCardSimplified from '../components/UserCardSimplified.vue';
+import UserCard from '../components/UserCard.vue';
 
 import { useAuthStore } from '@/stores';
 import { useRecoStore } from '@/stores';
+import DynamicCard from '../components/DynamicCard.vue';
 
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
@@ -14,7 +16,7 @@ const { getUser } = storeToRefs(usersStore);
 
 console.log(getUser)
 
-const users = [{idSTOW: 20740880, similarity: 1}, {idSTOW: 4198317, similarity: 1}]
+const users = [{idSTOW: 20740880, similarity: 1, nom: "john"}, {idSTOW: 4198317, similarity: 1, nom: "bob"}]
 
 const name = ref('ortave') 
 const type = ref('Helper')
@@ -32,8 +34,8 @@ const reco = ref('Expert neo4j')
     <div class="container-similarities">
         <div class="container-raw-cosinus-similarity">
             <span>Utilisateurs similaires:</span>
-            <UserCardSimplified v-for="user in users" :nom=user.idSTOW :type=user.similarity :reco=user.idSTOW />
-            
+                <DynamicCard v-for="user in users" :nom=user.idSTOW :type=user.similarity :reco=user.idSTOW />
+
         </div>
         <div class="container-similarity-tag-answers">
             <span>Utilisateurs qui repondent:</span>
