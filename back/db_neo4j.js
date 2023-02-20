@@ -302,9 +302,42 @@ const user63 =
         }
     }
 //})();
+    async function getUserProficiency(idSTOW){
+
+        var res = null;
+        const data = await getUserTopTags(idSTOW);
+
+        if(data.lenght != 0){
+
+            var users = [];
+            var technos = [];
+            var test = {
+                idSTOW : idSTOW
+            }
+            users.push(test)
+            data.map( (elem) => {
+                var title = {
+                    techno: elem._fields[0].properties.title,
+                    ratio: elem._fields[1]
+                };
+                technos.push(title);
+            });
+
+            users.push(technos)
+
+            res = users;
+        }
+        return res;
+    }
 
 module.exports = {
-    createUser, connectUser, getUserTopTags
+    createUser, connectUser, getUserTopTags, getUserProficiency
 };
+/*
+(async()=>{
+    const oui = await getUserProficiency(633440);
+    console.log(oui);
+})();
+*/
 
 
