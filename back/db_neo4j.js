@@ -302,6 +302,8 @@ const user63 =
         }
     }
 //})();
+
+    //à remodifier quand tous les utilisateutrs auront des nom mail...
     async function getUserProficiency(idSTOW){
 
         var res = null;
