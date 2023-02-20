@@ -162,17 +162,30 @@ app.get('/user/:idSTOW/similarity/answer', (req, res) => {
         }
         else{
 
-            
-            var users = [];
+            //on récupère tous les ids
+            //var users = [];
+            var ids = [];
             data.map( (elem) => {
+                /*
                 var user = {
                     // à remodifier quand tous les utilisateutrs auront des nom mail...
                     idSTOW: elem._fields[0].properties.id,
                     similarity: elem._fields[1]
                 };
                 users.push(user);
+                */
+               ids.push(elem._fields[0].properties.id);
             });
 
+
+            //on récupère les profile de tous les 
+            var users = [];
+
+            for(const id of ids){
+                var infos = await db.getUserProficiency(id);
+                users.push(infos);
+            }
+            
             res.status(200).send({
                 answer: "Users found",
                 users: users,
@@ -181,6 +194,97 @@ app.get('/user/:idSTOW/similarity/answer', (req, res) => {
         }
     })();
 });
+
+/*
+Exemple de résultat pour l'utilisateur 6309 pour la requête similarity/answer
+{
+	"answer": "Users found",
+	"users": [
+		[
+			{
+				"idSTOW": 20740880
+			},
+			[
+				{
+					"techno": "django",
+					"ratio": 28.000000000000004
+				},
+				{
+					"techno": "django-models",
+					"ratio": 18
+				},
+				{
+					"techno": "python",
+					"ratio": 17
+				},
+				{
+					"techno": "slugify",
+					"ratio": 15
+				},
+				{
+					"techno": "django-views",
+					"ratio": 6
+				}
+			]
+		],
+		[
+			{
+				"idSTOW": 4198317
+			},
+			[
+				{
+					"techno": "docker",
+					"ratio": 14.606741573033707
+				},
+				{
+					"techno": "dockerfile",
+					"ratio": 14.606741573033707
+				},
+				{
+					"techno": "docker-compose",
+					"ratio": 14.606741573033707
+				},
+				{
+					"techno": "go",
+					"ratio": 11.235955056179774
+				},
+				{
+					"techno": "goroutine",
+					"ratio": 3.3707865168539324
+				}
+			]
+		],
+		[
+			{
+				"idSTOW": 184546
+			},
+			[
+				{
+					"techno": "git",
+					"ratio": 27.835051546391753
+				},
+				{
+					"techno": "git-rebase",
+					"ratio": 12.371134020618557
+				},
+				{
+					"techno": "github",
+					"ratio": 9.278350515463918
+				},
+				{
+					"techno": "rebase",
+					"ratio": 6.185567010309279
+				},
+				{
+					"techno": "git-interactive-rebase",
+					"ratio": 6.185567010309279
+				}
+			]
+		]
+	],
+	"error": 0
+}
+*/
 
 
 app.get('/user/:idSTOW/similarity/question', (req, res) => {
@@ -220,6 +324,10 @@ app.get('/user/:idSTOW/similarity/question', (req, res) => {
         }
     })();
 });
+
+
+
+
 
 app.get('/user/:idSTOW/proficiency', (req, res) => {
 
@@ -297,4 +405,3 @@ app.get('/user/:idSTOW/proficiency', (req, res) => {
         
     })();
 });
-
