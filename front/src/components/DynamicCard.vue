@@ -9,9 +9,9 @@ const props = defineProps({
   nom: String,
   type: String,
   reco : String, 
-
+  techno: String,
 })
-var boolean = ref(true);
+var boolean = ref(false);
 function swapComponent() {
     boolean.value = !boolean.value;
   }
@@ -24,7 +24,7 @@ function swapComponent() {
 <template>
 
     <div @click="swapComponent">
-        <component :is="boolean ? UserCard : UserCardSimplified " />
+        <component :is="boolean ? UserCard : UserCardSimplified " :nom={nom}.nom :type={type}.type :reco={reco}.reco :techno={techno} />
     </div>
 
 

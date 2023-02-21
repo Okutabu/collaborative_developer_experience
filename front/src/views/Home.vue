@@ -35,7 +35,7 @@ const typeQuestion = ref('To help')
         <div class="container-raw-cosinus-similarity">
             <span>Utilisateurs similaires:</span>
 
-                <DynamicCard v-for="user in users" :nom=user.idSTOW :type=user.similarity :reco=user.idSTOW />
+                <DynamicCard v-for="user in usersRecoSimilarity.users" :nom=user[0].idSTOW :type=typeReponse :reco=user[1][0].techno :techno=user[1] />
         </div>
         <div class="container-similarity-tag-answers">
             <span>Utilisateurs qui repondent:</span>

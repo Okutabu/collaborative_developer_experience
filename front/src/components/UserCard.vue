@@ -1,10 +1,13 @@
-<script>
+<script setup>
 import { defineProps } from 'vue'
+import Radar from './Radar.vue'
 
 const props = defineProps({
   nom: String,
   type: String,
-  reco : String
+  reco : String,
+  techno: String,
+  ratio: Number,
 })
 </script>
 
@@ -13,14 +16,15 @@ const props = defineProps({
     <div class="container_user_card">
         <div class="container_user_info">
             <div class="user_description">
-                <p>nom</p>
-                <p>type</p>
-                <p>reco</p>
+                <p>{{ nom }}</p>
+                <p>{{ type }}</p>
+                <p>{{ reco }}</p>
             </div>
         </div>
         <div class="user_stats">
             <p>stats</p>
-        <div> <Chart /> </div>
+            <!-- <p>{{ techno }}</p> -->
+        <div> <Radar techno /> </div>
         </div>
     </div>
 
