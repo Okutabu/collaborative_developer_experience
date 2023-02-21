@@ -14,7 +14,7 @@ const authStore = useAuthStore();
     <div class="app-container" :class="authStore.user && 'bg-light'">
         <Nav />
         <Alert />
-        <div class="container pt-4 pb-4">
+        <div class="container-workspace">
             <RouterView />
         </div>
     </div>
@@ -22,4 +22,10 @@ const authStore = useAuthStore();
 
 <style>
 @import '@/assets/base.css';
+@import '@/assets/theme.css';
+
+.container-workspace{
+    width: 100%;
+    
+}
 </style>

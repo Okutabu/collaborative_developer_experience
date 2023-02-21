@@ -1,4 +1,5 @@
 @import './base.css';
+@import './theme.css';
 
 #app{
     font-family: Avenir, Helvetica, Arial, sans-serif;
