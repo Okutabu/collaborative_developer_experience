@@ -1,14 +1,18 @@
 <script setup>
 import { defineProps } from 'vue'
 import Radar from './Radar.vue'
+import { ref } from 'vue'
+
+
 
 const props = defineProps({
   nom: String,
   type: String,
   reco : String,
-  techno: String,
+  techno: Array,
   ratio: Number,
 })
+
 </script>
 
 <template>
@@ -24,7 +28,7 @@ const props = defineProps({
         <div class="user_stats">
             <p>stats</p>
             <!-- <p>{{ techno }}</p> -->
-        <div> <Radar techno /> </div>
+        <div> <Radar :technoratio=props.techno  /> </div>
         </div>
     </div>
 

@@ -34,17 +34,16 @@ const typeQuestion = ref('To help')
     <div class="container-similarities">
         <div class="container-raw-cosinus-similarity">
             <span>Utilisateurs similaires:</span>
-
                 <DynamicCard v-for="user in usersRecoSimilarity.users" :nom=user[0].idSTOW :type=typeReponse :reco=user[1][0].techno :techno=user[1] />
         </div>
         <div class="container-similarity-tag-answers">
             <span>Utilisateurs qui repondent:</span>
-            <UserCardSimplified v-for="user in usersReco.users" :nom=user[0].idSTOW :type=typeReponse :reco=user[1][0].techno />
+            <DynamicCard v-for="user in usersReco.users" :nom=user[0].idSTOW :type=typeReponse :reco=user[1][0].techno :techno=user[1] />
             
         </div>
         <div class="container-similarity-tag-questions">
             <span>Utilisateurs qui questionnent:</span>
-            <UserCardSimplified v-for="user in usersRecoQuestion.users" :nom=user[0].idSTOW :type=typeQuestion :reco=user[1][0].techno />
+            <DynamicCard v-for="user in usersRecoQuestion.users" :nom=user[0].idSTOW :type=typeQuestion :reco=user[1][0].techno :techno=user[1] />
             
         </div>
     </div>

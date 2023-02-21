@@ -1,51 +1,54 @@
-<script>
+<script setup>
 
 import VueApexCharts from "vue3-apexcharts";
-import { defineProps } from 'vue'
 
-export default {
-    name: 'radar',
-    components: {
-        VueApexCharts,
-    },
-    props: {
-        nom: String,
-        type: String,
-        reco : String,
-        techno: String,
-        ratio: Number,
-    },
-    data: {
+// export default {
+//     series: [{
+// name: 'Series 1',
+// data: [80, 50, 30, 40, 100, 20],
+// }],
+
+// chartOptions: {
+// chart: {
+//     height: 350,
+//     type: 'radar',
+// },
+// title: {
+//     text: 'Basic Radar Chart'
+// },
+// xaxis: {
+//     categories: ['January', 'February', 'March', 'April', 'May', 'June']
+// }
+// }
+// }
+
+const props = defineProps({
+  technoratio: Array
+})
+
+var series = []
+series.push({name: ratios, data: props.technoratio.techno.map(item => item.ratio)})
+
+// console.log(series)
+var ratios = {chart: {
+    height: 350,
+    type: 'radar',
+},
+title: {
+    text: 'Proficiency radar'
+},
+xaxis: {
     
-    series: [{
-    name: 'Series 1',
-    data: [80, 50, 30, 40, 100, 20],
-    }],
-    chartOptions: {
-    chart: {
-        height: 350,
-        type: 'radar',
-    },
-    title: {
-        text: 'Basic Radar Chart'
-    },
-    xaxis: {
-        categories: ['January', 'February', 'March', 'April', 'May', 'June']
-    }
-    },
-}
-}
-
-
-
+    categories: props.technoratio.techno.map(item => item.techno)}
+};
+// console.log(ratios)
 
 </script>
 
 <template>
 
-    
     <div id="chart">
-        <VueApexchart type="radar" height="350" :options="chartOptions" :series="series"></VueApexchart>
+        <VueApexCharts type="radar" height="350" :options="ratios" :series="series"></VueApexCharts>
     </div>
 
 </template>
