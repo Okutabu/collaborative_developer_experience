@@ -10,7 +10,7 @@
         </div>
         <div class="container_navbar_actions">
             <div class="container_navbar_actions_item">
-                <p>recommendation</p>
+                <p>Recommendations</p>
             </div>
             <div class="container_navbar_actions_item">
                 <p>Profil</p>

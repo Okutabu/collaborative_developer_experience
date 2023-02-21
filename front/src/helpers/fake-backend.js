@@ -1,7 +1,7 @@
 export { fakeBackend };
 
 // array in local storage for registered users
-const usersKey = 'vue-3-pinia-registration-login-example-users';
+const usersKey = 'exemple-key';
 let users = JSON.parse(localStorage.getItem(usersKey)) || [];
 
 function fakeBackend() {
@@ -128,8 +128,8 @@ function fakeBackend() {
             }
 
             function basicDetails(user) {
-                const { id, username, firstName, lastName } = user;
-                return { id, username, firstName, lastName };
+                const { id, username, firstName, lastName, idSTOW } = user;
+                return { id, username, firstName, lastName, idSTOW };
             }
 
             function isAuthenticated() {

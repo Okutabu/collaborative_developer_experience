@@ -1,12 +1,18 @@
-<script>
-export default {
+<script setup>
+import { defineProps } from 'vue'
+import Radar from './Radar.vue'
+import { ref } from 'vue'
 
 
-    props: ['data'],
-    setup(props) {
-        const propsname = props.data.name
-        return { propsname }}
-}
+
+const props = defineProps({
+  nom: String,
+  type: String,
+  reco : String,
+  techno: Array,
+  ratio: Number,
+})
+
 </script>
 
 <template>
@@ -14,14 +20,13 @@ export default {
     <div class="container_user_card">
         <div class="container_user_info">
             <div class="user_description">
-                <p>{{ data }}</p>
-                <p>age</p>
-                <p>description</p>
+                <p>Id : {{ nom }}</p>
+                <p>{{ type }}</p>
+                <p>point fort : {{ reco }}</p>
             </div>
         </div>
         <div class="user_stats">
-            <p>stats</p>
-        <div> <Chart /> </div>
+        <div> <Radar :technoratio=props.techno  /> </div>
         </div>
     </div>
 
@@ -64,6 +69,15 @@ export default {
     box-shadow: 0 0 10px 0 rgba(151, 144, 144, 0.2);
     margin-bottom: 20px;
     
+}
+
+.userdescription {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
 }
 
 </style>

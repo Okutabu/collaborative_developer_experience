@@ -1,5 +1,5 @@
 //var requete = require('../api/stack-overflow/STOWrequests');
-var profil = require('../calculateur');
+//var profil = require('../calculateur');
 
 //let allTags = requete.get_users_tags("1673130000","1673136000")
 //console.log(allTags);
@@ -18,18 +18,16 @@ const user63 =
     "question":{
         "github": 2,
         "java": 10
-
     },
     "answer":{
         "github": 2,
         "java": 10
-
     }
 };
 */
 
 
-(async() => {
+//(async() => {
     const neo4j = require('neo4j-driver');
 
     const uri = 'neo4j+s://47c2d019.databases.neo4j.io';
@@ -42,6 +40,7 @@ const user63 =
 
 
 //----------------------------------------------- MAIN ----------------------------------------------------------------------------------------------
+    /*
     try {
 
 
@@ -68,6 +67,7 @@ const user63 =
         // Don't forget to close the driver connection when you're finished with it.
         await driver.close();
     }
+    */
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -97,12 +97,38 @@ const user63 =
             const writeResult = await session.executeWrite(tx =>
                 tx.run(requete, { name, surname, mail, password, idSTOW })
             );
+            /*
             writeResult.records.forEach(record => {
-                console.log(`Found user: ${record.get('user')}`)
+                console.log(`Found user: ${record.get('u')}`)
             });
+            */
             
         } catch (error) {
             console.error(`Something went wrong, User could not be inserted : ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+    async function connectUser(mail, password){
+
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `Match (u:User{mail: $mail, password: $password})
+            return u`;
+        
+            const readResult = await session.executeRead(tx =>
+                tx.run(requete, { mail, password})
+            );
+            /*
+            readResult.records.forEach(record => {
+                console.log(`Found user: ${record.get('u')}`);
+            });
+            */
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong, wrong mail or password : ${error}`);
         } finally {
             await session.close();
         }
@@ -253,6 +279,67 @@ const user63 =
             await session.close();
         }
     }
+
+    async function getUserTopTags(idSTOW){
+
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            // Il faudra penser à changer id par idSTOW quand on refera la bdd
+            const requete = `MATCH(u:User{id: $idSTOW})-[i:INTERACT]-(t:Tag)
+                                WITH i.ratio as topTags, t 
+                                RETURN t, topTags ORDER BY topTags DESC
+                                LIMIT 5`;
+        
+            const readResult = await session.executeRead(tx =>
+                tx.run(requete, { idSTOW })
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong, wrong mail or password : ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+//})();
+
+    //à remodifier quand tous les utilisateutrs auront des nom mail...
+    async function getUserProficiency(idSTOW){
+
+        var res = null;
+        const data = await getUserTopTags(idSTOW);
+
+        if(data.lenght != 0){
+
+            var users = [];
+            var technos = [];
+            var test = {
+                idSTOW : idSTOW
+            }
+            users.push(test)
+            data.map( (elem) => {
+                var title = {
+                    techno: elem._fields[0].properties.title,
+                    ratio: elem._fields[1]
+                };
+                technos.push(title);
+            });
+
+            users.push(technos)
+
+            res = users;
+        }
+        return res;
+    }
+
+module.exports = {
+    createUser, connectUser, getUserTopTags, getUserProficiency
+};
+/*
+(async()=>{
+    const oui = await getUserProficiency(633440);
+    console.log(oui);
 })();
+*/
 
 

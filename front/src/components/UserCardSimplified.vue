@@ -51,7 +51,7 @@ const props = defineProps({
 }
 
 .user_picture {
-  
+   margin-right: 35px;
 }
 
 .name {
