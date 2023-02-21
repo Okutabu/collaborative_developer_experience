@@ -26,8 +26,6 @@ const props = defineProps({
             </div>
         </div>
         <div class="user_stats">
-            <p>stats</p>
-            <!-- <p>{{ techno }}</p> -->
         <div> <Radar :technoratio=props.techno  /> </div>
         </div>
     </div>
