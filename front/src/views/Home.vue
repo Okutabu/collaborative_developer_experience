@@ -19,7 +19,7 @@ const { usersReco, usersRecoSimilarity, usersRecoQuestion } = storeToRefs(usersS
 
 const users = [{idSTOW: 20740880, similarity: 1, nom: "john"}, {idSTOW: 4198317, similarity: 1, nom: "bob"}]
 
-const typeSimilaire = ref('Comme toi')
+const typeSimilaire = ref('Projet similaire')
 const typeReponse= ref('Helper')
 const typeQuestion = ref('To help')
 
@@ -27,22 +27,23 @@ const typeQuestion = ref('To help')
 
 <template>
     <div v-if="user">
-    <h1>Bonjour {{user.user.surname}} !</h1>
+    <h1>Bonjour {{user.user.surname}} ! </h1>
+    <h4>Bienvenue sur votre espace de collaboration PTC</h4>
     <p> Votre id Stack overflow est : {{ user.user.idSTOW }}</p>
     </div>
 
     <div class="container-similarities">
         <div class="container-raw-cosinus-similarity">
-            <span>Utilisateurs similaires:</span>
-                <DynamicCard v-for="user in usersRecoSimilarity.users" :nom=user[0].idSTOW :type=typeReponse :reco=user[1][0].techno :techno=user[1] />
+            <span class="categorie-recommendation">Utilisateurs similaires à vous</span>
+            <DynamicCard v-for="user in usersRecoSimilarity.users" :nom=user[0].idSTOW :type=typeSimilaire :reco=user[1][0].techno :techno=user[1] />
         </div>
         <div class="container-similarity-tag-answers">
-            <span>Utilisateurs qui repondent:</span>
+            <span class="categorie-recommendation">Utilisateurs qui repondent à vos questions</span>
             <DynamicCard v-for="user in usersReco.users" :nom=user[0].idSTOW :type=typeReponse :reco=user[1][0].techno :techno=user[1] />
             
         </div>
         <div class="container-similarity-tag-questions">
-            <span>Utilisateurs qui questionnent:</span>
+            <span class="categorie-recommendation">Utilisateurs que vous pouvez aider</span>
             <DynamicCard v-for="user in usersRecoQuestion.users" :nom=user[0].idSTOW :type=typeQuestion :reco=user[1][0].techno :techno=user[1] />
             
         </div>
@@ -61,5 +62,22 @@ const typeQuestion = ref('To help')
     align-items: center;
     width: 100%;
     height: 100%;
+    margin-top: 50px;
 }
+
+.container-raw-cosinus-similarity, .container-similarity-tag-answers, .container-similarity-tag-questions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.categorie-recommendation{
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
 </style>

@@ -20,9 +20,9 @@ const props = defineProps({
     <div class="container_user_card">
         <div class="container_user_info">
             <div class="user_description">
-                <p>{{ nom }}</p>
+                <p>Id : {{ nom }}</p>
                 <p>{{ type }}</p>
-                <p>{{ reco }}</p>
+                <p>point fort : {{ reco }}</p>
             </div>
         </div>
         <div class="user_stats">
@@ -69,6 +69,15 @@ const props = defineProps({
     box-shadow: 0 0 10px 0 rgba(151, 144, 144, 0.2);
     margin-bottom: 20px;
     
+}
+
+.userdescription {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
 }
 
 </style>
