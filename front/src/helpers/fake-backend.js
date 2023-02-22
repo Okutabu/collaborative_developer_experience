@@ -62,19 +62,16 @@ function fakeBackend() {
             }
 
             function getUsers() {
-                if (!isAuthenticated()) return unauthorized();
                 return ok(users.map(x => basicDetails(x)));
             }
 
             function getUserById() {
-                if (!isAuthenticated()) return unauthorized();
 
                 const user = users.find(x => x.id === idFromUrl());
                 return ok(basicDetails(user));
             }
 
             function updateUser() {
-                if (!isAuthenticated()) return unauthorized();
 
                 let params = body();
 
@@ -98,7 +95,6 @@ function fakeBackend() {
             }
 
             function deleteUser() {
-                if (!isAuthenticated()) return unauthorized();
 
                 users = users.filter(x => x.id !== idFromUrl());
                 localStorage.setItem(usersKey, JSON.stringify(users));
