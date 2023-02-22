@@ -26,6 +26,5 @@ const authStore = useAuthStore();
 
 .container-workspace{
     width: 100%;
-    
 }
 </style>

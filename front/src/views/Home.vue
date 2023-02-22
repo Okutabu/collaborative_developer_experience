@@ -43,19 +43,35 @@ const typeQuestion = ref('To help')
     </div>
 
     <div class="container-similarities">
+        
         <div class="container-raw-cosinus-similarity" v-if="usersRecoSimilarity">
             <span class="categorie-recommendation">Utilisateurs similaires à vous</span>
             <DynamicCard v-for="user in usersRecoSimilarity.users" :nom=user[0].idSTOW :type=typeSimilaire :reco=user[1][0].techno :techno=user[1] />
+        </div>
+        <div v-else>
+            <div class="spinner-border custom-spinner" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
         </div>
         <div class="container-similarity-tag-answers" v-if="usersReco">
             <span class="categorie-recommendation">Utilisateurs qui repondent à vos questions</span>
             <DynamicCard v-for="user in usersReco.users" :nom=user[0].idSTOW :type=typeReponse :reco=user[1][0].techno :techno=user[1] />
             
         </div>
+        <div v-else>
+            <div class="spinner-border custom-spinner" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
         <div class="container-similarity-tag-questions" v-if="usersRecoQuestion">
             <span class="categorie-recommendation">Utilisateurs que vous pouvez aider</span>
             <DynamicCard v-for="user in usersRecoQuestion.users" :nom=user[0].idSTOW :type=typeQuestion :reco=user[1][0].techno :techno=user[1] />
             
+        </div>
+        <div v-else>
+            <div class="spinner-border custom-spinner" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
         </div>
     </div>
     
@@ -87,8 +103,16 @@ const typeQuestion = ref('To help')
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    margin-top: 50px;
+    background-color: var(--cde-c-palette-dark-2);
 }
+
+.custom-spinner {
+    width: 3rem;
+    height: 3rem;
+    margin: 1rem;
+    color: var(--cde-c-palette-dark-4);
+}
+
 
 .container-raw-cosinus-similarity, .container-similarity-tag-answers, .container-similarity-tag-questions {
     display: flex;
