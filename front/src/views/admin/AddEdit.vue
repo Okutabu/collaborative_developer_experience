@@ -22,17 +22,15 @@ if (id) {
 }
 
 const schema = Yup.object().shape({
-    firstName: Yup.string()
+    surname: Yup.string()
         .required('First Name is required'),
-    lastName: Yup.string()
+    name: Yup.string()
         .required('Last Name is required'),
-    username: Yup.string()
-        .required('Username is required'),
-    password: Yup.string()
-        .transform(x => x === '' ? undefined : x)
-        // password optional in edit mode
-        .concat(user ? null : Yup.string().required('Password is required'))
-        .min(6, 'Password must be at least 6 characters')
+    mail: Yup.string()
+        .required('Mail is required')
+        .email('Mail must be a valid email'),
+    idSTOW: Yup.string()
+        .required('ID STOW is required')
 });
 
 async function onSubmit(values) {
@@ -42,7 +40,7 @@ async function onSubmit(values) {
             await usersStore.update(user.value.id, values)
             message = 'User updated';
         } else {
-            await usersStore.register(values);
+            await usersStore.register(values, {acceptTerms: true});
             message = 'User added';
         }
         await router.push('/users');
@@ -60,28 +58,25 @@ async function onSubmit(values) {
             <div class="form-row">
                 <div class="form-group col">
                     <label>First Name</label>
-                    <Field name="firstName" type="text" class="form-control" :class="{ 'is-invalid': errors.firstName }" />
-                    <div class="invalid-feedback">{{ errors.firstName }}</div>
+                    <Field name="surname" type="text" class="form-control" :class="{ 'is-invalid': errors.surname }" />
+                    <div class="invalid-feedback">{{ errors.surname }}</div>
                 </div>
                 <div class="form-group col">
                     <label>Last Name</label>
-                    <Field name="lastName" type="text" class="form-control" :class="{ 'is-invalid': errors.lastName }" />
-                    <div class="invalid-feedback">{{ errors.lastName }}</div>
+                    <Field name="name" type="text" class="form-control" :class="{ 'is-invalid': errors.name }" />
+                    <div class="invalid-feedback">{{ errors.name }}</div>
                 </div>
             </div>
-            <div class="form-row">
+            <div class="form-row ">
                 <div class="form-group col">
-                    <label>Username</label>
-                    <Field name="username" type="text" class="form-control" :class="{ 'is-invalid': errors.username }" />
-                    <div class="invalid-feedback">{{ errors.username }}</div>
+                    <label>Email</label>
+                    <Field name="mail" type="mail" class="form-control" :class="{ 'is-invalid': errors.mail }" />
+                    <div class="invalid-feedback">{{ errors.mail }}</div>
                 </div>
                 <div class="form-group col">
-                    <label>
-                        Password
-                        <em v-if="user">(Leave blank to keep the same password)</em>
-                    </label>
-                    <Field name="password" type="password" class="form-control" :class="{ 'is-invalid': errors.password }" />
-                    <div class="invalid-feedback">{{ errors.password }}</div>
+                    <label>Id Stack Overflow</label>
+                    <Field name="idSTOW" type="integer" class="form-control" :class="{ 'is-invalid': errors.idSTOW }" />
+                    <div class="invalid-feedback">{{ errors.idSTOW }}</div>
                 </div>
             </div>
             <div class="form-group">
@@ -89,7 +84,7 @@ async function onSubmit(values) {
                     <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
                     Save
                 </button>
-                <router-link to="/users" class="btn btn-link">Cancel</router-link>
+                <router-link to="/admin/users" class="btn btn-link">Cancel</router-link>
             </div>
         </Form>
     </template>

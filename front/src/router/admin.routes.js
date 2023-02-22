@@ -5,7 +5,7 @@ export default {
     component: Layout,
     children: [
         { path: '', component: AdminHomePage },
-        { path: 'add', component: AddEdit },
+        { path: 'users/add', component: AddEdit },
         { path: 'edit/:id', component: AddEdit },
         { path: 'users', component: List }
     ]
