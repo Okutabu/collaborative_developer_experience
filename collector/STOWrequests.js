@@ -5,7 +5,7 @@ puis on vient récupèrer la liste d'activité de chaque utilisateur dans une tr
 réponse et question posé par un utilisateur et on récupère les tags liés à ceux-ci.
 
 */
-const user = require('../../users.js')
+const user = require('./users')
 
 /*
 Un tableau de users à renvoyer
@@ -129,7 +129,7 @@ async function get_user_tags_async(idUser, start, end) {
 }
 
 
-exports.get_users_tags_async = async function (start, end){
+async function get_users_tags_async(start, end){
     let users = []
 
     console.log("Converting IDs to string ...");
@@ -156,23 +156,48 @@ exports.get_users_tags_async = async function (start, end){
 // Version asynchrone de la fonction.
 // Permet de récupérer toutes les informations d'un utilisateur.
 // Renvoie un objet user contenant le nom et l'id de l'utilisateur.
-async function get_user(dev, tab){
+async function get_user(id){
 
-    const URL = 'https://api.stackexchange.com/2.3/users/'+ dev.id +'?site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg(('
+    const URL = 'https://api.stackexchange.com/2.3/users/'+ id +'?site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg(('
 
-    console.log("GET user : " + dev.id)
+    console.log("GET user : " + id);
 
-    var result = await fetch(URL)
+    var data = await fetch(URL).then(response => response.json());
     
-    result.json().then( data => { 
-        tab.push(data.items[0].display_name);
-    })
+    var info = {
+        id: data.items[0].user_id,
+        pseudo: data.items[0].display_name,
+        avatar: data.items[0].profile_image
+    };
+    return info;
 }
 
-/*
+async function get_users(){
+
+    let ids = user.list_id.map(id => id.toString());
+    let users_info = [];
+
+    for(id of ids){
+        const info = await get_user(id);
+        users_info.push(info);
+    }
+
+    return users_info;
+}
+
+
 (async() => {
-    let res = await get_users_tags_async("1668610633","1673881033");
+    
+    let res = await get_users();
     console.log(res);
+    
 })();
-*/
+
+
+module.exports = {
+    get_answers_tags_async
+}
+
+
+
 
