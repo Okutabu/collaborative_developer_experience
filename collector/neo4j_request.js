@@ -187,7 +187,7 @@ async function add_name_and_picture(userInfo) {
     const session = driver.session({ database: 'neo4j' });
     try {
 
-        const requete = `MERGE (u:User { idSTOW: $id, pseudo: $pseudo, avatar: $avatar})`;
+        const requete = `MERGE (u:User { id: toInteger($id), pseudo: $pseudo, avatar: $avatar})`;
     
         const writeResult = await session.executeWrite(tx =>
             tx.run(requete, { id, pseudo, avatar })
@@ -209,16 +209,15 @@ async function add_name_and_picture(userInfo) {
 (async() => {
 
     try {
-        /*
-        const logan = {
-            "name": "Logan",
-            "surname": "LeG",
-            "mail": "leLleG@gmail.com",
-            "password": "blablabla",
-            "idSTOW": 8965,
+        
+        const vonc = {
+            id: 6309,
+            pseudo: 'VonC',
+            avatar: 'https://i.stack.imgur.com/I4fiW.jpg?s=256&g=1'
         };
-        await createUser(logan);
-        */
+    
+    
+        await add_name_and_picture(vonc);
 
     } catch (error) {
         console.error(`Something went wrong: ${error}`);
