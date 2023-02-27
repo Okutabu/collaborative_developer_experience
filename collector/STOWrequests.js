@@ -195,7 +195,7 @@ async function get_users(){
 
 
 module.exports = {
-    get_answers_tags_async
+    get_answers_tags_async, get_users
 }
 
 

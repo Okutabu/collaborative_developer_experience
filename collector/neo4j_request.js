@@ -194,10 +194,30 @@ async function add_name_and_picture(userInfo) {
         const writeResult = await session.executeWrite(tx =>
             tx.run(requete, { id, pseudo, avatar })
         );
+        /*
         writeResult.records.forEach(record => {
             console.log(record);
             //console.log(`Found tag: ${record.get('tag')}`)
         });
+        */
+        
+    } catch (error) {
+        console.error(`Something went wrong, Tags could not be inserted : ${error}`);
+    } finally {
+        await session.close();
+    }
+}
+
+async function add_all_names_and_pictures(usersInfo){
+
+    const session = driver.session({ database: 'neo4j' });
+
+    try {
+
+        for(info of usersInfo){
+            console.log(`Inserting user : ${info.id}`)
+            await add_name_and_picture(info);
+        }
         
     } catch (error) {
         console.error(`Something went wrong, Tags could not be inserted : ${error}`);
@@ -212,13 +232,9 @@ async function add_name_and_picture(userInfo) {
 
     try {
         
-        const vonc = {
-            id: 2756547,
-            pseudo: 'Artem Bilan',
-            avatar: 'https://www.gravatar.com/avatar/2158ce6e7c048277890eb64458864c1c?s=256&d=identicon&r=PG'                                                   
-        };
         
-        await add_name_and_picture(vonc);
+        const infos = requete.get_users();
+        await add_all_names_and_pictures(infos);
 
     } catch (error) {
         console.error(`Something went wrong: ${error}`);
