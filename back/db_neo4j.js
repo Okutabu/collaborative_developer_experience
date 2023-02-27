@@ -178,7 +178,7 @@ const user63 =
             const readResult =  await session.executeRead(tx =>
                 tx.run(requete)
             );
-            return readResult.records[0]._fields[0].low;
+            return readResult.records;
         }catch(error){
             console.error(`Something went wrong :  ${error}`);
         } finally {
@@ -197,7 +197,27 @@ const user63 =
             const readResult =  await session.executeRead(tx =>
                 tx.run(requete)
             );
-            return readResult.records[0]._fields[0].low;
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong :  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+    async function getTopTags(){
+
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `MATCH(u:User)-[i:INTERACT]-(t:Tag)                             
+                             RETURN t as topTags ORDER by i.nbInteractions
+                             LIMIT 5`;
+        
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete)
+            );
+            return readResult.records;
         }catch(error){
             console.error(`Something went wrong :  ${error}`);
         } finally {
@@ -210,7 +230,7 @@ module.exports = {
 };
 
 (async()=>{
-    const oui = await getNbTags();
+    const oui = await getTopTags();
     console.log(oui);
 })();
 
