@@ -186,12 +186,31 @@ const user63 =
         }
     }
 
+    async function getNbTags(){
+
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `MATCH(t:Tag)                            
+                             RETURN count(t) as nbTags`;
+        
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete)
+            );
+            return readResult.records[0]._fields[0].low;
+        }catch(error){
+            console.error(`Something went wrong :  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+    
 module.exports = {
     createUser, connectUser, getUserTopTags, getUserProficiency
 };
 
 (async()=>{
-    const oui = await getNbUsers();
+    const oui = await getNbTags();
     console.log(oui);
 })();
 
