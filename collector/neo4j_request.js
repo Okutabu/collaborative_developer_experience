@@ -233,7 +233,7 @@ async function add_all_names_and_pictures(usersInfo){
     try {
         
         
-        const infos = requete.get_users();
+        const infos = await requete.get_users();
         await add_all_names_and_pictures(infos);
 
     } catch (error) {
