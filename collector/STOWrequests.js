@@ -188,7 +188,7 @@ async function get_users(){
 
 (async() => {
     
-    let res = await get_users();
+    let res = await get_user('6309');
     console.log(res);
     
 })();
