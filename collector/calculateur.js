@@ -1,4 +1,4 @@
-const requete = require('./api/stack-overflow/STOWrequests');
+const requete = require('./STOWrequests');
 
 function concatTwoArrays(arr1, arr2) {
   let arr = arr1;

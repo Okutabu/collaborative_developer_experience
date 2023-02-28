@@ -6,7 +6,7 @@ import { useAlertStore } from '@/stores';
 
 const API_URL = "http://localhost:8080"
 
-// const baseUrl = `${import.meta.env.VITE_API_URL}/users`;
+//const baseUrl = `${import.meta.env.VITE_API_URL}/users`;
 const baseUrl = `${API_URL}/user`;
 
 export const useAuthStore = defineStore({
@@ -17,13 +17,13 @@ export const useAuthStore = defineStore({
         returnUrl: null
     }),
     actions: {
-        async login(mail, password) {
+        async login(idSTOW) {
             try {
-                const user = await fetchWrapper.post(`${baseUrl}/login`, { mail, password });    
-
+                const user = await fetchWrapper.post(`${baseUrl}/login`, { idSTOW });    
+            
                 // update pinia state
                 this.user = user;
-
+                
                 // store user details and jwt in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
 

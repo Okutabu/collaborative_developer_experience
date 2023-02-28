@@ -35,12 +35,10 @@ app.use(cors());
 
 app.post('/user/login', (req, res) => {
 
-    const mail = req.body.mail;
-    const password = req.body.password;
+    const id = parseInt(req.body.idSTOW);
 
     (async() => {
-        const data = await db.connectUser(mail, password);
-
+        const data = await db.connectUser(id);
         //teste si le tableau est vide
         if(!data.length){
             res.status(200).send({
@@ -53,9 +51,9 @@ app.post('/user/login', (req, res) => {
             const user = {
                 name: data[0]._fields[0].properties.name,
                 surname: data[0]._fields[0].properties.surname,
-                mail: data[0]._fields[0].properties.mail,
-                password: data[0]._fields[0].properties.password,
-                idSTOW: data[0]._fields[0].properties.idSTOW.low
+                avatar: data[0]._fields[0].properties.avatar,
+                pseudo: data[0]._fields[0].properties.pseudo,
+                idSTOW: id
             }
         
             res.status(200).send({
@@ -74,7 +72,6 @@ app.post('/user/register', (req, res) => {
     const name = req.body.name;
     const surname = req.body.surname;
     const mail = req.body.mail;
-    const password = req.body.password;
     const idSTOW  = req.body.idSTOW;
 
     
@@ -90,7 +87,6 @@ app.post('/user/register', (req, res) => {
         name,
         surname,
         mail,
-        password,
         idSTOW
     }
     
@@ -644,37 +640,39 @@ app.get('/user/:idSTOW/proficiency', (req, res) => {
             });
         }
 
-        // user = {
-        //     "answer": "Profile found",
-        //     "userProfile": [
-        //         {
-        //             "idSTOW": 633440
-        //         },
-        //         [
-        //             {
-        //                 "techno": "laravel",
-        //                 "ratio": 26.582278481012654
-        //             },
-        //             {
-        //                 "techno": "laravel-9",
-        //                 "ratio": 7.59493670886076
-        //             },
-        //             {
-        //                 "techno": "laravel-mix",
-        //                 "ratio": 7.59493670886076
-        //             },
-        //             {
-        //                 "techno": "laravel-8",
-        //                 "ratio": 5.063291139240507
-        //             },
-        //             {
-        //                 "techno": "testing",
-        //                 "ratio": 3.79746835443038
-        //             }
-        //         ]
-        //     ],
-        //     "error": 0
-        // }
+        	/* user = {
+				"answer": "Profile found",
+				"userProfile": [
+					{
+						"idSTOW": 6309,
+						"pseudo": "VonC",
+						"avatar": "https://i.stack.imgur.com/I4fiW.jpg?s=256&g=1"
+					},
+					[
+						{
+							"techno": "git",
+							"ratio": 17
+						},
+						{
+							"techno": "github",
+							"ratio": 16
+						},
+						{
+							"techno": "go",
+							"ratio": 8
+						},
+						{
+							"techno": "django",
+							"ratio": 6
+						},
+						{
+							"techno": "git-history",
+							"ratio": 6
+						}
+					]
+				],
+				"error": 0
+			} */
 
         
     })();

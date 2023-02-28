@@ -13,7 +13,7 @@ function fakeBackend() {
 
             function handleRoute() {
                 switch (true) {
-                    case url.endsWith('/users/authenticate') && opts.method === 'POST':
+                    case url.endsWith('/users/login') && opts.method === 'POST':
                         return authenticate();
                     case url.endsWith('/users/register') && opts.method === 'POST':
                         return register();
@@ -36,10 +36,10 @@ function fakeBackend() {
             // route functions
 
             function authenticate() {
-                const { username, password } = body();
-                const user = users.find(x => x.username === username && x.password === password);
+                const {idSTOW} = body();
+                const user = users.find(x => x.idSTOW === idSTOW);
 
-                if (!user) return error('Username or password is incorrect');
+                if (!user) return error('Id is not subscribed');
 
                 return ok({
                     ...basicDetails(user),
@@ -51,40 +51,29 @@ function fakeBackend() {
                 const user = body();
                 
 
-                if (users.find(x => x.username === user.username)) {
-                    return error('Username "' + user.username + '" is already taken')
+                if (users.find(x => x.idSTOW === user.idSTOW)) {
+                    return error('ID "' + user.id + '" is already registered')
                 }
 
-                user.id = users.length ? Math.max(...users.map(x => x.id)) + 1 : 1;
+                user.primary_id = users.length ? Math.max(...users.map(x => x.id)) + 1 : 1;
                 users.push(user);
                 localStorage.setItem(usersKey, JSON.stringify(users));
                 return ok();
             }
 
             function getUsers() {
-                if (!isAuthenticated()) return unauthorized();
                 return ok(users.map(x => basicDetails(x)));
             }
 
             function getUserById() {
-                if (!isAuthenticated()) return unauthorized();
 
                 const user = users.find(x => x.id === idFromUrl());
                 return ok(basicDetails(user));
             }
 
             function updateUser() {
-                if (!isAuthenticated()) return unauthorized();
 
                 let params = body();
-
-                let userToCreate = {
-                    "name": params.name,
-                    "surname": "LeG",
-                    "mail": "leLleG@gmail.com",
-                    "password": "blablabla",
-                    "idSTOW": 8965,
-                };
 
                 let user = users.find(x => x.id === idFromUrl());
 
@@ -106,7 +95,6 @@ function fakeBackend() {
             }
 
             function deleteUser() {
-                if (!isAuthenticated()) return unauthorized();
 
                 users = users.filter(x => x.id !== idFromUrl());
                 localStorage.setItem(usersKey, JSON.stringify(users));
@@ -128,8 +116,8 @@ function fakeBackend() {
             }
 
             function basicDetails(user) {
-                const { id, username, firstName, lastName, idSTOW } = user;
-                return { id, username, firstName, lastName, idSTOW };
+                const { id, mail, surname, name, idSTOW } = user;
+                return { id, mail, surname, name, idSTOW };
             }
 
             function isAuthenticated() {
