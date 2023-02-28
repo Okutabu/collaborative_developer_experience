@@ -185,13 +185,14 @@ async function get_users(allIds){
     return users_info;
 }
 
-
+/*
 (async() => {
     
     let res = await get_user('13431819');
     console.log(res);
     
 })();
+*/
 
 
 module.exports = {

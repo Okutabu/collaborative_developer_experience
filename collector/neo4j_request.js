@@ -226,7 +226,7 @@ async function add_all_names_and_pictures(usersInfo){
     }
 }
 
-
+/*
 //------------ main pour tester les fonctions ---------------------
 (async() => {
 
@@ -244,6 +244,7 @@ async function add_all_names_and_pictures(usersInfo){
         await driver.close();
     }
 })();
+*/
 
 
 module.exports = {

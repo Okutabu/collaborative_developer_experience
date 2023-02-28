@@ -16,6 +16,7 @@ async function start_collector_first_time(){
     await db.insert_profils(allProfiles);
 }
 
+/*
 async function start_collector_new_users(){
 
 }
@@ -24,7 +25,7 @@ async function update_db(){
     
 }
 
-
+*/
 
 (async() => {
 
