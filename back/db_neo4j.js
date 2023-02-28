@@ -91,16 +91,16 @@ const user63 =
         }
     }
 
-    async function connectUser(mail, password){
+    async function connectUser(idSTOW){
 
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            const requete = `Match (u:User{mail: $mail, password: $password})
+            const requete = `Match (u:User{id: $idSTOW})
             return u`;
         
             const readResult = await session.executeRead(tx =>
-                tx.run(requete, { mail, password})
+                tx.run(requete, { idSTOW})
             );
             /*
             readResult.records.forEach(record => {

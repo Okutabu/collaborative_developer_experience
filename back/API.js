@@ -35,11 +35,10 @@ app.use(cors());
 
 app.post('/user/login', (req, res) => {
 
-    const mail = req.body.mail;
-    const password = req.body.password;
+    const id = req.body.idSTOW;
 
     (async() => {
-        const data = await db.connectUser(mail, password);
+        const data = await db.connectUser(idSTOW);
 
         //teste si le tableau est vide
         if(!data.length){
