@@ -172,9 +172,9 @@ async function get_user(id){
     return info;
 }
 
-async function get_users(){
+async function get_users(allIds){
 
-    let ids = user.list_id.map(id => id.toString());
+    let ids = info.list_id.map(id => id.toString());
     let users_info = [];
 
     for(id of ids){
