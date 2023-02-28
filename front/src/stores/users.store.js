@@ -5,8 +5,8 @@ import { useAuthStore } from '@/stores';
 
 const API_URL = "http://localhost:8080"
 
-// const baseUrl = `${import.meta.env.VITE_API_URL}/users`;
-const baseUrl = `${API_URL}/user`;
+const baseUrl = `${import.meta.env.VITE_API_URL}/users`;
+// const baseUrl = `${API_URL}/user`;
 
 export const useUsersStore = defineStore({
     id: 'users',
@@ -19,7 +19,7 @@ export const useUsersStore = defineStore({
             await fetchWrapper.post(`${baseUrl}/register`, user);
         },
         async getAll() {
-            // Not yet useful
+            
             this.users = { loading: true };
             try {
                 this.users = await fetchWrapper.get(baseUrl);    

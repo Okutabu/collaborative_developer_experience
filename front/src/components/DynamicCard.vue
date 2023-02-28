@@ -8,6 +8,8 @@ import UserCard from './UserCard.vue';
 const props = defineProps({
   nom: String,
   type: String,
+  pseudo: String,
+  avatar: String,
   reco : String, 
   techno: String,
 })
@@ -24,31 +26,8 @@ function swapComponent() {
 <template>
 
     <div @click="swapComponent">
-        <Transition name="bounce">
-        <component :is="boolean ? UserCard : UserCardSimplified" :nom={nom}.nom :type={type}.type :reco={reco}.reco :techno={techno} />
-        </Transition>
+        <component :is="boolean ? UserCard : UserCardSimplified " :nom={nom}.nom :type={type}.type :reco={reco}.reco :techno={techno} :avatar={avatar}.avatar :pseudo={nom}.nom />
     </div>
 
+
 </template>
-
-<style scoped>
-
-.bounce-enter-active {
-  animation: bounce-in 0.5s;
-}
-.bounce-leave-active {
-  animation: bounce-in 0.001s reverse;
-}
-@keyframes bounce-in {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.25);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-</style>
