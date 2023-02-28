@@ -76,7 +76,7 @@ async function insert_user(id) {
     }
 }
 
-/*
+
 async function insert_users(allUsers) {
     try {
         for(userInfo of allUsers){
@@ -94,7 +94,7 @@ async function insert_users(allUsers) {
         console.error(`Something went wrong, Users could not be inserted : ${error}`);
     }
 }
-*/
+
 
 
 async function create_interact_link(idUser, tag, info){
@@ -232,6 +232,7 @@ async function add_all_names_and_pictures(usersInfo){
 
     try {
         
+
         
         const infos = await requete.get_users();
         await add_all_names_and_pictures(infos);
@@ -243,4 +244,8 @@ async function add_all_names_and_pictures(usersInfo){
         await driver.close();
     }
 })();
-    
+
+
+module.exports = {
+    driver, add_all_names_and_pictures, insert_users
+}

@@ -22,13 +22,20 @@ export const useAuthStore = defineStore({
                 const user = await fetchWrapper.post(`${baseUrl}/login`, { idSTOW });    
             
                 // update pinia state
-                this.user = user;
-                
-                // store user details and jwt in local storage to keep user logged in between page refreshes
-                localStorage.setItem('user', JSON.stringify(user));
+                if (user.error == -1){
+                    console.log("L'utilisateur n'existe pas")
+                    router.push(this.returnUrl || '/login');
 
-                // redirect to previous url or default to home page
-                router.push(this.returnUrl || '/');
+                }else{
+                    this.user = user;
+
+                    // store user details and jwt in local storage to keep user logged in between page refreshes
+                    localStorage.setItem('user', JSON.stringify(user));
+
+                    // redirect to previous url or default to home page
+                    router.push(this.returnUrl || '/');
+                }
+                
             } catch (error) {
                 const alertStore = useAlertStore();
                 alertStore.error(error);                
