@@ -1,12 +1,3 @@
-//var requete = require('../api/stack-overflow/STOWrequests');
-//var profil = require('../calculateur');
-
-//let allTags = requete.get_users_tags("1673130000","1673136000")
-//console.log(allTags);
-
-//let allUsers = requete.get_all_users();
-//console.log(allUsers);
-
 /*
 const user63 =       
   {
@@ -37,20 +28,10 @@ const user63 =
     // To learn more about the driver: https://neo4j.com/docs/javascript-manual/current/client-applications/#js-driver-driver-object
     const driver = neo4j.driver(uri, neo4j.auth.basic(user, password));
 
-
-
 //----------------------------------------------- MAIN ----------------------------------------------------------------------------------------------
     /*
     try {
 
-
-        //récupère les "profils" de tous les utilisateurs
-        //let allProfils = await profil.get_users_profils();
-
-        //console.log(allProfils);
-
-        //permet d'insérer tous les profils et les relations dans la bdd
-        //await insert_profils(allProfils);
         const logan = {
             "name": "Logan",
             "surname": "LeG",
@@ -78,24 +59,22 @@ const user63 =
             "name": ,
             "surname":,
             "mail":,
-            "password":,
             "idSTOW":,
             };
         */
         const name = member.name;
         const surname = member.surname;
         const mail = member.mail;
-        const password = member.password;
         const idSTOW = member.idSTOW;
        
         const session = driver.session({ database: 'neo4j' });
 
         try {
 
-            const requete = `MERGE (u:User { name: $name, surname: $surname, mail: $mail, password: $password, idSTOW: toInteger($idSTOW) })`;
+            const requete = `MERGE (u:User { name: $name, surname: $surname, mail: $mail, idSTOW: toInteger($idSTOW) })`;
         
             const writeResult = await session.executeWrite(tx =>
-                tx.run(requete, { name, surname, mail, password, idSTOW })
+                tx.run(requete, { name, surname, mail, idSTOW })
             );
             /*
             writeResult.records.forEach(record => {
@@ -110,16 +89,16 @@ const user63 =
         }
     }
 
-    async function connectUser(mail, password){
+    async function connectUser(idSTOW){
 
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            const requete = `Match (u:User{mail: $mail, password: $password})
+            const requete = `Match (u:User{id: $idSTOW})
             return u`;
         
             const readResult = await session.executeRead(tx =>
-                tx.run(requete, { mail, password})
+                tx.run(requete, { idSTOW})
             );
             /*
             readResult.records.forEach(record => {
@@ -134,152 +113,6 @@ const user63 =
         }
     }
 
-
-
-
-    async function insert_tags(allTags) {
-
-        const session = driver.session({ database: 'neo4j' });
-        try {
-
-            for (let tag of allTags){
-                
-                const requete = `MERGE (t:Tag { title: $tag })`;
-            
-                const writeResult = await session.executeWrite(tx =>
-                    tx.run(requete, { tag })
-                );
-                writeResult.records.forEach(record => {
-                    console.log(`Found tag: ${record.get('tag')}`)
-                });
-            }
-        } catch (error) {
-            console.error(`Something went wrong, Tags could not be inserted : ${error}`);
-        } finally {
-            await session.close();
-        }
-    }
-
-
-    async function insert_user(id) {
-
-        const session = driver.session({ database: 'neo4j' });
-        try {
-            
-            const requete = `MERGE (u:User { id: $id} )`;
-        
-            const writeResult = await session.executeWrite(tx =>
-                tx.run(requete, { id })
-            );
-
-            writeResult.records.forEach(record => {
-                console.log(`Found user: ${record.get('id')}`)
-            });
-        
-        } catch (error) {
-            console.error(`Something went wrong, User could not be inserted : ${error}`);
-        } finally {
-            await session.close();
-        }
-    }
-
-    /*
-    async function insert_users(allUsers) {
-        try {
-            for(userInfo of allUsers){
-                const requete = `MERGE (u:User { id: $user} )`;
-            
-                const writeResult = await session.executeWrite(tx =>
-                    tx.run(requete, { userInfo })
-                );
-    
-                writeResult.records.forEach(record => {
-                    console.log(`Found user: ${record.get('user')}`)
-                });
-            }
-        } catch (error) {
-            console.error(`Something went wrong, Users could not be inserted : ${error}`);
-        }
-    }
-    */
-
-
-    async function create_interact_link(idUser, tag, info){
-        /*
-        let pourcentageTag = info[0];
-        let nbRelations = info[1];
-        */
-    
-
-        const session = driver.session({ database: 'neo4j' });
-
-        ratio = info.interact[tag] ? info.interact[tag] : 0;
-        nbQ = info.question[tag] ? info.question[tag] : 0;
-        nbA = info.answer[tag] ? info.answer[tag] : 0;
-
-        if (ratio > 0){
-            
-            try {
-
-                const requete = `MATCH (u:User{id : $idUser}), (t:Tag {title : $tag})
-                                MERGE (u)-[r:INTERACT]->(t)
-                                SET r.ratio =  toFloat($ratio),
-                                r.nbQuestions = toInteger($nbQ),
-                                r.nbAnswers = toInteger($nbA)`;
-                                /*,
-                                r.nbInteractions = toInteger($nbRelations)`;*/
-            
-                const writeResult = await session.executeWrite(tx =>
-                    tx.run(requete, { idUser, tag, info, nbQ, nbA, ratio})
-                );
-                writeResult.records.forEach(record => {
-                    console.log(`Found user: ${record.get('user')}`)
-                });
-    
-            } catch (error) {
-                console.error(`Something went wrong: ${error}`);
-            } finally {
-                await session.close();
-            }
-        }
-        
-    }
-
-    //permet d'inserer tous les utilisateurs, tous les tags, et de créer les relations
-    async function insert_profils(allProfils) {
-
-        const session = driver.session({ database: 'neo4j' });
-        try {
-
-            for(profilInfo of allProfils){
-
-                const id = profilInfo.id;
-                console.log(`Inserting ${id}...`);
-
-                let allTags = [];
-                for(let tag in profilInfo.interact){
-                    allTags.push(tag);
-                }
-                                
-                await insert_user(id);
-                await insert_tags(allTags);
-                /*
-                await create_asked_link(profilInfo);
-                await create_answered_link(profilInfo);
-                */
-                for (let tag of allTags){
-                     await create_interact_link(id, tag, profilInfo);
-                }
-            
-            }
-            
-        } catch (error) {
-            console.error(`Something went wrong, profiles could not be inserted : ${error}`);
-        } finally {
-            await session.close();
-        }
-    }
-
     async function getUserTopTags(idSTOW){
 
         const session = driver.session({ database: 'neo4j' });
@@ -287,8 +120,8 @@ const user63 =
         try{
             // Il faudra penser à changer id par idSTOW quand on refera la bdd
             const requete = `MATCH(u:User{id: $idSTOW})-[i:INTERACT]-(t:Tag)
-                                WITH i.ratio as topTags, t 
-                                RETURN t, topTags ORDER BY topTags DESC
+                                WITH i.ratio as topTags, t, u 
+                                RETURN u, t, topTags ORDER BY topTags DESC
                                 LIMIT 5`;
         
             const readResult = await session.executeRead(tx =>
@@ -314,13 +147,15 @@ const user63 =
             var users = [];
             var technos = [];
             var test = {
-                idSTOW : idSTOW
+                idSTOW : idSTOW,
+                pseudo : data[0]._fields[0].properties.pseudo,
+                avatar: data[0]._fields[0].properties.avatar
             }
             users.push(test)
             data.map( (elem) => {
                 var title = {
-                    techno: elem._fields[0].properties.title,
-                    ratio: elem._fields[1]
+                    techno: elem._fields[1].properties.title,
+                    ratio: elem._fields[2]
                 };
                 technos.push(title);
             });
@@ -332,14 +167,95 @@ const user63 =
         return res;
     }
 
+    async function getNbUsers(){
+
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `MATCH(u:User)
+                             RETURN count(u) as nbUsers`;
+        
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete)
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong :  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+    async function getNbTags(){
+
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `MATCH(t:Tag)                            
+                             RETURN count(t) as nbTags`;
+        
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete)
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong :  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+    async function getTopTags(){
+
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `MATCH(u:User)-[i:INTERACT]-(t:Tag)                             
+                             RETURN t as topTags ORDER by i.nbInteractions
+                             LIMIT 5`;
+        
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete)
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong :  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+    
 module.exports = {
     createUser, connectUser, getUserTopTags, getUserProficiency
 };
+
 /*
 (async()=>{
-    const oui = await getUserProficiency(633440);
-    console.log(oui);
+
+
+    
+    // try {
+        
+    //     const oui = await getUserProficiency(6309);
+        
+    //     oui.forEach(res =>{
+    //         console.log(res);
+    //     });
+        
+    //     console.log(oui);
+    //     //console.log(oui);
+
+    // } catch (error) {
+    //     console.error(`Something went wrong: ${error}`);
+    // } finally {
+    //     // Don't forget to close the driver connection when you're finished with it.
+    //     await driver.close();
+        
+    // }
+
 })();
 */
+
+
 
 
