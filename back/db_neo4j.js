@@ -59,14 +59,14 @@ const user63 =
             "name": ,
             "surname":,
             "mail":,
-            "password":,
+            //"password":,
             "idSTOW":,
             };
         */
         const name = member.name;
         const surname = member.surname;
         const mail = member.mail;
-        const password = member.password;
+        //const password = member.password;
         const idSTOW = member.idSTOW;
        
         const session = driver.session({ database: 'neo4j' });
@@ -122,8 +122,8 @@ const user63 =
         try{
             // Il faudra penser à changer id par idSTOW quand on refera la bdd
             const requete = `MATCH(u:User{id: $idSTOW})-[i:INTERACT]-(t:Tag)
-                                WITH i.ratio as topTags, t 
-                                RETURN t, topTags ORDER BY topTags DESC
+                                WITH i.ratio as topTags, t, u 
+                                RETURN u, t, topTags ORDER BY topTags DESC
                                 LIMIT 5`;
         
             const readResult = await session.executeRead(tx =>
@@ -149,13 +149,15 @@ const user63 =
             var users = [];
             var technos = [];
             var test = {
-                idSTOW : idSTOW
+                idSTOW : idSTOW,
+                pseudo : data[0]._fields[0].properties.pseudo,
+                avatar: data[0]._fields[0].properties.avatar
             }
             users.push(test)
             data.map( (elem) => {
                 var title = {
-                    techno: elem._fields[0].properties.title,
-                    ratio: elem._fields[1]
+                    techno: elem._fields[1].properties.title,
+                    ratio: elem._fields[2]
                 };
                 technos.push(title);
             });
@@ -229,10 +231,31 @@ module.exports = {
     createUser, connectUser, getUserTopTags, getUserProficiency
 };
 
+/*
 (async()=>{
-    const oui = await getTopTags();
-    console.log(oui);
+    
+    try {
+        
+        const oui = await getUserProficiency(6309);
+        
+        oui.forEach(res =>{
+            console.log(res);
+        });
+        
+        console.log(oui);
+        //console.log(oui);
+
+    } catch (error) {
+        console.error(`Something went wrong: ${error}`);
+    } finally {
+        // Don't forget to close the driver connection when you're finished with it.
+        await driver.close();
+        
+    }
+
 })();
+*/
+
 
 
 

@@ -644,37 +644,39 @@ app.get('/user/:idSTOW/proficiency', (req, res) => {
             });
         }
 
-        // user = {
-        //     "answer": "Profile found",
-        //     "userProfile": [
-        //         {
-        //             "idSTOW": 633440
-        //         },
-        //         [
-        //             {
-        //                 "techno": "laravel",
-        //                 "ratio": 26.582278481012654
-        //             },
-        //             {
-        //                 "techno": "laravel-9",
-        //                 "ratio": 7.59493670886076
-        //             },
-        //             {
-        //                 "techno": "laravel-mix",
-        //                 "ratio": 7.59493670886076
-        //             },
-        //             {
-        //                 "techno": "laravel-8",
-        //                 "ratio": 5.063291139240507
-        //             },
-        //             {
-        //                 "techno": "testing",
-        //                 "ratio": 3.79746835443038
-        //             }
-        //         ]
-        //     ],
-        //     "error": 0
-        // }
+        	/* user = {
+				"answer": "Profile found",
+				"userProfile": [
+					{
+						"idSTOW": 6309,
+						"pseudo": "VonC",
+						"avatar": "https://i.stack.imgur.com/I4fiW.jpg?s=256&g=1"
+					},
+					[
+						{
+							"techno": "git",
+							"ratio": 17
+						},
+						{
+							"techno": "github",
+							"ratio": 16
+						},
+						{
+							"techno": "go",
+							"ratio": 8
+						},
+						{
+							"techno": "django",
+							"ratio": 6
+						},
+						{
+							"techno": "git-history",
+							"ratio": 6
+						}
+					]
+				],
+				"error": 0
+			} */
 
         
     })();
