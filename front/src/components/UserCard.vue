@@ -5,7 +5,9 @@ import Radar from './Radar.vue'
 
 
 const props = defineProps({
-  nom: String,
+  id: String,
+  avatar: String,
+  pseudo: String,
   type: String,
   reco : String,
   techno: Array,
@@ -19,7 +21,9 @@ const props = defineProps({
     <div class="container_user_card">
         <div class="container_user_info">
             <div class="user_description">
-                <p>Id : {{ nom }}</p>
+                
+                <img :src=avatar >
+                <p>{{ pseudo }}</p>
                 <p>{{ type }}</p>
                 <p>point fort : {{ reco }}</p>
             </div>
