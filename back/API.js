@@ -72,7 +72,6 @@ app.post('/user/register', (req, res) => {
     const name = req.body.name;
     const surname = req.body.surname;
     const mail = req.body.mail;
-    const password = req.body.password;
     const idSTOW  = req.body.idSTOW;
 
     
@@ -88,7 +87,6 @@ app.post('/user/register', (req, res) => {
         name,
         surname,
         mail,
-        password,
         idSTOW
     }
     

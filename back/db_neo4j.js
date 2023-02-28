@@ -59,24 +59,22 @@ const user63 =
             "name": ,
             "surname":,
             "mail":,
-            //"password":,
             "idSTOW":,
             };
         */
         const name = member.name;
         const surname = member.surname;
         const mail = member.mail;
-        //const password = member.password;
         const idSTOW = member.idSTOW;
        
         const session = driver.session({ database: 'neo4j' });
 
         try {
 
-            const requete = `MERGE (u:User { name: $name, surname: $surname, mail: $mail, password: $password, idSTOW: toInteger($idSTOW) })`;
+            const requete = `MERGE (u:User { name: $name, surname: $surname, mail: $mail, idSTOW: toInteger($idSTOW) })`;
         
             const writeResult = await session.executeWrite(tx =>
-                tx.run(requete, { name, surname, mail, password, idSTOW })
+                tx.run(requete, { name, surname, mail, idSTOW })
             );
             /*
             writeResult.records.forEach(record => {
@@ -233,25 +231,27 @@ module.exports = {
 
 /*
 (async()=>{
-    
-    try {
-        
-        const oui = await getUserProficiency(6309);
-        
-        oui.forEach(res =>{
-            console.log(res);
-        });
-        
-        console.log(oui);
-        //console.log(oui);
 
-    } catch (error) {
-        console.error(`Something went wrong: ${error}`);
-    } finally {
-        // Don't forget to close the driver connection when you're finished with it.
-        await driver.close();
+
+    
+    // try {
         
-    }
+    //     const oui = await getUserProficiency(6309);
+        
+    //     oui.forEach(res =>{
+    //         console.log(res);
+    //     });
+        
+    //     console.log(oui);
+    //     //console.log(oui);
+
+    // } catch (error) {
+    //     console.error(`Something went wrong: ${error}`);
+    // } finally {
+    //     // Don't forget to close the driver connection when you're finished with it.
+    //     await driver.close();
+        
+    // }
 
 })();
 */
