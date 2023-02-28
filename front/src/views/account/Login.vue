@@ -6,13 +6,14 @@ import { useAuthStore } from '@/stores';
 import { useRecoStore } from '@/stores';
 
 const schema = Yup.object().shape({
-    idSTOW: Yup.number().required('Cannot Log in without an ID')
+    mail: Yup.string().required('Mail is required'),
+    password: Yup.string().required('Password is required')
 });
 
 async function onSubmit(values) {
     const authStore = useAuthStore();
-    const {idSTOW} = values;
-    await authStore.login(idSTOW);
+    const { mail, password } = values;
+    await authStore.login(mail, password);
 
     const usersStore = useRecoStore();
     await usersStore.getRecommandedUsers();
@@ -25,9 +26,14 @@ async function onSubmit(values) {
         <div class="card-body">
             <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
                 <div class="form-group">
-                    <label>ID STOW</label>
-                    <Field name="idSTOW" type="text" class="form-control" :class="{ 'is-invalid': errors.idSTOW }" />
-                    <div class="invalid-feedback">{{ errors.idSTOW }}</div>
+                    <label>Mail</label>
+                    <Field name="mail" type="text" class="form-control" :class="{ 'is-invalid': errors.mail }" />
+                    <div class="invalid-feedback">{{ errors.mail }}</div>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <Field name="password" type="password" class="form-control" :class="{ 'is-invalid': errors.password }" />
+                    <div class="invalid-feedback">{{ errors.password }}</div>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary" :disabled="isSubmitting">

@@ -15,6 +15,9 @@ const schema = Yup.object().shape({
         .email('Mail must be a valid email'),
     idSTOW: Yup.string()
         .required('ID STOW is required'),
+    password: Yup.string()
+        .required('Password is required')
+        .min(6, 'Password must be at least 6 characters'),
     acceptTerms: Yup.bool()
                 .required('Accept Ts & Cs is required')
 });
@@ -57,6 +60,11 @@ async function onSubmit(values) {
                     <label>Last Name</label>
                     <Field name="name" type="text" class="form-control" :class="{ 'is-invalid': errors.lastName }" />
                     <div class="invalid-feedback">{{ errors.lastName }}</div>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <Field name="password" type="password" class="form-control" :class="{ 'is-invalid': errors.password }" />
+                    <div class="invalid-feedback">{{ errors.password }}</div>
                 </div>
                 <div class="form-group">
                     <label>Id Stack Overflow</label>
