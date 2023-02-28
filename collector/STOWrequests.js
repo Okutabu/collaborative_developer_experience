@@ -165,7 +165,7 @@ async function get_user(id){
     var data = await fetch(URL).then(response => response.json());
     
     var info = {
-        id: data.items[0].user_id,
+        idSTOW: data.items[0].user_id,
         pseudo: data.items[0].display_name,
         avatar: data.items[0].profile_image
     };

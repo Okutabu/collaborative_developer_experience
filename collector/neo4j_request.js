@@ -59,7 +59,7 @@ async function insert_user(id) {
     const session = driver.session({ database: 'neo4j' });
     try {
         
-        const requete = `MERGE (u:User { id: $id} )`;
+        const requete = `MERGE (u:User { idSTOW: $id} )`;
     
         const writeResult = await session.executeWrite(tx =>
             tx.run(requete, { id })
@@ -143,7 +143,7 @@ async function insert_profils(allProfils) {
 
         for(profilInfo of allProfils){
 
-            const id = profilInfo.id;
+            const id = profilInfo.idSTOW;
             console.log(`Inserting ${id}...`);
 
             let allTags = [];

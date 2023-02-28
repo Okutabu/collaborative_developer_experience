@@ -122,9 +122,9 @@ function calculateFrequencyOfItemsAppearingTogetherFromArrayOfArraysOfItem(arr) 
 */
 
 
-exports.get_users_profils = async function() {
+exports.get_users_profils = async function(startString, endString) {
 
-    let profils = await requete.get_users_tags_async("1668610633","1673881033");
+    let profils = await requete.get_users_tags_async(startString,endString);
     
 
     //la fonction à importer
