@@ -164,15 +164,11 @@ async function get_user(id){
 
     try {
         var data = await fetch(URL).then(response => response.json());
-        console.log("GET user : " + id + " OK");
-        console.log(data);
         var info = {
             idSTOW: data.items[0].user_id,
             pseudo: data.items[0].display_name,
             avatar: data.items[0].profile_image
         };
-        console.log("Info :");
-        console.log(info);
         return info;
         
     } catch (error) {

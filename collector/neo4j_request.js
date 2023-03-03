@@ -180,7 +180,7 @@ async function insert_profils(allProfils) {
 */
 async function add_name_and_picture(userInfo) {
 
-    const id = userInfo.id;
+    const id = userInfo.idSTOW;
     const pseudo = userInfo.pseudo;
     const avatar = userInfo.avatar;
 
@@ -215,7 +215,8 @@ async function add_all_names_and_pictures(usersInfo){
     try {
 
         for(info of usersInfo){
-            console.log(`Inserting user : ${info.id}`)
+            console.log("Info de l'utilisateur :",info);
+            console.log(`Inserting user : ${info.idSTOW}`)
             await add_name_and_picture(info);
         }
         
