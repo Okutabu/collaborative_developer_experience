@@ -48,7 +48,7 @@ async function insert_tags(allTags) {
             });
         }
     } catch (error) {
-        console.error(`Something went wrong, Tags could not be inserted : ${error}`);
+        console.error(`Error function insert_tag : ${error}`);
     } finally {
         await session.close();
     }
@@ -80,7 +80,7 @@ async function insert_user(id) {
 async function insert_users(allUsers) {
     try {
         for(userInfo of allUsers){
-            const requete = `MERGE (u:User { id: $user} )`;
+            const requete = `MERGE (u:User { idSTOW: $user} )`;
         
             const writeResult = await session.executeWrite(tx =>
                 tx.run(requete, { userInfo })
@@ -112,7 +112,7 @@ async function create_interact_link(idUser, tag, info){
         
         try {
 
-            const requete = `MATCH (u:User{id : $idUser}), (t:Tag {title : $tag})
+            const requete = `MATCH (u:User{idSTOW : $idUser}), (t:Tag {title : $tag})
                             MERGE (u)-[r:INTERACT]->(t)
                             SET r.ratio =  toFloat($ratio),
                             r.nbQuestions = toInteger($nbQ),
@@ -187,7 +187,7 @@ async function add_name_and_picture(userInfo) {
     const session = driver.session({ database: 'neo4j' });
     try {
 
-        const requete = `MERGE (u:User { id: toInteger($id)})
+        const requete = `MERGE (u:User { idSTOW: toInteger($id)})
                          SET u.pseudo = $pseudo,
                              u.avatar = $avatar`;
     
@@ -202,7 +202,7 @@ async function add_name_and_picture(userInfo) {
         */
         
     } catch (error) {
-        console.error(`Something went wrong, Tags could not be inserted : ${error}`);
+        console.error(`Error function add_name_and_picture : ${error}`);
     } finally {
         await session.close();
     }
@@ -220,7 +220,7 @@ async function add_all_names_and_pictures(usersInfo){
         }
         
     } catch (error) {
-        console.error(`Something went wrong, Tags could not be inserted : ${error}`);
+        console.error(`Error add_all_names_and_pictures : ${error}`);
     } finally {
         await session.close();
     }
