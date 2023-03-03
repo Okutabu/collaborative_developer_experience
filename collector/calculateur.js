@@ -86,7 +86,7 @@ function createUserObject(user) {
     let tab = InsertIntoInfoFromActivities(user.activities)
 
     var info = {
-        id: user.id,
+        idSTOW: user.id,
         interact: tab[0],
         question: tab[1],
         answer: tab[2]
@@ -146,7 +146,7 @@ exports.get_users_profils = async function(startString, endString) {
 /* Exemple de profils après récupération des données 
 [
   {
-    id: 6309,
+    idSTOW: 6309,
     interact: {
       go: 8,
       github: 16,

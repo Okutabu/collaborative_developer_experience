@@ -98,32 +98,34 @@ async function get_user_tags_async(idUser, start, end) {
   
     const data = await promise;
     
-    for (const item of data.items) {
-
-        let id = item.post_id
-        let type = item.post_type
-
-        if(id !== undefined){
-
-            if(type == "answer"){
-                await get_answers_tags_async(id, type)
-                .then(data => {
-                    activities.push(data);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-            } else {
-                await get_questions_tags_async(id, type)
-                .then(data => {
-                    activities.push(data);
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+    if (data.items != undefined){
+        for (const item of data.items) {
+            let id = item.post_id
+            let type = item.post_type
+    
+            if(id !== undefined){
+    
+                if(type == "answer"){
+                    await get_answers_tags_async(id, type)
+                    .then(data => {
+                        activities.push(data);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+                } else {
+                    await get_questions_tags_async(id, type)
+                    .then(data => {
+                        activities.push(data);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+                }
             }
         }
     }
+    
     
     return activities;
 }
@@ -144,7 +146,7 @@ async function get_users_tags_async(start, end){
             activities : await get_user_tags_async(user.list_id[i], start, end)
         }
 
-        await sleep(1000);
+        await sleep(300);
         
         //console.log(userInfo);
 
@@ -201,7 +203,7 @@ async function get_users(allIds){
 
 
 module.exports = {
-    get_answers_tags_async, get_users
+    get_answers_tags_async, get_users, get_users_tags_async
 }
 
 

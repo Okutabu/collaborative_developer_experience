@@ -70,7 +70,7 @@ async function insert_user(id) {
         });
     
     } catch (error) {
-        console.error(`Something went wrong, User could not be inserted : ${error}`);
+        console.error(`Erreur function insert_user : ${error}`);
     } finally {
         await session.close();
     }
@@ -78,6 +78,9 @@ async function insert_user(id) {
 
 
 async function insert_users(allUsers) {
+
+    const session = driver.session({ database: 'neo4j' });
+
     try {
         for(userInfo of allUsers){
             const requete = `MERGE (u:User { idSTOW: $user} )`;
@@ -91,7 +94,9 @@ async function insert_users(allUsers) {
             });
         }
     } catch (error) {
-        console.error(`Something went wrong, Users could not be inserted : ${error}`);
+        console.error(`Erreur function insert_users : ${error}`);
+    }finally {
+        await session.close();
     }
 }
 
@@ -128,7 +133,7 @@ async function create_interact_link(idUser, tag, info){
             });
 
         } catch (error) {
-            console.error(`Something went wrong: ${error}`);
+            console.error(`Erreur function create_interact_link : ${error}`);
         } finally {
             await session.close();
         }
@@ -142,7 +147,6 @@ async function insert_profils(allProfils) {
     try {
 
         for(profilInfo of allProfils){
-
             const id = profilInfo.idSTOW;
             console.log(`Inserting ${id}...`);
 
@@ -164,7 +168,7 @@ async function insert_profils(allProfils) {
         }
         
     } catch (error) {
-        console.error(`Something went wrong, profiles could not be inserted : ${error}`);
+        console.error(`Erreur function insert_profils : ${error}`);
     } finally {
         await session.close();
     }
@@ -215,7 +219,6 @@ async function add_all_names_and_pictures(usersInfo){
     try {
 
         for(info of usersInfo){
-            console.log("Info de l'utilisateur :",info);
             console.log(`Inserting user : ${info.idSTOW}`)
             await add_name_and_picture(info);
         }
@@ -249,5 +252,5 @@ async function add_all_names_and_pictures(usersInfo){
 
 
 module.exports = {
-    driver, add_all_names_and_pictures, insert_users
+    driver, add_all_names_and_pictures, insert_users, insert_profils
 }
