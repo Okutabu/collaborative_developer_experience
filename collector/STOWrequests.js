@@ -146,7 +146,7 @@ async function get_users_tags_async(start, end){
             activities : await get_user_tags_async(user.list_id[i], start, end)
         }
 
-        await sleep(300);
+        await sleep(500);
         
         //console.log(userInfo);
 
@@ -185,7 +185,7 @@ async function get_users(allIds){
 
     for(id of ids){
         const info = await get_user(id);
-        await sleep(300);
+        await sleep(500);
         users_info.push(info);
     }
 
