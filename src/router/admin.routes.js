@@ -10,3 +10,4 @@ export default {
         { path: 'users', component: List }
     ]
 };
+

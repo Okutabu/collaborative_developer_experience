@@ -21,10 +21,12 @@ export const useRecoStore = defineStore({
     actions: {
         async getRecommandedUsers() {
             try {
-            
-                const usersReco = await fetchWrapper.get(`${baseUrl}/${this.user.user.idSTOW}/similarity/answer`);
-                const usersRecoSimilarity = await fetchWrapper.get(`${baseUrl}/${this.user.user.idSTOW}/similarity/cosinus`);
-                const usersRecoQuestion = await fetchWrapper.get(`${baseUrl}/${this.user.user.idSTOW}/similarity/question`);
+
+                var user = this.user;
+                console.log(user.user.idSTOW);
+                const usersReco = await fetchWrapper.get(`${baseUrl}/${user.user.idSTOW}/similarity/answer`);
+                const usersRecoSimilarity = await fetchWrapper.get(`${baseUrl}/${user.user.idSTOW}/similarity/cosinus`);
+                const usersRecoQuestion = await fetchWrapper.get(`${baseUrl}/${user.user.idSTOW}/similarity/question`);
                 
                 // update pinia state
                 this.usersReco = usersReco;

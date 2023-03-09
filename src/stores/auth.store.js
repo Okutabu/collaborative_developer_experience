@@ -6,7 +6,7 @@ import { useAlertStore } from '@/stores';
 
 const API_URL = "http://localhost:8080"
 
-// const baseUrl = `${import.meta.env.VITE_API_URL}/users`;
+//const baseUrl = `${import.meta.env.VITE_API_URL}/users`;
 const baseUrl = `${API_URL}/user`;
 
 export const useAuthStore = defineStore({
@@ -17,18 +17,25 @@ export const useAuthStore = defineStore({
         returnUrl: null
     }),
     actions: {
-        async login(mail, password) {
+        async login(idSTOW) {
             try {
-                const user = await fetchWrapper.post(`${baseUrl}/login`, { mail, password });    
-
+                const user = await fetchWrapper.post(`${baseUrl}/login`, { idSTOW });    
+            
                 // update pinia state
-                this.user = user;
+                if (user.error == -1){
+                    console.log("L'utilisateur n'existe pas")
+                    router.push(this.returnUrl || '/login');
 
-                // store user details and jwt in local storage to keep user logged in between page refreshes
-                localStorage.setItem('user', JSON.stringify(user));
+                }else{
+                    this.user = user;
 
-                // redirect to previous url or default to home page
-                router.push(this.returnUrl || '/');
+                    // store user details and jwt in local storage to keep user logged in between page refreshes
+                    localStorage.setItem('user', JSON.stringify(user));
+
+                    // redirect to previous url or default to home page
+                    router.push(this.returnUrl || '/');
+                }
+                
             } catch (error) {
                 const alertStore = useAlertStore();
                 alertStore.error(error);                
@@ -41,6 +48,7 @@ export const useAuthStore = defineStore({
             localStorage.removeItem('usersReco');
             localStorage.removeItem('usersRecoSimilarity');
             localStorage.removeItem('usersRecoQuestion');
+            window.location.reload();
         }
     }
 });
