@@ -688,7 +688,7 @@ app.get('/admin/statistics', (req, res) => {
 
         //teste si le tableau est vide
         if(!nbTags.length || !nbUsers.length || !topTags){
-            res.status(200).send({
+            res.status(404).send({
                 answer: "Statistics not found",
                 users: [],
                 error: -1
@@ -717,15 +717,30 @@ app.get('/admin/users', (req, res) => {
 
 	(async() => {
 
-		var users = [];
 		const neo4jUsers = await db.getUsers();
 
 		if(!neo4jUsers.length){
 
+			res.status(404).send({
+                answer: "Users not found",
+                users: [],
+                error: -1
+            });
 		}
 		else{
 
-		}
+			let allUsers = [];
+			//oui[2]._fields[0].properties
+			for(let i = 0; i < neo4jUsers.length; i++){
 
+				allUsers.push(neo4jUsers[i]._fields[0].properties);
+
+			}
+			res.status(200).send({
+                answer: "Users found",
+                users: allUsers,
+                error: 0
+            });
+		}
 	})();
 });
