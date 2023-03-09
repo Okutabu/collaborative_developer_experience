@@ -6,20 +6,6 @@ const similarity = require('./similarityQueries');
 const app = express();
 const PORT = 8080;
 
-/*
-Les endpoints que l'on a besoin:
-
-POST/ user => inscription   //pas de sécurité
-GET / user => connexion     //get le user si ya le bon mdp
-
-GET / user => profiles      //récupérer toutes les technos d'une personne
-
-GET / userSimilaire         // sécurité, si on est connecté
-                            // 3 fonctions, similaires
-                                            questions similaires
-                                            réponses similaires
-*/
-
 
 app.listen(
     PORT,
@@ -32,6 +18,7 @@ app.use(express.json());
 
 //permet de gérer les requêtes provenant de serveurs externes
 app.use(cors());
+
 
 app.post('/user/login', (req, res) => {
 
