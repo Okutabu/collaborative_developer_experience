@@ -3,7 +3,7 @@
 
 // La similarité de cosinus est une mesure de similarité qui mesure la similarité entre deux vecteurs d'objets, Dans ce cas ci, 
 // les vecteurs sont les tags d'un utilisateur.
-const COSINUS_SIMILARITY = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(t:Tag)<-[data2:INTERACT]-(user2:User)
+const COSINUS_SIMILARITY = `MATCH (user1:User {idSTOW:$idUser})-[data1:INTERACT]->(t:Tag)<-[data2:INTERACT]-(user2:User)
                             WHERE data1.ratio > 5 and data2.ratio > 5
                             WITH SUM(data1.ratio * data2.ratio) AS data1data2Product,
                             SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(data1.ratio)| data1Dot + a^2)) AS data1Length,
@@ -16,7 +16,7 @@ const COSINUS_SIMILARITY = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(t
 
 //  COSINUS SIMILARITY
 // POURCENTAGE D'INTERACTION AVEC LES TAGS
-const RATIO_SIMILARITY = `MATCH (user1:User {id:$idUser})-[r1:INTERACT]->(t:Tag)<-[r2:INTERACT]-(user2)
+const RATIO_SIMILARITY = `MATCH (user1:User {idSTOW:$idUser})-[r1:INTERACT]->(t:Tag)<-[r2:INTERACT]-(user2)
                             WHERE r1.ratio > 10 AND r2.ratio > 10
                             RETURN r1.ratio AS PoidsU1, user2, r2.ratio AS PoidsU2, t.title AS Tag
                             ORDER BY PoidsU1 + PoidsU2 DESC
@@ -28,7 +28,7 @@ const RATIO_SIMILARITY = `MATCH (user1:User {id:$idUser})-[r1:INTERACT]->(t:Tag)
 //ANSWER_SIMILARITY
 //Récupère les utilisateurs similaires à l'aide de cosinus (qui interagissent sur les même tags)
 // puis récupère les utilisateurs qui posent des questions sur les sujets auxquels l'utilisateur principal répond
-const ANSWER_SIMILARITY = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(t:Tag)<-[data2:INTERACT]-(user2:User)
+const ANSWER_SIMILARITY = `MATCH (user1:User {idSTOW:$idUser})-[data1:INTERACT]->(t:Tag)<-[data2:INTERACT]-(user2:User)
                             WHERE data1.ratio > 5 and data2.ratio > 5
                             WITH SUM(data1.ratio * data2.ratio) AS data1data2Product,
                             SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(data1.ratio)| data1Dot + a^2)) AS data1Length,
@@ -47,7 +47,7 @@ const ANSWER_SIMILARITY = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(t:
 //Récupère les utilisateurs similaires à l'aide de cosinus (qui interagissent sur les même tags)
 // puis récupère les utilisateurs qui répondent aux questions sur le sujet sur lequel l'utilisateur principal pose des questions
 
-const QUESTION_SIMILARITY = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(t:Tag)<-[data2:INTERACT]-(user2:User)
+const QUESTION_SIMILARITY = `MATCH (user1:User {idSTOW:$idUser})-[data1:INTERACT]->(t:Tag)<-[data2:INTERACT]-(user2:User)
                                 WHERE data1.ratio > 5 and data2.ratio > 5
                                 WITH SUM(data1.ratio * data2.ratio) AS data1data2Product,
                                 SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(data1.ratio)| data1Dot + a^2)) AS data1Length,
@@ -64,7 +64,7 @@ const QUESTION_SIMILARITY = `MATCH (user1:User {id:$idUser})-[data1:INTERACT]->(
 //Récupère les tags sur lesquels l'utilisateur a répondu à des questions.
 //Renvoi les 3 tops tags
 
-const TOP_QUESTIONS_REQUEST = `MATCH (u:User{id: $idUser})-[i:INTERACT]->(t:Tag)
+const TOP_QUESTIONS_REQUEST = `MATCH (u:User{idSTOW: $idUser})-[i:INTERACT]->(t:Tag)
                                 RETURN u.id as utilisateur, t.title as tag, toFloat(i.nbQuestions) as nbQuestions
                                 ORDER BY nbQuestions DESC
                                 LIMIT 3`;
@@ -74,7 +74,7 @@ const TOP_QUESTIONS_REQUEST = `MATCH (u:User{id: $idUser})-[i:INTERACT]->(t:Tag)
 //Récupère les tags sur lesquels l'utilisateur a posé  des questions.
 //Renvoi les 3 tops tags
 
-const TOP_ANSWERS_REQUEST = `MATCH (u:User{id: $idUser})-[i:INTERACT]->(t:Tag)
+const TOP_ANSWERS_REQUEST = `MATCH (u:User{idSTOW: $idUser})-[i:INTERACT]->(t:Tag)
                                 RETURN u.id as utilisateur, t.title as tag, toFloat(i.nbAnswers) as nbAnswers
                                 ORDER BY nbAnswers DESC
                                 LIMIT 3`;

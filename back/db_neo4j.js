@@ -94,7 +94,7 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            const requete = `Match (u:User{id: $idSTOW})
+            const requete = `Match (u:User{idSTOW: $idSTOW})
             return u`;
         
             const readResult = await session.executeRead(tx =>
@@ -119,7 +119,7 @@ const user63 =
 
         try{
             // Il faudra penser à changer id par idSTOW quand on refera la bdd
-            const requete = `MATCH(u:User{id: $idSTOW})-[i:INTERACT]-(t:Tag)
+            const requete = `MATCH(u:User{idSTOW: $idSTOW})-[i:INTERACT]-(t:Tag)
                                 WITH i.ratio as topTags, t, u 
                                 RETURN u, t, topTags ORDER BY topTags DESC
                                 LIMIT 5`;
@@ -226,7 +226,7 @@ const user63 =
     }
     
 module.exports = {
-    createUser, connectUser, getUserTopTags, getUserProficiency
+    createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags
 };
 
 /*

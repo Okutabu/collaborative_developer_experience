@@ -121,7 +121,7 @@ app.get('/user/:idSTOW/similarity/cosinus', (req, res) => {
             //on récupère tous les ids
             var ids = [];
             data.map( (elem) => {
-               ids.push(elem._fields[0].properties.id);
+               ids.push(elem._fields[0].properties.idSTOW);
             });
 
 
@@ -310,7 +310,7 @@ app.get('/user/:idSTOW/similarity/answer', (req, res) => {
             //on récupère tous les ids
             var ids = [];
             data.map( (elem) => {
-               ids.push(elem._fields[0].properties.id);
+               ids.push(elem._fields[0].properties.idSTOW);
             });
 
 
@@ -445,7 +445,7 @@ app.get('/user/:idSTOW/similarity/question', (req, res) => {
             //on récupère tous les ids
             var ids = [];
             data.map( (elem) => {
-               ids.push(elem._fields[0].properties.id);
+               ids.push(elem._fields[0].properties.idSTOW);
             });
 
 
@@ -675,5 +675,41 @@ app.get('/user/:idSTOW/proficiency', (req, res) => {
 			} */
 
         
+    })();
+});
+
+app.get('/admin/statistics', (req, res) => {
+
+    (async() => {
+        const nbTags = await db.getNbTags();
+        const nbUsers = await db.getNbUsers();
+		const topTags = await db.getTopTags();
+		const tab = [];
+
+		
+
+        //teste si le tableau est vide
+        if(!nbTags.length || !nbUsers.length || !topTags){
+            res.status(200).send({
+                answer: "Users not found",
+                users: [],
+                error: -1
+            });
+        }
+        else{
+
+			for(let i = 0; i < 5; i++) {
+                var title = topTags[i]._fields[0].properties.title;
+                tab.push(title);
+            }
+
+            res.status(200).send({
+				answer: "Statistics found",
+				nbTags: nbTags[0]._fields[0].low,
+				nbUsers: nbUsers[0]._fields[0].low,
+				topTags: tab,
+				error: 0
+			});
+        }
     })();
 });
