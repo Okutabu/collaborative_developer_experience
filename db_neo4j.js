@@ -224,37 +224,49 @@ const user63 =
             await session.close();
         }
     }
+
+    async function getUsers(){
+
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `MATCH(u:User)                             
+                             RETURN u`;
+        
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete)
+            );
+            return readResult.records;
+
+        }catch(error){
+            console.error(`[ getUsers ] Something went wrong :  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
     
 module.exports = {
-    createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags
+    createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags, getUsers
 };
 
 /*
 (async()=>{
 
-
+    try {
     
-    // try {
-        
-    //     const oui = await getUserProficiency(6309);
-        
-    //     oui.forEach(res =>{
-    //         console.log(res);
-    //     });
-        
-    //     console.log(oui);
-    //     //console.log(oui);
+        const oui = await getUsers();
+    
+        console.log(oui[2]._fields[0].properties);
 
-    // } catch (error) {
-    //     console.error(`Something went wrong: ${error}`);
-    // } finally {
-    //     // Don't forget to close the driver connection when you're finished with it.
-    //     await driver.close();
-        
-    // }
-
+    } catch (error) {
+        console.error(`Something went wrong: ${error}`);
+    } finally {
+    // Don't forget to close the driver connection when you're finished with it.
+    await driver.close();
+    }
 })();
 */
+
 
 
 

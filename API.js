@@ -673,8 +673,6 @@ app.get('/user/:idSTOW/proficiency', (req, res) => {
 				],
 				"error": 0
 			} */
-
-        
     })();
 });
 
@@ -691,7 +689,7 @@ app.get('/admin/statistics', (req, res) => {
         //teste si le tableau est vide
         if(!nbTags.length || !nbUsers.length || !topTags){
             res.status(200).send({
-                answer: "Users not found",
+                answer: "Statistics not found",
                 users: [],
                 error: -1
             });
@@ -712,4 +710,22 @@ app.get('/admin/statistics', (req, res) => {
 			});
         }
     })();
+});
+
+
+app.get('/admin/users', (req, res) => {
+
+	(async() => {
+
+		var users = [];
+		const neo4jUsers = await db.getUsers();
+
+		if(!neo4jUsers.length){
+
+		}
+		else{
+
+		}
+
+	})();
 });
