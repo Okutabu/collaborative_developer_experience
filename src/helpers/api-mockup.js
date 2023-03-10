@@ -14,13 +14,13 @@ export function loadMirageInDev() {
                         this.namespace = `${import.meta.env.VITE_API_URL}`;
 
                         this.get(`${this.namespace}/admin/statistics`, () => {
-                            return [{
+                            return {
                                 answer: "Statistics found",
                                 nbTags: 999,
                                 nbUsers: 888,
                                 topTags: ["tag1", "tag2", "tag3", "tag4", "tag5"],
                                 error: 0
-                            }];
+                            };
                         });
 
                         this.post(`${this.namespace}/user/login`, (schema, request) => {

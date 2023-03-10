@@ -1,11 +1,10 @@
 <script setup>
 import { useAdminStore } from '@/stores';
-import { defineProps } from 'vue';
 import { storeToRefs } from 'pinia';
 
 const adminStore = useAdminStore();
 const { stats } = storeToRefs(adminStore);
-
+adminStore.getStats();
 </script>
 
 <template>
