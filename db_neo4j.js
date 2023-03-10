@@ -278,17 +278,17 @@ const user63 =
 
     
 module.exports = {
-    createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags, getUsers
+    createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags, getUsers, getUsersSorted
 };
 
-
+/*
 (async()=>{
 
     try {
     
-        const oui = await getUsersSorted("lastInteraction", DESC = "DESC");
+        const oui = await getUsersSorted("surname", "DESC");
     
-        //console.log(oui[0]._fields[0].properties);
+        console.log(oui[0]._fields[0].properties);
         //console.log(oui);
 
     } catch (error) {
@@ -298,6 +298,7 @@ module.exports = {
     await driver.close();
     }
 })();
+*/
 
 
 
