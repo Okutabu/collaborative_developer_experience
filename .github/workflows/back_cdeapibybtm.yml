@@ -24,7 +24,7 @@ jobs:
       - name: npm install, run
         run: |
           npm install
-          node API.js
+          node API.js &
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
