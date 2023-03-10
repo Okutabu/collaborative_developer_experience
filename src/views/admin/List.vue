@@ -8,10 +8,8 @@ import { useUsersStore } from '@/stores';
 
 const adminStore = useAdminStore();
 const { users } = storeToRefs(adminStore);
-
 adminStore.getUsers();
 
-console.log(users);
 </script>
 
 <template>
@@ -26,8 +24,8 @@ console.log(users);
             </tr>
         </thead>
         <tbody>
-            <template v-if="users.length">
-                <tr v-for="user in users" :key="user.id">
+            <template v-if="users">
+                <tr v-for="user in users.users" :key="user.id">
                     <td>{{ user.surname }}</td>
                     <td>{{ user.name }}</td>
                     <td style="white-space: nowrap">
