@@ -16,7 +16,6 @@ export function loadMirageInDev() {
 				error: 0
 			}];
           });
-
           
         },
       });
