@@ -20,6 +20,7 @@ adminStore.getUsers();
             <tr>
                 <th style="width: 30%">First Name</th>
                 <th style="width: 30%">Last Name</th>
+                <th style="width: 30%">Last activity</th>
                 <th style="width: 10%"></th>
             </tr>
         </thead>
@@ -28,6 +29,7 @@ adminStore.getUsers();
                 <tr v-for="user in users.users" :key="user.id">
                     <td>{{ user.surname }}</td>
                     <td>{{ user.name }}</td>
+                    <td>{{ (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}</td>
                     <td style="white-space: nowrap">
                         <router-link :to="`/users/edit/${user.id}`" class="btn btn-sm btn-primary mr-1">Edit</router-link>
                         <button @click="usersStore.delete(user.id)" class="btn btn-sm btn-danger btn-delete-user" :disabled="user.isDeleting">

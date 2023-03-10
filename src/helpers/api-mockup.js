@@ -55,6 +55,10 @@ export function loadMirageInDev() {
                                             "low": 1234,
                                             "high": 0
                                         },
+                                        "lastInteraction": {
+                                            "low": 1678487711,
+                                            "high": 0
+                                        },
                                         "mail": "bapt.ps3@live.fr",
                                         "surname": "Baptiste",
                                         "name": "Griva"
@@ -64,33 +68,13 @@ export function loadMirageInDev() {
                                             "low": 20935520,
                                             "high": 0
                                         },
-                                        "mail": "lologan789@gmail.com",
-                                        "surname": "Logan",
-                                        "name": "Goddard"
-                                    },
-                                    {
-                                        "idSTOW": {
-                                            "low": 6309,
-                                            "high": 0
-                                        },
-                                        "lastInteraction": {
-                                            "low": 1673876221,
-                                            "high": 0
-                                        },
-                                        "avatar": "https://i.stack.imgur.com/I4fiW.jpg?s=256&g=1",
-                                        "pseudo": "VonC"
-                                    },
-                                    {
-                                        "idSTOW": {
-                                            "low": 13431819,
-                                            "high": 0
-                                        },
                                         "lastInteraction": {
                                             "low": 1673879022,
                                             "high": 0
                                         },
-                                        "avatar": "https://i.stack.imgur.com/tw2FU.jpg?s=256&g=1",
-                                        "pseudo": "BouncyBits"
+                                        "mail": "lologan789@gmail.com",
+                                        "surname": "Logan",
+                                        "name": "Goddard"
                                     }
                                 ]}
                         });
