@@ -1,12 +1,18 @@
-<script>
+<script setup>
+import { useAdminStore } from '@/stores';
+import { defineProps } from 'vue';
+import { storeToRefs } from 'pinia';
+
+const adminStore = useAdminStore();
+const { stats } = storeToRefs(adminStore);
 
 </script>
 
 <template>
     <div>
-        <p> nb tags : </p>
-        <p> nb utilisateurs : </p>
-        <p> top tags : </p>
+        <p> nb tags : {{ stats.nbTags }}</p>
+        <p> nb utilisateurs : {{ stats.nbUsers }}</p>
+        <p> top tags : {{ stats.topTags }}</p>
     </div>
 
 </template>

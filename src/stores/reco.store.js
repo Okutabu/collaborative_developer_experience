@@ -4,6 +4,7 @@ import { useAlertStore } from '@/stores';
 
 import { fetchWrapper } from '@/helpers';
 
+
 const baseUrl = `${import.meta.env.VITE_API_URL}`;
 
 export const useRecoStore = defineStore({
