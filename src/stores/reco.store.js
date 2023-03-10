@@ -4,10 +4,7 @@ import { useAlertStore } from '@/stores';
 
 import { fetchWrapper } from '@/helpers';
 
-const API_URL = "http://localhost:8080"
-
-// const baseUrl = `${import.meta.env.VITE_API_URL}/users`;
-const baseUrl = `${API_URL}/user`;
+const baseUrl = `${import.meta.env.VITE_API_URL}`;
 
 export const useRecoStore = defineStore({
     id : 'reco',
