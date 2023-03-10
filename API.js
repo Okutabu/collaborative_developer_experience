@@ -746,22 +746,27 @@ app.get('/admin/users', (req, res) => {
 
 function errorParameters(attribute, desc){
 
-	isError = false;
+	isError = true;
 
-	if(attribute != "surname" || attribute != "name" || attribute != "lastInteraction"){
-		isError = true;
+	if(attribute == "surname" || attribute == "name" || attribute == "lastInteraction"){
+		isError = false;
 	}
 
-	if(desc != "" || desc != "DESC"){
-		isError = true;
+	if(desc === undefined || desc == "true"){
+		isError = false;
 	}
 	return isError;
 }
 
-app.get('/admin/users/sort/:attribute/:decreasing', (req, res) => {
+/*
+ attributs valide : "name", "surname", "lastInteraction"
+ Si on ne veut pas trié on laisse comme cela,
+ Sinon on rajoute ?desc=true à la fin de l'url
+ */
+app.get('/admin/users/sort/:attribute', (req, res) => {
 
-	var attribute = params.attribute;
-	var desc = params.decreasing;
+	var attribute = req.params.attribute;
+	var desc = req.query.desc;
 
 	//traitement des erreurs
 	if(errorParameters(attribute, desc)){
@@ -777,6 +782,11 @@ app.get('/admin/users/sort/:attribute/:decreasing', (req, res) => {
 		(async() => {
 
 			var neo4jUsers;
+			if(desc === 'true'){
+				desc = "DESC";
+			}else{
+				desc = "";
+			}
 
 			if(attribute == "name"){
 				neo4jUsers = await db.getUsersSorted(attribute, desc);

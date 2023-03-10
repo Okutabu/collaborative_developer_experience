@@ -261,7 +261,6 @@ const user63 =
             WHERE u.${ATTRIBUTE} IS NOT NULL
             RETURN u
             ORDER BY u.${ATTRIBUTE} ${DESC}`;
-            console.log(requete);
         
             const readResult =  await session.executeRead(tx =>
                 tx.run(requete)
