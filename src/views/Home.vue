@@ -16,6 +16,8 @@ const typeSimilaire = ref('Projet similaire')
 const typeReponse= ref('Helper')
 const typeQuestion = ref('To help')
 
+console.log(user);
+
 </script>
 
 <template>

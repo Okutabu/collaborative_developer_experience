@@ -46,6 +46,9 @@ export function loadMirageInDev() {
                         this.delete(`${this.namespace}/user/:id`, () => {
                             return deleteUser();
                         });
+                        this.get(`${this.namespace}/admin/users`, () => {
+                            return getUsers();
+                        });
 
                         //default route
                         

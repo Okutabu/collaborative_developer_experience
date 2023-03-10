@@ -1,12 +1,17 @@
 <script setup>
 import { storeToRefs } from 'pinia';
-
+import { useAdminStore } from '@/stores';
 import { useUsersStore } from '@/stores';
 
-const usersStore = useUsersStore();
-const { users } = storeToRefs(usersStore);
+// const usersStore = useUsersStore();
+// const { users } = storeToRefs(usersStore);
 
-usersStore.getAll();
+const adminStore = useAdminStore();
+const { users } = storeToRefs(adminStore);
+
+adminStore.getUsers();
+
+console.log(users);
 </script>
 
 <template>
