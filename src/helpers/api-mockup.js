@@ -126,7 +126,7 @@ export function loadMirageInDev() {
             return ok();
         }
 
-        // helper functions
+        // helper functions updated
 
         function ok(body) {
             new Response({ ok: true, ...headers(), json: () => Promise.resolve(body) })
