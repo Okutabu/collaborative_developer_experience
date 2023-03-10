@@ -1,31 +1,27 @@
 //const { parseStringStyle } = require('@vue/shared');
 const express = require('express');
 const cors = require('cors');
-const http = require('http');
 const db = require('./db_neo4j');
 const similarity = require('./similarityQueries');
 const app = express();
-
 const PORT = 8080;
 
+/* ------- Pour le deploiement ne marche pas encore ------
+const http = require('http');
 var server =  http.createServer(app);
 
 server.listen(PORT, 'localhost');
 server.on('listening', function(){
 	console.log('Express server started on port %s at %s', server.address().port, server.address().address);
 });
-
-
-
-/*
- -----------  Pour le localHost -----------
+*/
 
 
 app.listen(
     PORT,
     () => console.log(`Server alive on http://localhost:${PORT}`)
 );
-*/
+
 
 
 //midleware json, tout est transformé en json après la reception
