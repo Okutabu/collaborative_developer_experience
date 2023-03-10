@@ -742,3 +742,22 @@ app.get('/admin/users', (req, res) => {
 		}
 	})();
 });
+
+
+
+/*
+requêtes GET pour la page admin :
+
+	-	users
+	-	lastName / Sorted croissant, decroissant
+	-	name / sorted croissant, decroissant
+	-	date / sorted croissant, decroissant
+
+
+requêtes GET pour le filtrage :
+
+	-	users by name
+	-	users by lastname
+	-	users by tag
+	
+*/
