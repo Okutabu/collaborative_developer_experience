@@ -744,32 +744,28 @@ app.get('/admin/users', (req, res) => {
 });
 
 
-function errorParameters(attribute, desc){
-
-	isError = true;
+function errorParameters(attribute){
+	
+	let isError;
 
 	if(attribute == "surname" || attribute == "name" || attribute == "lastInteraction"){
 		isError = false;
-	}
-
-	if(desc === undefined || desc == "true"){
-		isError = false;
+	}else{
+		isError = true;
 	}
 	return isError;
 }
 
 /*
  attributs valide : "name", "surname", "lastInteraction"
- Si on ne veut pas trié on laisse comme cela,
- Sinon on rajoute ?desc=true à la fin de l'url
+ renvoyé dans l'ordre croissant
  */
 app.get('/admin/users/sort/:attribute', (req, res) => {
 
 	var attribute = req.params.attribute;
-	var desc = req.query.desc;
 
 	//traitement des erreurs
-	if(errorParameters(attribute, desc)){
+	if(errorParameters(attribute)){
 
 		res.status(404).send({
 			answer: "Users not found, there may be is an error in the parameters",
@@ -796,6 +792,65 @@ app.get('/admin/users/sort/:attribute', (req, res) => {
 			}
 			if(attribute == "lastInteraction"){
 				neo4jUsers = await db.getUsersSorted(attribute, desc);
+			}
+
+
+			if(!neo4jUsers.length){
+
+				res.status(404).send({
+					answer: "Users not found",
+					users: [],
+					error: -1
+				});
+			}
+			else{
+	
+				let allUsers = [];
+				//oui[2]._fields[0].properties
+				for(let i = 0; i < neo4jUsers.length; i++){
+	
+					allUsers.push(neo4jUsers[i]._fields[0].properties);
+	
+				}
+				res.status(200).send({
+					answer: "Users found",
+					users: allUsers,
+					error: 0
+				});
+			}
+		})();
+	}
+});
+
+
+// renvoit la liste dans l'ordre décroissant
+app.get('/admin/users/sort/:attribute/desc', (req, res) => {
+
+	var attribute = req.params.attribute;
+
+	//traitement des erreurs
+	if(errorParameters(attribute)){
+
+		res.status(404).send({
+			answer: "Users not found, there may be is an error in the parameters",
+			users: [],
+			error: -1
+		});
+
+	}else{
+
+		(async() => {
+
+			var neo4jUsers;
+		
+			if(attribute == "name"){
+				neo4jUsers = await db.getUsersSorted(attribute, "DESC");
+			}
+			if(attribute == "surname"){
+				neo4jUsers = await db.getUsersSorted(attribute, "DESC");
+			}
+			if(attribute == "lastInteraction"){
+				neo4jUsers = await db.getUsersSorted(attribute, "DESC");
 			}
 
 
