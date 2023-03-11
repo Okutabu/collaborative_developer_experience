@@ -21,10 +21,10 @@ jobs:
         with:
           node-version: '16.x'
 
-      - name: npm install, run
+      - name: npm install and run
         run: |
           npm install
-          node API.js &
+          npm start
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
