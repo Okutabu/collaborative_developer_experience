@@ -23,9 +23,27 @@ export function loadMirageInDev() {
                             };
                         });
 
+                        // this.post(`${this.namespace}/user/login`, (schema, request) => {
+                        //     return authenticate(request);
+                        // });
                         this.post(`${this.namespace}/user/login`, (schema, request) => {
-                            return authenticate(request);
-                        });
+                            return {
+                                "answer": "User found",
+                                "user": {
+                                    "idSTOW": { 
+                                        "low": 1234,
+                                        "high": 0 
+                                    },
+                                    "lastInteraction": { 
+                                        "low": 1234,
+                                        "high": 0 
+                                    },
+                                    "mail": "alex@gmail.com",
+                                    "surname": "Alex",
+                                    "name": "Dupont"
+                                    }
+                                }
+                            });
 
                         this.post(`${this.namespace}/user/register`, (schema, request) => {
                             return register(request);
@@ -78,6 +96,184 @@ export function loadMirageInDev() {
                                     }
                                 ]}
                         });
+
+
+                        this.get(`${this.namespace}/:idSTOW/similarity/answer`, () => {
+                            return {
+                                    "answer": "Users found", 
+                                    "users":[ 
+                                                [ {   
+                                                    "idSTOW": { "low": 11804213, "high": 0 }, 
+                                                    "pseudo": "AlexD", 
+                                                    "avatar": "https://i.stack.imgur.com/2lm9w.jpg?s=256&g=1" },
+                                                    [ 
+                                                        { "techno": "reactjs", "ratio": 23.52941176470588 }, 
+                                                        { "techno": "material-ui", "ratio": 17.647058823529413 }, 
+                                                        { "techno": "http-live-streaming", "ratio": 8.823529411764707 }, 
+                                                        { "techno": "vercel", "ratio": 8.823529411764707 }, 
+                                                        { "techno": "hls.js", "ratio": 8.823529411764707 } ] ],
+                                                [ { 
+                                                    "idSTOW": { "low": 20740880, "high": 0 }, 
+                                                    "pseudo": "PolarBear", 
+                                                    "avatar": "https://www.gravatar.com/avatar/a125846e788fa0f180710a8c22942ff4?s=256&d=identicon&r=PG" }, 
+                                                    [ 
+                                                        { "techno": "django", "ratio": 28.000000000000004 },
+                                                        { "techno": "django-models", "ratio": 18 }, 
+                                                        { "techno": "python", "ratio": 17 }, 
+                                                        { "techno": "slugify", "ratio": 15 }, 
+                                                        { "techno": "django-views", "ratio": 6 } ] ], 
+                                                [ { 
+                                                    "idSTOW": { "low": 20864520, "high": 0 }, 
+                                                    "pseudo": "Kiarash Fazli", 
+                                                    "avatar": "https://i.stack.imgur.com/H1G7n.png?s=256&g=1" }, 
+                                                    [ 
+                                                        { "techno": "fastapi", "ratio": 31.57894736842105 },
+                                                        { "techno": "python", "ratio": 21.052631578947366 }, 
+                                                        { "techno": "passwords", "ratio": 21.052631578947366 }, 
+                                                        { "techno": "pydantic", "ratio": 5.263157894736842 }, 
+                                                        { "techno": "mongodb", "ratio": 5.263157894736842 } ] ], 
+                                                [ { 
+                                                    "idSTOW": { "low": 56541, "high": 0 }, 
+                                                    "pseudo": "David Z", 
+                                                    "avatar": "https://i.stack.imgur.com/Wm7Xg.png?s=256&g=1" }, 
+                                                    [ 
+                                                        { "techno": "latex", "ratio": 18.181818181818183 }, 
+                                                        { "techno": "git", "ratio": 9.090909090909092 }, 
+                                                        { "techno": "shell", "ratio": 9.090909090909092 }, 
+                                                        { "techno": "peek", "ratio": 9.090909090909092 }, 
+                                                        { "techno": "git-submodules", "ratio": 9.090909090909092 } ] ], 
+                                                [ { 
+                                                    "idSTOW": { "low": 250259, "high": 0 }, 
+                                                    "pseudo": "John Conde", 
+                                                    "avatar": "https://www.gravatar.com/avatar/64839d31baaefafa58120e1a5a503d66?s=256&d=identicon&r=PG" }, 
+                                                    [ 
+                                                        { "techno": "php", "ratio": 20 }, 
+                                                        { "techno": "authorize.net", "ratio": 11.428571428571429 }, 
+                                                        { "techno": "python", "ratio": 8.571428571428571 }, 
+                                                        { "techno": "django", "ratio": 5.714285714285714 }, 
+                                                        { "techno": "foreach", "ratio": 5.714285714285714 } ] ] 
+                                            ], "error": 0 
+                                }
+                        });
+
+                        this.get(`${this.namespace}/:idSTOW/similarity/cosinus`, () => {
+                            return {
+                                
+                                    "answer": "Users found", 
+                                    "users":[ 
+                                                [ {   
+                                                    "idSTOW": { "low": 11804213, "high": 0 }, 
+                                                    "pseudo": "zinzinboy", 
+                                                    "avatar": "https://i.stack.imgur.com/2lm9w.jpg?s=256&g=1" },
+                                                    [ 
+                                                        { "techno": "reactjs", "ratio": 23.52941176470588 }, 
+                                                        { "techno": "material-ui", "ratio": 17.647058823529413 }, 
+                                                        { "techno": "http-live-streaming", "ratio": 8.823529411764707 }, 
+                                                        { "techno": "vercel", "ratio": 8.823529411764707 }, 
+                                                        { "techno": "hls.js", "ratio": 8.823529411764707 } ] ],
+                                                [ { 
+                                                    "idSTOW": { "low": 20740880, "high": 0 }, 
+                                                    "pseudo": "PolarBear", 
+                                                    "avatar": "https://www.gravatar.com/avatar/a125846e788fa0f180710a8c22942ff4?s=256&d=identicon&r=PG" }, 
+                                                    [ 
+                                                        { "techno": "django", "ratio": 28.000000000000004 },
+                                                        { "techno": "django-models", "ratio": 18 }, 
+                                                        { "techno": "python", "ratio": 17 }, 
+                                                        { "techno": "slugify", "ratio": 15 }, 
+                                                        { "techno": "django-views", "ratio": 6 } ] ], 
+                                                [ { 
+                                                    "idSTOW": { "low": 20864520, "high": 0 }, 
+                                                    "pseudo": "Kiarash Fazli", 
+                                                    "avatar": "https://i.stack.imgur.com/H1G7n.png?s=256&g=1" }, 
+                                                    [ 
+                                                        { "techno": "fastapi", "ratio": 31.57894736842105 },
+                                                        { "techno": "python", "ratio": 21.052631578947366 }, 
+                                                        { "techno": "passwords", "ratio": 21.052631578947366 }, 
+                                                        { "techno": "pydantic", "ratio": 5.263157894736842 }, 
+                                                        { "techno": "mongodb", "ratio": 5.263157894736842 } ] ], 
+                                                [ { 
+                                                    "idSTOW": { "low": 56541, "high": 0 }, 
+                                                    "pseudo": "David Z", 
+                                                    "avatar": "https://i.stack.imgur.com/Wm7Xg.png?s=256&g=1" }, 
+                                                    [ 
+                                                        { "techno": "latex", "ratio": 18.181818181818183 }, 
+                                                        { "techno": "git", "ratio": 9.090909090909092 }, 
+                                                        { "techno": "shell", "ratio": 9.090909090909092 }, 
+                                                        { "techno": "peek", "ratio": 9.090909090909092 }, 
+                                                        { "techno": "git-submodules", "ratio": 9.090909090909092 } ] ], 
+                                                [ { 
+                                                    "idSTOW": { "low": 250259, "high": 0 }, 
+                                                    "pseudo": "John Conde", 
+                                                    "avatar": "https://www.gravatar.com/avatar/64839d31baaefafa58120e1a5a503d66?s=256&d=identicon&r=PG" }, 
+                                                    [ 
+                                                        { "techno": "php", "ratio": 20 }, 
+                                                        { "techno": "authorize.net", "ratio": 11.428571428571429 }, 
+                                                        { "techno": "python", "ratio": 8.571428571428571 }, 
+                                                        { "techno": "django", "ratio": 5.714285714285714 }, 
+                                                        { "techno": "foreach", "ratio": 5.714285714285714 } ] ] 
+                                            ], "error": 0 
+                                }
+                        });
+
+                        this.get(`${this.namespace}/:idSTOW/similarity/question`, () => {
+                            return {
+                                
+                                    "answer": "Users found", 
+                                    "users":[ 
+                                                [ {   
+                                                    "idSTOW": { "low": 11804213, "high": 0 }, 
+                                                    "pseudo": "Franck", 
+                                                    "avatar": "https://i.stack.imgur.com/2lm9w.jpg?s=256&g=1" },
+                                                    [ 
+                                                        { "techno": "reactjs", "ratio": 23.52941176470588 }, 
+                                                        { "techno": "material-ui", "ratio": 17.647058823529413 }, 
+                                                        { "techno": "http-live-streaming", "ratio": 8.823529411764707 }, 
+                                                        { "techno": "vercel", "ratio": 8.823529411764707 }, 
+                                                        { "techno": "hls.js", "ratio": 8.823529411764707 } ] ],
+                                                [ { 
+                                                    "idSTOW": { "low": 20740880, "high": 0 }, 
+                                                    "pseudo": "PolarBear", 
+                                                    "avatar": "https://www.gravatar.com/avatar/a125846e788fa0f180710a8c22942ff4?s=256&d=identicon&r=PG" }, 
+                                                    [ 
+                                                        { "techno": "django", "ratio": 28.000000000000004 },
+                                                        { "techno": "django-models", "ratio": 18 }, 
+                                                        { "techno": "python", "ratio": 17 }, 
+                                                        { "techno": "slugify", "ratio": 15 }, 
+                                                        { "techno": "django-views", "ratio": 6 } ] ], 
+                                                [ { 
+                                                    "idSTOW": { "low": 20864520, "high": 0 }, 
+                                                    "pseudo": "Kiarash Fazli", 
+                                                    "avatar": "https://i.stack.imgur.com/H1G7n.png?s=256&g=1" }, 
+                                                    [ 
+                                                        { "techno": "fastapi", "ratio": 31.57894736842105 },
+                                                        { "techno": "python", "ratio": 21.052631578947366 }, 
+                                                        { "techno": "passwords", "ratio": 21.052631578947366 }, 
+                                                        { "techno": "pydantic", "ratio": 5.263157894736842 }, 
+                                                        { "techno": "mongodb", "ratio": 5.263157894736842 } ] ], 
+                                                [ { 
+                                                    "idSTOW": { "low": 56541, "high": 0 }, 
+                                                    "pseudo": "David Z", 
+                                                    "avatar": "https://i.stack.imgur.com/Wm7Xg.png?s=256&g=1" }, 
+                                                    [ 
+                                                        { "techno": "latex", "ratio": 18.181818181818183 }, 
+                                                        { "techno": "git", "ratio": 9.090909090909092 }, 
+                                                        { "techno": "shell", "ratio": 9.090909090909092 }, 
+                                                        { "techno": "peek", "ratio": 9.090909090909092 }, 
+                                                        { "techno": "git-submodules", "ratio": 9.090909090909092 } ] ], 
+                                                [ { 
+                                                    "idSTOW": { "low": 250259, "high": 0 }, 
+                                                    "pseudo": "John Conde", 
+                                                    "avatar": "https://www.gravatar.com/avatar/64839d31baaefafa58120e1a5a503d66?s=256&d=identicon&r=PG" }, 
+                                                    [ 
+                                                        { "techno": "php", "ratio": 20 }, 
+                                                        { "techno": "authorize.net", "ratio": 11.428571428571429 }, 
+                                                        { "techno": "python", "ratio": 8.571428571428571 }, 
+                                                        { "techno": "django", "ratio": 5.714285714285714 }, 
+                                                        { "techno": "foreach", "ratio": 5.714285714285714 } ] ] 
+                                            ], "error": 0 
+                                }
+                        });
+                                
 
                         //default route
                         
