@@ -778,20 +778,15 @@ app.get('/admin/users/sort/:attribute', (req, res) => {
 		(async() => {
 
 			var neo4jUsers;
-			if(desc === 'true'){
-				desc = "DESC";
-			}else{
-				desc = "";
-			}
 
 			if(attribute == "name"){
-				neo4jUsers = await db.getUsersSorted(attribute, desc);
+				neo4jUsers = await db.getUsersSorted(attribute);
 			}
 			if(attribute == "surname"){
-				neo4jUsers = await db.getUsersSorted(attribute, desc);
+				neo4jUsers = await db.getUsersSorted(attribute);
 			}
 			if(attribute == "lastInteraction"){
-				neo4jUsers = await db.getUsersSorted(attribute, desc);
+				neo4jUsers = await db.getUsersSorted(attribute);
 			}
 
 
