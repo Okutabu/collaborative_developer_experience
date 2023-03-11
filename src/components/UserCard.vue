@@ -23,13 +23,15 @@ const props = defineProps({
             <div class="user_description">
                 
                 <img :src=avatar >
-                <p>{{ pseudo }}</p>
-                <p>{{ type }}</p>
-                <p>point fort : {{ reco }}</p>
+                <p>{{ pseudo || 'loading...' }}</p>
+                <p>{{ type || 'loading...' }}</p>
+                <p>point fort : {{ reco || 'loading...' }}</p>
             </div>
         </div>
         <div class="user_stats">
-        <div> <Radar :technoratio=props.techno  /> </div>
+            <div> 
+                <Radar :technoratio=props.techno /> 
+            </div>
         </div>
     </div>
 

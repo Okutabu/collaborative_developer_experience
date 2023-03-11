@@ -1,4 +1,5 @@
 <script setup>
+import { defineProps } from 'vue'
 
 const props = defineProps({
   nom: String,
@@ -18,7 +19,7 @@ const props = defineProps({
                 <div class="user_description">
                     <p class="name">{{ nom || 'Loading ...' }}</p> <!-- nom -->
                     <p class="type">{{ type || 'Loading ...'}}</p>   <!-- type -->
-                    <p class="reco">{{ reco || 'Loading ...'}}</p>
+                    <p class="reco">{{ reco || 'Loading ...'}}</p>  <!-- reco -->
                 </div>
         </div>
     </div>

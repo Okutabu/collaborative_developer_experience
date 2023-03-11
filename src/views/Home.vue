@@ -5,6 +5,8 @@ import { ref } from 'vue'
 import { useAuthStore } from '@/stores';
 import { useRecoStore } from '@/stores';
 import DynamicCard from '../components/DynamicCard.vue';
+import UserCardSimplified from '../components/UserCardSimplified.vue';
+import UserCard from '../components/UserCard.vue';
 
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
@@ -48,7 +50,7 @@ console.log(user);
         
         <div class="container-raw-cosinus-similarity" v-if="usersRecoSimilarity">
             <span class="categorie-recommendation">Utilisateurs similaires à vous</span>
-            <DynamicCard v-for="user in usersRecoSimilarity.users" :nom=user[0].pseudo :type=typeSimilaire :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar /> 
+            <UserCardSimplified v-for="user in usersRecoSimilarity.users" :nom=user[0].pseudo :type=typeSimilaire :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar /> 
         </div>
         <div v-else>
             <div class="spinner-border custom-spinner" role="status">
@@ -57,7 +59,7 @@ console.log(user);
         </div>
         <div class="container-similarity-tag-answers" v-if="usersReco">
             <span class="categorie-recommendation">Utilisateurs qui repondent à vos questions</span>
-            <DynamicCard v-for="user in usersReco.users" :nom=user[0].pseudo :type=typeReponse :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar />
+            <UserCardSimplified v-for="user in usersReco.users" :nom=user[0].pseudo :type=typeReponse :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar />
             
         </div>
         <div v-else>
@@ -74,6 +76,14 @@ console.log(user);
             <div class="spinner-border custom-spinner" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
+        </div>
+    </div>
+
+    <div class="container-usercard-peek"> 
+        <div>
+
+            <DynamicCard :techno=usersReco.users[0][1] />
+
         </div>
     </div>
     
@@ -101,6 +111,14 @@ console.log(user);
 }
 
 .container-similarities {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--cde-c-palette-dark-2);
+}
+
+.container-usercard-peek {
     display: flex;
     flex-direction: row;
     justify-content: space-around;

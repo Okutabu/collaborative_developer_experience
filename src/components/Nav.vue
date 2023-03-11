@@ -26,7 +26,6 @@ const authStore = useAuthStore();
     justify-content: space-around;
     align-items: center;
     width: 20%;
-    height: 100vh;
     background-color: var(--cde-c-palette-dark-1);
     color: var(--cde-c-text-light-1);
 }
