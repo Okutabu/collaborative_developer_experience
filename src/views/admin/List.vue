@@ -1,15 +1,49 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { useAdminStore } from '@/stores';
-import { useUsersStore } from '@/stores';
+import { ref } from "vue";
 
-// const usersStore = useUsersStore();
-// const { users } = storeToRefs(usersStore);
 
+let input = ref("");
+const valeurs = [
+
+{
+    "idSTOW": {
+        "low": 20935520,
+        "high": 0
+    },
+    "lastInteraction": {
+        "low": 1673879022,
+        "high": 0
+    },
+    "mail": "lologan789@gmail.com",
+    "surname": "Logan",
+    "name": "Goddard"
+},
+{
+    "idSTOW": {
+        "low": 1234,
+        "high": 0
+    },
+    "lastInteraction": {
+        "low": 1678487711,
+        "high": 0
+    },
+    "mail": "bapt.ps3@live.fr",
+    "surname": "Baptiste",
+    "name": "Griva"
+}
+];
 
 const adminStore = useAdminStore();
 const { users } = storeToRefs(adminStore);
 adminStore.getUsers();
+
+function filteredList() {
+  return valeurs.filter((valeur) =>
+    valeur.name.toLowerCase().includes(input.value.toLowerCase())
+  );
+}
 
 
 function triLastActivity() {
@@ -38,7 +72,7 @@ function triSurname() {
     }
     adminStore.desc = !adminStore.desc;
 }
-
+console.log(users.users);
 </script>
 
 <template>
@@ -54,11 +88,20 @@ function triSurname() {
         </thead>
         <tbody>
             <template v-if="users">
-                <tr v-for="user in users.users">
+                <input type="text" v-model="input" placeholder="Search dev..." />
+                <tr class="item fruit" v-for="test in filteredList()" :key="test">
+                    <td>{{ test.surname }}</td>
+                    <td>{{ test.name }}</td>
+                    <td>{{ (new Date(test.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}</td>
+                </tr>
+                <div class="item error" v-if="input&&!filteredList().length">
+                    <p>Aucun résultat trouvé !</p>
+                </div>
+                <!-- <tr v-for="user in users.users" :key = "user">
                     <td>{{ user.surname }}</td>
                     <td>{{ user.name }}</td>
                     <td>{{ (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}</td>
-                </tr>
+                </tr> -->
             </template>
             <tr v-if="users.loading">
                 <td colspan="4" class="text-center">
