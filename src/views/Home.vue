@@ -25,21 +25,21 @@ console.log(user);
 <template>
     <div v-if="user" class="header">
         <div class="container-welcome-message">
-                <h2>Bienvenue sur votre espace de collaboration !</h2>
-                <p class="text-muted"> Faites de nouvelles rencontres</p>
+                <h2> Bienvenue sur votre espace de collaboration</h2>
+                <p class="text-muted">Découvrez de nouvelles relations chez PTC</p>
         </div>
         <div class="container-action-bar">
             <div class="container-bell">
                 <!-- <b-icon icon="bell-fill" class="border rounded p-2"></b-icon> -->
             </div>
             <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{user.surname}} {{user.name}}</a>
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{user.user.surname}} {{ user.user.name }}</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Mes favoris</a>
                         <a class="dropdown-item" href="#">Another action</a>
                         <a class="dropdown-item" href="#">Something else here</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Separated link</a>
+                    <a class="dropdown-item" href="#" @click="authStore.logout()">Se deconnecter</a>
                 </div>
             </div>
         </div>
@@ -69,7 +69,7 @@ console.log(user);
         </div>
         <div class="container-similarity-tag-questions" v-if="usersRecoQuestion">
             <span class="categorie-recommendation">Utilisateurs que vous pouvez aider</span>
-            <DynamicCard v-for="user in usersRecoQuestion.users" :nom=user[0].pseudo :type=typeQuestion :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar />
+            <UserCardSimplified v-for="user in usersRecoQuestion.users" :nom=user[0].pseudo :type=typeQuestion :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar />
             
         </div>
         <div v-else>
@@ -91,15 +91,23 @@ console.log(user);
 
 </template>
 
-<style>
+<style scoped>
 
 .header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--cde-c-palette-dark-4);
+    background-color: rgb(248, 249, 250);
     width: 100%;
+}
+
+.container-welcome-message {
+    height: 130px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left: 2em;
 }
 
 .container-action-bar{
@@ -115,7 +123,7 @@ console.log(user);
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    background-color: var(--cde-c-palette-dark-2);
+    background-color: rgb(230, 230, 230);
 }
 
 .container-usercard-peek {
@@ -123,7 +131,7 @@ console.log(user);
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    background-color: var(--cde-c-palette-dark-2);
+    background-color: rgb(230, 230, 230);
 }
 
 .custom-spinner {
@@ -147,6 +155,10 @@ console.log(user);
     font-size: 1em;
     font-weight: bold;
     margin-bottom: 1em;
+}
+
+.nav-item {
+    margin-right: 1em;
 }
 
 </style>

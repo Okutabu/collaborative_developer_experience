@@ -21,11 +21,15 @@ const props = defineProps({
     <div class="container_user_card">
         <div class="container_user_info">
             <div class="user_description">
+                <div class="avatar">
+                    <img :src=avatar >    
+                </div>
+                <div class="info">
+                    <p class="bold name">{{ pseudo || 'loading...' }}</p>
+                    <p class="type" >{{ type || 'loading...' }}</p>
+                    <p class="speciality">point fort : {{ reco || 'loading...' }}</p>
+                </div>
                 
-                <img :src=avatar >
-                <p>{{ pseudo || 'loading...' }}</p>
-                <p>{{ type || 'loading...' }}</p>
-                <p>point fort : {{ reco || 'loading...' }}</p>
             </div>
         </div>
         <div class="user_stats">
@@ -39,50 +43,65 @@ const props = defineProps({
 
 <style scoped>
 
+.container_user_card {
+    background-color: white;
+    border-radius: 25px;
+    width: 500px;
+    height: 400px;
+    box-shadow: 0 0 10px 0 rgba(151, 144, 144, 0.2);
+    margin-bottom: 20px;
+    font-family: sans-serif;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+
+.avatar {
+
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 1px solid black;
+    margin-bottom: 15px;
+
+
+}
 
 .container_user_info {
+    
+    align-items: left;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.user_description {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 50%;
-}
+    margin-left: 30px;
 
-.container_user_card img{
-    width: 100px;
-    height: 100px;
 }
-
-.container_user_info {
-    padding: 0;
-    margin: 0;
-    align-items: center;
-    display: flex;
-    justify-content: space-around;
-}
-
-.container_user_card {
-    display: flex;
-    flex-direction: column;
+.user_stats {
     align-items: center;
     justify-content: center;
-    background-color: white;
-    border-radius: 10px;
-    width: 500px;
-    height: 600px;
-    box-shadow: 0 0 10px 0 rgba(151, 144, 144, 0.2);
-    margin-bottom: 20px;
-    
+
 }
 
-.userdescription {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-}
 
 </style>

@@ -33,7 +33,7 @@ const props = defineProps({
     align-items: center;
     justify-content: center;
     background-color: white;
-    border-radius: 10px;
+    border-radius: 25px;
     width: 300px;
     height: 200px;
     box-shadow: 0 0 10px 0 rgba(151, 144, 144, 0.2);

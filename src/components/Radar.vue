@@ -9,30 +9,31 @@ const props = defineProps({
 var series = []
 series.push({name: ratios, data: props.technoratio.techno.map(item => item.ratio)})
 
-var ratios = {chart: {
-    height: 350,
-    type: 'radar',
-},
-title: {
-    text: 'Proficiency radar'
-},
-xaxis: {
+var ratios = {
     
-    categories: props.technoratio.techno.map(item => item.techno)}
-};
+    chart: {
+        type: 'radar',
+        toolbar: {
+            show: false
+        },
+    },
+    xaxis: {
+        categories: props.technoratio.techno.map(item => item.techno)}
+    };
 
 </script>
 
 <template>
 
     <div id="chart">
-        <VueApexCharts type="radar" height="350" :options="ratios" :series="series"></VueApexCharts>
+        <VueApexCharts type="radar" height="300" :options="ratios" :series="series"></VueApexCharts>
     </div>
 
 </template>
 
 
 <style>
+
 </style>
     
  

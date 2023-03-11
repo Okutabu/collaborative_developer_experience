@@ -13,9 +13,9 @@ const props = defineProps({
   reco : String, 
   techno: String,
 })
-var boolean = ref(false);
+var boolean = ref(true);
 function swapComponent() {
-    boolean.value = !boolean.value;
+    boolean.value = true;
   }
 
 
