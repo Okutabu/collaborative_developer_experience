@@ -43,7 +43,7 @@ export const useAdminStore = defineStore({
         },
         async getUsersbyLastActivityDesc() {
             try {
-                this.users = await fetchWrapper.get(`${baseUrl}/users/sort/lastInteractionTrue`);
+                this.users = await fetchWrapper.get(`${baseUrl}/users/sort/lastInteraction/desc`);
             }
             catch (error) {
                 const alertStore = useAlertStore();
@@ -52,7 +52,7 @@ export const useAdminStore = defineStore({
         },
         async getUsersbyName() {
             try {
-                this.users = await fetchWrapper.get(`${baseUrl}/users/sort/lastInteraction`);
+                this.users = await fetchWrapper.get(`${baseUrl}/users/sort/name`);
             }
             catch (error) {
                 const alertStore = useAlertStore();
@@ -61,7 +61,25 @@ export const useAdminStore = defineStore({
         },
         async getUsersbyNameDesc() {
             try {
-                this.users = await fetchWrapper.get(`${baseUrl}/users/sort/lastInteractionTrue`);
+                this.users = await fetchWrapper.get(`${baseUrl}/users/sort/name/desc`);
+            }
+            catch (error) {
+                const alertStore = useAlertStore();
+                alertStore.error(error);                
+            }
+        },
+        async getUsersbySurname() {
+            try {
+                this.users = await fetchWrapper.get(`${baseUrl}/users/sort/surname`);
+            }
+            catch (error) {
+                const alertStore = useAlertStore();
+                alertStore.error(error);                
+            }
+        },
+        async getUsersbySurnameDesc() {
+            try {
+                this.users = await fetchWrapper.get(`${baseUrl}/users/sort/surname/desc`);
             }
             catch (error) {
                 const alertStore = useAlertStore();

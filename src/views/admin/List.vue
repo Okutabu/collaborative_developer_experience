@@ -21,6 +21,24 @@ function triLastActivity() {
     adminStore.desc = !adminStore.desc;
 }
 
+function triName() {
+    if (adminStore.desc) {
+        adminStore.getUsersbyNameDesc();
+    } else {
+        adminStore.getUsersbyName();
+    }
+    adminStore.desc = !adminStore.desc;
+}
+
+function triSurname() {
+    if (adminStore.desc) {
+        adminStore.getUsersbySurnameDesc();
+    } else {
+        adminStore.getUsersbySurname();
+    }
+    adminStore.desc = !adminStore.desc;
+}
+
 </script>
 
 <template>
@@ -28,8 +46,8 @@ function triLastActivity() {
     <table class="table table-striped">
         <thead>
             <tr>
-                <th style="width: 30%">First Name</th>
-                <th style="width: 30%">Last Name</th>
+                <th style="width: 30%">First Name <button @click=triName()>trier</button></th>
+                <th style="width: 30%">Last Name <button @click=triSurname()>trier</button></th>
                 <th style="width: 30%">Last activity <button @click=triLastActivity()>trier</button></th>
                 <th style="width: 10%"></th>
             </tr>
