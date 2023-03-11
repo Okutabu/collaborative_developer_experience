@@ -78,6 +78,136 @@ export function loadMirageInDev() {
                                     }
                                 ]}
                         });
+                        this.get(`${this.namespace}/admin/users/sort/lastInteraction`, () => {
+                            return {
+                                "answer": "Users found",
+                                "users": [
+
+                                    {
+                                        "idSTOW": {
+                                            "low": 20935520,
+                                            "high": 0
+                                        },
+                                        "lastInteraction": {
+                                            "low": 1673879022,
+                                            "high": 0
+                                        },
+                                        "mail": "lologan789@gmail.com",
+                                        "surname": "Logan",
+                                        "name": "Goddard"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 1234,
+                                            "high": 0
+                                        },
+                                        "lastInteraction": {
+                                            "low": 1678487711,
+                                            "high": 0
+                                        },
+                                        "mail": "bapt.ps3@live.fr",
+                                        "surname": "Baptiste",
+                                        "name": "Griva"
+                                    }
+                                ]}
+                        });
+                        this.get(`${this.namespace}/admin/users/sort/lastInteractionTrue`, () => {
+                            return {
+                                "answer": "Users found",
+                                "users": [
+                                    {
+                                        "idSTOW": {
+                                            "low": 1234,
+                                            "high": 0
+                                        },
+                                        "lastInteraction": {
+                                            "low": 1678487711,
+                                            "high": 0
+                                        },
+                                        "mail": "bapt.ps3@live.fr",
+                                        "surname": "Baptiste",
+                                        "name": "Griva"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 20935520,
+                                            "high": 0
+                                        },
+                                        "lastInteraction": {
+                                            "low": 1673879022,
+                                            "high": 0
+                                        },
+                                        "mail": "lologan789@gmail.com",
+                                        "surname": "Logan",
+                                        "name": "Goddard"
+                                    }
+                                ]}
+                        });
+                        this.get(`${this.namespace}/admin/users/sort/lastInteraction`, () => {
+                            return {
+                                "answer": "Users found",
+                                "users": [
+
+                                    {
+                                        "idSTOW": {
+                                            "low": 20935520,
+                                            "high": 0
+                                        },
+                                        "lastInteraction": {
+                                            "low": 1673879022,
+                                            "high": 0
+                                        },
+                                        "mail": "lologan789@gmail.com",
+                                        "surname": "Logan",
+                                        "name": "Goddard"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 1234,
+                                            "high": 0
+                                        },
+                                        "lastInteraction": {
+                                            "low": 1678487711,
+                                            "high": 0
+                                        },
+                                        "mail": "bapt.ps3@live.fr",
+                                        "surname": "Baptiste",
+                                        "name": "Griva"
+                                    }
+                                ]}
+                        });
+                        this.get(`${this.namespace}/admin/users/sort/lastInteractionTrue`, () => {
+                            return {
+                                "answer": "Users found",
+                                "users": [
+                                    {
+                                        "idSTOW": {
+                                            "low": 1234,
+                                            "high": 0
+                                        },
+                                        "lastInteraction": {
+                                            "low": 1678487711,
+                                            "high": 0
+                                        },
+                                        "mail": "bapt.ps3@live.fr",
+                                        "surname": "Baptiste",
+                                        "name": "Griva"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 20935520,
+                                            "high": 0
+                                        },
+                                        "lastInteraction": {
+                                            "low": 1673879022,
+                                            "high": 0
+                                        },
+                                        "mail": "lologan789@gmail.com",
+                                        "surname": "Logan",
+                                        "name": "Goddard"
+                                    }
+                                ]}
+                        });
 
                         //default route
                         

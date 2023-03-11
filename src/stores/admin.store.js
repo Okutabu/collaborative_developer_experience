@@ -9,9 +9,11 @@ export const useAdminStore = defineStore({
     id: 'admin',
     state: () => ({
         stats: {},
-        users: {}
+        users: {},
+        desc: false
     }),
     actions: {
+
         async getStats() {
             try {
                 this.stats = await fetchWrapper.get(`${baseUrl}/statistics`);
@@ -24,6 +26,42 @@ export const useAdminStore = defineStore({
         async getUsers() {
             try {
                 this.users = await fetchWrapper.get(`${baseUrl}/users`);
+            }
+            catch (error) {
+                const alertStore = useAlertStore();
+                alertStore.error(error);                
+            }
+        },
+        async getUsersbyLastActivity() {
+            try {
+                this.users = await fetchWrapper.get(`${baseUrl}/users/sort/lastInteraction`);
+            }
+            catch (error) {
+                const alertStore = useAlertStore();
+                alertStore.error(error);                
+            }
+        },
+        async getUsersbyLastActivityDesc() {
+            try {
+                this.users = await fetchWrapper.get(`${baseUrl}/users/sort/lastInteractionTrue`);
+            }
+            catch (error) {
+                const alertStore = useAlertStore();
+                alertStore.error(error);                
+            }
+        },
+        async getUsersbyName() {
+            try {
+                this.users = await fetchWrapper.get(`${baseUrl}/users/sort/lastInteraction`);
+            }
+            catch (error) {
+                const alertStore = useAlertStore();
+                alertStore.error(error);                
+            }
+        },
+        async getUsersbyNameDesc() {
+            try {
+                this.users = await fetchWrapper.get(`${baseUrl}/users/sort/lastInteractionTrue`);
             }
             catch (error) {
                 const alertStore = useAlertStore();

@@ -6,37 +6,40 @@ import { useUsersStore } from '@/stores';
 // const usersStore = useUsersStore();
 // const { users } = storeToRefs(usersStore);
 
+
 const adminStore = useAdminStore();
 const { users } = storeToRefs(adminStore);
 adminStore.getUsers();
+
+
+function triLastActivity() {
+    if (adminStore.desc) {
+        adminStore.getUsersbyLastActivityDesc();
+    } else {
+        adminStore.getUsersbyLastActivity();
+    }
+    adminStore.desc = !adminStore.desc;
+}
 
 </script>
 
 <template>
     <h1>Users</h1>
-    <router-link to="/admin/users/add" class="btn btn-sm btn-success mb-2">Add User</router-link>
     <table class="table table-striped">
         <thead>
             <tr>
                 <th style="width: 30%">First Name</th>
                 <th style="width: 30%">Last Name</th>
-                <th style="width: 30%">Last activity</th>
+                <th style="width: 30%">Last activity <button @click=triLastActivity()>trier</button></th>
                 <th style="width: 10%"></th>
             </tr>
         </thead>
         <tbody>
             <template v-if="users">
-                <tr v-for="user in users.users" :key="user.id">
+                <tr v-for="user in users.users">
                     <td>{{ user.surname }}</td>
                     <td>{{ user.name }}</td>
                     <td>{{ (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}</td>
-                    <td style="white-space: nowrap">
-                        <router-link :to="`/users/edit/${user.id}`" class="btn btn-sm btn-primary mr-1">Edit</router-link>
-                        <button @click="usersStore.delete(user.id)" class="btn btn-sm btn-danger btn-delete-user" :disabled="user.isDeleting">
-                            <span v-if="user.isDeleting" class="spinner-border spinner-border-sm"></span>
-                            <span v-else>Delete</span>
-                        </button>
-                    </td>
                 </tr>
             </template>
             <tr v-if="users.loading">
