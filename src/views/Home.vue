@@ -103,7 +103,7 @@ console.log(user);
 }
 
 .container-welcome-message {
-    height: 130px;
+    height: 100px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -124,6 +124,7 @@ console.log(user);
     justify-content: space-around;
     align-items: center;
     background-color: rgb(230, 230, 230);
+    padding-top: 50px;
 }
 
 .container-usercard-peek {
@@ -158,7 +159,12 @@ console.log(user);
 }
 
 .nav-item {
-    margin-right: 1em;
+    margin-right: 2em;
+}
+
+.dropdown-toggle{
+    color: black;
+    font-weight: bold;
 }
 
 </style>

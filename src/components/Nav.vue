@@ -36,7 +36,7 @@ const authStore = useAuthStore();
 .navbar{
     background-color: #ffffff;
     border-bottom: 1px solid #000000;
-    width: 20%;
+    width: 300px;
     display: flex;
     flex-direction: column;
 }
@@ -71,10 +71,10 @@ const authStore = useAuthStore();
     margin-bottom: 100px;
 }
 
-.navbar-brand img {
-    width: 100%;
-    height: 100%;
-}
+
+
+
+
 
 </style>
     
