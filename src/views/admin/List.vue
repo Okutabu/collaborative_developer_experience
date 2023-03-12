@@ -90,13 +90,12 @@ function triSurname() {
             <template v-if="users">
                 <input type="text" v-model="input" placeholder="Search dev..." />
                     <tr v-for="user in users" :key = "user">
-                        <td>{{ user.surname }}</td>
-                        <td>{{ user.name }}</td>
-                        <td>{{ (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}</td>
+                        <div v-if="user.name.toLowerCase().includes(input.toLowerCase()) || user.surname.toLowerCase().includes(input.toLowerCase()) ">
+                            <td>{{ user.surname }}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}</td>
+                        </div>
                     </tr>
-                <div class="item error" v-if="input&&!filteredList().length">
-                    <p>Aucun résultat trouvé !</p>
-                </div>
             </template>
             <tr v-if="users.loading">
                 <td colspan="4" class="text-center">
