@@ -21,9 +21,11 @@ jobs:
         with:
           node-version: '16.x'
 
-      - name: npm install
+      - name: npm install, build, and test
         run: |
           npm install
+          npm run build --if-present
+          npm run test --if-present
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
@@ -50,5 +52,5 @@ jobs:
         with:
           app-name: 'cdeapibybtm'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_980744B4382D4E738A1E9890F0036EC2 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_391F34FCE39642B5BF834ECB65A7D47C }}
           package: .
