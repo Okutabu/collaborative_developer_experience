@@ -36,15 +36,16 @@ const valeurs = [
 ];
 
 const adminStore = useAdminStore();
-const { users } = storeToRefs(adminStore);
+const { users, usersDotUsers } = storeToRefs(adminStore);
 adminStore.getUsers();
+adminStore.getUsersDotUsers();
 
 function filteredList() {
+
   return valeurs.filter((valeur) =>
     valeur.name.toLowerCase().includes(input.value.toLowerCase())
   );
 }
-
 
 function triLastActivity() {
     if (adminStore.desc) {
@@ -72,7 +73,7 @@ function triSurname() {
     }
     adminStore.desc = !adminStore.desc;
 }
-console.log(users.users);
+
 </script>
 
 <template>
@@ -89,7 +90,8 @@ console.log(users.users);
         <tbody>
             <template v-if="users">
                 <input type="text" v-model="input" placeholder="Search dev..." />
-                <tr class="item fruit" v-for="test in filteredList()" :key="test">
+                <tr class="item test" v-for="test in filteredList()" :key="test">
+                    <td>{{ usersDotUsers[0] }}</td>
                     <td>{{ test.surname }}</td>
                     <td>{{ test.name }}</td>
                     <td>{{ (new Date(test.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}</td>

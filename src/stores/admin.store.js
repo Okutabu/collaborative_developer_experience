@@ -10,10 +10,21 @@ export const useAdminStore = defineStore({
     state: () => ({
         stats: {},
         users: {},
+        usersDotUsers: [],
         desc: false
     }),
     actions: {
-
+        async getUsersDotUsers() {
+            try {
+                var res = await fetchWrapper.get(`${baseUrl}/users`);
+                res = JSON.parse(JSON.stringify(res));
+                this.usersDotUsers = res.users;
+            }
+            catch (error) {
+                const alertStore = useAlertStore();
+                alertStore.error(error);                
+            }
+        },
         async getStats() {
             try {
                 this.stats = await fetchWrapper.get(`${baseUrl}/statistics`);
@@ -25,7 +36,9 @@ export const useAdminStore = defineStore({
         },
         async getUsers() {
             try {
-                this.users = await fetchWrapper.get(`${baseUrl}/users`);
+                var res = await fetchWrapper.get(`${baseUrl}/users`);
+                res = JSON.parse(JSON.stringify(res));
+                this.users = res.users;
             }
             catch (error) {
                 const alertStore = useAlertStore();
