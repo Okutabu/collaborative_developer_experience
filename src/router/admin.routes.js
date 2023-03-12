@@ -7,6 +7,7 @@ export default {
         { path: '', component: AdminHomePage },
         { path: 'users/add', component: AddEdit },
         { path: 'edit/:id', component: AddEdit },
+        { path: 'users/:profile', component: Profile},
         { path: 'users', component: List },
         { path: 'stats', component: Stats}
     ]
