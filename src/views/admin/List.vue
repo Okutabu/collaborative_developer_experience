@@ -36,9 +36,8 @@ const valeurs = [
 ];
 
 const adminStore = useAdminStore();
-const { users, usersDotUsers } = storeToRefs(adminStore);
+const { users } = storeToRefs(adminStore);
 adminStore.getUsers();
-adminStore.getUsersDotUsers();
 
 function filteredList() {
 
@@ -90,20 +89,14 @@ function triSurname() {
         <tbody>
             <template v-if="users">
                 <input type="text" v-model="input" placeholder="Search dev..." />
-                <tr class="item test" v-for="test in filteredList()" :key="test">
-                    <td>{{ usersDotUsers[0] }}</td>
-                    <td>{{ test.surname }}</td>
-                    <td>{{ test.name }}</td>
-                    <td>{{ (new Date(test.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}</td>
-                </tr>
+                    <tr v-for="user in users" :key = "user">
+                        <td>{{ user.surname }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}</td>
+                    </tr>
                 <div class="item error" v-if="input&&!filteredList().length">
                     <p>Aucun résultat trouvé !</p>
                 </div>
-                <!-- <tr v-for="user in users.users" :key = "user">
-                    <td>{{ user.surname }}</td>
-                    <td>{{ user.name }}</td>
-                    <td>{{ (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}</td>
-                </tr> -->
             </template>
             <tr v-if="users.loading">
                 <td colspan="4" class="text-center">

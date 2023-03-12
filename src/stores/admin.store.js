@@ -47,7 +47,9 @@ export const useAdminStore = defineStore({
         },
         async getUsersbyLastActivity() {
             try {
-                this.users = await fetchWrapper.get(`${baseUrl}/users/sort/lastInteraction`);
+                var res = await fetchWrapper.get(`${baseUrl}/users/sort/lastInteraction`);
+                res = JSON.parse(JSON.stringify(res));
+                this.users = res.users;
             }
             catch (error) {
                 const alertStore = useAlertStore();
@@ -56,7 +58,9 @@ export const useAdminStore = defineStore({
         },
         async getUsersbyLastActivityDesc() {
             try {
-                this.users = await fetchWrapper.get(`${baseUrl}/users/sort/lastInteraction/desc`);
+                var res = await fetchWrapper.get(`${baseUrl}/users/sort/lastInteraction/desc`);
+                res = JSON.parse(JSON.stringify(res));
+                this.users = res.users;
             }
             catch (error) {
                 const alertStore = useAlertStore();
@@ -65,7 +69,9 @@ export const useAdminStore = defineStore({
         },
         async getUsersbyName() {
             try {
-                this.users = await fetchWrapper.get(`${baseUrl}/users/sort/name`);
+                var res = await fetchWrapper.get(`${baseUrl}/users/sort/name`);
+                res = JSON.parse(JSON.stringify(res));
+                this.users = res.users;
             }
             catch (error) {
                 const alertStore = useAlertStore();
@@ -74,7 +80,9 @@ export const useAdminStore = defineStore({
         },
         async getUsersbyNameDesc() {
             try {
-                this.users = await fetchWrapper.get(`${baseUrl}/users/sort/name/desc`);
+                var res = await fetchWrapper.get(`${baseUrl}/users/sort/name/desc`);
+                res = JSON.parse(JSON.stringify(res));
+                this.users = res.users;
             }
             catch (error) {
                 const alertStore = useAlertStore();
@@ -83,7 +91,9 @@ export const useAdminStore = defineStore({
         },
         async getUsersbySurname() {
             try {
-                this.users = await fetchWrapper.get(`${baseUrl}/users/sort/surname`);
+                var res = await fetchWrapper.get(`${baseUrl}/users/sort/surname`);
+                res = JSON.parse(JSON.stringify(res));
+                this.users = res.users;
             }
             catch (error) {
                 const alertStore = useAlertStore();
@@ -92,7 +102,9 @@ export const useAdminStore = defineStore({
         },
         async getUsersbySurnameDesc() {
             try {
-                this.users = await fetchWrapper.get(`${baseUrl}/users/sort/surname/desc`);
+                var res = await fetchWrapper.get(`${baseUrl}/users/sort/surname/desc`);
+                res = JSON.parse(JSON.stringify(res));
+                this.users = res.users;
             }
             catch (error) {
                 const alertStore = useAlertStore();
