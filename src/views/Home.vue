@@ -7,6 +7,7 @@ import { useRecoStore } from '@/stores';
 import DynamicCard from '../components/DynamicCard.vue';
 import UserCardSimplified from '../components/UserCardSimplified.vue';
 import UserCard from '../components/UserCard.vue';
+import Header from '../components/Header.vue';
 
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
@@ -17,33 +18,15 @@ const { usersReco, usersRecoSimilarity, usersRecoQuestion } = storeToRefs(usersS
 const typeSimilaire = ref('Projet similaire')
 const typeReponse= ref('Helper')
 const typeQuestion = ref('To help')
+const espace = ref('de collaboration')
 
 console.log(user);
 
 </script>
 
 <template>
-    <div v-if="user" class="header">
-        <div class="container-welcome-message">
-                <h2> Bienvenue sur votre espace de collaboration</h2>
-                <p class="text-muted">Découvrez de nouvelles relations chez PTC</p>
-        </div>
-        <div class="container-action-bar">
-            <div class="container-bell">
-                <!-- <b-icon icon="bell-fill" class="border rounded p-2"></b-icon> -->
-            </div>
-            <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{user.user.surname}} {{ user.user.name }}</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Mes favoris</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#" @click="authStore.logout()">Se deconnecter</a>
-                </div>
-            </div>
-        </div>
-    
+    <div v-if="user">
+        <Header :surname=user.user.surname  :name=user.user.name :espace=espace />
     </div>
 
     <div class="container-similarities">
@@ -93,31 +76,6 @@ console.log(user);
 
 <style scoped>
 
-.header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgb(248, 249, 250);
-    width: 100%;
-}
-
-.container-welcome-message {
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    margin-left: 2em;
-}
-
-.container-action-bar{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 20%;
-}
-
 .container-similarities {
     display: flex;
     flex-direction: row;
@@ -156,15 +114,12 @@ console.log(user);
     font-size: 1em;
     font-weight: bold;
     margin-bottom: 1em;
+    border: solid black 1px;
+    border-radius: 30px;
+    padding: 0.5em;
+    background-color: rgb(200, 200, 200);
 }
 
-.nav-item {
-    margin-right: 2em;
-}
 
-.dropdown-toggle{
-    color: black;
-    font-weight: bold;
-}
 
 </style>

@@ -1,39 +1,46 @@
 <script>
-import { storeToRefs } from 'pinia';
-import { ref } from 'vue'
+import { defineProps } from 'vue'
 
 
-const props = defineProps({
-  name: String,
-})
-
-
-
+export default {
+    name: 'Header',
+    props: {
+        name: {
+            type: String,
+            required: true
+        },
+        surname: {
+            type: String,
+            required: true
+        },
+        espace: {
+            type: String,
+            required: true
+        }
+    }
+}
 </script>
 
 
 <template>
-    <div v-if="user" class="header">
+    <div class="header">
         <div class="container-welcome-message">
-                <h2>Hey  {{ props.name }} ! Bienvenue sur votre espace de collaboration !</h2>
-                <p class="text-muted"> Faites de nouvelles rencontres</p>
+                <h2> Bienvenue sur votre espace {{ espace }}</h2>
+                <p class="text-muted">Découvrez de nouvelles relations chez PTC</p>
         </div>
-        <div class="container-action-bar">
-            <div class="container-bell">
-                <!-- <b-icon icon="bell-fill" class="border rounded p-2"></b-icon> -->
-            </div>
-            <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{user.surname}} {{user.name}}</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Separated link</a>
+            <div class="container-action-bar">
+                <div class="container-bell">
+                    <!-- <b-icon icon="bell-fill" class="border rounded p-2"></b-icon> -->
+                </div>
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ surname }} {{ name }}</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Mes favoris</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
                 </div>
             </div>
-        </div>
-    
     </div>
 </template>
 
@@ -44,8 +51,16 @@ const props = defineProps({
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--cde-c-palette-dark-4);
+    background-color: rgb(248, 249, 250);
     width: 100%;
+}
+
+.container-welcome-message {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left: 2em;
 }
 
 .container-action-bar{
@@ -54,6 +69,15 @@ const props = defineProps({
     justify-content: space-between;
     align-items: center;
     width: 20%;
+}
+
+.nav-item {
+    margin-right: 3em;
+}
+
+.dropdown-toggle{
+    color: black;
+    font-weight: bold;
 }
 
 </style>
