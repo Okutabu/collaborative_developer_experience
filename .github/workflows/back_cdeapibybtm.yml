@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'cdeapibybtm'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_391F34FCE39642B5BF834ECB65A7D47C }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6E9B3F9EDEB942EDA9128EE4A321F004 }}
           package: .
