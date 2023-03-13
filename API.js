@@ -675,13 +675,7 @@ app.get('/user/:idSTOW/proficiency', (req, res) => {
 });
 
 
-/*
-Ce qu'il faut rajouter :
-	getNbAnswers
-	getNbInteractions
-	// getNbOfUsersUsingTopTags([tag1.. tag5])
-	getTagWithMostUsers()
-*/
+
 app.get('/admin/statistics', (req, res) => {
 
     (async() => {
