@@ -26,7 +26,7 @@ const props = defineProps({
                 </div>
                 <div class="info">
                     <p class="bold name">{{ pseudo || 'loading...' }}</p>
-                    <p class="type" >{{ type || 'loading...' }}</p>
+                    <!-- <p class="type" >{{ type || 'loading...' }}</p> -->
                     <p class="speciality">point fort : {{ reco || 'loading...' }}</p>
                 </div>
                 
@@ -34,7 +34,7 @@ const props = defineProps({
         </div>
         <div class="user_stats">
             <div> 
-                <Radar :technoratio=props.techno /> 
+                <Radar :technoratio=props.techno :ref_key=props.techno /> 
             </div>
         </div>
     </div>

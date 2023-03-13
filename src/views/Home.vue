@@ -23,6 +23,13 @@ const message = ref('Découvrez de nouvelles relations chez PTC')
 
 console.log(user);
 
+const userSelected = ref(null);
+
+function onClick(userParam) {
+    userSelected.value = userParam;
+    console.log(userSelected.value);
+}
+
 </script>
 
 <template>
@@ -34,7 +41,9 @@ console.log(user);
         
         <div class="container-raw-cosinus-similarity" v-if="usersRecoSimilarity">
             <span class="categorie-recommendation">Utilisateurs similaires à vous</span>
-            <UserCardSimplified v-for="user in usersRecoSimilarity.users" :nom=user[0].pseudo :type=typeSimilaire :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar /> 
+            <div @click="onClick(usersRecoSimilarity.users)">
+                <UserCardSimplified v-for="user in usersRecoSimilarity.users" :nom=user[0].pseudo :type=typeSimilaire :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar /> 
+            </div>
         </div>
         <div v-else>
             <div class="spinner-border custom-spinner" role="status">
@@ -43,8 +52,9 @@ console.log(user);
         </div>
         <div class="container-similarity-tag-answers" v-if="usersReco">
             <span class="categorie-recommendation">Utilisateurs qui repondent à vos questions</span>
-            <UserCardSimplified v-for="user in usersReco.users" :nom=user[0].pseudo :type=typeReponse :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar />
-            
+            <div @click="onClick(usersReco.users)">
+                <UserCardSimplified v-for="user in usersReco.users" :nom=user[0].pseudo :type=typeReponse :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar />
+            </div>
         </div>
         <div v-else>
             <div class="spinner-border custom-spinner" role="status">
@@ -53,8 +63,9 @@ console.log(user);
         </div>
         <div class="container-similarity-tag-questions" v-if="usersRecoQuestion">
             <span class="categorie-recommendation">Utilisateurs que vous pouvez aider</span>
-            <UserCardSimplified v-for="user in usersRecoQuestion.users" :nom=user[0].pseudo :type=typeQuestion :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar />
-            
+            <div @click="onClick(usersRecoQuestion.users)">
+                <UserCardSimplified v-for="user in usersRecoQuestion.users" :nom=user[0].pseudo :type=typeQuestion :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar />
+            </div>
         </div>
         <div v-else>
             <div class="spinner-border custom-spinner" role="status">
@@ -64,10 +75,8 @@ console.log(user);
     </div>
 
     <div class="container-usercard-peek"> 
-        <div>
-
-            <DynamicCard :techno=usersReco.users[0][1] />
-
+        <div v-if="userSelected">
+            <DynamicCard :nom=userSelected[0][0].pseudo :techno=userSelected[0][1] :avatar=userSelected[0][0].avatar :reco=userSelected[0][1][0].techno :key=userSelected />
         </div>
     </div>
     

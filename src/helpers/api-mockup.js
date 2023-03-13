@@ -301,7 +301,7 @@ export function loadMirageInDev() {
                                                     "pseudo": "AlexD", 
                                                     "avatar": "https://i.stack.imgur.com/2lm9w.jpg?s=256&g=1" },
                                                     [ 
-                                                        { "techno": "reactjs", "ratio": 23.52941176470588 }, 
+                                                        { "techno": "VueJS", "ratio": 16.52941176470588 }, 
                                                         { "techno": "material-ui", "ratio": 17.647058823529413 }, 
                                                         { "techno": "http-live-streaming", "ratio": 8.823529411764707 }, 
                                                         { "techno": "vercel", "ratio": 8.823529411764707 }, 
@@ -360,7 +360,7 @@ export function loadMirageInDev() {
                                                     "pseudo": "zinzinboy", 
                                                     "avatar": "https://www.gravatar.com/avatar/a125846e788fa0f180710a8c22942ff4?s=256&d=identicon&r=PG" },
                                                     [ 
-                                                        { "techno": "reactjs", "ratio": 23.52941176470588 }, 
+                                                        { "techno": "chatgpt", "ratio": 13.52941176470588 }, 
                                                         { "techno": "material-ui", "ratio": 17.647058823529413 }, 
                                                         { "techno": "http-live-streaming", "ratio": 8.823529411764707 }, 
                                                         { "techno": "vercel", "ratio": 8.823529411764707 }, 
@@ -419,7 +419,7 @@ export function loadMirageInDev() {
                                                     "pseudo": "Franck", 
                                                     "avatar": "https://i.stack.imgur.com/H1G7n.png?s=256&g=1" },
                                                     [ 
-                                                        { "techno": "reactjs", "ratio": 23.52941176470588 }, 
+                                                        { "techno": "Macmini", "ratio": 18.52941176470588 }, 
                                                         { "techno": "material-ui", "ratio": 17.647058823529413 }, 
                                                         { "techno": "http-live-streaming", "ratio": 8.823529411764707 }, 
                                                         { "techno": "vercel", "ratio": 8.823529411764707 }, 
