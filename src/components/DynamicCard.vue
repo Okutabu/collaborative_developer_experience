@@ -12,6 +12,7 @@ const props = defineProps({
   avatar: String,
   reco : String, 
   techno: String,
+  lastInteract: Number,
 })
 
 
@@ -28,7 +29,7 @@ function swapComponent() {
 <template>
 
     <div @click="swapComponent">
-        <component :is="boolean ? UserCard : UserCardSimplified " :nom={nom}.nom :type={type}.type :reco={reco}.reco :techno={techno} :avatar={avatar}.avatar :pseudo={nom}.nom />
+        <component :is="boolean ? UserCard : UserCardSimplified " :nom={nom}.nom :type={type}.type :reco={reco}.reco :techno={techno} :avatar={avatar}.avatar :pseudo={nom}.nom :lastInteract={lastInteract}.lastInteract />
     </div>
 
 

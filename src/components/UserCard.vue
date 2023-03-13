@@ -12,7 +12,11 @@ const props = defineProps({
   reco : String,
   techno: Array,
   ratio: Number,
+  lastInteract : Number,
 })
+
+const date = (new Date(props.lastInteract* 1000)).toLocaleString().split(',')[0] 
+
 
 </script>
 
@@ -26,8 +30,8 @@ const props = defineProps({
                 </div>
                 <div class="info">
                     <p class="bold name">{{ pseudo || 'loading...' }}</p>
-                    <!-- <p class="type" >{{ type || 'loading...' }}</p> -->
                     <p class="speciality">point fort : {{ reco || 'loading...' }}</p>
+                    <p class="lastInteract" >Dernière interaction : {{ date || 'loading...' }}</p>
                 </div>
                 
             </div>
