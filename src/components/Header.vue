@@ -16,6 +16,10 @@ export default {
         espace: {
             type: String,
             required: true
+        },
+        message: {
+            type: String,
+            required: true
         }
     }
 }
@@ -26,7 +30,7 @@ export default {
     <div class="header">
         <div class="container-welcome-message">
                 <h2> Bienvenue sur votre espace {{ espace }}</h2>
-                <p class="text-muted">Découvrez de nouvelles relations chez PTC</p>
+                <p class="text-muted">{{ message }}</p>
         </div>
             <div class="container-action-bar">
                 <div class="container-bell">

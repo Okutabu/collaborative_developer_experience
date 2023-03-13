@@ -19,6 +19,7 @@ const typeSimilaire = ref('Projet similaire')
 const typeReponse= ref('Helper')
 const typeQuestion = ref('To help')
 const espace = ref('de collaboration')
+const message = ref('Découvrez de nouvelles relations chez PTC')
 
 console.log(user);
 
@@ -26,7 +27,7 @@ console.log(user);
 
 <template>
     <div v-if="user">
-        <Header :surname=user.user.surname  :name=user.user.name :espace=espace />
+        <Header :surname=user.user.surname  :name=user.user.name :espace=espace :message=message />
     </div>
 
     <div class="container-similarities">
