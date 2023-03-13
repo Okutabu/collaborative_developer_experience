@@ -1,15 +1,7 @@
-
 const db = require('./neo4j_request');
 const requete = require('./STOWrequests');
 const users = require('./users');
 const profil = require('./calculateur');
-
-const neo4j = require('neo4j-driver');
-
-const uri = 'neo4j+s://47c2d019.databases.neo4j.io';
-const user = 'neo4j';
-const password = 'iUqo1cQ1GZr0w1Am5Uy68kslIxkdk9zS62yDmlHjsdc';
-const driver = neo4j.driver(uri, neo4j.auth.basic(user, password));
 
 
 async function start_collector_first_time(){
@@ -46,6 +38,9 @@ async function update_db(){
 
 (async() => {
 
+
     await start_collector_first_time();
+
+    db.driver.close();
     
 })();

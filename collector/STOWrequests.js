@@ -175,6 +175,8 @@ async function get_user(id){
 
     try {
         var data = await fetch(URL).then(response => response.json());
+
+        //console.log(data);
         var info = {
             idSTOW: data.items[0].user_id,
             pseudo: data.items[0].display_name,
@@ -194,7 +196,7 @@ async function get_users(allIds){
 
     for(id of ids){
         const info = await get_user(id);
-        await sleep(500);
+        await sleep(1000);
         users_info.push(info);
     }
 
