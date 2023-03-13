@@ -675,21 +675,20 @@ app.get('/user/:idSTOW/proficiency', (req, res) => {
 });
 
 
-/*
-getNbOfActiveUsers, getNbQuestions, getNbAnswers, getNbInteractions, getTagsWithMostUsers
-*/
 app.get('/admin/statistics', (req, res) => {
 
     (async() => {
         const nbTags = await db.getNbTags();
         const nbUsers = await db.getNbUsers();
 		const topTags = await db.getTopTags();
-		const tab = [];
-
-		
+		const activeUsers = await db.getNbInteractions();
+		const nbQuestions = await db.getNbQuestions();
+		const nbAnswers = await db.getNbAnswers();
+		const nbInteractions = await db.getNbInteractions();
+		const tagsWithMostUsers = await db.getTagsWithMostUsers();
 
         //teste si le tableau est vide
-        if(!nbTags.length || !nbUsers.length || !topTags){
+        if(!nbTags.length || !nbUsers.length || !topTags || !activeUsers || !nbQuestions || !nbAnswers || !nbInteractions || !tagsWithMostUsers ){
             res.status(404).send({
                 answer: "Statistics not found",
                 users: [],
@@ -698,16 +697,36 @@ app.get('/admin/statistics', (req, res) => {
         }
         else{
 
-			for(let i = 0; i < 5; i++) {
-                var title = topTags[i]._fields[0].properties.title;
-                tab.push(title);
-            }
+			const tabTopTags = [];
 
+			for(let i = 0; i < 5; i++) {
+				var infos = {
+					tag: topTags[i]._fields[0].properties.title,
+					nbInteractions: topTags[i]._fields[1].low
+				};
+                tabTopTags.push(infos);
+            }
+		
+			const tabTagsUsers = [];
+			for(let i = 0; i < 5; i++){
+				var infos = {
+					tag: tagsWithMostUsers[i]._fields[1].properties.title,
+					nbInteractions: tagsWithMostUsers[i]._fields[0].low
+				};
+                tabTagsUsers.push(infos);
+
+			}
+			
             res.status(200).send({
 				answer: "Statistics found",
 				nbTags: nbTags[0]._fields[0].low,
 				nbUsers: nbUsers[0]._fields[0].low,
-				topTags: tab,
+				topTags: tabTopTags,
+				nbInteractions: nbInteractions[0]._fields[0].low,
+				nbAnswers: nbAnswers[0]._fields[0].low,
+				nbInteractions: nbInteractions[0]._fields[0].low,
+				nbActiveUsers: activeUsers[0]._fields[0].low,
+				tagsWithMostUsers: tabTagsUsers,
 				error: 0
 			});
         }
