@@ -250,7 +250,7 @@ const user63 =
 
         try{
             const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
-                             WITH COUNT(i.nbQuestions) AS nbQuestions
+                             WITH sum(i.nbQuestions) AS nbQuestions
                              RETURN nbQuestions`;
         
             const readResult =  await session.executeRead(tx =>
@@ -264,7 +264,47 @@ const user63 =
         }
     }
 
+    async function getNbAnswers(){
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
+                             WITH sum(i.nbQuestions) AS nbQuestions
+                             RETURN nbQuestions`;
+        
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete)
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong [ getNbAnswers ]:  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
     
+
+async function getNbInteractions(){
+    const session = driver.session({ database: 'neo4j' });
+
+    try{
+        const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
+                         WITH sum(i.nbQuestions) AS questions, sum(i.nbAnswers) AS answers
+                         RETURN (questions + answers) AS interactions`;
+    
+        const readResult =  await session.executeRead(tx =>
+            tx.run(requete)
+        );
+        return readResult.records;
+    }catch(error){
+        console.error(`Something went wrong [ getNbInteractions ]:  ${error}`);
+    } finally {
+        await session.close();
+    }
+}
+
+
 
     async function getUsers(){
 
@@ -321,7 +361,7 @@ const user63 =
     
 module.exports = {
     createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags, getUsers,
-    getUsersSorted, getNbOfActiveUsers,
+    getUsersSorted, getNbOfActiveUsers, getNbQuestions, getNbAnswers, getNbInteractions
 };
 
 /*
