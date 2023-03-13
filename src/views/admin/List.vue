@@ -71,6 +71,7 @@ function triSurname() {
         adminStore.getUsersbySurname();
     }
     adminStore.desc = !adminStore.desc;
+
 }
 
 </script>
@@ -89,12 +90,14 @@ function triSurname() {
         <tbody>
             <template v-if="users">
                 <input type="text" v-model="input" placeholder="Search dev..." />
-                    <tr v-for="user in users" :key = "user">
+                <tr v-for="user in users" :key = "user">
+                    <router-link :to="`/admin/users/profile/${user.idSTOW.low}`">
                         <div v-if="user.name.toLowerCase().includes(input.toLowerCase()) || user.surname.toLowerCase().includes(input.toLowerCase()) ">
                             <td>{{ user.surname }}</td>
                             <td>{{ user.name }}</td>
                             <td>{{ (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}</td>
                         </div>
+                    </router-link>
                     </tr>
             </template>
             <tr v-if="users.loading">

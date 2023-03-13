@@ -514,8 +514,19 @@ export function loadMirageInDev() {
 
         function getUserById() {
 
-            const user = users.find(x => x.id === idFromUrl());
-            return ok(basicDetails(user));
+            return {
+                "idSTOW": {
+                    "low": 20935520,
+                    "high": 0
+                },
+                "lastInteraction": {
+                    "low": 1673879022,
+                    "high": 0
+                },
+                "mail": "lologan789@gmail.com",
+                "surname": "Logan",
+                "name": "Goddard"
+            }
         }
 
         function updateUser(request) {
