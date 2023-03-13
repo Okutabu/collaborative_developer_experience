@@ -66,12 +66,7 @@ const props = defineProps({
     border: 1px solid black;
     margin-bottom: 15px;
     margin-right: 40px;
-
-
-}
-
-.container_user_info {
-    
+    margin-top: 30px;
 }
 
 .info {
@@ -86,6 +81,7 @@ const props = defineProps({
     width: 100%;
     height: 100%;
     border-radius: 30%;
+    
 }
 
 .user_description {
@@ -93,6 +89,7 @@ const props = defineProps({
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    margin-top: 30px;
 
 
 }
