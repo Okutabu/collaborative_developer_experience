@@ -149,7 +149,8 @@ const user63 =
             var test = {
                 idSTOW : idSTOW,
                 pseudo : data[0]._fields[0].properties.pseudo,
-                avatar: data[0]._fields[0].properties.avatar
+                avatar: data[0]._fields[0].properties.avatar,
+                lastInteraction: data[0]._fields[0].properties.lastInteraction.low
             }
             users.push(test)
             data.map( (elem) => {
@@ -210,8 +211,10 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            const requete = `MATCH(u:User)-[i:INTERACT]-(t:Tag)                             
-                             RETURN t as topTags ORDER by i.nbInteractions
+            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
+                             WITH sum(i.nbQuestions + i.nbAnswers) AS interactions, t AS topTags
+                             RETURN topTags, interactions
+                             ORDER BY interactions DESC
                              LIMIT 5`;
         
             const readResult =  await session.executeRead(tx =>
@@ -219,11 +222,113 @@ const user63 =
             );
             return readResult.records;
         }catch(error){
-            console.error(`Something went wrong :  ${error}`);
+            console.error(`Something went wrong [ getTopTags ]:  ${error}`);
         } finally {
             await session.close();
         }
     }
+
+    async function getNbOfActiveUsers(){
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `MATCH (u:User)
+                             WHERE  u.lastInteraction <> -1
+                             WITH COUNT(u) AS nbActive
+                             RETURN nbActive`;
+        
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete)
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong [ getNbOfActiveUsers ]:  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+    async function getNbQuestions(){
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
+                             WITH sum(i.nbQuestions) AS nbQuestions
+                             RETURN nbQuestions`;
+        
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete)
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong [ getNbQuestions ]:  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+    async function getNbAnswers(){
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
+                             WITH sum(i.nbQuestions) AS nbQuestions
+                             RETURN nbQuestions`;
+        
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete)
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong [ getNbAnswers ]:  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+    
+
+    async function getNbInteractions(){
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
+                            WITH sum(i.nbQuestions) AS questions, sum(i.nbAnswers) AS answers
+                            RETURN (questions + answers) AS interactions`;
+        
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete)
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong [ getNbInteractions ]:  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+    async function getTagsWithMostUsers(){
+        const session = driver.session({ database: 'neo4j' });
+    
+        try{
+            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
+                             WITH COUNT(i) AS nbUsers, t AS tag
+                             RETURN nbUsers, tag
+                             ORDER BY nbUsers DESC
+                             LIMIT 5`;
+        
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete)
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong [ getTagsWithMostUsers ]:  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+
 
     async function getUsers(){
 
@@ -300,7 +405,8 @@ const user63 =
 
     
 module.exports = {
-    createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags, getUsers, getUsersSorted, getTagAdmin
+    createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags, getUsers,
+    getUsersSorted, getNbOfActiveUsers, getNbQuestions, getNbAnswers, getNbInteractions, getTagsWithMostUsers
 };
 
 /*
