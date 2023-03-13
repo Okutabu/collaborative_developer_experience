@@ -675,7 +675,9 @@ app.get('/user/:idSTOW/proficiency', (req, res) => {
 });
 
 
-
+/*
+getNbOfActiveUsers, getNbQuestions, getNbAnswers, getNbInteractions, getTagsWithMostUsers
+*/
 app.get('/admin/statistics', (req, res) => {
 
     (async() => {

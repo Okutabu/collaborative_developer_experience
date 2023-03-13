@@ -149,7 +149,8 @@ const user63 =
             var test = {
                 idSTOW : idSTOW,
                 pseudo : data[0]._fields[0].properties.pseudo,
-                avatar: data[0]._fields[0].properties.avatar
+                avatar: data[0]._fields[0].properties.avatar,
+                lastInteraction: data[0]._fields[0].properties.lastInteraction.low
             }
             users.push(test)
             data.map( (elem) => {
@@ -384,7 +385,7 @@ const user63 =
     
 module.exports = {
     createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags, getUsers,
-    getUsersSorted, getNbOfActiveUsers, getNbQuestions, getNbAnswers, getNbInteractions
+    getUsersSorted, getNbOfActiveUsers, getNbQuestions, getNbAnswers, getNbInteractions, getTagsWithMostUsers
 };
 
 /*
