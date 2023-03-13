@@ -41,6 +41,13 @@ const props = defineProps({
     margin: 10px;
 }
 
+.container_user_card:hover {
+    box-shadow: 0 0 30px 0 rgba(151, 144, 144, 0.5);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) translate3d(0px, -5px, 0px);
+}
+
 .user_description {
     display: flex;
     flex-direction: column;

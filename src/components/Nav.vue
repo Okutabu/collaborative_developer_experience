@@ -18,9 +18,9 @@ const authStore = useAuthStore();
                 <li class="nav-item">
                     <RouterLink to="/admin" class="nav-item nav-link"><i class="fa fa-unlock"></i> &nbsp; Admin</RouterLink>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <RouterLink to="/message" class="nav-item nav-link"><i class="fa fa-solid fa-envelope"></i>&nbsp; Message</RouterLink>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <button @click="authStore.logout()" class="btn btn-link nav-item nav-link"><i class="fa fa-sign-out" style="font-size:24px"></i> Logout</button>
                 </li>
@@ -35,7 +35,6 @@ const authStore = useAuthStore();
 <style scoped>
 .navbar{
     background-color: #ffffff;
-    border-bottom: 1px solid #000000;
     width: 300px;
     display: flex;
     flex-direction: column;
