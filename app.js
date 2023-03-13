@@ -7,7 +7,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/user');
 
 const express = require('express');
-const db = require('./db_neo4j');
+const db = require('../db_neo4j');
 
 
 var app = express();
