@@ -21,7 +21,6 @@ const typeQuestion = ref('To help')
 const espace = ref('de collaboration')
 const message = ref('Découvrez de nouvelles relations chez PTC')
 
-console.log(user);
 
 const userSelected = ref(null);
 
@@ -76,7 +75,7 @@ function onClick(userParam) {
 
     <div class="container-usercard-peek"> 
         <div v-if="userSelected">
-            <DynamicCard :nom=userSelected[0][0].pseudo :techno=userSelected[0][1] :avatar=userSelected[0][0].avatar :reco=userSelected[0][1][0].techno :key=userSelected />
+            <DynamicCard :nom=userSelected[0][0].pseudo :techno=userSelected[0][1] :avatar=userSelected[0][0].avatar :reco=userSelected[0][1][0].techno :key=userSelected :lastInteract=userSelected[0][0].lastInteraction /> 
         </div>
         <div v-else class="waiting-clic">
         </div>
