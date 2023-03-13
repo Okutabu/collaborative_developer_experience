@@ -716,6 +716,7 @@ app.get('/admin/users', (req, res) => {
 	(async() => {
 
 		const neo4jUsers = await db.getUsers();
+		var temp;
 
 		if(!neo4jUsers.length){
 
@@ -728,10 +729,16 @@ app.get('/admin/users', (req, res) => {
 		else{
 
 			let allUsers = [];
+			let users;
 			//oui[2]._fields[0].properties
 			for(let i = 0; i < neo4jUsers.length; i++){
 
-				allUsers.push(neo4jUsers[i]._fields[0].properties);
+				temp = await db.getTagAdmin(neo4jUsers[i]._fields[0].properties.idSTOW.low);
+				if (temp[0] != undefined) {
+					users = neo4jUsers[i]._fields[0].properties;
+					users["tag"] = temp[0]._fields[0].properties.title;
+				}
+				allUsers.push(users);
 
 			}
 			res.status(200).send({

@@ -230,7 +230,8 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            const requete = `MATCH(u:User)                             
+            const requete = `MATCH(u:User)  
+                             WHERE u.name IS NOT NULL                           
                              RETURN u`;
         
             const readResult =  await session.executeRead(tx =>
@@ -240,6 +241,28 @@ const user63 =
 
         }catch(error){
             console.error(`[ getUsers ] Something went wrong :  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+    async function getTagAdmin(idSTOW){
+
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            // Il faudra penser à changer id par idSTOW quand on refera la bdd
+            const requete = `MATCH(u:User{idSTOW: $idSTOW})-[i:INTERACT]-(t:Tag)
+                                WITH i.ratio as topTags, t, u 
+                                RETURN t ORDER BY topTags DESC
+                                LIMIT 1`;
+        
+            const readResult = await session.executeRead(tx =>
+                tx.run(requete, { idSTOW })
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong, wrong mail or password : ${error}`);
         } finally {
             await session.close();
         }
@@ -277,7 +300,7 @@ const user63 =
 
     
 module.exports = {
-    createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags, getUsers, getUsersSorted
+    createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags, getUsers, getUsersSorted, getTagAdmin
 };
 
 /*
