@@ -788,6 +788,7 @@ app.get('/admin/users/sort/:attribute', (req, res) => {
 
 		(async() => {
 
+			var temp;
 			var neo4jUsers;
 
 			if(attribute == "name"){
@@ -812,10 +813,15 @@ app.get('/admin/users/sort/:attribute', (req, res) => {
 			else{
 	
 				let allUsers = [];
-				//oui[2]._fields[0].properties
+
 				for(let i = 0; i < neo4jUsers.length; i++){
-	
-					allUsers.push(neo4jUsers[i]._fields[0].properties);
+
+					temp = await db.getTagAdmin(neo4jUsers[i]._fields[0].properties.idSTOW.low);
+					if (temp[0] != undefined) {
+						users = neo4jUsers[i]._fields[0].properties;
+						users["tag"] = temp[0]._fields[0].properties.title;
+					}
+					allUsers.push(users);
 	
 				}
 				res.status(200).send({
@@ -847,6 +853,7 @@ app.get('/admin/users/sort/:attribute/desc', (req, res) => {
 
 		(async() => {
 
+			var temp;
 			var neo4jUsers;
 		
 			if(attribute == "name"){
@@ -871,10 +878,15 @@ app.get('/admin/users/sort/:attribute/desc', (req, res) => {
 			else{
 	
 				let allUsers = [];
-				//oui[2]._fields[0].properties
-				for(let i = 0; i < neo4jUsers.length; i++){
 	
-					allUsers.push(neo4jUsers[i]._fields[0].properties);
+				for(let i = 0; i < neo4jUsers.length; i++){
+
+					temp = await db.getTagAdmin(neo4jUsers[i]._fields[0].properties.idSTOW.low);
+					if (temp[0] != undefined) {
+						users = neo4jUsers[i]._fields[0].properties;
+						users["tag"] = temp[0]._fields[0].properties.title;
+					}
+					allUsers.push(users);
 	
 				}
 				res.status(200).send({
