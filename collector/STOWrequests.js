@@ -63,6 +63,9 @@ async function get_questions_tags_async(postid, posttype){
     //console.log(response)
     const data = await response.json();
     
+    if (data.items == undefined){
+        return [];
+    }
     let activities = {
         typePost : posttype,
         tags : data.items[0].tags
@@ -77,10 +80,14 @@ async function get_questions_tags_async(postid, posttype){
 // Exécute la fonction get_questions_tags avec le type answer.
 async function get_answers_tags_async(postid, posttype){
 
+
     const promise = fetch('https://api.stackexchange.com/2.3/answers/'+postid+'?order=desc&sort=activity&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg((')
       .then(response => response.json())
 
     const data = await promise;
+    if (data.items == undefined){
+        return [];
+    }
 
     return get_questions_tags_async(data.items[0].question_id, posttype);
 }
@@ -146,8 +153,10 @@ async function get_users_tags_async(start, end){
             activities : await get_user_tags_async(user.list_id[i], start, end)
         }
 
-        await sleep(500);
-        
+        await sleep(800);
+        if (i == 20){
+            await sleep(10000);
+        }
         //console.log(userInfo);
 
         users.push(userInfo); ;
