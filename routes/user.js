@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+const db = require('../db_neo4j');
+
 const similarity = require('../similarityQueries');
 
 /* GET users listing. */
