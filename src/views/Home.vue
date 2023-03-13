@@ -78,6 +78,8 @@ function onClick(userParam) {
         <div v-if="userSelected">
             <DynamicCard :nom=userSelected[0][0].pseudo :techno=userSelected[0][1] :avatar=userSelected[0][0].avatar :reco=userSelected[0][1][0].techno :key=userSelected />
         </div>
+        <div v-else class="waiting-clic">
+        </div>
     </div>
     
     
@@ -132,6 +134,9 @@ function onClick(userParam) {
     background-color: rgba(87 , 176, 192, 0.3);
 }
 
-
-/* (234, 51, 75) */
+.waiting-clic{
+    height: 450px;
+    background-color: rgb(230, 230, 230);
+}
+/*couleur rose du logo PTC (234, 51, 75) */
 </style>

@@ -31,6 +31,8 @@ export const useRecoStore = defineStore({
                 this.usersRecoSimilarity = usersRecoSimilarity;
                 this.usersRecoQuestion = usersRecoQuestion;
 
+                console.log(usersReco);
+
                 // store user details and jwt in local storage to keep user logged in between page refreshes
                 localStorage.setItem('usersReco', JSON.stringify(usersReco));
                 localStorage.setItem('usersRecoSimilarity', JSON.stringify(usersRecoSimilarity));

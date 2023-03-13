@@ -60,20 +60,18 @@ const props = defineProps({
 
 .avatar {
 
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     border: 1px solid black;
     margin-bottom: 15px;
+    margin-right: 40px;
 
 
 }
 
 .container_user_info {
     
-    align-items: left;
-    justify-content: center;
-    margin-top: 30px;
 }
 
 .info {
@@ -87,14 +85,15 @@ const props = defineProps({
 .avatar img {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
+    border-radius: 30%;
 }
 
 .user_description {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-left: 30px;
+    justify-content: center;
+
 
 }
 .user_stats {

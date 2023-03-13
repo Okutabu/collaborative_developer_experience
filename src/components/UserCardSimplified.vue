@@ -14,14 +14,19 @@ const props = defineProps({
 
     <div class="container_user_card">
         <div class="container_user_info">
-            <div class="user_picture">
-                <img class="avatar" :src=avatar >  
-            </div>
+            <div class="container-top-info">
+                <div class="user_picture">
+                    <img class="avatar" :src=avatar >  
+                </div>
                 <div class="user_description">
                     <p class="name">{{ nom || 'Loading ...' }}</p> <!-- nom -->
                     <p class="type">{{ type || 'Loading ...'}}</p>   <!-- type -->
-                    <p class="reco">{{ reco || 'Loading ...'}}</p>  <!-- reco -->
                 </div>
+            </div>
+            <div class="container-bot-info">
+                <p class="reco">{{ reco || 'Loading ...'}}</p>  <!-- reco -->
+            </div>
+                
         </div>
     </div>
 
@@ -41,27 +46,25 @@ const props = defineProps({
     margin: 10px;
 }
 
+.container-top-info {
+    display: flex;
+    align-items: center;
+}
+
 .container_user_card:hover {
     box-shadow: 0 0 50px 0 rgba(151, 144, 144, 0.5);
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     transform: perspective(1000px) rotate3d(0, 1, 0, 5deg) scale(1.1);
-
 }
 
 .user_description {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    margin-top: 10px;
+    margin-left: 30px;
 }
 .container_user_info {
     display: flex;
-    
-    
-}
-
-.user_picture {
-   margin-right: 35px;
+    flex-direction: column;
 }
 
 .name {
@@ -77,16 +80,13 @@ const props = defineProps({
 }
 
 .user_picture img{
-    height: 60px;
-    width: 60px;
+    height: 50px;
+    width: 50px;
 }
 
 .avatar {
-    height: 60px;
-    width: 60px;
-    border-radius: 50%;
-    border: 1px solid black;
-    margin-bottom: 15px;
+    border-radius: 30%;
+
 }
 
 </style>
