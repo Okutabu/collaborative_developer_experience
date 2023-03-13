@@ -84,8 +84,8 @@ console.log(users);
     <table class="table table-striped">
         <thead>
             <tr>
-                <th style="width: 30%">First Name <button @click=triName()>trier</button></th>
-                <!-- <th style="width: 30%">Last Name <button @click=triSurname()>trier</button></th> -->
+                <th style="width: 30%">First Name <button @click=triSurname()>trier</button></th>
+                <th style="width: 30%">Last Name <button @click=triName()>trier</button></th>
                 <th style="width: 30%">Last activity <button @click=triLastActivity()>trier</button></th>
                 <th style="width: 10%"></th>
             </tr>
@@ -94,10 +94,9 @@ console.log(users);
             <template v-if="users">
                 <input type="text" v-model="input" placeholder="Search dev..." />
                     <tr v-for="user in users" :key = "user">
-                        <div v-if="user.pseudo.toLowerCase().includes(input.toLowerCase())  ">  <!-- || user.surname.toLowerCase().includes(input.toLowerCase()) -->
-                            <!-- <td>{{ user.surname }}</td>
-                            <td>{{ user.name }}</td> -->
-                            <td>{{ user.pseudo }}</td>
+                        <div v-if="user.name.toLowerCase().includes(input.toLowerCase()) || user.surname.toLowerCase().includes(input.toLowerCase())">
+                            <td>{{ user.surname }}</td>
+                            <td>{{ user.name }}</td>
                             <td v-if="user.lastInteraction.low != -1" >{{ (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}</td>
                             <td v-else>Inactif</td>
                         </div>
