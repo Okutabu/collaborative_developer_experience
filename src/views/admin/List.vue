@@ -39,12 +39,6 @@ const adminStore = useAdminStore();
 const { users } = storeToRefs(adminStore);
 adminStore.getUsers();
 
-function filteredList() {
-
-  return valeurs.filter((valeur) =>
-    valeur.name.toLowerCase().includes(input.value.toLowerCase())
-  );
-}
 
 function triLastActivity() {
     if (!adminStore.desc) {
@@ -87,7 +81,7 @@ console.log(users);
                 <th style="width: 30%">First Name <button @click=triSurname()>trier</button></th>
                 <th style="width: 30%">Last Name <button @click=triName()>trier</button></th>
                 <th style="width: 30%">Last activity <button @click=triLastActivity()>trier</button></th>
-                <th style="width: 10%"></th>
+                <th style="width: 10%">Top Tags</th>
             </tr>
         </thead>
         <tbody>
@@ -99,6 +93,7 @@ console.log(users);
                             <td>{{ user.name }}</td>
                             <td v-if="user.lastInteraction.low != -1" >{{ (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}</td>
                             <td v-else>Inactif</td>
+                            <td>{{ user.tag }}</td>
                         </div>
                     </tr>
             </template>
