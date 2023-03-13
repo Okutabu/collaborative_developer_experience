@@ -7,9 +7,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/user');
 
 const express = require('express');
-const cors = require('cors');
 const db = require('./db_neo4j');
-const similarity = require('./similarityQueries');
 
 
 var app = express();
@@ -23,8 +21,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors());
-
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
 
