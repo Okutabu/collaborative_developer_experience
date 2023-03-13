@@ -42,7 +42,7 @@ function onClick(userParam) {
         <div class="container-raw-cosinus-similarity" v-if="usersRecoSimilarity">
             <span class="categorie-recommendation">Utilisateurs similaires à vous</span>
             <div @click="onClick(usersRecoSimilarity.users)">
-                <UserCardSimplified v-for="user in usersRecoSimilarity.users" :nom=user[0].pseudo :type=typeSimilaire :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar /> 
+                <UserCardSimplified v-for="user in usersRecoSimilarity.users.slice(0,1)" :nom=user[0].pseudo :type=typeSimilaire :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar /> 
             </div>
         </div>
         <div v-else>
@@ -53,7 +53,7 @@ function onClick(userParam) {
         <div class="container-similarity-tag-answers" v-if="usersReco">
             <span class="categorie-recommendation">Utilisateurs qui repondent à vos questions</span>
             <div @click="onClick(usersReco.users)">
-                <UserCardSimplified v-for="user in usersReco.users" :nom=user[0].pseudo :type=typeReponse :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar />
+                <UserCardSimplified v-for="user in usersReco.users.slice(0,1)" :nom=user[0].pseudo :type=typeReponse :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar />
             </div>
         </div>
         <div v-else>
@@ -64,7 +64,7 @@ function onClick(userParam) {
         <div class="container-similarity-tag-questions" v-if="usersRecoQuestion">
             <span class="categorie-recommendation">Utilisateurs que vous pouvez aider</span>
             <div @click="onClick(usersRecoQuestion.users)">
-                <UserCardSimplified v-for="user in usersRecoQuestion.users" :nom=user[0].pseudo :type=typeQuestion :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar />
+                <UserCardSimplified v-for="user in usersRecoQuestion.users.slice(0,1)" :nom=user[0].pseudo :type=typeQuestion :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar />
             </div>
         </div>
         <div v-else>
@@ -124,12 +124,14 @@ function onClick(userParam) {
     font-size: 1em;
     font-weight: bold;
     margin-bottom: 1em;
-    border: solid black 1px;
     border-radius: 30px;
-    padding: 0.5em;
-    background-color: rgb(200, 200, 200);
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    background-color: rgba(87 , 176, 192, 0.3);
 }
 
 
-
+/* (234, 51, 75) */
 </style>

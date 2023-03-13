@@ -57,7 +57,7 @@ const authStore = useAuthStore();
 }
 
 .navbar .nav-link.active {
-  background-color: rgb(45, 45, 46);
+  background-color: rgba(87 , 176, 192, 0.5);
   color: #ffffff;
 }
 

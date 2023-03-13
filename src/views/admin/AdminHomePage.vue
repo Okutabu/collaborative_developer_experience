@@ -15,12 +15,8 @@ const userJson = JSON.parse(user)
         <Header :surname=userJson.user.surname  :name=userJson.user.name :espace=espace :message=message />
     </div>
     <div class="container-choix-admin">
-        <div class="container-admin-user-page container-admin-page">
-            <router-link to="/admin/users">Users</router-link>
-        </div>
-        <div class="container-admin-stat-page container-admin-page">
-            <router-link to="/admin/stats">Statistiques de la platerforme</router-link>
-        </div>
+        <router-link to="/admin/users" class="container-admin-user-page container-admin-page">Users</router-link>
+        <router-link to="/admin/stats" class="container-admin-stat-page container-admin-page">Statistiques de la platerforme</router-link>
     </div>
 </template>
 
@@ -38,13 +34,22 @@ const userJson = JSON.parse(user)
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(230, 230, 230);
+    background-color: rgba(87 , 176, 192, 0.3);
     width: 300px;
     height: 300px;
     border-radius: 10px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
     margin: 20px;
-    
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.container-admin-page:hover {
+    box-shadow: 0 0 30px 0 rgba(151, 144, 144, 0.5);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) translate3d(0px, -5px, 0px);
 }
 
 
