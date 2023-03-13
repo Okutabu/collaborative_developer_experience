@@ -225,6 +225,47 @@ const user63 =
         }
     }
 
+    async function getNbOfActiveUsers(){
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `MATCH (u:User)
+                             WHERE  u.lastInteraction <> -1
+                             WITH COUNT(u) AS nbActive
+                             RETURN nbActive`;
+        
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete)
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong [ getNbOfActiveUsers ]:  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+    async function getNbQuestions(){
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
+                             WITH COUNT(i.nbQuestions) AS nbQuestions
+                             RETURN nbQuestions`;
+        
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete)
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong [ getNbQuestions ]:  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+    
+
     async function getUsers(){
 
         const session = driver.session({ database: 'neo4j' });
@@ -244,6 +285,8 @@ const user63 =
             await session.close();
         }
     }
+
+
 
     /**
     * @param ATTRIBUTE String, "lastInteraction", "name" or "surname", "name" by default
@@ -277,7 +320,8 @@ const user63 =
 
     
 module.exports = {
-    createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags, getUsers, getUsersSorted
+    createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags, getUsers,
+    getUsersSorted, getNbOfActiveUsers,
 };
 
 /*
