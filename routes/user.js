@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const similarity = require('./similarityQueries');
+const similarity = require('../similarityQueries');
 
 /* GET users listing. */
 router.get('', function(req, res, next) {
