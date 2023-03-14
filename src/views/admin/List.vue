@@ -6,6 +6,7 @@ import Header from '../../components/Header.vue';
 
 
 let input = ref("");
+let inputTag = ref("");
 const espace = ref('d\'administration')
 const message = ref('Trouver le profil qu\'il vous faut parmis les utilisateurs CDE !')
 
@@ -46,8 +47,6 @@ function triSurname() {
 
 console.log(users);
 
-
-
 </script>
 
 <template>
@@ -57,6 +56,7 @@ console.log(users);
     <div class="container-table">
         <div class="container-search">
             <input type="text" v-model="input" placeholder="Rechercher un utilisateur" class="search-bar" />
+            <input type="text" v-model="inputTag" placeholder="Rechercher un tag" class="search-bar" />
         </div>
         <table class="table table-striped">
             <thead class="table-head">
@@ -69,7 +69,7 @@ console.log(users);
             </thead>
             <tbody class="table-body">
                 <template v-if="users">
-                        <tr v-for="user in users" :key = "user" >
+                        <tr v-for="user in users" :key = "user">
                             <td v-if="user.name.toLowerCase().includes(input.toLowerCase()) || user.surname.toLowerCase().includes(input.toLowerCase())">{{ user.surname }}</td>
                             <td v-if="user.name.toLowerCase().includes(input.toLowerCase()) || user.surname.toLowerCase().includes(input.toLowerCase())">{{ user.name }}</td>
                             <td v-if="user.name.toLowerCase().includes(input.toLowerCase()) || user.surname.toLowerCase().includes(input.toLowerCase())">
@@ -80,7 +80,7 @@ console.log(users);
                                     Inactif
                                 </div>
                             </td>
-                            <td v-if="user.name.toLowerCase().includes(input.toLowerCase()) || user.surname.toLowerCase().includes(input.toLowerCase())">{{ user.tag }}</td>
+                            <td v-if="user.name.toLowerCase().includes(input.toLowerCase()) || user.surname.toLowerCase().includes(input.toLowerCase())">{{ user.topTag}}</td>
                         </tr>
                 </template>
                 <tr v-if="users.loading">
