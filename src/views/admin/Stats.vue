@@ -58,7 +58,7 @@ adminStore.getStats();
 
 </template>
 
-<style>
+<style scoped>
 
 table{
     margin : 30px;
