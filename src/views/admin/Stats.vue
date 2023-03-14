@@ -2,14 +2,27 @@
 import { useAdminStore } from '@/stores';
 import { storeToRefs } from 'pinia';
 import Donut from './Donut.vue';
+import Header from '../../components/Header.vue';
+import { ref } from "vue"; 
+
 
 const adminStore = useAdminStore();
 const { stats } = storeToRefs(adminStore);
 adminStore.getStats();
+
+const espace = ref('d\'administration')
+const message = ref('Découvrez toutes les statistiques de la plateforme !')
+
+const user = localStorage.getItem('user')
+const userJson = JSON.parse(user)
+
 </script>
 
 <template>
-    <div>
+    <div v-if="userJson">
+        <Header :surname=userJson.user.surname  :name=userJson.user.name :espace=espace :message=message />
+    </div>
+    <div class="container-table">
         <!-- <Donut :technoInteraction=stats.topTags /> 
 
 
@@ -22,8 +35,8 @@ adminStore.getStats();
         <p>nbActiveUsers : {{  stats.nbActiveUsers }}</p>
         <p>tagsWithMostUsers : {{ stats.tagsWithMostUsers }}</p>
         -->
-
-        <table>
+        
+        <table class="table-body">
             <tr>
                 <td>Le nombre de tags différents</td>
                 <td>{{ stats.nbTags }}</td>
@@ -60,12 +73,23 @@ adminStore.getStats();
 
 <style scoped>
 
-table{
-    margin : 30px;
+.container-table {
+    background-color: rgb(230, 230, 230);
+    padding: 30px;
+    height: 660px;
+}
+.table-body td{
+    width: 25%;
 }
 
-td {
-    border: 1px solid #333;
+.table-body tr{ 
+    height: 50px;
+    border-bottom: 1px solid rgb(200, 200, 200);
+    border-top: 1px solid rgb(200, 200, 200);
+    text-align: center;
 }
+
+
+
 
 </style>
