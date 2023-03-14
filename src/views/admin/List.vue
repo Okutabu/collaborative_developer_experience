@@ -91,7 +91,7 @@ function triSurname() {
             <template v-if="users">
                 <input type="text" v-model="input" placeholder="Search dev..." />
                 <tr v-for="user in users" :key = "user">
-                    <router-link :to="`/admin/users/profile/${user.idSTOW.low}`">
+                    <router-link :to="{path :`/admin/users/profile/${user}`, query:{name: user.name, id: user.idSTOW.low, surname: user.surname, mail: user.mail}}">
                         <div v-if="user.name.toLowerCase().includes(input.toLowerCase()) || user.surname.toLowerCase().includes(input.toLowerCase()) ">
                             <td>{{ user.surname }}</td>
                             <td>{{ user.name }}</td>

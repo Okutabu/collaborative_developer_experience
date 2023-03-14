@@ -1,9 +1,18 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 
+import { useRoute } from 'vue-router';
+
 import {useUsersStore} from '@/stores';
 
-import DynamicCard from '@/components/DynamicCard.vue';
+const route = useRoute();
+
+const Username = route.query.name;
+const surname = route.query.surname;
+const id = route.query.id;
+const mail = route.query.mail;
+
+console.log(Username);
 
 const usersStore = useUsersStore();
 const { users } = storeToRefs(usersStore);
@@ -20,6 +29,9 @@ console.log(user);
 
 <template>
 
-<DynamicCard :id={user}.id :avatar={user}.avatar :pseudo={user}.pseudo :type={user}.type :reco={user}.reco :techno={user}.techno :ratio={user}.ratio />
+    <p>User {{ Username }} {{ surname }}</p>
+    <p>Mail : {{ mail }}</p>
+    <p>Id : {{ id }}</p>
+
 
 </template>
