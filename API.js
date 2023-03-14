@@ -888,10 +888,7 @@ app.get('/admin/users/sort/:attribute/desc', (req, res) => {
 	
 				for(let i = 0; i < neo4jUsers.length; i++){
 
-					for(let i = 0; i < neo4jUsers.length; i++){
-
-						allUsers.push(neo4jUsers[i]._fields[0].properties);
-					}
+					allUsers.push(neo4jUsers[i]._fields[0].properties);
 	
 				}
 				res.status(200).send({
