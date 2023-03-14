@@ -22,7 +22,7 @@ const userJson = JSON.parse(user)
     <div v-if="userJson">
         <Header :surname=userJson.user.surname  :name=userJson.user.name :espace=espace :message=message />
     </div>
-    <div>
+    <div class="container-table">
         <!-- <Donut :technoInteraction=stats.topTags /> 
 
 
@@ -35,8 +35,8 @@ const userJson = JSON.parse(user)
         <p>nbActiveUsers : {{  stats.nbActiveUsers }}</p>
         <p>tagsWithMostUsers : {{ stats.tagsWithMostUsers }}</p>
         -->
-
-        <table>
+        
+        <table class="table-body">
             <tr>
                 <td>Le nombre de tags différents</td>
                 <td>{{ stats.nbTags }}</td>
@@ -73,12 +73,23 @@ const userJson = JSON.parse(user)
 
 <style scoped>
 
-table{
-    margin : 30px;
+.container-table {
+    background-color: rgb(230, 230, 230);
+    padding: 30px;
+    height: 660px;
+}
+.table-body td{
+    width: 25%;
 }
 
-td {
-    border: 1px solid #333;
+.table-body tr{ 
+    height: 50px;
+    border-bottom: 1px solid rgb(200, 200, 200);
+    border-top: 1px solid rgb(200, 200, 200);
+    text-align: center;
 }
+
+
+
 
 </style>
