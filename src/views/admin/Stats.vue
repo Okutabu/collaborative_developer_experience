@@ -2,13 +2,26 @@
 import { useAdminStore } from '@/stores';
 import { storeToRefs } from 'pinia';
 import Donut from './Donut.vue';
+import Header from '../../components/Header.vue';
+import { ref } from "vue"; 
+
 
 const adminStore = useAdminStore();
 const { stats } = storeToRefs(adminStore);
 adminStore.getStats();
+
+const espace = ref('d\'administration')
+const message = ref('Découvrez toutes les statistiques de la plateforme !')
+
+const user = localStorage.getItem('user')
+const userJson = JSON.parse(user)
+
 </script>
 
 <template>
+    <div v-if="userJson">
+        <Header :surname=userJson.user.surname  :name=userJson.user.name :espace=espace :message=message />
+    </div>
     <div>
         <!-- <Donut :technoInteraction=stats.topTags /> 
 
