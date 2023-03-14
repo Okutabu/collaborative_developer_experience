@@ -43,6 +43,7 @@ function triSurname() {
         adminStore.getUsersbySurname();
     }
     adminStore.desc = !adminStore.desc;
+
 }
 
 console.log(users);
@@ -50,6 +51,7 @@ console.log(users);
 </script>
 
 <template>
+    
     <div v-if="userJson">
         <Header :surname=userJson.user.surname  :name=userJson.user.name :espace=espace :message=message />
     </div>
@@ -70,6 +72,7 @@ console.log(users);
             <tbody class="table-body">
                 <template v-if="users">
                         <tr v-for="user in users" :key = "user">
+                            <router-link :to="{path :`/admin/users/profile/${user}`, query:{name: user.name, id: user.idSTOW.low, surname: user.surname, mail: user.mail}}">
                             <td v-if="user.name.toLowerCase().includes(input.toLowerCase()) || user.surname.toLowerCase().includes(input.toLowerCase())">{{ user.surname }}</td>
                             <td v-if="user.name.toLowerCase().includes(input.toLowerCase()) || user.surname.toLowerCase().includes(input.toLowerCase())">{{ user.name }}</td>
                             <td v-if="user.name.toLowerCase().includes(input.toLowerCase()) || user.surname.toLowerCase().includes(input.toLowerCase())">
@@ -81,6 +84,7 @@ console.log(users);
                                 </div>
                             </td>
                             <td v-if="user.name.toLowerCase().includes(input.toLowerCase()) || user.surname.toLowerCase().includes(input.toLowerCase())">{{ user.topTag}}</td>
+                        </router-link>
                         </tr>
                 </template>
                 <tr v-if="users.loading">
