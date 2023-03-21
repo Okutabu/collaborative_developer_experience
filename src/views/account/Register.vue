@@ -71,13 +71,49 @@ async function onSubmit(values) {
                     <div class="invalid-feedback">{{errors.acceptTerms}}</div>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-primary" :disabled="isSubmitting">
+                    <button class="btn btn-primary btn-register" :disabled="isSubmitting">
                         <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
                         Register
                     </button>
-                    <router-link to="login" class="btn btn-link">Cancel</router-link>
+                    <router-link to="login" class="btn btn-link btn-cancel">Cancel</router-link>
                 </div>
             </Form>
         </div>
     </div>
 </template>
+
+<style scoped>
+.card{
+    border-radius: 30px;
+}
+
+.card-header{
+    border-radius: 30px;
+    background-color: rgba(87 , 176, 192, 0.3);
+}
+
+.btn-register{
+    background-color:rgb(87, 176, 192);
+    border: none;
+}
+
+.btn-register:hover{
+    background-color:rgb(87, 176, 192);
+    border: none;
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-cancel{
+    color: rgb(87, 176, 192);
+    text-decoration: none;
+}
+
+.btn-cancel:hover{
+    color: rgb(87, 176, 192);
+    text-decoration: none;
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}
+
+</style>

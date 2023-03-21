@@ -10,6 +10,7 @@ export const useAdminStore = defineStore({
     state: () => ({
         stats: {},
         users: {},
+        userClic: {},
         usersDotUsers: [],
         desc: false
     }),
@@ -27,7 +28,21 @@ export const useAdminStore = defineStore({
         },
         async getStats() {
             try {
-                this.stats = await fetchWrapper.get(`${baseUrl}/statistics`);
+                var res = await fetchWrapper.get(`${baseUrl}/users`);
+                res = JSON.parse(JSON.stringify(res));
+                this.usersDotUsers = res.users;
+            }
+            catch (error) {
+                const alertStore = useAlertStore();
+                alertStore.error(error);                
+            }
+        },
+        async getUserProficiency(id) {
+            try {
+                var res = await fetchWrapper.get(`${import.meta.env.VITE_API_URL}/user/${id}/proficiency`);
+                console.log(res);
+                res = JSON.parse(JSON.stringify(res));
+                this.userClic = res;
             }
             catch (error) {
                 const alertStore = useAlertStore();
