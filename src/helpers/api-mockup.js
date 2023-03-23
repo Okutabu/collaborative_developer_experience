@@ -5,6 +5,7 @@ const usersKey = 'exemple-key';
 let users = JSON.parse(localStorage.getItem(usersKey)) || [];
 
 export function loadMirageInDev() {
+
         if (import.meta.env.MODE === "development") {
             loadMirage().then(({ Server }) => {
                 return new Server({

@@ -12,14 +12,6 @@ export default {
         surname: {
             type: String,
             required: true
-        },
-        espace: {
-            type: String,
-            required: true
-        },
-        message: {
-            type: String,
-            required: true
         }
     }
 }
@@ -28,13 +20,13 @@ export default {
 
 <template>
     <div class="header">
-        <div class="container-welcome-message">
-                <h2> Bienvenue sur votre espace {{ espace }}</h2>
-                <p class="text-muted">{{ message }}</p>
+        <div class="container-welcome-message text-center">
+                <h2> Bienvenue sur votre espace de collaboration</h2>
+                <p class="text-muted">Découvrez de nouvelles relations chez PTC</p>
         </div>
-            <div class="container-action-bar">
+            <!-- <div class="container-action-bar">
                 <div class="container-bell">
-                    <!-- <b-icon icon="bell-fill" class="border rounded p-2"></b-icon> -->
+                    <b-icon icon="bell-fill" class="border rounded p-2"></b-icon>
                 </div>
                 <div class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ surname }} {{ name }}</a>
@@ -44,7 +36,7 @@ export default {
                             <a class="dropdown-item" href="#">Something else here</a>
                         </div>
                 </div>
-            </div>
+            </div> -->
     </div>
 </template>
 
@@ -52,19 +44,17 @@ export default {
 
 .header {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     align-items: center;
     background-color: rgb(248, 249, 250);
     width: 100%;
 }
 
 .container-welcome-message {
-    height: 100px;
+    height: 50vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    margin-left: 2em;
+    justify-content: center;
+    width: 100%;
 }
 
 .container-action-bar{

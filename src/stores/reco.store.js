@@ -22,9 +22,9 @@ export const useRecoStore = defineStore({
 
                 var user = this.user;
                 console.log(user.user.idSTOW);
-                const usersReco = await fetchWrapper.get(`${baseUrl}/${user.user.idSTOW}/similarity/answer`);
-                const usersRecoSimilarity = await fetchWrapper.get(`${baseUrl}/${user.user.idSTOW}/similarity/cosinus`);
-                const usersRecoQuestion = await fetchWrapper.get(`${baseUrl}/${user.user.idSTOW}/similarity/question`);
+                const usersReco = await fetchWrapper.get(`${baseUrl}/${user.user.idSTOW.low}/similarity/answer`);
+                const usersRecoSimilarity = await fetchWrapper.get(`${baseUrl}/${user.user.idSTOW.low}/similarity/cosinus`);
+                const usersRecoQuestion = await fetchWrapper.get(`${baseUrl}/${user.user.idSTOW.low}/similarity/question`);
                 
                 // update pinia state
                 this.usersReco = usersReco;
@@ -40,7 +40,7 @@ export const useRecoStore = defineStore({
 
             } catch (error) {
                 const alertStore = useAlertStore();
-                alertStore.error(error);                
+                console.log(error.message);                
             }
         }
     }

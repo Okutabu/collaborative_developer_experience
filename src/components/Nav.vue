@@ -33,6 +33,7 @@ const authStore = useAuthStore();
 </template>
 
 <style scoped>
+
 .navbar{
     background-color: #ffffff;
     width: 300px;
@@ -69,9 +70,6 @@ const authStore = useAuthStore();
 .navbar-brand {
     margin-bottom: 100px;
 }
-
-
-
 
 
 

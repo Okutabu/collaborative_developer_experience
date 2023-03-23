@@ -6,7 +6,6 @@ import { useAuthStore } from '@/stores';
 import { useRecoStore } from '@/stores';
 import DynamicCard from '../components/DynamicCard.vue';
 import UserCardSimplified from '../components/UserCardSimplified.vue';
-import UserCard from '../components/UserCard.vue';
 import Header from '../components/Header.vue';
 
 const authStore = useAuthStore();
@@ -18,22 +17,20 @@ const { usersReco, usersRecoSimilarity, usersRecoQuestion } = storeToRefs(usersS
 const typeSimilaire = ref('Projet similaire')
 const typeReponse= ref('Helper')
 const typeQuestion = ref('To help')
-const espace = ref('de collaboration')
-const message = ref('Découvrez de nouvelles relations chez PTC')
 
 
 const userSelected = ref(null);
 
 function onClick(userParam) {
     userSelected.value = userParam;
-    console.log(userSelected.value);
+    console.log("yo wtf: ",userSelected.value);
 }
 
 </script>
 
 <template>
     <div v-if="user">
-        <Header :surname=user.user.surname  :name=user.user.name :espace=espace :message=message />
+        <Header :surname=user.user.surname  :name=user.user.name />
     </div>
 
     <div class="container-similarities">
@@ -94,6 +91,8 @@ function onClick(userParam) {
     align-items: center;
     background-color: rgb(230, 230, 230);
     padding-top: 50px;
+ 
+
 }
 
 .container-usercard-peek {
@@ -102,6 +101,7 @@ function onClick(userParam) {
     justify-content: space-around;
     align-items: center;
     background-color: rgb(230, 230, 230);
+    
 }
 
 .custom-spinner {
@@ -136,6 +136,7 @@ function onClick(userParam) {
 .waiting-clic{
     height: 450px;
     background-color: rgb(230, 230, 230);
+    
 }
 /*couleur rose du logo PTC (234, 51, 75) */
 </style>

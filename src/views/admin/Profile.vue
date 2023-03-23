@@ -1,25 +1,12 @@
 <script setup>
 import { storeToRefs } from 'pinia';
+import { ref } from 'vue'
 
-import { useRoute } from 'vue-router';
+import { useAuthStore } from '@/stores';
+import { useRecoStore } from '@/stores';
 
-import {useUsersStore} from '@/stores';
+const userSelected = ref(null);
 
-const route = useRoute();
-
-const Username = route.query.name;
-const surname = route.query.surname;
-const id = route.query.id;
-const mail = route.query.mail;
-
-console.log(Username);
-
-const usersStore = useUsersStore();
-const { users } = storeToRefs(usersStore);
-
-var user = usersStore.getById(1234);
-
-console.log(user);
 
 
 
