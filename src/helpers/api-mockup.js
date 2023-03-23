@@ -292,7 +292,7 @@ export function loadMirageInDev() {
                         });
 
 
-                        this.get(`${this.namespace}/:idSTOW/similarity/answer`, () => {
+                        this.get(`${this.namespace}/user/:idSTOW/similarity/answer`, () => {
                             return {
                                     "answer": "Users found", 
                                     "users":[ 
@@ -350,7 +350,7 @@ export function loadMirageInDev() {
                                 }
                         });
 
-                        this.get(`${this.namespace}/:idSTOW/similarity/cosinus`, () => {
+                        this.get(`${this.namespace}/user/:idSTOW/similarity/cosinus`, () => {
                             return {
                                 
                                     "answer": "Users found", 
@@ -409,7 +409,7 @@ export function loadMirageInDev() {
                                 }
                         });
 
-                        this.get(`${this.namespace}/:idSTOW/similarity/question`, () => {
+                        this.get(`${this.namespace}/user/:idSTOW/similarity/question`, () => {
                             return {
                                 
                                     "answer": "Users found", 
