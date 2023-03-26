@@ -118,11 +118,11 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            // Il faudra penser à changer id par idSTOW quand on refera la bdd
-            const requete = `MATCH(u:User{idSTOW: $idSTOW})-[i:INTERACT]-(t:Tag)
-                                WITH i.ratio as topTags, t, u 
-                                RETURN u, t, topTags ORDER BY topTags DESC
-                                LIMIT 5`;
+            const requete = `MATCH (u:User{idSTOW: $idSTOW})-[]-()-[h:HAS_TOPIC]-(t:Tag)
+                                WITH u,t, count(h) as nbRelations
+                                MATCH (u)-[]-()-[i]-()
+                                RETURN u as utilisateur ,t as tags ,nbRelations, count(i) as alltags
+                                ORDER BY nbRelations DESC`;
         
             const readResult = await session.executeRead(tx =>
                 tx.run(requete, { idSTOW })
@@ -143,7 +143,9 @@ const user63 =
         const data = await getUserTopTags(idSTOW);
 
         if(data.lenght != 0){
-
+            console.log("idSTOW :",data[0]._fields[0].properties.idSTOW.low)
+            console.log("pseudo",data[0]._fields[0])
+            console.log(data[0]._fields[2])
             var users = [];
             var technos = [];
             var test = {
