@@ -122,7 +122,8 @@ const user63 =
                                 WITH u,t, count(h) as nbRelations
                                 MATCH (u)-[]-()-[i]-()
                                 RETURN u as utilisateur ,t as tags ,nbRelations, count(i) as alltags
-                                ORDER BY nbRelations DESC`;
+                                ORDER BY nbRelations DESC
+                                LIMIT 5`;
         
             const readResult = await session.executeRead(tx =>
                 tx.run(requete, { idSTOW })
@@ -134,31 +135,50 @@ const user63 =
             await session.close();
         }
     }
-//})();
+
+    async function getUserLastInteraction(idSTOW){
+
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `MATCH (u:User{idSTOW: $idSTOW})-[i]-()
+                                RETURN i.dateInteraction as lastInteraction
+                                ORDER BY lastInteraction DESC
+                                LIMIT 1`;
+        
+            const readResult = await session.executeRead(tx =>
+                tx.run(requete, { idSTOW })
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Erreur getUserLastInteraction : ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
 
     //à remodifier quand tous les utilisateutrs auront des nom mail...
     async function getUserProficiency(idSTOW){
 
         var res = null;
         const data = await getUserTopTags(idSTOW);
+        const lastInteraction = await getUserLastInteraction(idSTOW);
 
         if(data.lenght != 0){
-            console.log("idSTOW :",data[0]._fields[0].properties.idSTOW.low)
-            console.log("pseudo",data[0]._fields[0])
-            console.log(data[0]._fields[2])
             var users = [];
             var technos = [];
             var test = {
-                idSTOW : idSTOW,
+                idSTOW : data[0]._fields[0].properties.idSTOW.low,
                 pseudo : data[0]._fields[0].properties.pseudo,
                 avatar: data[0]._fields[0].properties.avatar,
-                lastInteraction: data[0]._fields[0].properties.lastInteraction.low
+                lastInteraction: lastInteraction[0]._fields[0].low
             }
             users.push(test)
             data.map( (elem) => {
                 var title = {
                     techno: elem._fields[1].properties.title,
-                    ratio: elem._fields[2]
+                    ratio: elem._fields[2].low/elem._fields[3].low
                 };
                 technos.push(title);
             });
