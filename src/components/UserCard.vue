@@ -5,7 +5,6 @@ import RadarUserCard from './RadarUserCard.vue';
 
 const props = defineProps({
   nom: String,
-  type: String,
   avatar: String,
   reco : String, 
   techno: Array,
