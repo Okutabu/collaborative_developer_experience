@@ -5,29 +5,57 @@ const authStore = useAuthStore();
 </script>
 
 <template>
-    <nav v-show="authStore.user" class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="navbar-brand">
-            <img src="../assets/Logo-Positive-Thinking-Company.png" alt="logo" width="300" height="200">
-        </div>
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav flex-column">
-                <li class="nav-item">
-                    <RouterLink to="/" class="nav-item nav-link"><i class="fa fa-user"></i>&nbsp; Home</RouterLink>
-                </li>
-                <li class="nav-item">
-                    <RouterLink to="/admin" class="nav-item nav-link"><i class="fa fa-unlock"></i> &nbsp; Admin</RouterLink>
-                </li>
-                <!-- <li class="nav-item">
-                    <RouterLink to="/message" class="nav-item nav-link"><i class="fa fa-solid fa-envelope"></i>&nbsp; Message</RouterLink>
-                </li> -->
-                <li class="nav-item">
-                    <button @click="authStore.logout()" class="btn btn-link nav-item nav-link"><i class="fa fa-sign-out" style="font-size:24px"></i> Logout</button>
-                </li>
-            </ul>
+    <!-- if the url start with /admin render the div bellow -->
+    <div v-if="$route.path.startsWith('/admin')">
+        <nav v-show="authStore.user" class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="navbar-brand">
+                <img src="../assets/Logo-Positive-Thinking-Company.png" alt="logo" width="300" height="200">
             </div>
-        </div>
-    </nav>
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav flex-column">
+                    <li class="nav-item">
+                        <RouterLink to="/admin" class="nav-item nav-link"><i class="fa fa-user"></i>&nbsp; Home</RouterLink>
+                    </li>
+                    <li class="nav-item">
+                        <RouterLink to="/admin/stats"    class="nav-item nav-link"><i class="fa fa-unlock"></i> &nbsp; statistiques</RouterLink>
+                    </li>
+                    <li class="nav-item">
+                        <RouterLink to="/admin/collecteur" class="nav-item nav-link"><i class="fa fa-unlock"></i> &nbsp; Collecteur</RouterLink>
+                    </li>
+                </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div v-else>
+        <nav v-show="authStore.user" class="navbar navbar-expand-lg navbar-light bg-light" >
+            <div class="navbar-brand">
+                <img src="../assets/Logo-Positive-Thinking-Company.png" alt="logo" width="300" height="200">
+            </div>
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav flex-column">
+                    <li class="nav-item">
+                        <RouterLink to="/" class="nav-item nav-link"><i class="fa fa-user"></i>&nbsp; Home</RouterLink>
+                    </li>
+                    <li class="nav-item">
+                        <RouterLink to="/userStat" class="nav-item nav-link"><i class="fa fa-unlock"></i> &nbsp; Mes statistiques</RouterLink>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <RouterLink to="/admin" class="nav-item nav-link"><i class="fa fa-unlock"></i> &nbsp; Admin</RouterLink>
+                    </li> -->
+                    <!-- <li class="nav-item">
+                        <RouterLink to="/message" class="nav-item nav-link"><i class="fa fa-solid fa-envelope"></i>&nbsp; Message</RouterLink>
+                    </li> -->
+                    <li class="nav-item">
+                        <button @click="authStore.logout()" class="btn btn-link nav-item nav-link"><i class="fa fa-sign-out" style="font-size:24px"></i> Logout</button>
+                    </li>
+                </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
 
 
 </template>

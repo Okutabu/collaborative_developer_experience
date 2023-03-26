@@ -8,6 +8,7 @@ import DynamicCard from '../components/DynamicCard.vue';
 import UserCardSimplified from '../components/UserCardSimplified.vue';
 import Header from '../components/Header.vue';
 
+
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
 
