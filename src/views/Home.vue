@@ -4,9 +4,9 @@ import { ref } from 'vue'
 
 import { useAuthStore } from '@/stores';
 import { useRecoStore } from '@/stores';
-import DynamicCard from '../components/DynamicCard.vue';
 import UserCardSimplified from '../components/UserCardSimplified.vue';
 import Header from '../components/Header.vue';
+import UserCard from '../components/UserCard.vue';
 
 
 const authStore = useAuthStore();
@@ -73,7 +73,7 @@ function onClick(userParam) {
 
     <div class="container-usercard-peek"> 
         <div v-if="userSelected">
-            <DynamicCard :nom=userSelected[0][0].pseudo :techno=userSelected[0][1] :avatar=userSelected[0][0].avatar :reco=userSelected[0][1][0].techno :key=userSelected :lastInteract=userSelected[0][0].lastInteraction /> 
+            <UserCard :nom=userSelected[0][0].pseudo :techno=userSelected[0][1] :avatar=userSelected[0][0].avatar :reco=userSelected[0][1][0].techno :key=userSelected :lastInteract=userSelected[0][0].lastInteraction /> 
         </div>
         <div v-else class="waiting-clic">
         </div>
