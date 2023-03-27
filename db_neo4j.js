@@ -430,6 +430,10 @@ const user63 =
         }
     }
 
+    async function getUsersWhoInteractedWithMe(myIdSTOW){
+
+    }
+
 
     
 module.exports = {
