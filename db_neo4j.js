@@ -215,8 +215,6 @@ const user63 =
                              WITH count(i) AS interactions, t AS topTags
                              RETURN topTags, interactions
                              ORDER BY interactions DESC
-                             
-                             
                              LIMIT 5`;
         
             const readResult =  await session.executeRead(tx =>
@@ -234,10 +232,10 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            const requete = `MATCH (u:User)
-                             WHERE  u.lastInteraction <> -1
-                             WITH COUNT(u) AS nbActive
-                             RETURN nbActive`;
+            const requete =`match(u:User)-[i]->(q:Question)
+                            where i.dateInteraction <> -1
+                            with count(distinct u) as nbActive
+                            return nbActive`;
         
             const readResult =  await session.executeRead(tx =>
                 tx.run(requete)
@@ -254,9 +252,8 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
-                             WITH sum(i.nbQuestions) AS nbQuestions
-                             RETURN nbQuestions`;
+            const requete =`match (u:User)-[i:ASKED]->(q:Question)
+                            return count(i) as nbQuestions`;
         
             const readResult =  await session.executeRead(tx =>
                 tx.run(requete)
@@ -273,9 +270,8 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
-                             WITH sum(i.nbQuestions) AS nbQuestions
-                             RETURN nbQuestions`;
+            const requete =`match (u:User)-[i:ANSWERED]->(q:Question)
+                            return count(i) as nbAnswers`;
         
             const readResult =  await session.executeRead(tx =>
                 tx.run(requete)
@@ -294,9 +290,8 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
-                            WITH sum(i.nbQuestions) AS questions, sum(i.nbAnswers) AS answers
-                            RETURN (questions + answers) AS interactions`;
+            const requete =`match (u:User)-[i]->(q:Question)
+                            return count(i) as interactions`;
         
             const readResult =  await session.executeRead(tx =>
                 tx.run(requete)
@@ -313,9 +308,9 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
     
         try{
-            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
-                             WITH COUNT(i) AS nbUsers, t AS tag
-                             RETURN nbUsers, tag
+            const requete = `MATCH (u:User)-[i]-(q:Question)-[h:HAS_TOPIC]-(t:Tag)
+                             WITH count(i) AS nbUsers, t AS Tag
+                             RETURN nbUsers, Tag
                              ORDER BY nbUsers DESC
                              LIMIT 5`;
         
@@ -455,7 +450,7 @@ module.exports = {
 
     try {
     
-        const oui = await getAllNodes();
+        const oui = await getTagsWithMostUsers();
     
         //console.log(oui[0]._fields[0].properties);
         console.log(oui[0]._fields[0].low);
