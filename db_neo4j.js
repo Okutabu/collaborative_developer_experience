@@ -141,10 +141,9 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            const requete = `MATCH (u:User{idSTOW: $idSTOW})-[i]-()
-                                RETURN i.dateInteraction as lastInteraction
-                                ORDER BY lastInteraction DESC
-                                LIMIT 1`;
+            const requete = `MATCH (u:User{idSTOW:$idSTOW})-[i]-(q:Question)
+                                WITH collect(i.dateInteraction) as lastInteraction , u
+                                RETURN u,lastInteraction[0] ORDER BY lastInteraction`;
         
             const readResult = await session.executeRead(tx =>
                 tx.run(requete, { idSTOW })
@@ -233,11 +232,11 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
-                             WITH sum(i.nbQuestions + i.nbAnswers) AS interactions, t AS topTags
-                             RETURN topTags, interactions
-                             ORDER BY interactions DESC
-                             LIMIT 5`;
+            const requete = `MATCH (u:User)-[i]-()-[h:HAS_TOPIC]-(t:Tag)
+                                WITH count(h) AS interactions, t AS topTags
+                                RETURN topTags, interactions
+                                ORDER BY interactions DESC
+                                LIMIT 5`;
         
             const readResult =  await session.executeRead(tx =>
                 tx.run(requete)
@@ -255,10 +254,9 @@ const user63 =
 
         try{
             const requete = `MATCH (u:User)
-                             WHERE  u.lastInteraction <> -1
-                             WITH COUNT(u) AS nbActive
-                             RETURN nbActive`;
-        
+                                WHERE (u)--()
+                                RETURN COUNT(u) as nbActive`;
+                            
             const readResult =  await session.executeRead(tx =>
                 tx.run(requete)
             );
