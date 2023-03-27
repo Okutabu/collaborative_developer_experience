@@ -3,15 +3,20 @@
 
 // La similarité de cosinus est une mesure de similarité qui mesure la similarité entre deux vecteurs d'objets, Dans ce cas ci, 
 // les vecteurs sont les tags d'un utilisateur.
-const COSINUS_SIMILARITY = `MATCH (user1:User {idSTOW:$idUser})-[data1:INTERACT]->(t:Tag)<-[data2:INTERACT]-(user2:User)
-                            WHERE data1.ratio > 5 and data2.ratio > 5
-                            WITH SUM(data1.ratio * data2.ratio) AS data1data2Product,
-                            SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(data1.ratio)| data1Dot + a^2)) AS data1Length,
-                            SQRT(REDUCE(data2Dot = 0.0, b IN COLLECT(data2.ratio)| data2Dot + b^2)) AS data2Length,
-                            user1, user2
-                            RETURN user2, data1data2Product / (data1Length * data2Length) AS similarite
-                            ORDER BY similarite DESC
-                            LIMIT 5`;
+const COSINUS_SIMILARITY = `MATCH (u:User{idSTOW:$idSTOW})-[]-()-[h:HAS_TOPIC]-(t:Tag)
+                                WITH u,t, count(h) as data1
+                                MATCH (u2:User)-[]-()-[h2:HAS_TOPIC]-(t)
+                                WHERE u2.idSTOW <> $idSTOW
+                                WITH u, u2, t, data1, count(h2) as data2
+                                MATCH (u)-[]-()-[i]-()
+                                WITH u, u2, t, toFloat(data1) as data1, toFloat(data2) as data2, count(i) as alltags
+                                WITH SUM(data1/alltags * data2/alltags) AS data1data2Product,
+                                SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(data1/alltags)| data1Dot + a^2)) AS data1Length,
+                                SQRT(REDUCE(data2Dot = 0.0, b IN COLLECT(data2/alltags)| data2Dot + b^2)) AS data2Length,
+                                u, u2
+                                RETURN u2, data1data2Product / (data1Length * data2Length) AS similarite
+                                ORDER BY similarite DESC
+                                LIMIT 5`;
 
 
 //  COSINUS SIMILARITY
