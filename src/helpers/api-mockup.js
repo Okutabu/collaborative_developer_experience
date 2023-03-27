@@ -56,6 +56,42 @@ export function loadMirageInDev() {
                         this.get(`${this.namespace}/user/:id`, () => {
                             return getUserById();
                         });
+                        
+                        this.get(`${this.namespace}/user/:idSTOW/proficiency`, () => {
+                            return {
+                                "answer": "Profile found",
+                                "userProfile": [
+                                    {
+                                        "idSTOW": 6309,
+                                        "pseudo": "VonC",
+                                        "avatar": "https://i.stack.imgur.com/I4fiW.jpg?s=256&g=1"
+                                    },
+                                    [
+                                        {
+                                            "techno": "git",
+                                            "ratio": 17
+                                        },
+                                        {
+                                            "techno": "github",
+                                            "ratio": 16
+                                        },
+                                        {
+                                            "techno": "go",
+                                            "ratio": 8
+                                        },
+                                        {
+                                            "techno": "django",
+                                            "ratio": 6
+                                        },
+                                        {
+                                            "techno": "git-history",
+                                            "ratio": 6
+                                        }
+                                    ]
+                                ],
+                                "error": 0
+                            };
+                        });
 
                         this.put(`${this.namespace}/user/:id`, () => {
                             return updateUser(request);

@@ -1,12 +1,9 @@
 <script setup>
 import { storeToRefs } from 'pinia';
-import { ref } from 'vue'
+import { useProfileStore } from '@/stores';
 
-import { useAuthStore } from '@/stores';
-import { useRecoStore } from '@/stores';
-
-const userSelected = ref(null);
-
+const profileStore = useProfileStore();
+const { user } = storeToRefs(profileStore);
 
 
 
@@ -16,9 +13,13 @@ const userSelected = ref(null);
 
 <template>
 
-    <p>User {{ Username }} {{ surname }}</p>
-    <p>Mail : {{ mail }}</p>
-    <p>Id : {{ id }}</p>
+    <div class="container-profile-">
+        {{ user }}
+    </div>
 
 
 </template>
+
+<style>
+
+</style>
