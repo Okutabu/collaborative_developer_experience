@@ -920,15 +920,24 @@ requêtes GET pour le filtrage :
 
 */
 
+// pour convertir un timeStamp en String
+function convertTimeStampToString(intDate){
+
+    let date = new Date(intDate * 1000).toLocaleDateString().split('/')
+    let string = `${date[2]}-${date[1]}-${date[0]}`;
+    return string;
+}
+
+
 // renvoit la liste des dates d'interactions ainsi que leur nombres
 app.get('/admin/InteractionDates', (req, res) => {
 
 	(async() => {
 
-		const dateQuestion = await db.getInteractionDates("ANSWERED");
-		const dateAnswer = await db.getInteractionDates("ASKED");
+		const dateQuestions = await db.getInteractionDates("ANSWERED");
+		const dateAnswers = await db.getInteractionDates("ASKED");
 
-		if(!dateQuestion.length && !dateAnswer.length ){
+		if(!dateQuestions.length && !dateAnswers.length ){
 
 			res.status(404).send({
                 answer: "Dates not found",
@@ -936,15 +945,16 @@ app.get('/admin/InteractionDates', (req, res) => {
                 error: -1
             });
 		}
-
 		else{
 
 			let allDates = {};
 			let users;
 			//oui[2]._fields[0].properties
-			for(let i = 0; i < neo4jUsers.length; i++){
-
-				allUsers.push(neo4jUsers[i]._fields[0].properties);
+			for(let answer of dateAnswers){
+				allDates[convertTimeStampToString(answer._fields[0].low)] += 1;
+			}
+			for(let question of dateQuestions){
+				allDates[convertTimeStampToString(question._fields[0].low)] += 1;
 			}
 
 			res.status(200).send({
