@@ -402,31 +402,66 @@ const user63 =
         }
     }
 
+    async function getInteractionDates(type){
+
+
+        // type est soit ANSWERED ou ASKED
+
+        if(type == "ANSWERED" || type == "ASKED"){
+            const session = driver.session({ database: 'neo4j' });
+
+            try{
+                const requete = `MATCH (u:User)-[i:${type}]-(q:Question)
+                RETURN i.dateInteraction as dates`;
+            
+                const readResult =  await session.executeRead(tx =>
+                    tx.run(requete)
+                );
+                return readResult.records;
+    
+            }catch(error){
+                console.error(`[ getInteractionDates ] Something went wrong :  ${error}`);
+            } finally {
+                await session.close();
+            }
+        }
+        else{
+            console.log(`[ getInteractionDates ] Something went wrong : bad parameters.`)
+        }
+    }
+
 
     
 module.exports = {
     createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags, getUsers,
-    getUsersSorted, getNbOfActiveUsers, getNbQuestions, getNbAnswers, getNbInteractions, getTagsWithMostUsers, getTagAdmin
+    getUsersSorted, getNbOfActiveUsers, getNbQuestions, getNbAnswers, getNbInteractions, getTagsWithMostUsers, getTagAdmin,
+    getInteractionDates
 };
 
-/*
-(async()=>{
 
-    try {
-    
-        const oui = await getUsersSorted("surname", "DESC");
-    
-        console.log(oui[0]._fields[0].properties);
-        //console.log(oui);
+// (async()=>{
 
-    } catch (error) {
-        console.error(`Something went wrong: ${error}`);
-    } finally {
-    // Don't forget to close the driver connection when you're finished with it.
-    await driver.close();
-    }
-})();
-*/
+//     try {
+        
+//         // const oui = await getUsersSorted("surname", "DESC");
+    
+//         // console.log(oui[0]._fields[0].properties);
+//         // //console.log(oui);
+
+//         const non = await getInteractionDates("ASKED");
+//         const oui = await getInteractionDates("ANSWERED");
+
+//         console.log(non);
+//         console.log(oui[1]._fields[0]);
+
+//     } catch (error) {
+//         console.error(`Something went wrong: ${error}`);
+//     } finally {
+//     // Don't forget to close the driver connection when you're finished with it.
+//     await driver.close();
+//     }
+// })();
+
 
 
 

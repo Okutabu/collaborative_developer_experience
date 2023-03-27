@@ -919,3 +919,39 @@ requêtes GET pour le filtrage :
 	-	users by tag
 
 */
+
+// renvoit la liste des dates d'interactions ainsi que leur nombres
+app.get('/admin/InteractionDates', (req, res) => {
+
+	(async() => {
+
+		const dateQuestion = await db.getInteractionDates("ANSWERED");
+		const dateAnswer = await db.getInteractionDates("ASKED");
+
+		if(!dateQuestion.length && !dateAnswer.length ){
+
+			res.status(404).send({
+                answer: "Users not found",
+                dates: [],
+                error: -1
+            });
+		}
+		
+		else{
+
+			let allUsers = [];
+			let users;
+			//oui[2]._fields[0].properties
+			for(let i = 0; i < neo4jUsers.length; i++){
+
+				allUsers.push(neo4jUsers[i]._fields[0].properties);
+			}
+
+			res.status(200).send({
+                answer: "Users found",
+                dates: allUsers,
+                error: 0
+            });
+		}
+	})();
+});
