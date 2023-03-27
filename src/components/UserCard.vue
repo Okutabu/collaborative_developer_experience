@@ -1,6 +1,6 @@
 <script setup>
 import { defineProps } from 'vue';
-import RadarUserCard from './RadarUserCard.vue';
+import Radar from './Radar.vue';
 
 
 const props = defineProps({
@@ -32,7 +32,7 @@ const date = (new Date(props.lastInteract* 1000)).toLocaleString().split(',')[0]
             </div>
         </div>
         <div>
-            <component :is="RadarUserCard" :techno={techno} />
+            <Radar :technoratio={techno} :ref_key={techno} /> 
         </div>
     </div>
 
