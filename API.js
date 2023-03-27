@@ -930,6 +930,7 @@ function convertTimeStampToString(intDate){
 
 
 // renvoit la liste des dates d'interactions ainsi que leur nombres
+// peut être revoir le collecteur, il y a des dates d'intéraction inférieur à la date données en paramètre
 app.get('/admin/InteractionDates', (req, res) => {
 
 	(async() => {
