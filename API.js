@@ -686,9 +686,12 @@ app.get('/admin/statistics', (req, res) => {
 		const nbAnswers = await db.getNbAnswers();
 		const nbInteractions = await db.getNbInteractions();
 		const tagsWithMostUsers = await db.getTagsWithMostUsers();
+		const allNodes = await db.getAllNodes();
+		const allRelationships = await db.getAllRelationships();
+
 
         //teste si le tableau est vide
-        if(!nbTags.length || !nbUsers.length || !topTags || !activeUsers || !nbQuestions || !nbAnswers || !nbInteractions || !tagsWithMostUsers ){
+        if(nbTags == 0 || nbUsers == 0 || topTags == 0 || activeUsers == 0 || nbQuestions == 0 || nbAnswers == 0 || nbInteractions == 0 || tagsWithMostUsers == 0 || allNodes == 0 || allRelationships == 0 ){
             res.status(404).send({
                 answer: "Statistics not found",
                 users: [],
@@ -727,6 +730,8 @@ app.get('/admin/statistics', (req, res) => {
 				nbInteractions: nbInteractions[0]._fields[0].low,
 				nbActiveUsers: activeUsers[0]._fields[0].low,
 				tagsWithMostUsers: tabTagsUsers,
+				allNodes: allNodes[0]._fields[0].low,
+				allRelationships: allRelationships[0]._fields.low,
 				error: 0
 			});
         }

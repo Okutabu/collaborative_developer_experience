@@ -211,10 +211,12 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
-                             WITH sum(i.nbQuestions + i.nbAnswers) AS interactions, t AS topTags
+            const requete = `MATCH (u:User)-[i]-(q:Question)-[h:HAS_TOPIC]-(t:Tag)
+                             WITH count(i) AS interactions, t AS topTags
                              RETURN topTags, interactions
                              ORDER BY interactions DESC
+                             
+                             
                              LIMIT 5`;
         
             const readResult =  await session.executeRead(tx =>
@@ -373,6 +375,44 @@ const user63 =
         }
     }
 
+    async function getAllNodes(){
+    
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `match (n) return count(*)`;
+
+            const readResult = await session.executeRead(tx =>
+                tx.run(requete)
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`[ getAllnodes ] Something went wrong : ${error}`);
+
+
+        } finally {
+            await session.close();
+        }
+    }
+
+    async function getAllRelationships(){
+    
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `match (n)-[r]->() return count(r)`;
+
+            const readResult = await session.executeRead(tx =>
+                tx.run(requete)
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`[ getAllRelationships ] Something went wrong : ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
     /**
     * @param ATTRIBUTE String, "lastInteraction", "name" or "surname", "name" by default
     * @param DESC String, "DESC" or nothing
@@ -406,17 +446,19 @@ const user63 =
     
 module.exports = {
     createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags, getUsers,
-    getUsersSorted, getNbOfActiveUsers, getNbQuestions, getNbAnswers, getNbInteractions, getTagsWithMostUsers, getTagAdmin
+    getUsersSorted, getNbOfActiveUsers, getNbQuestions, getNbAnswers, getNbInteractions, getTagsWithMostUsers, getTagAdmin,
+    getAllNodes, getAllRelationships
 };
 
-/*
+
 (async()=>{
 
     try {
     
-        const oui = await getUsersSorted("surname", "DESC");
+        const oui = await getAllNodes();
     
-        console.log(oui[0]._fields[0].properties);
+        //console.log(oui[0]._fields[0].properties);
+        console.log(oui[0]._fields[0].low);
         //console.log(oui);
 
     } catch (error) {
@@ -426,7 +468,7 @@ module.exports = {
     await driver.close();
     }
 })();
-*/
+
 
 
 
