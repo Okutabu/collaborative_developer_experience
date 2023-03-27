@@ -947,15 +947,37 @@ app.get('/admin/InteractionDates', (req, res) => {
 		}
 		else{
 
-			let allDates = {};
-			let users;
+			let allRequests = dateQuestions.concat(dateAnswers);
+			let allDates = [];
+
+			//créé la liste d'objet
+			for(let res of allRequests){
+				
+				if(allDates.includes( e => e.date 
+
+				)){
+					let objet = {
+						date: convertTimeStampToString(res._fields[0].low), 
+						count: 1
+					}
+					allDates.push(objet);	
+				}
+			}
+
+			// incrémente la liste
+			for(let res of allRequests){
+
+			}
+
 			//oui[2]._fields[0].properties
-			for(let answer of dateAnswers){
-				allDates[convertTimeStampToString(answer._fields[0].low)] += 1;
-			}
-			for(let question of dateQuestions){
-				allDates[convertTimeStampToString(question._fields[0].low)] += 1;
-			}
+			// for(let answer of dateAnswers){
+			// 	let date = {};
+			// 	date[)]  ++;
+			// 	allDates.push(date);
+			// }
+			// for(let question of dateQuestions){
+			// 	allDates[convertTimeStampToString(question._fields[0].low)] += 1;
+			// }
 
 			res.status(200).send({
                 answer: "Dates found",
