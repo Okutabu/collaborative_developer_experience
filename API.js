@@ -680,8 +680,8 @@ app.get('/user/:idSTOW/interactedWithMe', (req, res) => {
 	const idSTOW = parseInt(req.params.idSTOW);
 
 	(async() => {
-		const users = db.getUsersWhoInteractedWithMe(idSTOW);
-
+		const users = await db.getUsersWhoInteractedWithMe(idSTOW);
+		console.log(users);
 		if(!users.length){
 			res.status(404).send({
                 answer: "Nobody has interacted with this user",
@@ -694,6 +694,7 @@ app.get('/user/:idSTOW/interactedWithMe', (req, res) => {
 			let allUsers = [];
 
 			for(var user of users){
+				console.log(user);
 				allUsers.push(user._fields[0]);
 			}
 
