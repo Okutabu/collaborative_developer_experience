@@ -15,16 +15,31 @@ const authStore = useAuthStore();
         <Nav />
         <Alert />
         <div class="container-workspace">
+            
             <RouterView />
+            
+            
         </div>
     </div>
 </template>
 
-<style>
+<style scoped>
 @import '@/assets/base.css';
 @import '@/assets/theme.css';
+
+body{
+    overflow: hidden;
+}
 
 .container-workspace{
     width: 100%;
 }
+
+
+.container-routerview{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
 </style>

@@ -1,23 +1,18 @@
 <script setup>
-import { defineProps } from 'vue'
-import Radar from './Radar.vue'
-
+import { defineProps } from 'vue';
+import Radar from './Radar.vue';
 
 
 const props = defineProps({
-  id: String,
+  nom: String,
   avatar: String,
-  pseudo: String,
-  type: String,
-  reco : String,
+  reco : String, 
   techno: Array,
-  ratio: Number,
-  lastInteract : Number,
+  lastInteract: Number,
 })
 
 const date = (new Date(props.lastInteract* 1000)).toLocaleString().split(',')[0] 
-
-
+      
 </script>
 
 <template>
@@ -29,25 +24,23 @@ const date = (new Date(props.lastInteract* 1000)).toLocaleString().split(',')[0]
                     <img :src=avatar >    
                 </div>
                 <div class="info">
-                    <p class="bold name">{{ pseudo || 'loading...' }}</p>
+                    <p class="bold name">{{ nom || 'loading...' }}</p>
                     <p class="speciality">point fort : {{ reco || 'loading...' }}</p>
                     <p class="lastInteract" >Dernière interaction : {{ date || 'loading...' }}</p>
                 </div>
                 
             </div>
         </div>
-        <div class="user_stats">
-            <div> 
-                <Radar :technoratio=props.techno :ref_key=props.techno /> 
-            </div>
+        <div>
+            <Radar :technoratio={techno} :ref_key={techno} /> 
         </div>
     </div>
+
 
 </template>
 
 <style scoped>
-
-.container_user_card {
+  .container_user_card {
     background-color: white;
     border-radius: 25px;
     width: 500px;
@@ -97,11 +90,4 @@ const date = (new Date(props.lastInteract* 1000)).toLocaleString().split(',')[0]
 
 
 }
-.user_stats {
-    align-items: center;
-    justify-content: center;
-
-}
-
-
 </style>

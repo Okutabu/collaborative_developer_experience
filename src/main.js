@@ -6,6 +6,7 @@ import { router } from './router';
 
 // setup fake api/backend
 import { loadMirageInDev } from './helpers';
+
 loadMirageInDev();
 
 const app = createApp(App);
