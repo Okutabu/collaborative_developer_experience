@@ -675,6 +675,39 @@ app.get('/user/:idSTOW/proficiency', (req, res) => {
 });
 
 
+app.get('/user/:idSTOW/interactedWithMe', (req, res) => {
+
+	const idSTOW = parseInt(req.params.idSTOW);
+
+	(async() => {
+		const users = db.getUsersWhoInteractedWithMe(idSTOW);
+
+		if(!users.length){
+			res.status(404).send({
+                answer: "Nobody has interacted with this user",
+                users: [],
+                error: -1
+            });
+		}
+		else{
+
+			let allUsers = [];
+
+			for(var user of users){
+				allUsers.push(user._fields[0]);
+			}
+
+			res.status(200).send({
+                answer: "Users found",
+                users: allUsers,
+                error: 0
+            });
+		}
+	})();
+});
+
+
+
 app.get('/admin/statistics', (req, res) => {
 
     (async() => {

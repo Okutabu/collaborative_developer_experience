@@ -432,6 +432,8 @@ const user63 =
 
     async function getUsersWhoInteractedWithMe(myIdSTOW){
         
+        const session = driver.session({ database: 'neo4j' });
+
         try{
             const requete = `MATCH (u1:User { idSTOW: $myIdSTOW })--(q:Question)--(u2:User)
             RETURN u2 AS InteractedWith`;
@@ -442,7 +444,7 @@ const user63 =
             return readResult.records;
 
         }catch(error){
-            console.error(`[ getInteractionDates ] Something went wrong :  ${error}`);
+            console.error(`[ getUsersWhoInteractedWithMe ] Something went wrong :  ${error}`);
         } finally {
             await session.close();
         }
