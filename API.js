@@ -931,15 +931,15 @@ app.get('/admin/InteractionDates', (req, res) => {
 		if(!dateQuestion.length && !dateAnswer.length ){
 
 			res.status(404).send({
-                answer: "Users not found",
+                answer: "Dates not found",
                 dates: [],
                 error: -1
             });
 		}
-		
+
 		else{
 
-			let allUsers = [];
+			let allDates = {};
 			let users;
 			//oui[2]._fields[0].properties
 			for(let i = 0; i < neo4jUsers.length; i++){
@@ -948,8 +948,8 @@ app.get('/admin/InteractionDates', (req, res) => {
 			}
 
 			res.status(200).send({
-                answer: "Users found",
-                dates: allUsers,
+                answer: "Dates found",
+                dates: allDates,
                 error: 0
             });
 		}
