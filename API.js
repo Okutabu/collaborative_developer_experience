@@ -948,36 +948,38 @@ app.get('/admin/InteractionDates', (req, res) => {
 		else{
 
 			let allRequests = dateQuestions.concat(dateAnswers);
-			let allDates = [];
+			let dates = [];
 
-			//créé la liste d'objet
+			//créé la liste de dates en string
 			for(let res of allRequests){
-				
-				if(allDates.includes( e => e.date 
+				let date = convertTimeStampToString(res._fields[0].low);
+				dates.push(date);	
+			}
 
-				)){
-					let objet = {
-						date: convertTimeStampToString(res._fields[0].low), 
-						count: 1
-					}
-					allDates.push(objet);	
+			let dicoDate = {};
+			// créé un grand dictionnaire avec les dates et leurs nb d'intéraction
+			for(let date of dates){
+
+				if(dicoDate[date] == undefined){
+					dicoDate[date] = 0;
 				}
 			}
-
-			// incrémente la liste
-			for(let res of allRequests){
-
+		
+			// on incrémente le nb d'intéractions par date
+			for(let date of dates){
+				dicoDate[date]++;
 			}
 
-			//oui[2]._fields[0].properties
-			// for(let answer of dateAnswers){
-			// 	let date = {};
-			// 	date[)]  ++;
-			// 	allDates.push(date);
-			// }
-			// for(let question of dateQuestions){
-			// 	allDates[convertTimeStampToString(question._fields[0].low)] += 1;
-			// }
+			let allDates = [];
+
+			// transformation en liste d'objet pour le composant vue
+			for(let elem in dicoDate){
+				let objet = {
+					date : elem,
+					count : dicoDate[elem]
+				}
+				allDates.push(objet);
+			}
 
 			res.status(200).send({
                 answer: "Dates found",
