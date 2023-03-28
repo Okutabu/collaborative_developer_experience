@@ -18,6 +18,8 @@ export const router = createRouter({
 });
 
 router.beforeEach(async (to) => {
+    
+
     // clear alert on route change
     const alertStore = useAlertStore();
     alertStore.clear();
@@ -27,8 +29,15 @@ router.beforeEach(async (to) => {
     const authRequired = !publicPages.includes(to.path);
     const authStore = useAuthStore();
 
-    if (authRequired && !authStore.user) {
+    const user = localStorage.getItem('user')
+    if (user && (to.path == '/account/login' || to.path == '/account/register')) {
+        console.log('user', user)
+        return '/'
+    }
+    else if (authRequired && !authStore.user) {
         authStore.returnUrl = to.path;
         return '/account/login';
     }
+
+    
 });
