@@ -4,26 +4,36 @@
 // La similarité de cosinus est une mesure de similarité qui mesure la similarité entre deux vecteurs d'objets, Dans ce cas ci, 
 // les vecteurs sont les tags d'un utilisateur.
 const COSINUS_SIMILARITY = `MATCH (u:User{idSTOW:$idSTOW})-[]-()-[h:HAS_TOPIC]-(t:Tag)
-                                WITH u,t, count(h) as data1
-                                MATCH (u2:User)-[]-()-[h2:HAS_TOPIC]-(t)
-                                WHERE u2.idSTOW <> $idSTOW
-                                WITH u, u2, t, data1, count(h2) as data2
-                                MATCH (u)-[]-()-[i]-()
-                                WITH u, u2, t, toFloat(data1) as data1, toFloat(data2) as data2, count(i) as alltags
-                                WITH SUM(data1/alltags * data2/alltags) AS data1data2Product,
-                                SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(data1/alltags)| data1Dot + a^2)) AS data1Length,
-                                SQRT(REDUCE(data2Dot = 0.0, b IN COLLECT(data2/alltags)| data2Dot + b^2)) AS data2Length,
-                                u, u2
-                                RETURN u2, data1data2Product / (data1Length * data2Length) AS similarite
-                                ORDER BY similarite DESC
-                                LIMIT 5`;
+                            WITH u,t, count(h) as data1
+                            MATCH (u2:User)-[]-()-[h2:HAS_TOPIC]-(t)
+                            WHERE u2.idSTOW <> $idSTOW
+                            WITH u, u2, t, data1, count(h2) as data2
+                            MATCH (u)-[]-()-[i]-()
+                            WITH u, u2, t, toFloat(data1) as data1, toFloat(data2) as data2, count(i) as alltagsU1
+                            MATCH (u2)-[]-()-[i]-()
+                            WITH u, u2, t, data1, data2, alltagsU1,count(i) as alltagsU2
+                            WITH SUM(alltagsU1/data1 * alltagsU2/data2) AS data1data2Product,
+                            SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(alltagsU1/data1)| data1Dot + a^2)) AS data1Length,
+                            SQRT(REDUCE(data2Dot = 0.0, b IN COLLECT(alltagsU2/data2)| data2Dot + b^2)) AS data2Length,
+                            u, u2, data1, data2, alltagsU1, alltagsU2
+                            RETURN DISTINCT u2, data1data2Product / (data1Length * data2Length) AS similarite
+                            ORDER BY similarite DESC
+                            LIMIT 5`;
 
 
 //  COSINUS SIMILARITY
 // POURCENTAGE D'INTERACTION AVEC LES TAGS
-const RATIO_SIMILARITY = `MATCH (user1:User {idSTOW:$idUser})-[r1:INTERACT]->(t:Tag)<-[r2:INTERACT]-(user2)
-                            WHERE r1.ratio > 10 AND r2.ratio > 10
-                            RETURN r1.ratio AS PoidsU1, user2, r2.ratio AS PoidsU2, t.title AS Tag
+const RATIO_SIMILARITY = `MATCH (u:User{idSTOW:$idSTOW})-[]-()-[h:HAS_TOPIC]-(t:Tag)
+                            WITH u,t, count(h) as data1
+                            MATCH (u2:User)-[]-()-[h2:HAS_TOPIC]-(t)
+                            WHERE u2.idSTOW <> $idSTOW
+                            WITH u, u2, t, data1, count(h2) as data2
+                            MATCH (u)-[]-()-[i]-()
+                            WITH u, u2, t, toFloat(data1) as data1, toFloat(data2) as data2, count(i) as alltagsU1
+                            MATCH (u2)-[]-()-[i]-()
+                            WITH u, u2, t, data1, data2, alltagsU1,count(i) as alltagsU2
+                            WHERE alltagsU1/data1> 10 AND alltagsU2/data2 > 10
+                            RETURN alltagsU1/data1 AS PoidsU1, u2, alltagsU2/data2 AS PoidsU2, t.title AS Tag
                             ORDER BY PoidsU1 + PoidsU2 DESC
                             LIMIT 5`;
 
@@ -44,6 +54,14 @@ const ANSWER_SIMILARITY = `MATCH (user1:User {idSTOW:$idUser})-[data1:INTERACT]-
                             RETURN DISTINCT user2, data1data2Product / (data1Length * data2Length) AS similarite
                             ORDER BY similarite DESC
                             LIMIT 5`;
+
+                            //test
+                            `MATCH (u:User{idSTOW:954940})-[]-()-[h:HAS_TOPIC]-(t:Tag)
+                            WITH u,t, count(h) as data1
+                            MATCH (u2:User)-[]-()-[h2:HAS_TOPIC]-(t)
+                            WHERE u2.idSTOW <> 954940
+                            WITH u, u2, t, data1, count(h2) as data2
+                            return distinct t.title, data1 ORDER BY data1 DESC`
 
 
 
