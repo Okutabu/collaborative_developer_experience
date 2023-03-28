@@ -32,7 +32,7 @@ const RATIO_SIMILARITY = `MATCH (u:User{idSTOW:$idSTOW})-[]-()-[h:HAS_TOPIC]-(t:
                             WITH u, u2, t, toFloat(data1) as data1, toFloat(data2) as data2, count(i) as alltagsU1
                             MATCH (u2)-[]-()-[i]-()
                             WITH u, u2, t, data1, data2, alltagsU1,count(i) as alltagsU2
-                            WHERE alltagsU1/data1> 10 AND alltagsU2/data2 > 10
+                            WHERE alltagsU1/data1 > 10 AND alltagsU2/data2 > 10
                             RETURN alltagsU1/data1 AS PoidsU1, u2, alltagsU2/data2 AS PoidsU2, t.title AS Tag
                             ORDER BY PoidsU1 + PoidsU2 DESC
                             LIMIT 5`;
@@ -43,25 +43,28 @@ const RATIO_SIMILARITY = `MATCH (u:User{idSTOW:$idSTOW})-[]-()-[h:HAS_TOPIC]-(t:
 //ANSWER_SIMILARITY
 //Récupère les utilisateurs similaires à l'aide de cosinus (qui interagissent sur les même tags)
 // puis récupère les utilisateurs qui posent des questions sur les sujets auxquels l'utilisateur principal répond
-const ANSWER_SIMILARITY = `MATCH (user1:User {idSTOW:$idUser})-[data1:INTERACT]->(t:Tag)<-[data2:INTERACT]-(user2:User)
-                            WHERE data1.ratio > 5 and data2.ratio > 5
-                            WITH SUM(data1.ratio * data2.ratio) AS data1data2Product,
-                            SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(data1.ratio)| data1Dot + a^2)) AS data1Length,
-                            SQRT(REDUCE(data2Dot = 0.0, b IN COLLECT(data2.ratio)| data2Dot + b^2)) AS data2Length,
-                            user1, user2
-                            MATCH (user1)-[i:INTERACT]->(t2:Tag)<-[i2:INTERACT]-(user2)
-                            WHERE i.nbAnswers > 5 AND i2.nbQuestions > 5 AND data1data2Product / (data1Length * data2Length) > 0.5
-                            RETURN DISTINCT user2, data1data2Product / (data1Length * data2Length) AS similarite
-                            ORDER BY similarite DESC
-                            LIMIT 5`;
-
-                            //test
-                            `MATCH (u:User{idSTOW:954940})-[]-()-[h:HAS_TOPIC]-(t:Tag)
+const ANSWER_SIMILARITY = `MATCH (u:User{idSTOW:$idSTOW})-[]-()-[h:HAS_TOPIC]-(t:Tag)
                             WITH u,t, count(h) as data1
                             MATCH (u2:User)-[]-()-[h2:HAS_TOPIC]-(t)
-                            WHERE u2.idSTOW <> 954940
+                            WHERE u2.idSTOW <> $idSTOW
                             WITH u, u2, t, data1, count(h2) as data2
-                            return distinct t.title, data1 ORDER BY data1 DESC`
+                            MATCH (u)-[]-()-[i1]-()
+                            WITH u, u2, t, toFloat(data1) as data1, toFloat(data2) as data2, count(i1) as alltagsU1
+                            MATCH (u2)-[]-()-[i2]-()
+                            WITH u, u2, t, data1, data2, alltagsU1,count(i2) as alltagsU2
+                            WITH SUM(alltagsU1/data1 * alltagsU2/data2) AS data1data2Product,
+                            SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(alltagsU1/data1)| data1Dot + a^2)) AS data1Length,
+                            SQRT(REDUCE(data2Dot = 0.0, b IN COLLECT(alltagsU2/data2)| data2Dot + b^2)) AS data2Length,
+                            u, u2, t
+                            WHERE data1data2Product / (data1Length * data2Length) > 0.8
+                            MATCH (u)-[a:ASKED]-()-[h:HAS_TOPIC]-(t)
+                            WITH u,t, count(DISTINCT h) as nbAsked
+                            MATCH (u2:User)-[a2:ANSWERED]-()-[h2:HAS_TOPIC]-(t)
+                            WHERE u2.idSTOW <> u.idSTOW
+                            WITH u, u2, t, nbAsked, count(h2) as nbAnswered
+                            RETURN DISTINCT u,u2,t.title, nbAsked, nbAnswered
+                            ORDER BY (nbAsked+nbAnswered)  DESC
+                            LIMIT 5`;
 
 
 
@@ -70,16 +73,27 @@ const ANSWER_SIMILARITY = `MATCH (user1:User {idSTOW:$idUser})-[data1:INTERACT]-
 //Récupère les utilisateurs similaires à l'aide de cosinus (qui interagissent sur les même tags)
 // puis récupère les utilisateurs qui répondent aux questions sur le sujet sur lequel l'utilisateur principal pose des questions
 
-const QUESTION_SIMILARITY = `MATCH (user1:User {idSTOW:$idUser})-[data1:INTERACT]->(t:Tag)<-[data2:INTERACT]-(user2:User)
-                                WHERE data1.ratio > 5 and data2.ratio > 5
-                                WITH SUM(data1.ratio * data2.ratio) AS data1data2Product,
-                                SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(data1.ratio)| data1Dot + a^2)) AS data1Length,
-                                SQRT(REDUCE(data2Dot = 0.0, b IN COLLECT(data2.ratio)| data2Dot + b^2)) AS data2Length,
-                                user1, user2
-                                MATCH (user1)-[i:INTERACT]->(t2:Tag)<-[i2:INTERACT]-(user2)
-                                WHERE i.nbQuestions > 5 AND i2.nbAnswers > 5 AND data1data2Product / (data1Length * data2Length) > 0.5
-                                RETURN DISTINCT user2, data1data2Product / (data1Length * data2Length) AS similarite
-                                ORDER BY similarite DESC
+const QUESTION_SIMILARITY = `MATCH (u:User{idSTOW:$idSTOW})-[]-()-[h:HAS_TOPIC]-(t:Tag)
+                                WITH u,t, count(h) as data1
+                                MATCH (u2:User)-[]-()-[h2:HAS_TOPIC]-(t)
+                                WHERE u2.idSTOW <> $idSTOW
+                                WITH u, u2, t, data1, count(h2) as data2
+                                MATCH (u)-[]-()-[i1]-()
+                                WITH u, u2, t, toFloat(data1) as data1, toFloat(data2) as data2, count(i1) as alltagsU1
+                                MATCH (u2)-[]-()-[i2]-()
+                                WITH u, u2, t, data1, data2, alltagsU1,count(i2) as alltagsU2
+                                WITH SUM(alltagsU1/data1 * alltagsU2/data2) AS data1data2Product,
+                                SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(alltagsU1/data1)| data1Dot + a^2)) AS data1Length,
+                                SQRT(REDUCE(data2Dot = 0.0, b IN COLLECT(alltagsU2/data2)| data2Dot + b^2)) AS data2Length,
+                                u, u2, t
+                                WHERE data1data2Product / (data1Length * data2Length) > 0.8
+                                MATCH (u)-[a:ANSWERED]-()-[h:HAS_TOPIC]-(t)
+                                WITH u,t, count(DISTINCT h) as nbAnswered
+                                MATCH (u2:User)-[a2:ASKED]-()-[h2:HAS_TOPIC]-(t)
+                                WHERE u2.idSTOW <> u.idSTOW
+                                WITH u, u2, t, nbAnswered, count(h2) as nbAsked
+                                RETURN DISTINCT u,u2,t.title, nbAnswered, nbAsked
+                                ORDER BY (nbAsked+nbAnswered)  DESC
                                 LIMIT 5`;
 
 
