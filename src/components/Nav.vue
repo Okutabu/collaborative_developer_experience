@@ -15,7 +15,7 @@ const authStore = useAuthStore();
                 <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav flex-column">
                     <li class="nav-item">
-                        <RouterLink to="/admin" class="nav-item nav-link"><i class="fa fa-user"></i>&nbsp; Home</RouterLink>
+                        <RouterLink to="/admin/list" class="nav-item nav-link"><i class="fa fa-user"></i>&nbsp; Home</RouterLink>
                     </li>
                     <li class="nav-item">
                         <RouterLink to="/admin/stats"    class="nav-item nav-link"><i class="fa fa-unlock"></i> &nbsp; statistiques</RouterLink>
@@ -37,10 +37,10 @@ const authStore = useAuthStore();
                 <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav flex-column">
                     <li class="nav-item">
-                        <RouterLink to="/" class="nav-item nav-link"><i class="fa fa-user"></i>&nbsp; Home</RouterLink>
+                        <RouterLink to="/overview" class="nav-item nav-link"><i class="fa fa-user"></i>&nbsp; Home</RouterLink>
                     </li>
                     <li class="nav-item">
-                        <RouterLink to="/userStat" class="nav-item nav-link"><i class="fa fa-unlock"></i> &nbsp; Mes statistiques</RouterLink>
+                        <RouterLink to="/statistics" class="nav-item nav-link"><i class="fa fa-unlock"></i> &nbsp; Mes statistiques</RouterLink>
                     </li>
                     <!-- <li class="nav-item">
                         <RouterLink to="/admin" class="nav-item nav-link"><i class="fa fa-unlock"></i> &nbsp; Admin</RouterLink>

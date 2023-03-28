@@ -4,16 +4,19 @@ import { useAuthStore, useAlertStore } from '@/stores';
 import { Home } from '@/views';
 import accountRoutes from './account.routes';
 import adminRoutes from './admin.routes';
+import userRoutes from './user.routes';
 
 export const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     linkActiveClass: 'active',
     routes: [
-        { path: '/', component: Home },
+        // { path: '/', redirect: Home },
         { ...accountRoutes },
+        { ...userRoutes},
         { ...adminRoutes },
         // catch all redirect to home page
-        { path: '/:pathMatch(.*)*', redirect: '/' }
+        { path: '/:pathMatch(.*)*', redirect: '/user' },
+        // catch home page to userOverview
     ]
 });
 

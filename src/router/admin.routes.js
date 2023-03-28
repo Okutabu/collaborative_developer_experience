@@ -5,12 +5,13 @@ export default {
     path: '/admin',
     component: Layout,
     children: [
-        { path: '', component: List },
+        { path: 'list', component: List },
         { path: 'users/add', component: AddEdit },
         { path: 'edit/:id', component: AddEdit },
         { path: 'users/profile/:id', component: Profile},
         { path: 'stats', component: Stats},
-        { path: 'collecteur', component: Collecteur}
+        { path: 'collecteur', component: Collecteur},
+        { path: '', redirect: '/admin/list'}
     ]
 };
 

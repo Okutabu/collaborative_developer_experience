@@ -4,10 +4,10 @@ import { ref } from 'vue'
 
 import { useAuthStore } from '@/stores';
 import { useRecoStore } from '@/stores';
-import UserCardSimplified from '../components/UserCardSimplified.vue';
-import Header from '../components/Header.vue';
-import UserCard from '../components/UserCard.vue';
-import UserCarCollaborative from '../components/UserCarCollaborative.vue';
+import UserCardSimplified from '../../components/UserCardSimplified.vue';
+import Header from '../../components/Header.vue';
+import UserCard from '../../components/UserCard.vue';
+import UserCarCollaborative from '../../components/UserCarCollaborative.vue';
 
 
 
