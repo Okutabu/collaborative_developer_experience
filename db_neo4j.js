@@ -272,9 +272,8 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
-                             WITH sum(i.nbQuestions) AS nbQuestions
-                             RETURN nbQuestions`;
+            const requete = `MATCH (u:User)-[a:ASKED]-()
+                             RETURN count(a) as nbQuestions`;
         
             const readResult =  await session.executeRead(tx =>
                 tx.run(requete)
@@ -291,9 +290,8 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
-                             WITH sum(i.nbQuestions) AS nbQuestions
-                             RETURN nbQuestions`;
+            const requete = `MATCH (u:User)-[a:ANSWERED]-()
+                             RETURN count(a) as nbAnswers`;
         
             const readResult =  await session.executeRead(tx =>
                 tx.run(requete)
@@ -312,9 +310,11 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
-                            WITH sum(i.nbQuestions) AS questions, sum(i.nbAnswers) AS answers
-                            RETURN (questions + answers) AS interactions`;
+            const requete = `MATCH (u:User)-[a:ANSWERED]-()
+                                WITH count (a) as nbAnswered
+                                MATCH (u:User)-[a:ASKED]-()
+                                WITH nbAnswered, count(a) as nbAsked
+                                RETURN (nbAnswered + nbAsked) as interactions`;
         
             const readResult =  await session.executeRead(tx =>
                 tx.run(requete)
@@ -331,11 +331,11 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
     
         try{
-            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
-                             WITH COUNT(i) AS nbUsers, t AS tag
-                             RETURN nbUsers, tag
-                             ORDER BY nbUsers DESC
-                             LIMIT 5`;
+            const requete = `MATCH (u:User)-[i]-()-[]-(t:Tag)
+                                WITH COUNT(i) AS nbUsers, t AS tag
+                                RETURN nbUsers, tag
+                                ORDER BY nbUsers DESC
+                                LIMIT 5`;
         
             const readResult =  await session.executeRead(tx =>
                 tx.run(requete)
