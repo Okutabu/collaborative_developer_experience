@@ -90,7 +90,7 @@ function onClick(userParam) {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    background-color: rgb(230, 230, 230);
+    /* background-color: rgb(230, 230, 230); */
     padding-top: 50px;
  
 
@@ -101,7 +101,7 @@ function onClick(userParam) {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    background-color: rgb(230, 230, 230);
+    /* background-color: rgb(230, 230, 230); */
     
 }
 
@@ -131,7 +131,7 @@ function onClick(userParam) {
     padding-right: 1em;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
-    background-color: rgba(87 , 176, 192, 0.3);
+    /* background-color: rgba(87 , 176, 192, 0.3); */
 }
 
 .waiting-clic{
