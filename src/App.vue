@@ -23,7 +23,7 @@ const authStore = useAuthStore();
     </div>
 </template>
 
-<style scoped>
+<style>
 @import '@/assets/base.css';
 @import '@/assets/theme.css';
 
