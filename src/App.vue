@@ -33,8 +33,7 @@ body{
 
 .container-workspace{
     width: 100%;
-    background-color: aliceblue;
-    animation: reveal 1s cubic-bezier(.17,.67,.4,1.02); 
+    
 }
 
 

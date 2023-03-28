@@ -78,7 +78,7 @@ async function onSubmit(values) {
 }
 
 .container-form{
-    width: 70%;
+    width: 50%;
 }
 
 .form-control{

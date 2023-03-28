@@ -34,55 +34,56 @@ console.log(usersRecoSimilarity);
 </script>
 
 <template>
-    <div v-if="user">
-        <Header :surname=user.user.surname  :name=user.user.name />
-    </div>
+    <div class="container-home">
+        <div v-if="user">
+            <Header :surname=user.user.surname  :name=user.user.name />
+        </div>
 
-    <div class="container-similarities">
-        
-        <div class="container-raw-cosinus-similarity" v-if="usersRecoSimilarity">
-            <span class="categorie-recommendation">Utilisateurs similaires à vous</span>
-            <div @click="onClick(usersRecoSimilarity.users)">
-                <UserCarCollaborative :user="usersRecoSimilarity" :type="typeSimilaire"/>
+        <div class="container-similarities">
+            
+            <div class="container-raw-cosinus-similarity" v-if="usersRecoSimilarity">
+                <span class="categorie-recommendation">Utilisateurs similaires à vous</span>
+                <div @click="onClick(usersRecoSimilarity.users)">
+                    <UserCarCollaborative :user="usersRecoSimilarity" :type="typeSimilaire"/>
+                </div>
+            </div>
+            <div v-else>
+                <div class="spinner-border custom-spinner" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <div class="container-similarity-tag-answers" v-if="usersReco">
+                <span class="categorie-recommendation">Utilisateurs qui repondent à vos questions</span>
+                <div @click="onClick(usersReco.users)">
+                    <UserCarCollaborative :user="usersReco" :type="typeReponse"/>
+                </div>
+            </div>
+            <div v-else>
+                <div class="spinner-border custom-spinner" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <div class="container-similarity-tag-questions" v-if="usersRecoQuestion">
+                <span class="categorie-recommendation">Utilisateurs que vous pouvez aider</span>
+                <div @click="onClick(usersRecoQuestion.users)">
+                    <UserCarCollaborative :user="usersRecoQuestion" :type="typeQuestion"/>
+                </div>
+            </div>
+            <div v-else>
+                <div class="spinner-border custom-spinner" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
             </div>
         </div>
-        <div v-else>
-            <div class="spinner-border custom-spinner" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-        <div class="container-similarity-tag-answers" v-if="usersReco">
-            <span class="categorie-recommendation">Utilisateurs qui repondent à vos questions</span>
-            <div @click="onClick(usersReco.users)">
-                <UserCarCollaborative :user="usersReco" :type="typeReponse"/>
-            </div>
-        </div>
-        <div v-else>
-            <div class="spinner-border custom-spinner" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-        <div class="container-similarity-tag-questions" v-if="usersRecoQuestion">
-            <span class="categorie-recommendation">Utilisateurs que vous pouvez aider</span>
-            <div @click="onClick(usersRecoQuestion.users)">
-                <UserCarCollaborative :user="usersRecoQuestion" :type="typeQuestion"/>
-            </div>
-        </div>
-        <div v-else>
-            <div class="spinner-border custom-spinner" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-    </div>
 
-    <div class="container-usercard-peek"> 
-        <div v-if="userSelected">
-            <UserCard :nom=userSelected[0][0].pseudo :techno=userSelected[0][1] :avatar=userSelected[0][0].avatar :reco=userSelected[0][1][0].techno :key=userSelected :lastInteract=userSelected[0][0].lastInteraction /> 
-        </div>
-        <div v-else class="waiting-clic">
+        <div class="container-usercard-peek"> 
+            <div v-if="userSelected">
+                <UserCard :nom=userSelected[0][0].pseudo :techno=userSelected[0][1] :avatar=userSelected[0][0].avatar :reco=userSelected[0][1][0].techno :key=userSelected :lastInteract=userSelected[0][0].lastInteraction /> 
+            </div>
+            <div v-else class="waiting-clic">
+            </div>
         </div>
     </div>
-    
     
 
 </template>
@@ -144,4 +145,9 @@ console.log(usersRecoSimilarity);
     
 }
 /*couleur rose du logo PTC (234, 51, 75) */
+
+.container-home{
+    background-color: aliceblue;
+    animation: reveal 1s cubic-bezier(.17,.67,.4,1.02); 
+}
 </style>

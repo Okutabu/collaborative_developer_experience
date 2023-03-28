@@ -39,7 +39,7 @@ async function onSubmit(values) {
 
 
 <template>
-    <div class="card ">
+    <div class="card container-form">
         <h4 class="card-header">Register</h4>
         <div class="card-body">
             <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
@@ -107,7 +107,7 @@ async function onSubmit(values) {
 }
 
 .container-form{
-    width: 70%;
+    width: 50%;
 }
 
 .btn-cancel{
