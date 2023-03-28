@@ -681,14 +681,14 @@ app.get('/admin/statistics', (req, res) => {
         const nbTags = await db.getNbTags();
         const nbUsers = await db.getNbUsers();
 		const topTags = await db.getTopTags();
-		const activeUsers = await db.getNbInteractions();
+		//const activeUsers = await db.getNbInteractions();
 		const nbQuestions = await db.getNbQuestions();
 		const nbAnswers = await db.getNbAnswers();
 		const nbInteractions = await db.getNbInteractions();
 		const tagsWithMostUsers = await db.getTagsWithMostUsers();
 
         //teste si le tableau est vide
-        if(!nbTags.length || !nbUsers.length || !topTags || !activeUsers || !nbQuestions || !nbAnswers || !nbInteractions || !tagsWithMostUsers ){
+        if(!nbTags.length || !nbUsers.length || !topTags || !nbQuestions || !nbAnswers || !nbInteractions || !tagsWithMostUsers ){
             res.status(404).send({
                 answer: "Statistics not found",
                 users: [],
