@@ -17,3 +17,15 @@ const { alert } = storeToRefs(alertStore);
         </div>
     </div>
 </template>
+
+<style scoped>
+.container{
+    position: absolute;
+    top: 50;
+    left: 50;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+</style>

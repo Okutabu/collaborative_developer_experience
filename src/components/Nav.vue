@@ -94,12 +94,33 @@ const authStore = useAuthStore();
   background-color: #e6e6e6;
 
 }
-
+.nav-item{
+    animation: reveal 1s cubic-bezier(.17,.67,.4,1.02);
+}
 .navbar-brand {
     margin-bottom: 100px;
+    animation: reveal 1s ease-in-out;
 }
 
+@keyframes reveal{
+    0%{
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
 
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 
 </style>
     

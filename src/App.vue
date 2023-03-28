@@ -14,7 +14,7 @@ const authStore = useAuthStore();
     <div class="app-container" :class="authStore.user && 'bg-light'">
         <Nav />
         <Alert />
-        <div class="container-workspace">
+        <div class="container-workspace ">
             
             <RouterView />
             
@@ -33,6 +33,8 @@ body{
 
 .container-workspace{
     width: 100%;
+    background-color: aliceblue;
+    animation: reveal 1s cubic-bezier(.17,.67,.4,1.02); 
 }
 
 
@@ -40,6 +42,17 @@ body{
     width: 100%;
     height: 100%;
     position: relative;
+}
+
+@keyframes reveal{
+    0%{
+        opacity: 0;
+        transform: translateY(100px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0px);
+    }
 }
 
 </style>
