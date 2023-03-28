@@ -20,7 +20,7 @@ async function onSubmit(values) {
 </script>
 
 <template>
-    <div class="card container-form">
+    <div class="card m-3">
         <h4 class="card-header">Login</h4>
         <div class="card-body">
             <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
@@ -44,29 +44,28 @@ async function onSubmit(values) {
 <style scoped>
 
 .card{
-    border-radius: 15px;
-    border: 1px solid #92b8da;
+    border-radius: 30px;
 }
 
 .card-header{
-    border-radius: 15px 15px 0 0;
-    background-color: #bdd0fb;
-    border-bottom: 1px solid #92b8da;
+    border-radius: 30px;
+    background-color: rgba(87 , 176, 192, 0.3);
 }
 
 .btn-login{
-    background-color:#4347e9;
+    background-color:rgb(87, 176, 192);
     border: none;
 }
 
 .btn-login:hover{
+    background-color:rgb(87, 176, 192);
     border: none;
     transform: scale(1.1);
     transition: all 0.3s ease-in-out;
 }
 
 .btn-register{
-    color: #6c97fc;
+    color: rgb(87, 176, 192);
     text-decoration: none;
 }
 
@@ -75,14 +74,6 @@ async function onSubmit(values) {
     text-decoration: none;
     transform: scale(1.1);
     transition: all 0.3s ease-in-out;
-}
-
-.container-form{
-    width: 70%;
-}
-
-.form-control{
-    border: 1px solid #92b8da;
 }
 
 </style>

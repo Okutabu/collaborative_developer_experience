@@ -39,7 +39,7 @@ async function onSubmit(values) {
 
 
 <template>
-    <div class="card ">
+    <div class="card m-3">
         <h4 class="card-header">Register</h4>
         <div class="card-body">
             <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
@@ -83,39 +83,37 @@ async function onSubmit(values) {
 </template>
 
 <style scoped>
-
 .card{
-    border-radius: 15px;
-    border: 1px solid #92b8da;
+    border-radius: 30px;
 }
 
 .card-header{
-    border-radius: 15px 15px 0 0;
-    background-color: #bdd0fb;
-    border-bottom: 1px solid #92b8da;
+    border-radius: 30px;
+    background-color: rgba(87 , 176, 192, 0.3);
 }
 
 .btn-register{
-    background-color:#4347e9;
+    background-color:rgb(87, 176, 192);
     border: none;
 }
 
-.btn-login:hover{
+.btn-register:hover{
+    background-color:rgb(87, 176, 192);
     border: none;
     transform: scale(1.1);
     transition: all 0.3s ease-in-out;
 }
 
-.container-form{
-    width: 70%;
-}
-
 .btn-cancel{
-    color: #7099fc;
+    color: rgb(87, 176, 192);
+    text-decoration: none;
 }
 
-.form-control{
-    border: 1px solid #92b8da;
+.btn-cancel:hover{
+    color: rgb(87, 176, 192);
+    text-decoration: none;
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
 }
 
 </style>
