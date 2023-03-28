@@ -7,6 +7,8 @@ import { useRecoStore } from '@/stores';
 import UserCardSimplified from '../components/UserCardSimplified.vue';
 import Header from '../components/Header.vue';
 import UserCard from '../components/UserCard.vue';
+import UserCarCollaborative from '../components/UserCarCollaborative.vue';
+
 
 
 const authStore = useAuthStore();
@@ -27,6 +29,8 @@ function onClick(userParam) {
     console.log("yo wtf: ",userSelected.value);
 }
 
+
+console.log(usersRecoSimilarity);
 </script>
 
 <template>
@@ -39,7 +43,7 @@ function onClick(userParam) {
         <div class="container-raw-cosinus-similarity" v-if="usersRecoSimilarity">
             <span class="categorie-recommendation">Utilisateurs similaires à vous</span>
             <div @click="onClick(usersRecoSimilarity.users)">
-                <UserCardSimplified v-for="user in usersRecoSimilarity.users.slice(0,1)" :nom=user[0].pseudo :type=typeSimilaire :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar /> 
+                <UserCarCollaborative :user="usersRecoSimilarity" :type="typeSimilaire"/>
             </div>
         </div>
         <div v-else>
@@ -50,7 +54,7 @@ function onClick(userParam) {
         <div class="container-similarity-tag-answers" v-if="usersReco">
             <span class="categorie-recommendation">Utilisateurs qui repondent à vos questions</span>
             <div @click="onClick(usersReco.users)">
-                <UserCardSimplified v-for="user in usersReco.users.slice(0,1)" :nom=user[0].pseudo :type=typeReponse :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar />
+                <UserCarCollaborative :user="usersReco" :type="typeReponse"/>
             </div>
         </div>
         <div v-else>
@@ -61,7 +65,7 @@ function onClick(userParam) {
         <div class="container-similarity-tag-questions" v-if="usersRecoQuestion">
             <span class="categorie-recommendation">Utilisateurs que vous pouvez aider</span>
             <div @click="onClick(usersRecoQuestion.users)">
-                <UserCardSimplified v-for="user in usersRecoQuestion.users.slice(0,1)" :nom=user[0].pseudo :type=typeQuestion :reco=user[1][0].techno :techno=user[1] :avatar=user[0].avatar />
+                <UserCarCollaborative :user="usersRecoQuestion" :type="typeQuestion"/>
             </div>
         </div>
         <div v-else>
