@@ -12,7 +12,7 @@ const authStore = useAuthStore();
 
 <template>
     <div class="app-container" :class="authStore.user && 'bg-light'">
-        <Nav />
+        <Nav v-if="!$route.path.startsWith('/account')" />
         <Alert />
         <div class="container-workspace ">
             
