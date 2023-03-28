@@ -6,6 +6,7 @@ import Header from '../../components/Header.vue';
 
 
 let input = ref("");
+let inputName = ref("");
 let inputTag = ref("");
 const espace = ref('d\'administration')
 const message = ref('Trouver le profil qu\'il vous faut parmis les utilisateurs CDE !')
@@ -57,8 +58,9 @@ console.log(users);
     </div>
     <div class="container-table">
         <div class="container-search">
-            <input type="text" v-model="input" placeholder="Rechercher un utilisateur" class="search-bar" />
-            <input type="text" v-model="inputTag" placeholder="Rechercher un tag" class="search-bar" />
+            <input type="text" v-model="input" placeholder="Prénom" class="search-bar" />
+            <input type="text" v-model="inputName" placeholder="Nom" class="search-bar" />
+            <input type="text" v-model="inputTag" placeholder="Rechercher un tag" class="search-bar search-tag" />
         </div>
         <table class="table table-striped">
             <thead class="table-head">
@@ -73,9 +75,10 @@ console.log(users);
                 <template v-if="users">
                         <tr v-for="user in users" :key = "user">
                             <router-link :to="{path :`/admin/users/profile/${user}`, query:{name: user.name, id: user.idSTOW.low, surname: user.surname, mail: user.mail}}">
-                            <td v-if="user.name.toLowerCase().includes(input.toLowerCase()) || user.surname.toLowerCase().includes(input.toLowerCase())">{{ user.surname }}</td>
-                            <td v-if="user.name.toLowerCase().includes(input.toLowerCase()) || user.surname.toLowerCase().includes(input.toLowerCase())">{{ user.name }}</td>
-                            <td v-if="user.name.toLowerCase().includes(input.toLowerCase()) || user.surname.toLowerCase().includes(input.toLowerCase())">
+                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase())">{{ user.surname }}</td>
+                            </router-link>
+                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase())">{{ user.name }}</td>
+                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase())">
                                 <div v-if="user.lastInteraction.low != -1" >
                                     {{ (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}
                                 </div>
@@ -83,8 +86,8 @@ console.log(users);
                                     Inactif
                                 </div>
                             </td>
-                            <td v-if="user.name.toLowerCase().includes(input.toLowerCase()) || user.surname.toLowerCase().includes(input.toLowerCase())">{{ user.topTag}}</td>
-                        </router-link>
+                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase())">{{ user.topTag}}</td>
+                        
                         </tr>
                 </template>
                 <tr v-if="users.loading">
@@ -109,16 +112,17 @@ console.log(users);
 }
 
 .search-bar {
-    width: 30%;
+    width: 25%;
     height: 40px;
     border-radius: 25px;
 }
 
 .container-search {
     display: flex;
-    justify-content: center;
-    padding-top: 50px;
-    padding-bottom: 50px;
+}
+
+.search-tag {
+    margin-left: 25%;
 }
 
 .sort-button{
