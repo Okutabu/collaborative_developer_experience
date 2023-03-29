@@ -34,7 +34,9 @@
     "jsdom": "^20.0.3",
     "miragejs": "^0.1.47",
     "prettier": "^2.7.1",
+    "tippy.js": "^6.3.7",
     "vite": "^4.0.0",
-    "vitest": "^0.25.6"
+    "vitest": "^0.25.6",
+    "vue3-calendar-heatmap": "^2.0.5"
   }
 }
