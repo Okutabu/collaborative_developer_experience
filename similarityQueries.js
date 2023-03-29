@@ -56,13 +56,13 @@ const ANSWER_SIMILARITY = `MATCH (u:User{idSTOW:$idSTOW})-[]-()-[h:HAS_TOPIC]-(t
                             SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(alltagsU1/data1)| data1Dot + a^2)) AS data1Length,
                             SQRT(REDUCE(data2Dot = 0.0, b IN COLLECT(alltagsU2/data2)| data2Dot + b^2)) AS data2Length,
                             u, u2, t
-                            WHERE data1data2Product / (data1Length * data2Length) > 0.8
-                            MATCH (u)-[a:ASKED]-()-[h:HAS_TOPIC]-(t)
-                            WITH u,t, count(DISTINCT h) as nbAsked
-                            MATCH (u2:User)-[a2:ANSWERED]-()-[h2:HAS_TOPIC]-(t)
+                            WHERE data1data2Product / (data1Length * data2Length) > 0.2
+                            MATCH (u)-[a:ANSWERED]-()-[h:HAS_TOPIC]-(t)
+                            WITH u,t, count(DISTINCT h) as nbAnswered
+                            MATCH (u2:User)-[a2:ASKED]-()-[h2:HAS_TOPIC]-(t)
                             WHERE u2.idSTOW <> u.idSTOW
-                            WITH u, u2, t, nbAsked, count(h2) as nbAnswered
-                            RETURN DISTINCT u,u2,t.title, nbAsked, nbAnswered
+                            WITH u, u2, t, nbAnswered, count(h2) as nbAsked
+                            RETURN DISTINCT u,u2,t.title, nbAnswered, nbAsked
                             ORDER BY (nbAsked+nbAnswered)  DESC
                             LIMIT 5`;
 
@@ -86,13 +86,13 @@ const QUESTION_SIMILARITY = `MATCH (u:User{idSTOW:$idSTOW})-[]-()-[h:HAS_TOPIC]-
                                 SQRT(REDUCE(data1Dot = 0.0, a IN COLLECT(alltagsU1/data1)| data1Dot + a^2)) AS data1Length,
                                 SQRT(REDUCE(data2Dot = 0.0, b IN COLLECT(alltagsU2/data2)| data2Dot + b^2)) AS data2Length,
                                 u, u2, t
-                                WHERE data1data2Product / (data1Length * data2Length) > 0.8
-                                MATCH (u)-[a:ANSWERED]-()-[h:HAS_TOPIC]-(t)
-                                WITH u,t, count(DISTINCT h) as nbAnswered
-                                MATCH (u2:User)-[a2:ASKED]-()-[h2:HAS_TOPIC]-(t)
+                                WHERE data1data2Product / (data1Length * data2Length) > 0.2
+                                MATCH (u)-[a:ASKED]-()-[h:HAS_TOPIC]-(t)
+                                WITH u,t, count(DISTINCT h) as nbAsked
+                                MATCH (u2:User)-[a2:ANSWERED]-()-[h2:HAS_TOPIC]-(t)
                                 WHERE u2.idSTOW <> u.idSTOW
-                                WITH u, u2, t, nbAnswered, count(h2) as nbAsked
-                                RETURN DISTINCT u,u2,t.title, nbAnswered, nbAsked
+                                WITH u, u2, t, nbAsked, count(h2) as nbAnswered
+                                RETURN DISTINCT u,u2,t.title, nbAsked, nbAnswered
                                 ORDER BY (nbAsked+nbAnswered)  DESC
                                 LIMIT 5`;
 
@@ -176,7 +176,7 @@ const TOP_ANSWERS_REQUEST = `MATCH (u:User{idSTOW: $idUser})-[i:INTERACT]->(t:Ta
     */
 //---------------------------------------------------------------------------------------------------------------------------------------------
 
-    async function find_similar_user(idUser, query) {
+    async function find_similar_user(idSTOW, query) {
         
         const session = driver.session({ database: 'neo4j' });
 
@@ -184,7 +184,7 @@ const TOP_ANSWERS_REQUEST = `MATCH (u:User{idSTOW: $idUser})-[i:INTERACT]->(t:Ta
             const readQuery = query;
 
             const readResult = await session.executeRead(tx =>
-                tx.run(readQuery, { idUser })
+                tx.run(readQuery, { idSTOW })
             );
 
             /* readResult.records.forEach(record => {
@@ -199,7 +199,7 @@ const TOP_ANSWERS_REQUEST = `MATCH (u:User{idSTOW: $idUser})-[i:INTERACT]->(t:Ta
         }
     }
 
-    async function cosinus_similarity(idUser) {
+    async function cosinus_similarity(idSTOW) {
 
         const session = driver.session({ database: 'neo4j' });
 
@@ -207,7 +207,7 @@ const TOP_ANSWERS_REQUEST = `MATCH (u:User{idSTOW: $idUser})-[i:INTERACT]->(t:Ta
             const readQuery = COSINUS_SIMILARITY;
 
             const readResult = await session.executeRead(tx =>
-                tx.run(readQuery, { idUser })
+                tx.run(readQuery, { idSTOW })
             );
             
             return readResult.records;
@@ -220,7 +220,7 @@ const TOP_ANSWERS_REQUEST = `MATCH (u:User{idSTOW: $idUser})-[i:INTERACT]->(t:Ta
     }
 
 
-    async function question_similarity(idUser) {
+    async function question_similarity(idSTOW) {
 
         const session = driver.session({ database: 'neo4j' });
 
@@ -228,7 +228,7 @@ const TOP_ANSWERS_REQUEST = `MATCH (u:User{idSTOW: $idUser})-[i:INTERACT]->(t:Ta
             const readQuery = QUESTION_SIMILARITY;
 
             const readResult = await session.executeRead(tx =>
-                tx.run(readQuery, { idUser })
+                tx.run(readQuery, { idSTOW })
             );
 
             return readResult.records;
@@ -241,7 +241,7 @@ const TOP_ANSWERS_REQUEST = `MATCH (u:User{idSTOW: $idUser})-[i:INTERACT]->(t:Ta
     }
     
 
-    async function answer_similarity(idUser) {
+    async function answer_similarity(idSTOW) {
 
         const session = driver.session({ database: 'neo4j' });
 
@@ -249,7 +249,7 @@ const TOP_ANSWERS_REQUEST = `MATCH (u:User{idSTOW: $idUser})-[i:INTERACT]->(t:Ta
             const readQuery = ANSWER_SIMILARITY;
 
             const readResult = await session.executeRead(tx =>
-                tx.run(readQuery, { idUser })
+                tx.run(readQuery, { idSTOW })
             );
 
             return readResult.records;
@@ -312,7 +312,6 @@ const TOP_ANSWERS_REQUEST = `MATCH (u:User{idSTOW: $idUser})-[i:INTERACT]->(t:Ta
 
 //})();
 
-
 module.exports = {
-    cosinus_similarity, answer_similarity, question_similarity
+    cosinus_similarity, question_similarity, answer_similarity
 };
