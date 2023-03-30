@@ -105,7 +105,7 @@ app.get('/user/:idSTOW/similarity/cosinus', (req, res) => {
 
     (async() => {
         const data = await similarity.cosinus_similarity(idSTOW);
-        console.log(data)
+        //console.log(data)
         //teste si le tableau est vide
         if(!data.length){
             res.status(200).send({
@@ -263,7 +263,7 @@ app.get('/user/:idSTOW/interactedWithMe', (req, res) => {
 
 	(async() => {
 		const users = await db.getUsersWhoInteractedWithMe(idSTOW);
-		console.log(users);
+		//console.log(users);
 		if(!users.length){
 			res.status(404).send({
                 answer: "Nobody has interacted with this user",
@@ -276,7 +276,7 @@ app.get('/user/:idSTOW/interactedWithMe', (req, res) => {
 			let allUsers = [];
 
 			for(var user of users){
-				console.log(user);
+				//console.log(user);
 				allUsers.push(user._fields[0]);
 			}
 
