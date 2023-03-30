@@ -1,17 +1,9 @@
 <script>
-  import { CalendarHeatmap } from 'vue3-calendar-heatmap';
-
-  export default {
-    components: {
-      CalendarHeatmap
-    }
-  }
+  import CalendarHeatmap from 'vue3-calendar-heatmap';
+  import { defineProps } from 'vue';
 
   const props = defineProps({
     data : Array,
-    color : String,
-    tooltip : String,
-    onClick : Function,
     EndDate : String,
 })
 
@@ -49,11 +41,14 @@ const obj = [
     { date: '2023-02-29', count: 11 },
 ]
 
+var date = "2023-02-29"
+
 </script>
 
 <template>
 
-  <CalendarHeatmap :data="obj" :EndDate="{today}" />
+  <div class="div">nzndzjdz</div>
+  <CalendarHeatmap :values="obj" :endDate="date"></CalendarHeatmap>
 
 </template>
 
