@@ -352,18 +352,11 @@ app.get('/admin/users', (req, res) => {
 
 function errorParameters(attribute){
 	
-	let isError;
-
-	if(attribute == "surname" || attribute == "name" || attribute == "lastInteraction"){
-		isError = false;
-	}else{
-		isError = true;
-	}
-	return isError;
+	return !(attribute == "surname" || attribute == "name" || attribute == "lastInteraction");
 }
 
 /*
- attributs valide : "name", "surname", "lastInteraction"
+ attributs valide : "name", "surname"
  renvoyé dans l'ordre croissant
  */
 app.get('/admin/users/sort/:attribute', (req, res) => {
@@ -421,6 +414,49 @@ app.get('/admin/users/sort/:attribute', (req, res) => {
 			}
 		})();
 	}
+});
+
+
+app.get('/admin/users/sort/lastInteraction', (req, res) => {
+
+	//var attribute = req.params.attribute;
+
+    (async() => {
+
+        var neo4jUsers = await db.getUsersSorted("lastInteraction");
+
+        if(!neo4jUsers.length){
+            res.status(404).send({
+                answer: "Users not found, there may be is an error in the parameters",
+                users: [],
+                error: -1
+            });
+        }
+
+        if(!neo4jUsers.length){
+
+            res.status(404).send({
+                answer: "Users not found",
+                users: [],
+                error: -1
+            });
+        }
+        else{
+
+            let allUsers = [];
+
+            for(let i = 0; i < neo4jUsers.length; i++){
+
+                allUsers.push(neo4jUsers[i]._fields[0].properties);
+            }
+
+            res.status(200).send({
+                answer: "Users found",
+                users: allUsers,
+                error: 0
+            });
+        }
+    })();
 });
 
 
