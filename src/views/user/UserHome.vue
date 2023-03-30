@@ -26,7 +26,7 @@ const userSelected = ref(null);
 
 function onClick(userParam) {
     userSelected.value = userParam;
-    console.log("yo wtf: ",userSelected.value);
+    console.log("yo wtf: ",userSelected[0][1]);
 }
 
 

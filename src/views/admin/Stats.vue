@@ -6,10 +6,7 @@ import Header from '../../components/Header.vue';
 import { ref } from "vue"; 
 
 
-import { CalendarHeatmap } from '@/components/Heatmap.vue';
-
-Vue.use(CalendarHeatmap);
-
+import CalendarHeatmap from '@/components/Heatmap.vue';
 
 const adminStore = useAdminStore();
 const { stats } = storeToRefs(adminStore);
@@ -21,45 +18,13 @@ const message = ref('Découvrez toutes les statistiques de la plateforme !')
 const user = localStorage.getItem('user')
 const userJson = JSON.parse(user)
 
-const obj = [
-    { date: '2021-01-01', count: 1 },
-    { date: '2021-02-02', count: 2 },
-    { date: '2021-03-03', count: 3 },
-    { date: '2021-04-04', count: 4 },
-    { date: '2021-05-05', count: 5 },
-    { date: '2021-05-06', count: 6 },
-    { date: '2021-06-07', count: 7 },
-    { date: '2021-07-08', count: 5 },
-    { date: '2021-08-09', count: 7 },
-    { date: '2021-08-10', count: 1 },
-    { date: '2021-08-11', count: 5 },
-    { date: '2021-09-12', count: 8 },
-    { date: '2021-10-13', count: 13 },
-    { date: '2021-11-14', count: 7 },
-    { date: '2021-12-15', count: 2 },
-    { date: '2022-01-16', count: 1 },
-    { date: '2022-03-17', count: 8 },
-    { date: '2022-04-18', count: 10 },
-    { date: '2022-04-19', count: 9 },
-    { date: '2022-07-20', count: 2 },
-    { date: '2022-07-21', count: 5 },
-    { date: '2022-08-22', count: 4 },
-    { date: '2022-09-23', count: 9 },
-    { date: '2022-10-24', count: 6 },
-    { date: '2022-10-25', count: 7 },
-    { date: '2022-11-26', count: 4 },
-    { date: '2022-12-27', count: 2 },
-    { date: '2023-01-28', count: 4 },
-    { date: '2023-02-29', count: 11 },
-]
 
-const today = new Date();
 
 </script>
 
 <template>
 
-    <CalendarHeatmap :data="obj" :EndDate="{today}" />
+    <CalendarHeatmap />
 
     <div v-if="userJson">
         <Header :surname=userJson.user.surname  :name=userJson.user.name :espace=espace :message=message />
