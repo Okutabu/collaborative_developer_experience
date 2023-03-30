@@ -432,6 +432,7 @@ const user63 =
 
             const requete = `MATCH (u:User)-[i]-(q:Question)
                             UNWIND i.dateInteraction AS dates
+                            WITH u, min(dates) AS date
                             RETURN u
                             ORDER BY date ${DESC}`;
         
@@ -458,22 +459,22 @@ module.exports = {
 };
 
 
-(async()=>{
+// (async()=>{
 
-    try {
+//     try {
     
-        const oui = await getUsersSortedByLastInteraction();
+//         const oui = await getUsersSortedByLastInteraction("DESC");
     
-        console.log(oui[0]._fields[0].properties);
-        //console.log(oui);
+//         console.log(oui[0]._fields[0].properties);
+//         //console.log(oui);
 
-    } catch (error) {
-        console.error(`Something went wrong: ${error}`);
-    } finally {
-    // Don't forget to close the driver connection when you're finished with it.
-    await driver.close();
-    }
-})();
+//     } catch (error) {
+//         console.error(`Something went wrong: ${error}`);
+//     } finally {
+//     // Don't forget to close the driver connection when you're finished with it.
+//     await driver.close();
+//     }
+// })();
 
 
 
