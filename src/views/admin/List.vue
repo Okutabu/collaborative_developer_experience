@@ -12,8 +12,9 @@ const espace = ref('d\'administration')
 const message = ref('Trouver le profil qu\'il vous faut parmis les utilisateurs CDE !')
 
 const adminStore = useAdminStore();
-const { users } = storeToRefs(adminStore);
+const { users, userClic } = storeToRefs(adminStore);
 adminStore.getUsers();
+adminStore.getUserProficiency();
 
 
 const user = localStorage.getItem('user')
@@ -47,8 +48,6 @@ function triSurname() {
 
 }
 
-console.log(users);
-
 </script>
 
 <template>
@@ -75,10 +74,10 @@ console.log(users);
                 <template v-if="users">
                         <tr v-for="user in users" :key = "user">
                             <router-link :to="{path :`/admin/users/profile/${user}`, query:{name: user.name, id: user.idSTOW.low, surname: user.surname, mail: user.mail}}">
-                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase())">{{ user.surname }}</td>
+                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && userClic.userProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())">{{ user.surname }}</td>
                             </router-link>
-                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase())">{{ user.name }}</td>
-                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase())">
+                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && userClic.userProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())">{{ user.name }}</td>
+                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && userClic.userProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())">
                                 <div v-if="user.lastInteraction.low != -1" >
                                     {{ (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}
                                 </div>
@@ -86,7 +85,7 @@ console.log(users);
                                     Inactif
                                 </div>
                             </td>
-                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase())">{{ user.topTag}}</td>
+                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && userClic.userProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())">{{ userClic.userProfile[1][0].techno }}</td>
                         
                         </tr>
                 </template>
