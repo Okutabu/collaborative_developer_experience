@@ -427,12 +427,12 @@ const user63 =
         // Les différents types disponnible pour TypeSort
 
         const session = driver.session({ database: 'neo4j' });
-
+        
         try{
 
             const requete = `MATCH (u:User)-[i]-(q:Question)
                             UNWIND i.dateInteraction AS dates
-                            WITH u, min(dates) AS date
+                            WITH u, max(dates) AS date
                             RETURN u
                             ORDER BY date ${DESC}`;
         
