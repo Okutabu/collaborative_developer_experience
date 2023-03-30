@@ -385,7 +385,7 @@ app.get('/admin/users/sort/:attribute', (req, res) => {
 				neo4jUsers = await db.getUsersSorted(attribute);
 			}
 			if(attribute == "lastInteraction"){
-				neo4jUsers = await db.getUsersSorted(attribute);
+				neo4jUsers = await db.getUsersSortedByLastInteraction();
 			}
 
 
@@ -414,39 +414,6 @@ app.get('/admin/users/sort/:attribute', (req, res) => {
 			}
 		})();
 	}
-});
-
-
-app.get('/admin/users/sort/lastInteraction', (req, res) => {
-
-    (async() => {
-
-        var neo4jUsers = await db.getUsersSortedByLastInteraction();
-
-        if(!neo4jUsers.length){
-
-            res.status(404).send({
-                answer: "Users not found",
-                users: [],
-                error: -1
-            });
-        }
-        else{
-
-            let allUsers = [];
-
-            for(let i = 0; i < neo4jUsers.length; i++){
-
-                allUsers.push(neo4jUsers[i]._fields[0].properties);
-            }
-
-            res.status(200).send({
-                answer: "Users found",
-                users: allUsers,
-                error: 0
-            });
-        }
-    })();
 });
 
 
