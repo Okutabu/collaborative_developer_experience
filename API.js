@@ -445,7 +445,7 @@ app.get('/admin/users/sort/:attribute/desc', (req, res) => {
 				neo4jUsers = await db.getUsersSorted(attribute, "DESC");
 			}
 			if(attribute == "lastInteraction"){
-				neo4jUsers = await db.getUsersSorted(attribute, "DESC");
+				neo4jUsers = await db.getUsersSortedByLastInteraction("DESC");
 			}
 
 
