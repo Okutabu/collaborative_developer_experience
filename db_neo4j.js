@@ -455,6 +455,7 @@ const user63 =
 
         try{
             const requete = `MATCH (u1:User { idSTOW: $myIdSTOW })--(q:Question)--(u2:User)
+            WHERE u1 <> u2
             RETURN u2 AS InteractedWith`;
 
             const readResult =  await session.executeRead(tx =>
