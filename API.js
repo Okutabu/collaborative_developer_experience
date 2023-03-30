@@ -421,7 +421,7 @@ app.get('/admin/users/sort/lastInteraction', (req, res) => {
 
     (async() => {
 
-        var neo4jUsers = await db.getUsersSorted("lastInteraction");
+        var neo4jUsers = await db.getUsersSortedByLastInteraction();
 
         if(!neo4jUsers.length){
 
