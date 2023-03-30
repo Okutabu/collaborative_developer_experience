@@ -419,19 +419,9 @@ app.get('/admin/users/sort/:attribute', (req, res) => {
 
 app.get('/admin/users/sort/lastInteraction', (req, res) => {
 
-	//var attribute = req.params.attribute;
-
     (async() => {
 
         var neo4jUsers = await db.getUsersSorted("lastInteraction");
-
-        if(!neo4jUsers.length){
-            res.status(404).send({
-                answer: "Users not found, there may be is an error in the parameters",
-                users: [],
-                error: -1
-            });
-        }
 
         if(!neo4jUsers.length){
 
