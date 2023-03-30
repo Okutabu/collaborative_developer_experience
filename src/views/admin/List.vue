@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia';
 import { useAdminStore } from '@/stores';
 import { ref } from "vue";
 import Header from '../../components/Header.vue';
-
+import Mannequin from '@/components/Mannequin.vue';
 
 let input = ref("");
 let inputName = ref("");
@@ -45,7 +45,6 @@ function triSurname() {
         adminStore.getUsersbySurname();
     }
     adminStore.desc = !adminStore.desc;
-
 }
 
 </script>
@@ -78,14 +77,14 @@ function triSurname() {
                             </router-link>
                             <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && userClic.userProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())">{{ user.name }}</td>
                             <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && userClic.userProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())">
-                                <div v-if="user.lastInteraction.low != -1" >
+                                <!-- <div v-if="user.lastInteraction.low != -1" >
                                     {{ (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}
                                 </div>
                                 <div v-else>
                                     Inactif
-                                </div>
+                                </div> -->
                             </td>
-                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && userClic.userProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())">{{ userClic.userProfile[1][0].techno }}</td>
+                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && userClic.userProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())">{{ user.techno }}</td>
                         
                         </tr>
                 </template>
