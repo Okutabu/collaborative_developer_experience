@@ -118,10 +118,11 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            // Il faudra penser à changer id par idSTOW quand on refera la bdd
-            const requete = `MATCH(u:User{idSTOW: $idSTOW})-[i:INTERACT]-(t:Tag)
-                                WITH i.ratio as topTags, t, u 
-                                RETURN u, t, topTags ORDER BY topTags DESC
+            const requete = `MATCH (u:User{idSTOW: $idSTOW})-[]-()-[h:HAS_TOPIC]-(t:Tag)
+                                WITH u,t, count(h) as nbRelations
+                                MATCH (u)-[]-()-[i]-()
+                                RETURN u as utilisateur ,t as tags ,nbRelations, count(i) as alltags
+                                ORDER BY nbRelations DESC
                                 LIMIT 5`;
         
             const readResult = await session.executeRead(tx =>
@@ -134,29 +135,49 @@ const user63 =
             await session.close();
         }
     }
-//})();
+
+    async function getUserLastInteraction(idSTOW){
+
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `MATCH (u:User{idSTOW:$idSTOW})-[i]-(q:Question)
+                                WITH collect(i.dateInteraction) as lastInteraction , u
+                                RETURN u,lastInteraction[0] ORDER BY lastInteraction`;
+        
+            const readResult = await session.executeRead(tx =>
+                tx.run(requete, { idSTOW })
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Erreur getUserLastInteraction : ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
 
     //à remodifier quand tous les utilisateutrs auront des nom mail...
     async function getUserProficiency(idSTOW){
 
         var res = null;
         const data = await getUserTopTags(idSTOW);
+        const lastInteraction = await getUserLastInteraction(idSTOW);
 
         if(data.lenght != 0){
-
             var users = [];
             var technos = [];
             var test = {
-                idSTOW : idSTOW,
+                idSTOW : data[0]._fields[0].properties.idSTOW.low,
                 pseudo : data[0]._fields[0].properties.pseudo,
                 avatar: data[0]._fields[0].properties.avatar,
-                lastInteraction: data[0]._fields[0].properties.lastInteraction.low
+                lastInteraction: lastInteraction[0]._fields[0].low
             }
             users.push(test)
             data.map( (elem) => {
                 var title = {
                     techno: elem._fields[1].properties.title,
-                    ratio: elem._fields[2]
+                    ratio: elem._fields[2].low/elem._fields[3].low
                 };
                 technos.push(title);
             });
@@ -211,11 +232,11 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
-                             WITH sum(i.nbQuestions + i.nbAnswers) AS interactions, t AS topTags
-                             RETURN topTags, interactions
-                             ORDER BY interactions DESC
-                             LIMIT 5`;
+            const requete = `MATCH (u:User)-[i]-()-[h:HAS_TOPIC]-(t:Tag)
+                                WITH count(h) AS interactions, t AS topTags
+                                RETURN topTags, interactions
+                                ORDER BY interactions DESC
+                                LIMIT 5`;
         
             const readResult =  await session.executeRead(tx =>
                 tx.run(requete)
@@ -233,10 +254,9 @@ const user63 =
 
         try{
             const requete = `MATCH (u:User)
-                             WHERE  u.lastInteraction <> -1
-                             WITH COUNT(u) AS nbActive
-                             RETURN nbActive`;
-        
+                                WHERE (u)--()
+                                RETURN COUNT(u) as nbActive`;
+                            
             const readResult =  await session.executeRead(tx =>
                 tx.run(requete)
             );
@@ -252,9 +272,8 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
-                             WITH sum(i.nbQuestions) AS nbQuestions
-                             RETURN nbQuestions`;
+            const requete = `MATCH (u:User)-[a:ASKED]-()
+                             RETURN count(a) as nbQuestions`;
         
             const readResult =  await session.executeRead(tx =>
                 tx.run(requete)
@@ -271,9 +290,8 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
-                             WITH sum(i.nbQuestions) AS nbQuestions
-                             RETURN nbQuestions`;
+            const requete = `MATCH (u:User)-[a:ANSWERED]-()
+                             RETURN count(a) as nbAnswers`;
         
             const readResult =  await session.executeRead(tx =>
                 tx.run(requete)
@@ -292,9 +310,11 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
-                            WITH sum(i.nbQuestions) AS questions, sum(i.nbAnswers) AS answers
-                            RETURN (questions + answers) AS interactions`;
+            const requete = `MATCH (u:User)-[a:ANSWERED]-()
+                                WITH count (a) as nbAnswered
+                                MATCH (u:User)-[a:ASKED]-()
+                                WITH nbAnswered, count(a) as nbAsked
+                                RETURN (nbAnswered + nbAsked) as interactions`;
         
             const readResult =  await session.executeRead(tx =>
                 tx.run(requete)
@@ -311,11 +331,11 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
     
         try{
-            const requete = `MATCH (u:User)-[i:INTERACT]-(t:Tag)
-                             WITH COUNT(i) AS nbUsers, t AS tag
-                             RETURN nbUsers, tag
-                             ORDER BY nbUsers DESC
-                             LIMIT 5`;
+            const requete = `MATCH (u:User)-[i]-()-[]-(t:Tag)
+                                WITH COUNT(i) AS nbUsers, t AS tag
+                                RETURN nbUsers, tag
+                                ORDER BY nbUsers DESC
+                                LIMIT 5`;
         
             const readResult =  await session.executeRead(tx =>
                 tx.run(requete)
@@ -404,7 +424,6 @@ const user63 =
 
     async function getInteractionDates(type){
 
-
         // type est soit ANSWERED ou ASKED
 
         if(type == "ANSWERED" || type == "ASKED"){
@@ -450,12 +469,36 @@ const user63 =
         }
     }
 
+    async function getUsersSortedByLastInteraction(DESC = ""){
+        // mettre "DESC" en paramètre si on veut classer de manière décroissante
+        // Les différents types disponnible pour TypeSort
 
-    
+        const session = driver.session({ database: 'neo4j' });
+        
+        try{
+
+            const requete = `MATCH (u:User)-[i]-(q:Question)
+                            UNWIND i.dateInteraction AS dates
+                            WITH u, max(dates) AS date
+                            RETURN u
+                            ORDER BY date ${DESC}`;
+        
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete)
+                );
+            return readResult.records;
+
+        }catch(error){
+            console.error(`[ getUsersSortedByLastInteraction ] Something went wrong :  ${error}`);
+        } finally {
+            await session.close();
+        }
+
+
 module.exports = {
     createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags, getUsers,
     getUsersSorted, getNbOfActiveUsers, getNbQuestions, getNbAnswers, getNbInteractions, getTagsWithMostUsers, getTagAdmin,
-    getInteractionDates, getUsersWhoInteractedWithMe
+    getInteractionDates, getUsersWhoInteractedWithMe, getUsersSortedByLastInteraction
 };
 
 
@@ -473,6 +516,11 @@ module.exports = {
 
 //         console.log(non);
 //         console.log(oui[1]._fields[0]);
+    
+//         const oui = await getUsersSortedByLastInteraction("DESC");
+    
+//         console.log(oui[0]._fields[0].properties);
+//         //console.log(oui);
 
 //     } catch (error) {
 //         console.error(`Something went wrong: ${error}`);
@@ -481,10 +529,3 @@ module.exports = {
 //     await driver.close();
 //     }
 // })();
-
-
-
-
-
-
-
