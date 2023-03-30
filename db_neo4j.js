@@ -493,13 +493,14 @@ const user63 =
         } finally {
             await session.close();
         }
+    }
 
 
 module.exports = {
     createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags, getUsers,
     getUsersSorted, getNbOfActiveUsers, getNbQuestions, getNbAnswers, getNbInteractions, getTagsWithMostUsers, getTagAdmin,
     getInteractionDates, getUsersWhoInteractedWithMe, getUsersSortedByLastInteraction
-};
+}
 
 
 // (async()=>{
