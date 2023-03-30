@@ -422,19 +422,47 @@ const user63 =
         }
     }
 
+    async function getUsersSortedByLastInteraction(DESC = ""){
+        // mettre "DESC" en paramètre si on veut classer de manière décroissante
+        // Les différents types disponnible pour TypeSort
+
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+
+            const requete = `MATCH (u:User)-[i]-(q:Question)
+                            UNWIND i.dateInteraction AS dates
+                            RETURN u
+                            ORDER BY date ${DESC}`;
+        
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete)
+            );
+            return readResult.records;
+
+        }catch(error){
+            console.error(`[ getUsersSortedByLastInteraction ] Something went wrong :  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+
+
 
     
 module.exports = {
     createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags, getUsers,
-    getUsersSorted, getNbOfActiveUsers, getNbQuestions, getNbAnswers, getNbInteractions, getTagsWithMostUsers, getTagAdmin
+    getUsersSorted, getNbOfActiveUsers, getNbQuestions, getNbAnswers, getNbInteractions, getTagsWithMostUsers, getTagAdmin,
+    getUsersSortedByLastInteraction
 };
 
-/*
+
 (async()=>{
 
     try {
     
-        const oui = await getUsersSorted("surname", "DESC");
+        const oui = await getUsersSortedByLastInteraction();
     
         console.log(oui[0]._fields[0].properties);
         //console.log(oui);
@@ -446,7 +474,7 @@ module.exports = {
     await driver.close();
     }
 })();
-*/
+
 
 
 
