@@ -28,9 +28,9 @@ export const useAdminStore = defineStore({
         },
         async getStats() {
             try {
-                var res = await fetchWrapper.get(`${baseUrl}/users`);
+                var res = await fetchWrapper.get(`${baseUrl}/statistics`);
                 res = JSON.parse(JSON.stringify(res));
-                this.usersDotUsers = res.users;
+                this.stats = res;
             }
             catch (error) {
                 const alertStore = useAlertStore();
@@ -40,7 +40,6 @@ export const useAdminStore = defineStore({
         async getUserProficiency(id) {
             try {
                 var res = await fetchWrapper.get(`${import.meta.env.VITE_API_URL}/user/${id}/proficiency`);
-                console.log(res);
                 res = JSON.parse(JSON.stringify(res));
                 this.userClic = res;
             }

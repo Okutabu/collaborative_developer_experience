@@ -6,7 +6,9 @@ import Header from '../../components/Header.vue';
 import { ref } from "vue"; 
 
 
+
 import CalendarHeatmap from '@/components/Heatmap.vue';
+
 
 const adminStore = useAdminStore();
 const { stats } = storeToRefs(adminStore);
@@ -53,11 +55,11 @@ const userJson = JSON.parse(user)
                 <td>{{ stats.nbUsers }}</td>
             </tr>
             <tr>
-                <td>Les tags avec le plus d'intéractions</td>
+                <td>Les tags avec le plus d'interactions</td>
                 <td>{{ stats.topTags }}</td>
             </tr>
             <tr>
-                <td>Le nombre d'intéractions totales</td>
+                <td>Le nombre d'interactions totales</td>
                 <td>{{ stats.nbInteractions }}</td>
             </tr>
             <tr>

@@ -5,6 +5,7 @@ import VueApexCharts from "vue3-apexcharts";
 
 const props = defineProps({
   technoratio: Array
+
 })
 
 /*
@@ -107,6 +108,8 @@ var chartOptions = {
     },
     };
 
+var date = "2023-02-29"
+
 </script>
 
 <template>
@@ -114,6 +117,7 @@ var chartOptions = {
     <div id="chart">
         <VueApexCharts type="heatmap" height="350" :options="chartOptions" :series="series"></VueApexCharts>
     </div>
+
 
 </template>
 

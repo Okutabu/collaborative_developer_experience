@@ -4,7 +4,7 @@ import { RouterLink, RouterView } from 'vue-router';
 import Nav from "./components/Nav.vue";
 import Alert from "./components/Alert.vue";
 
-import { useAuthStore } from '@/stores';
+import { useAuthStore } from '@/stores';    
 
 const authStore = useAuthStore();
 
