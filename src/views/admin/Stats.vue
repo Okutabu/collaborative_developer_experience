@@ -18,7 +18,6 @@ const message = ref('Découvrez toutes les statistiques de la plateforme !')
 const user = localStorage.getItem('user')
 const userJson = JSON.parse(user)
 
-
 </script>
 
 <template>
@@ -52,11 +51,11 @@ const userJson = JSON.parse(user)
                 <td>{{ stats.nbUsers }}</td>
             </tr>
             <tr>
-                <td>Les tags avec le plus d'intéractions</td>
+                <td>Les tags avec le plus d'interactions</td>
                 <td>{{ stats.topTags }}</td>
             </tr>
             <tr>
-                <td>Le nombre d'intéractions totales</td>
+                <td>Le nombre d'interactions totales</td>
                 <td>{{ stats.nbInteractions }}</td>
             </tr>
             <tr>
