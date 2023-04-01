@@ -151,6 +151,10 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Mary.Smith@email.com",
+                                        "lastInteraction": {
+                                            "low": 1679884919,
+                                            "high": 0
+                                        },
                                         "surname": "Smith",
                                         "topTag": "git",
                                         "name": "Mary",
@@ -163,6 +167,10 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Lawrence.Mendoza@email.com",
+                                        "lastInteraction": {
+                                            "low": 1680076627,
+                                            "high": 0
+                                        },
                                         "surname": "Mendoza",
                                         "topTag": "flutter",
                                         "name": "Lawrence",
@@ -175,6 +183,10 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Emma.Williams@email.com",
+                                        "lastInteraction": {
+                                            "low": 1665596398,
+                                            "high": 0
+                                        },
                                         "surname": "Williams",
                                         "topTag": "html",
                                         "name": "Emma",
@@ -191,56 +203,9 @@ export function loadMirageInDev() {
                                         "name": "Elizabeth",
                                         "avatar": "https://www.gravatar.com/avatar/58745021dbc7642c62e9a67eccb94ddf?s=256&d=identicon&r=PG",
                                         "pseudo": "Jaydeep Khamar"
-                                    },
-                                    {
-                                        "idSTOW": {
-                                            "low": 12439119,
-                                            "high": 0
-                                        },
-                                        "mail": "Minnie.Jones@email.com",
-                                        "surname": "Jones",
-                                        "topTag": "python",
-                                        "name": "Minnie",
-                                        "avatar": "https://www.gravatar.com/avatar/158a3ae1466f740f8b74e5522260dabf?s=256&d=identicon&r=PG",
-                                        "pseudo": "Alexander L. Hayes"
-                                    },
-                                    {
-                                        "idSTOW": {
-                                            "low": 7297700,
-                                            "high": 0
-                                        },
-                                        "mail": "Margaret.Miller@email.com",
-                                        "surname": "Miller",
-                                        "topTag": "powerbi",
-                                        "name": "Margaret",
-                                        "avatar": "https://i.stack.imgur.com/FkQhS.png?s=256&g=1",
-                                        "pseudo": "David Browne - Microsoft"
-                                    },
-                                    {
-                                        "idSTOW": {
-                                            "low": 2772584,
-                                            "high": 0
-                                        },
-                                        "mail": "Ida.Davis@email.com",
-                                        "surname": "Davis",
-                                        "topTag": "cloudflare",
-                                        "name": "Ida",
-                                        "avatar": "https://www.gravatar.com/avatar/6564ff71c6813f28cb51fe8b4720b61b?s=256&d=identicon&r=PG&f=1",
-                                        "pseudo": "zombi_man"
-                                    },
-                                    {
-                                        "idSTOW": {
-                                            "low": 2257564,
-                                            "high": 0
-                                        },
-                                        "mail": "Alice.Garcia@email.com",
-                                        "surname": "Garcia",
-                                        "name": "Alice",
-                                        "avatar": "https://www.gravatar.com/avatar/eb78ad434c7af64f1fb6d3d35297b0f6?s=256&d=identicon&r=PG",
-                                        "pseudo": "user2257564"
                                     }
                                 ],
-                                    "error": 0
+                                "error": 0
                             }
                         });
                         this.get(`${this.namespace}/admin/users/sort/lastInteraction`, () => {
@@ -253,6 +218,10 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Louise.Green@email.com",
+                                        "lastInteraction": {
+                                            "low": 1237922848,
+                                            "high": 0
+                                        },
                                         "surname": "Green",
                                         "topTag": "moq",
                                         "name": "Louise",
@@ -265,6 +234,10 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Elmer.Gonzales@email.com",
+                                        "lastInteraction": {
+                                            "low": 1286194756,
+                                            "high": 0
+                                        },
                                         "surname": "Gonzales",
                                         "topTag": "macos",
                                         "name": "Elmer",
@@ -277,6 +250,10 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Alfred.Patterson@email.com",
+                                        "lastInteraction": {
+                                            "low": 1328945181,
+                                            "high": 0
+                                        },
                                         "surname": "Patterson",
                                         "topTag": "c",
                                         "name": "Alfred",
@@ -289,6 +266,10 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Thomas.Brooks@email.com",
+                                        "lastInteraction": {
+                                            "low": 1355909200,
+                                            "high": 0
+                                        },
                                         "surname": "Brooks",
                                         "topTag": "node.js",
                                         "name": "Thomas",
@@ -301,11 +282,87 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Edith.Walker@email.com",
+                                        "lastInteraction": {
+                                            "low": 1417882934,
+                                            "high": 0
+                                        },
                                         "surname": "Walker",
                                         "topTag": "ionic-framework",
                                         "name": "Edith",
                                         "avatar": "https://i.stack.imgur.com/baIRy.jpg?s=256&g=1",
                                         "pseudo": "Fizer Khan"
+                                    }
+                                ],
+                                "error": 0
+                            }
+                        });
+                        this.get(`${this.namespace}/admin/users/sort/lastInteraction`, () => {
+                            return {
+                                "answer": "Users found",
+                                "users": [
+                                    {
+                                        "idSTOW": {
+                                            "low": 3962914,
+                                            "high": 0
+                                        },
+                                        "mail": "Cora.Hernandez@email.com",
+                                        "lastInteraction": {
+                                            "low": 1677837492,
+                                            "high": 0
+                                        },
+                                        "surname": "Hernandez",
+                                        "topTag": "r",
+                                        "name": "Cora",
+                                        "avatar": "https://i.stack.imgur.com/tGgv6.jpg?s=256&g=1",
+                                        "pseudo": "Ronak Shah"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 2029983,
+                                            "high": 0
+                                        },
+                                        "mail": "Mattie.Perez@email.com",
+                                        "lastInteraction": {
+                                            "low": 1680096650,
+                                            "high": 0
+                                        },
+                                        "surname": "Perez",
+                                        "topTag": "sql-server",
+                                        "name": "Mattie",
+                                        "avatar": "https://www.gravatar.com/avatar/0118fb43d1ce086d768e295339cf0ff4?s=256&d=identicon&r=PG",
+                                        "pseudo": "Thom A"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 13431819,
+                                            "high": 0
+                                        },
+                                        "mail": "Lawrence.Mendoza@email.com",
+                                        "lastInteraction": {
+                                            "low": 1680076627,
+                                            "high": 0
+                                        },
+                                        "surname": "Mendoza",
+                                        "topTag": "flutter",
+                                        "name": "Lawrence",
+                                        "avatar": "https://i.stack.imgur.com/tw2FU.jpg?s=256&g=1",
+                                        "pseudo": "BouncyBits"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 4788546,
+                                            "high": 0
+                                        },
+                                        "mail": "Joe.Ross@email.com",
+                                        "lastInteraction": {
+                                            "low": 1679574522,
+                                            "high": 0
+                                        },
+                                        "surname": "Ross",
+                                        "topTag": "python",
+                                        "name": "Joe",
+                                        "avatar": "https://i.stack.imgur.com/Z2jWn.jpg?s=256&g=1",
+                                        "pseudo": "CristiFati"
                                     }
                                 ],
                                 "error": 0
@@ -321,6 +378,10 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Ada.Sanchez@email.com",
+                                        "lastInteraction": {
+                                            "low": 1537175053,
+                                            "high": 0
+                                        },
                                         "surname": "Sanchez",
                                         "topTag": "java",
                                         "name": "Ada",
@@ -333,6 +394,10 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Agnes.Stewart@email.com",
+                                        "lastInteraction": {
+                                            "low": 1662883454,
+                                            "high": 0
+                                        },
                                         "surname": "Stewart",
                                         "topTag": "r",
                                         "name": "Agnes",
@@ -345,6 +410,10 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Albert.Myers@email.com",
+                                        "lastInteraction": {
+                                            "low": 1532392288,
+                                            "high": 0
+                                        },
                                         "surname": "Myers",
                                         "topTag": "rust",
                                         "name": "Albert",
@@ -357,34 +426,15 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Alfred.Patterson@email.com",
+                                        "lastInteraction": {
+                                            "low": 1328945181,
+                                            "high": 0
+                                        },
                                         "surname": "Patterson",
                                         "topTag": "c",
                                         "name": "Alfred",
                                         "avatar": "https://www.gravatar.com/avatar/a2090a0ffd27b055c8fa22a8e59476d0?s=256&d=identicon&r=PG",
                                         "pseudo": "cnicutar"
-                                    },
-                                    {
-                                        "idSTOW": {
-                                            "low": 2257564,
-                                            "high": 0
-                                        },
-                                        "mail": "Alice.Garcia@email.com",
-                                        "surname": "Garcia",
-                                        "name": "Alice",
-                                        "avatar": "https://www.gravatar.com/avatar/eb78ad434c7af64f1fb6d3d35297b0f6?s=256&d=identicon&r=PG",
-                                        "pseudo": "user2257564"
-                                    },
-                                    {
-                                        "idSTOW": {
-                                            "low": 1420701,
-                                            "high": 0
-                                        },
-                                        "mail": "Andrew.Russell@email.com",
-                                        "surname": "Russell",
-                                        "topTag": "shopware6",
-                                        "name": "Andrew",
-                                        "avatar": "https://www.gravatar.com/avatar/ac859ce59977be80cb188d3ffdeea1f8?s=256&d=identicon&r=PG",
-                                        "pseudo": "augsteyer"
                                     }
                                 ],
                                 "error": 0
@@ -400,6 +450,10 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Willie.Simmons@email.com",
+                                        "lastInteraction": {
+                                            "low": 1673582364,
+                                            "high": 0
+                                        },
                                         "surname": "Simmons",
                                         "topTag": "c#",
                                         "name": "Willie",
@@ -434,6 +488,10 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Walter.Cruz@email.com",
+                                        "lastInteraction": {
+                                            "low": 1673594828,
+                                            "high": 0
+                                        },
                                         "surname": "Cruz",
                                         "topTag": "javascript",
                                         "name": "Walter",
@@ -465,6 +523,10 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Lula.Adams@email.com",
+                                        "lastInteraction": {
+                                            "low": 1668600389,
+                                            "high": 0
+                                        },
                                         "surname": "Adams",
                                         "topTag": "sql-server",
                                         "name": "Lula",
@@ -477,6 +539,10 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Carl.Alexander@email.com",
+                                        "lastInteraction": {
+                                            "low": 1280089493,
+                                            "high": 0
+                                        },
                                         "surname": "Alexander",
                                         "topTag": "java",
                                         "name": "Carl",
@@ -489,6 +555,10 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Lillian.Allen@email.com",
+                                        "lastInteraction": {
+                                            "low": 1673344431,
+                                            "high": 0
+                                        },
                                         "surname": "Allen",
                                         "topTag": "javascript",
                                         "name": "Lillian",
@@ -501,6 +571,10 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Otto.Alvarez@email.com",
+                                        "lastInteraction": {
+                                            "low": 1677487234,
+                                            "high": 0
+                                        },
                                         "surname": "Alvarez",
                                         "topTag": "flutter",
                                         "name": "Otto",
@@ -513,65 +587,22 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Clara.Anderson@email.com",
+                                        "lastInteraction": {
+                                            "low": 1383664560,
+                                            "high": 0
+                                        },
                                         "surname": "Anderson",
                                         "topTag": "c#",
                                         "name": "Clara",
                                         "avatar": "https://i.stack.imgur.com/6HADc.jpg?s=256&g=1",
                                         "pseudo": "Vivek Nuna"
-                                    },
-                                    {
-                                        "idSTOW": {
-                                            "low": 20864520,
-                                            "high": 0
-                                        },
-                                        "mail": "Della.Bailey@email.com",
-                                        "surname": "Bailey",
-                                        "topTag": "python",
-                                        "name": "Della",
-                                        "avatar": "https://i.stack.imgur.com/H1G7n.png?s=256&g=1",
-                                        "pseudo": "Kiarash Fazli"
-                                    },
-                                    {
-                                        "idSTOW": {
-                                            "low": 18533248,
-                                            "high": 0
-                                        },
-                                        "mail": "Ethel.Baker@email.com",
-                                        "surname": "Baker",
-                                        "topTag": "ncurses",
-                                        "name": "Ethel",
-                                        "avatar": "https://www.gravatar.com/avatar/4bf14cfa5ab81a8c3dc0baee34e14883?s=256&d=identicon&r=PG",
-                                        "pseudo": "kamkow1"
-                                    },
-                                    {
-                                        "idSTOW": {
-                                            "low": 576911,
-                                            "high": 0
-                                        },
-                                        "mail": "Lewis.Barnes@email.com",
-                                        "surname": "Barnes",
-                                        "name": "Lewis",
-                                        "avatar": "https://www.gravatar.com/avatar/2a2941970f141aad669d13375dc57c4f?s=256&d=identicon&r=PG",
-                                        "pseudo": "Howard Hinnant"
-                                    },
-                                    {
-                                        "idSTOW": {
-                                            "low": 2016562,
-                                            "high": 0
-                                        },
-                                        "mail": "Lizzie.Bell@email.com",
-                                        "surname": "Bell",
-                                        "topTag": "android-jetpack-compose",
-                                        "name": "Lizzie",
-                                        "avatar": "https://www.gravatar.com/avatar/2433495de6d2b99746f8e25344209fa7?s=256&d=identicon&r=PG",
-                                        "pseudo": "Gabriele Mariotti"
                                     }
                                 ],
                                 "error": 0
                             }
                         });
                         this.get(`${this.namespace}/admin/users/sort/surname/desc`, () => {
-                            return {
+                            return{
                                 "answer": "Users found",
                                 "users": [
                                     {
@@ -580,6 +611,10 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Catherine.Young@email.com",
+                                        "lastInteraction": {
+                                            "low": 1678841597,
+                                            "high": 0
+                                        },
                                         "surname": "Young",
                                         "topTag": "swift",
                                         "name": "Catherine",
@@ -592,6 +627,10 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Lillie.Wright@email.com",
+                                        "lastInteraction": {
+                                            "low": 1679154940,
+                                            "high": 0
+                                        },
                                         "surname": "Wright",
                                         "topTag": "reactjs",
                                         "name": "Lillie",
@@ -604,6 +643,10 @@ export function loadMirageInDev() {
                                             "high": 0
                                         },
                                         "mail": "Luther.Woods@email.com",
+                                        "lastInteraction": {
+                                            "low": 1673299558,
+                                            "high": 0
+                                        },
                                         "surname": "Woods",
                                         "topTag": "flutter",
                                         "name": "Luther",
@@ -620,18 +663,6 @@ export function loadMirageInDev() {
                                         "name": "Frank",
                                         "avatar": "https://www.gravatar.com/avatar/8cff0e19c525c987e7fe10a3e3aef350?s=256&d=identicon&r=PG",
                                         "pseudo": "Pat Notz"
-                                    },
-                                    {
-                                        "idSTOW": {
-                                            "low": 564406,
-                                            "high": 0
-                                        },
-                                        "mail": "Sarah.Wilson@email.com",
-                                        "surname": "Wilson",
-                                        "topTag": "webstorm",
-                                        "name": "Sarah",
-                                        "avatar": "https://www.gravatar.com/avatar/ebb844b75738159b0888db4ce91be0d3?s=256&d=identicon&r=PG",
-                                        "pseudo": "David"
                                     }
                                 ],
                                 "error": 0
