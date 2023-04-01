@@ -77,12 +77,12 @@ function triSurname() {
                             </router-link>
                             <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && userClic.userProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())">{{ user.name }}</td>
                             <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && userClic.userProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())">
-                                <!-- <div v-if="user.lastInteraction.low != -1" >
+                               <div v-if="user.lastInteraction.low" >
                                     {{ (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}
                                 </div>
                                 <div v-else>
                                     Inactif
-                                </div> -->
+                                </div>
                             </td>
                             <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && userClic.userProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())">{{ user.topTag }}</td>
                         
