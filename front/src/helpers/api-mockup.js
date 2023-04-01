@@ -106,64 +106,154 @@ export function loadMirageInDev() {
                                 "users": [
                                     {
                                         "idSTOW": {
-                                            "low": 1234,
+                                            "low": 6309,
                                             "high": 0
                                         },
+                                        "mail": "Mary.Smith@email.com",
                                         "lastInteraction": {
-                                            "low": 1678487711,
+                                            "low": 1679884919,
                                             "high": 0
                                         },
-                                        "mail": "bapt.ps3@live.fr",
-                                        "surname": "Baptiste",
-                                        "name": "Griva"
+                                        "surname": "Smith",
+                                        "topTag": "git",
+                                        "name": "Mary",
+                                        "avatar": "https://i.stack.imgur.com/I4fiW.jpg?s=256&g=1",
+                                        "pseudo": "VonC"
                                     },
                                     {
                                         "idSTOW": {
-                                            "low": 20935520,
+                                            "low": 13431819,
                                             "high": 0
                                         },
+                                        "mail": "Lawrence.Mendoza@email.com",
                                         "lastInteraction": {
-                                            "low": 1673879022,
+                                            "low": 1680076627,
                                             "high": 0
                                         },
-                                        "mail": "lologan789@gmail.com",
-                                        "surname": "Logan",
-                                        "name": "Goddard"
+                                        "surname": "Mendoza",
+                                        "topTag": "flutter",
+                                        "name": "Lawrence",
+                                        "avatar": "https://i.stack.imgur.com/tw2FU.jpg?s=256&g=1",
+                                        "pseudo": "BouncyBits"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 6392120,
+                                            "high": 0
+                                        },
+                                        "mail": "Emma.Williams@email.com",
+                                        "lastInteraction": {
+                                            "low": 1665596398,
+                                            "high": 0
+                                        },
+                                        "surname": "Williams",
+                                        "topTag": "html",
+                                        "name": "Emma",
+                                        "avatar": "https://i.stack.imgur.com/Jnudv.jpg?s=256&g=1",
+                                        "pseudo": "xbass540"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 654730,
+                                            "high": 0
+                                        },
+                                        "mail": "Elizabeth.Brown@email.com",
+                                        "surname": "Brown",
+                                        "name": "Elizabeth",
+                                        "avatar": "https://www.gravatar.com/avatar/58745021dbc7642c62e9a67eccb94ddf?s=256&d=identicon&r=PG",
+                                        "pseudo": "Jaydeep Khamar"
                                     }
-                                ]}
+                                ],
+                                "error": 0
+                            }
                         });
                         this.get(`${this.namespace}/admin/users/sort/lastInteraction`, () => {
                             return {
                                 "answer": "Users found",
                                 "users": [
-
                                     {
                                         "idSTOW": {
-                                            "low": 20935520,
+                                            "low": 12950,
                                             "high": 0
                                         },
+                                        "mail": "Louise.Green@email.com",
                                         "lastInteraction": {
-                                            "low": 1673879022,
+                                            "low": 1237922848,
                                             "high": 0
                                         },
-                                        "mail": "lologan789@gmail.com",
-                                        "surname": "Logan",
-                                        "name": "Goddard"
+                                        "surname": "Green",
+                                        "topTag": "moq",
+                                        "name": "Louise",
+                                        "avatar": "https://www.gravatar.com/avatar/00aa1356e6f90fca08b36fb3c8d230c5?s=256&d=identicon&r=PG",
+                                        "pseudo": "tvanfosson"
                                     },
                                     {
                                         "idSTOW": {
-                                            "low": 1234,
+                                            "low": 422476,
                                             "high": 0
                                         },
+                                        "mail": "Elmer.Gonzales@email.com",
                                         "lastInteraction": {
-                                            "low": 1678487711,
+                                            "low": 1286194756,
                                             "high": 0
                                         },
-                                        "mail": "bapt.ps3@live.fr",
-                                        "surname": "Baptiste",
-                                        "name": "Griva"
+                                        "surname": "Gonzales",
+                                        "topTag": "macos",
+                                        "name": "Elmer",
+                                        "avatar": "https://www.gravatar.com/avatar/d091ed042239b4eec894e2fd089868bc?s=256&d=identicon&r=PG",
+                                        "pseudo": "Filip Spiridonov"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 714501,
+                                            "high": 0
+                                        },
+                                        "mail": "Alfred.Patterson@email.com",
+                                        "lastInteraction": {
+                                            "low": 1328945181,
+                                            "high": 0
+                                        },
+                                        "surname": "Patterson",
+                                        "topTag": "c",
+                                        "name": "Alfred",
+                                        "avatar": "https://www.gravatar.com/avatar/a2090a0ffd27b055c8fa22a8e59476d0?s=256&d=identicon&r=PG",
+                                        "pseudo": "cnicutar"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 201952,
+                                            "high": 0
+                                        },
+                                        "mail": "Thomas.Brooks@email.com",
+                                        "lastInteraction": {
+                                            "low": 1355909200,
+                                            "high": 0
+                                        },
+                                        "surname": "Brooks",
+                                        "topTag": "node.js",
+                                        "name": "Thomas",
+                                        "avatar": "https://i.stack.imgur.com/4wIGc.jpg?s=256&g=1",
+                                        "pseudo": "josh3736"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 1154350,
+                                            "high": 0
+                                        },
+                                        "mail": "Edith.Walker@email.com",
+                                        "lastInteraction": {
+                                            "low": 1417882934,
+                                            "high": 0
+                                        },
+                                        "surname": "Walker",
+                                        "topTag": "ionic-framework",
+                                        "name": "Edith",
+                                        "avatar": "https://i.stack.imgur.com/baIRy.jpg?s=256&g=1",
+                                        "pseudo": "Fizer Khan"
                                     }
-                                ]}
+                                ],
+                                "error": 0
+                            }
                         });
                         this.get(`${this.namespace}/admin/users/sort/lastInteraction/desc`, () => {
                             return {
@@ -171,64 +261,143 @@ export function loadMirageInDev() {
                                 "users": [
                                     {
                                         "idSTOW": {
-                                            "low": 1234,
+                                            "low": 3962914,
                                             "high": 0
                                         },
+                                        "mail": "Cora.Hernandez@email.com",
                                         "lastInteraction": {
-                                            "low": 1678487711,
+                                            "low": 1677837492,
                                             "high": 0
                                         },
-                                        "mail": "bapt.ps3@live.fr",
-                                        "surname": "Baptiste",
-                                        "name": "Griva"
+                                        "surname": "Hernandez",
+                                        "topTag": "r",
+                                        "name": "Cora",
+                                        "avatar": "https://i.stack.imgur.com/tGgv6.jpg?s=256&g=1",
+                                        "pseudo": "Ronak Shah"
                                     },
                                     {
                                         "idSTOW": {
-                                            "low": 20935520,
+                                            "low": 2029983,
                                             "high": 0
                                         },
+                                        "mail": "Mattie.Perez@email.com",
                                         "lastInteraction": {
-                                            "low": 1673879022,
+                                            "low": 1680096650,
                                             "high": 0
                                         },
-                                        "mail": "lologan789@gmail.com",
-                                        "surname": "Logan",
-                                        "name": "Goddard"
+                                        "surname": "Perez",
+                                        "topTag": "sql-server",
+                                        "name": "Mattie",
+                                        "avatar": "https://www.gravatar.com/avatar/0118fb43d1ce086d768e295339cf0ff4?s=256&d=identicon&r=PG",
+                                        "pseudo": "Thom A"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 13431819,
+                                            "high": 0
+                                        },
+                                        "mail": "Lawrence.Mendoza@email.com",
+                                        "lastInteraction": {
+                                            "low": 1680076627,
+                                            "high": 0
+                                        },
+                                        "surname": "Mendoza",
+                                        "topTag": "flutter",
+                                        "name": "Lawrence",
+                                        "avatar": "https://i.stack.imgur.com/tw2FU.jpg?s=256&g=1",
+                                        "pseudo": "BouncyBits"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 4788546,
+                                            "high": 0
+                                        },
+                                        "mail": "Joe.Ross@email.com",
+                                        "lastInteraction": {
+                                            "low": 1679574522,
+                                            "high": 0
+                                        },
+                                        "surname": "Ross",
+                                        "topTag": "python",
+                                        "name": "Joe",
+                                        "avatar": "https://i.stack.imgur.com/Z2jWn.jpg?s=256&g=1",
+                                        "pseudo": "CristiFati"
                                     }
-                                ]}
+                                ],
+                                "error": 0
+                            }
                         });
                         this.get(`${this.namespace}/admin/users/sort/name`, () => {
                             return {
                                 "answer": "Users found",
                                 "users": [
-
                                     {
                                         "idSTOW": {
-                                            "low": 20935520,
+                                            "low": 1426227,
                                             "high": 0
                                         },
+                                        "mail": "Ada.Sanchez@email.com",
                                         "lastInteraction": {
-                                            "low": 1673879022,
+                                            "low": 1537175053,
                                             "high": 0
                                         },
-                                        "mail": "lologan789@gmail.com",
-                                        "surname": "Logan",
-                                        "name": "Goddard"
+                                        "surname": "Sanchez",
+                                        "topTag": "java",
+                                        "name": "Ada",
+                                        "avatar": "https://i.stack.imgur.com/ElYch.jpg?s=256&g=1",
+                                        "pseudo": "cassiomolin"
                                     },
                                     {
                                         "idSTOW": {
-                                            "low": 1234,
+                                            "low": 17959618,
                                             "high": 0
                                         },
+                                        "mail": "Agnes.Stewart@email.com",
                                         "lastInteraction": {
-                                            "low": 1678487711,
+                                            "low": 1662883454,
                                             "high": 0
                                         },
-                                        "mail": "bapt.ps3@live.fr",
-                                        "surname": "Baptiste",
-                                        "name": "Griva"
+                                        "surname": "Stewart",
+                                        "topTag": "r",
+                                        "name": "Agnes",
+                                        "avatar": "https://lh3.googleusercontent.com/a/AATXAJyYkyQZyVsqUULsjnZOkcdYfaMSNmt9V61q7Fh3=k-s256",
+                                        "pseudo": "PTS390"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 234590,
+                                            "high": 0
+                                        },
+                                        "mail": "Albert.Myers@email.com",
+                                        "lastInteraction": {
+                                            "low": 1532392288,
+                                            "high": 0
+                                        },
+                                        "surname": "Myers",
+                                        "topTag": "rust",
+                                        "name": "Albert",
+                                        "avatar": "https://www.gravatar.com/avatar/463c0219a51a5d1fd08e1fa280811b57?s=256&d=identicon&r=PG",
+                                        "pseudo": "Francis Gagn&#233;"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 714501,
+                                            "high": 0
+                                        },
+                                        "mail": "Alfred.Patterson@email.com",
+                                        "lastInteraction": {
+                                            "low": 1328945181,
+                                            "high": 0
+                                        },
+                                        "surname": "Patterson",
+                                        "topTag": "c",
+                                        "name": "Alfred",
+                                        "avatar": "https://www.gravatar.com/avatar/a2090a0ffd27b055c8fa22a8e59476d0?s=256&d=identicon&r=PG",
+                                        "pseudo": "cnicutar"
                                     }
-                                ]}
+                                ],
+                                "error": 0
+                            }
                         });
                         this.get(`${this.namespace}/admin/users/sort/name/desc`, () => {
                             return {
@@ -236,31 +405,72 @@ export function loadMirageInDev() {
                                 "users": [
                                     {
                                         "idSTOW": {
-                                            "low": 1234,
+                                            "low": 98713,
                                             "high": 0
                                         },
+                                        "mail": "Willie.Simmons@email.com",
                                         "lastInteraction": {
-                                            "low": 1678487711,
+                                            "low": 1673582364,
                                             "high": 0
                                         },
-                                        "mail": "bapt.ps3@live.fr",
-                                        "surname": "Baptiste",
-                                        "name": "Griva"
+                                        "surname": "Simmons",
+                                        "topTag": "c#",
+                                        "name": "Willie",
+                                        "avatar": "https://www.gravatar.com/avatar/f4acdb91aba11ddf8f03d4b12453f3d5?s=256&d=identicon&r=PG",
+                                        "pseudo": "Thomas Levesque"
                                     },
                                     {
                                         "idSTOW": {
-                                            "low": 20935520,
+                                            "low": 20785192,
                                             "high": 0
                                         },
+                                        "mail": "William.Ward@email.com",
+                                        "surname": "Ward",
+                                        "name": "William",
+                                        "avatar": "https://i.stack.imgur.com/HJPZ4.png?s=256&g=1",
+                                        "pseudo": "Boots"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 3434970,
+                                            "high": 0
+                                        },
+                                        "mail": "Will.Gutierrez@email.com",
+                                        "surname": "Gutierrez",
+                                        "name": "Will",
+                                        "avatar": "https://i.stack.imgur.com/cWyFQ.png?s=256&g=1",
+                                        "pseudo": "Shady Aziza"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 3930247,
+                                            "high": 0
+                                        },
+                                        "mail": "Walter.Cruz@email.com",
                                         "lastInteraction": {
-                                            "low": 1673879022,
+                                            "low": 1673594828,
                                             "high": 0
                                         },
-                                        "mail": "lologan789@gmail.com",
-                                        "surname": "Logan",
-                                        "name": "Goddard"
+                                        "surname": "Cruz",
+                                        "topTag": "javascript",
+                                        "name": "Walter",
+                                        "avatar": "https://i.stack.imgur.com/zFtTQ.jpg?s=256&g=1",
+                                        "pseudo": "technophyle"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 2172,
+                                            "high": 0
+                                        },
+                                        "mail": "Tom.Kim@email.com",
+                                        "surname": "Kim",
+                                        "name": "Tom",
+                                        "avatar": "https://www.gravatar.com/avatar/d45a34439ae17a079045a23df5131b91?s=256&d=identicon&r=PG",
+                                        "pseudo": "Sander Versluys"
                                     }
-                                ]}
+                                ],
+                                "error": 0
+                            }
                         });
                         this.get(`${this.namespace}/admin/users/sort/surname`, () => {
                             return {
@@ -268,31 +478,87 @@ export function loadMirageInDev() {
                                 "users": [
                                     {
                                         "idSTOW": {
-                                            "low": 20935520,
+                                            "low": 14172808,
                                             "high": 0
                                         },
+                                        "mail": "Lula.Adams@email.com",
                                         "lastInteraction": {
-                                            "low": 1673879022,
+                                            "low": 1668600389,
                                             "high": 0
                                         },
-                                        "mail": "lologan789@gmail.com",
-                                        "surname": "Logan",
-                                        "name": "Goddard"
+                                        "surname": "Adams",
+                                        "topTag": "sql-server",
+                                        "name": "Lula",
+                                        "avatar": "https://www.gravatar.com/avatar/8ee2c5646c5ab45082023c8da7e66020?s=256&d=identicon&r=PG&f=1",
+                                        "pseudo": "RaPtiLE"
                                     },
                                     {
                                         "idSTOW": {
-                                            "low": 1234,
+                                            "low": 16475264,
                                             "high": 0
                                         },
+                                        "mail": "Carl.Alexander@email.com",
                                         "lastInteraction": {
-                                            "low": 1678487711,
+                                            "low": 1280089493,
                                             "high": 0
                                         },
-                                        "mail": "bapt.ps3@live.fr",
-                                        "surname": "Baptiste",
-                                        "name": "Griva"
+                                        "surname": "Alexander",
+                                        "topTag": "java",
+                                        "name": "Carl",
+                                        "avatar": "https://i.stack.imgur.com/QsIVA.png?s=256&g=1",
+                                        "pseudo": "Vikrant Pandey"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 905,
+                                            "high": 0
+                                        },
+                                        "mail": "Lillian.Allen@email.com",
+                                        "lastInteraction": {
+                                            "low": 1673344431,
+                                            "high": 0
+                                        },
+                                        "surname": "Allen",
+                                        "topTag": "javascript",
+                                        "name": "Lillian",
+                                        "avatar": "https://www.gravatar.com/avatar/130b8a67fd029b2e6b5e56e7aad04952?s=256&d=identicon&r=PG",
+                                        "pseudo": "Keith"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 5425860,
+                                            "high": 0
+                                        },
+                                        "mail": "Otto.Alvarez@email.com",
+                                        "lastInteraction": {
+                                            "low": 1677487234,
+                                            "high": 0
+                                        },
+                                        "surname": "Alvarez",
+                                        "topTag": "flutter",
+                                        "name": "Otto",
+                                        "avatar": "https://i.stack.imgur.com/d6fgg.jpg?s=256&g=1",
+                                        "pseudo": "Faiz Ahmad Dae"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 6527049,
+                                            "high": 0
+                                        },
+                                        "mail": "Clara.Anderson@email.com",
+                                        "lastInteraction": {
+                                            "low": 1383664560,
+                                            "high": 0
+                                        },
+                                        "surname": "Anderson",
+                                        "topTag": "c#",
+                                        "name": "Clara",
+                                        "avatar": "https://i.stack.imgur.com/6HADc.jpg?s=256&g=1",
+                                        "pseudo": "Vivek Nuna"
                                     }
-                                ]}
+                                ],
+                                "error": 0
+                            }
                         });
                         this.get(`${this.namespace}/admin/users/sort/surname/desc`, () => {
                             return {
@@ -300,31 +566,66 @@ export function loadMirageInDev() {
                                 "users": [
                                     {
                                         "idSTOW": {
-                                            "low": 1234,
+                                            "low": 2303865,
                                             "high": 0
                                         },
+                                        "mail": "Catherine.Young@email.com",
                                         "lastInteraction": {
-                                            "low": 1678487711,
+                                            "low": 1678841597,
                                             "high": 0
                                         },
-                                        "mail": "bapt.ps3@live.fr",
-                                        "surname": "Baptiste",
-                                        "name": "Griva"
+                                        "surname": "Young",
+                                        "topTag": "swift",
+                                        "name": "Catherine",
+                                        "avatar": "https://i.stack.imgur.com/varL9.jpg?s=256&g=1",
+                                        "pseudo": "Leo Dabus"
                                     },
                                     {
                                         "idSTOW": {
-                                            "low": 20935520,
+                                            "low": 954940,
                                             "high": 0
                                         },
+                                        "mail": "Lillie.Wright@email.com",
                                         "lastInteraction": {
-                                            "low": 1673879022,
+                                            "low": 1679154940,
                                             "high": 0
                                         },
-                                        "mail": "lologan789@gmail.com",
-                                        "surname": "Logan",
-                                        "name": "Goddard"
+                                        "surname": "Wright",
+                                        "topTag": "reactjs",
+                                        "name": "Lillie",
+                                        "avatar": "https://i.stack.imgur.com/8VrIO.jpg?s=256&g=1",
+                                        "pseudo": "Adam Jenkins"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 12349734,
+                                            "high": 0
+                                        },
+                                        "mail": "Luther.Woods@email.com",
+                                        "lastInteraction": {
+                                            "low": 1673299558,
+                                            "high": 0
+                                        },
+                                        "surname": "Woods",
+                                        "topTag": "flutter",
+                                        "name": "Luther",
+                                        "avatar": "https://www.gravatar.com/avatar/43d5578dec3745c33be38236b05566b3?s=256&d=identicon&r=PG&f=1",
+                                        "pseudo": "MendelG"
+                                    },
+                                    {
+                                        "idSTOW": {
+                                            "low": 825,
+                                            "high": 0
+                                        },
+                                        "mail": "Frank.Wood@email.com",
+                                        "surname": "Wood",
+                                        "name": "Frank",
+                                        "avatar": "https://www.gravatar.com/avatar/8cff0e19c525c987e7fe10a3e3aef350?s=256&d=identicon&r=PG",
+                                        "pseudo": "Pat Notz"
                                     }
-                                ]}
+                                ],
+                                "error": 0
+                            }
                         });
 
 
