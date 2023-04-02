@@ -167,12 +167,14 @@ const user63 =
         if(data.lenght != 0){
             var users = [];
             var technos = [];
+            
             var test = {
                 idSTOW : data[0]._fields[0].properties.idSTOW.low,
                 pseudo : data[0]._fields[0].properties.pseudo,
                 avatar: data[0]._fields[0].properties.avatar,
-                lastInteraction: lastInteraction[0]._fields[0].low
+                lastInteraction: lastInteraction[0]._fields[0].properties.lastInteraction.low
             }
+            //console.log("User : ", test);
             users.push(test)
             data.map( (elem) => {
                 var title = {
@@ -497,37 +499,39 @@ const user63 =
     }
 
 
+
+
+(async()=>{
+
+    try {
+        
+        // const oui = await getUsersSorted("surname", "DESC");
+    
+        // console.log(oui[0]._fields[0].properties);
+        // //console.log(oui);
+
+        // const non = await getInteractionDates("ASKED");
+        // const oui = await getInteractionDates("ANSWERED");
+
+        // console.log(non);
+        // console.log(oui[1]._fields[0]);
+    
+        const oui = await getUserProficiency(6309);
+    
+        console.log(oui);
+        //console.log(oui);
+
+    } catch (error) {
+        console.error(`Something went wrong: ${error}`);
+    } finally {
+    // Don't forget to close the driver connection when you're finished with it.
+        await driver.close();
+    }
+})();
+
+
 module.exports = {
     createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags, getUsers,
     getUsersSorted, getNbOfActiveUsers, getNbQuestions, getNbAnswers, getNbInteractions, getTagsWithMostUsers, getTagAdmin,
     getInteractionDates, getUsersWhoInteractedWithMe, getUsersSortedByLastInteraction
 }
-
-
-// (async()=>{
-
-//     try {
-        
-//         // const oui = await getUsersSorted("surname", "DESC");
-    
-//         // console.log(oui[0]._fields[0].properties);
-//         // //console.log(oui);
-
-//         const non = await getInteractionDates("ASKED");
-//         const oui = await getInteractionDates("ANSWERED");
-
-//         console.log(non);
-//         console.log(oui[1]._fields[0]);
-    
-//         const oui = await getUsersSortedByLastInteraction("DESC");
-    
-//         console.log(oui[0]._fields[0].properties);
-//         //console.log(oui);
-
-//     } catch (error) {
-//         console.error(`Something went wrong: ${error}`);
-//     } finally {
-//     // Don't forget to close the driver connection when you're finished with it.
-//     await driver.close();
-//     }
-// })();
