@@ -105,28 +105,29 @@ export function loadMirageInDev() {
                                     {
                                         "idSTOW": 6309,
                                         "pseudo": "VonC",
-                                        "avatar": "https://i.stack.imgur.com/I4fiW.jpg?s=256&g=1"
+                                        "avatar": "https://i.stack.imgur.com/I4fiW.jpg?s=256&g=1",
+                                        "lastInteraction": 1679884919
                                     },
                                     [
                                         {
                                             "techno": "git",
-                                            "ratio": 0.24444444444444444
+                                            "ratio": 0.1896551724137931
                                         },
                                         {
                                             "techno": "github",
-                                            "ratio": 0.15555555555555556
-                                        },
-                                        {
-                                            "techno": "github-api",
-                                            "ratio": 0.044444444444444446
-                                        },
-                                        {
-                                            "techno": "hook",
-                                            "ratio": 0.044444444444444446
+                                            "ratio": 0.13793103448275862
                                         },
                                         {
                                             "techno": "github-actions",
-                                            "ratio": 0.044444444444444446
+                                            "ratio": 0.06896551724137931
+                                        },
+                                        {
+                                            "techno": "gitlab",
+                                            "ratio": 0.06896551724137931
+                                        },
+                                        {
+                                            "techno": "visual-studio-code",
+                                            "ratio": 0.034482758620689655
                                         }
                                     ]
                                 ],
