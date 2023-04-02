@@ -7,7 +7,7 @@ const props = defineProps({
 })
 
 var series = []
-series.push({name: ratios, data: props.technoratio.techno.map(item => item.ratio)})
+series.push({name: ratios, data: props.technoratio.techno.map(item => item.ratio*100)})
 
 var ratios = {
     

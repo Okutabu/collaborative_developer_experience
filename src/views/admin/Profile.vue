@@ -2,6 +2,8 @@
 import { storeToRefs } from 'pinia';
 import { useProfileStore } from '@/stores';
 import { useRoute } from 'vue-router'
+import UserCard from '../../components/UserCard.vue';
+import UserCard2 from '../../components/UserCard2.vue';
 
 const route = useRoute()
 const profileStore = useProfileStore();
@@ -16,16 +18,20 @@ profileStore.setUserProfile(route.params.id);
 <template>
 
     <div class="container-profile-">
-        <td>
-            {{ userCardValue }}
-        </td>
-        
-        <!-- <UserCard :nom=userCardValue.userProfile[0].pseudo :techno=userCardValue.userProfile[1] :avatar=userCardValue.userProfile[0].avatar  />  -->
+        <div class="container-card"> <UserCard2 :nom=userCardValue.userProfile[0].pseudo :techno=userCardValue.userProfile[1] :avatar=userCardValue.userProfile[0].avatar  :reco=userCardValue.userProfile[1][0].techno :key=userCardValue /> </div>
     </div>
 
 
 </template>
 
 <style>
+.container-profile- {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+}
+
+
 
 </style>
