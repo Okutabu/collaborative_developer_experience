@@ -72,12 +72,12 @@ function triSurname() {
             <tbody class="table-body">
                 <template v-if="users">
                         <tr v-for="user in users" :key = "user">
-                            <router-link :to="{path :`/admin/users/profile/${user}`, query:{name: user.name, id: user.idSTOW.low, surname: user.surname, mail: user.mail}}">
+                            <router-link :to="{path :`/admin/users/profile/${user.idSTOW.low}`}">
                             <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && userClic.userProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())">{{ user.surname }}</td>
                             </router-link>
                             <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && userClic.userProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())">{{ user.name }}</td>
                             <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && userClic.userProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())">
-                               <div v-if="user.lastInteraction.low" >
+                               <div v-if="user.lastInteraction" >
                                     {{ (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}
                                 </div>
                                 <div v-else>

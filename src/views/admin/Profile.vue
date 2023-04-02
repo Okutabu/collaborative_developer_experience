@@ -1,10 +1,12 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { useProfileStore } from '@/stores';
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const profileStore = useProfileStore();
-const { user } = storeToRefs(profileStore);
-
+const { userCardValue } = storeToRefs(profileStore);
+profileStore.setUserProfile(route.params.id);
 
 
 </script>
@@ -14,7 +16,11 @@ const { user } = storeToRefs(profileStore);
 <template>
 
     <div class="container-profile-">
-        {{ user }}
+        <td>
+            {{ userCardValue }}
+        </td>
+        
+        <!-- <UserCard :nom=userCardValue.userProfile[0].pseudo :techno=userCardValue.userProfile[1] :avatar=userCardValue.userProfile[0].avatar  />  -->
     </div>
 
 
