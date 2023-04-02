@@ -17,6 +17,26 @@ const { user } = storeToRefs(authStore);
 const usersStore = useRecoStore();
 const { usersReco, usersRecoSimilarity, usersRecoQuestion } = storeToRefs(usersStore);
 
+const dataForLoadingUsersRecos = {
+                                
+                                "answer": "Users found", 
+                                "users":[ 
+                                            [ {   
+                                                "idSTOW": { "low": 11804213, "high": 0 }, 
+                                                "pseudo": "Franck", 
+                                                "avatar": "https://i.stack.imgur.com/H1G7n.png?s=256&g=1" },
+                                                [ 
+                                                    { "techno": "Macmini", "ratio": 18.52941176470588 }, 
+                                                    { "techno": "material-ui", "ratio": 17.647058823529413 }, 
+                                                    { "techno": "http-live-streaming", "ratio": 8.823529411764707 }, 
+                                                    { "techno": "vercel", "ratio": 8.823529411764707 }, 
+                                                    { "techno": "hls.js", "ratio": 8.823529411764707 } ] ]
+                                                
+                                            ]};
+
+const dataForLoadingUsersRecosSimilarity = dataForLoadingUsersRecos;
+const dataForLoadingUsersRecosQuestion = dataForLoadingUsersRecos;
+
 const typeSimilaire = ref('Projet similaire')
 const typeReponse= ref('Helper')
 const typeQuestion = ref('To help')
@@ -48,8 +68,9 @@ console.log(usersRecoSimilarity);
                 </div>
             </div>
             <div v-else>
-                <div class="spinner-border custom-spinner" role="status">
-                    <span class="sr-only">Loading...</span>
+                <div class="custom-spinner" role="status">
+                    <UserCarCollaborative :user="dataForLoadingUsersRecosSimilarity" :type="typeSimilaire"/>
+                    <div class="cover">&nbsp;</div>
                 </div>
             </div>
             <div class="container-similarity-tag-answers" v-if="usersReco">
@@ -59,8 +80,9 @@ console.log(usersRecoSimilarity);
                 </div>
             </div>
             <div v-else>
-                <div class="spinner-border custom-spinner" role="status">
-                    <span class="sr-only">Loading...</span>
+                <div class="custom-spinner" role="status">
+                    <UserCarCollaborative :user="dataForLoadingUsersRecos" :type="typeReponse"/>
+                    <div class="cover">&nbsp;</div>
                 </div>
             </div>
             <div class="container-similarity-tag-questions" v-if="usersRecoQuestion">
@@ -70,8 +92,9 @@ console.log(usersRecoSimilarity);
                 </div>
             </div>
             <div v-else>
-                <div class="spinner-border custom-spinner" role="status">
-                    <span class="sr-only">Loading...</span>
+                <div class="custom-spinner" role="status">
+                    <UserCarCollaborative :user="dataForLoadingUsersRecosQuestion" :type="typeQuestion"/>
+                    <div class="cover">&nbsp;</div>
                 </div>
             </div>
         </div>
@@ -111,12 +134,21 @@ console.log(usersRecoSimilarity);
 }
 
 .custom-spinner {
-    width: 3rem;
-    height: 3rem;
-    margin: 1rem;
-    color: var(--cde-c-palette-dark-4);
+    position: relative;
 }
 
+.cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+    z-index: 1;
+    border-radius: 8px;
+}
 
 .container-raw-cosinus-similarity, .container-similarity-tag-answers, .container-similarity-tag-questions {
     display: flex;
@@ -149,5 +181,17 @@ console.log(usersRecoSimilarity);
 .container-home{
     background-color: aliceblue;
     animation: reveal 1s cubic-bezier(.17,.67,.4,1.02); 
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }
 </style>

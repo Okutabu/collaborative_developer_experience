@@ -2,6 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router';
 
 import Nav from "./components/Nav.vue";
+import Nav2 from "./components/Nav2.vue";
 import Alert from "./components/Alert.vue";
 
 import { useAuthStore } from '@/stores';    
