@@ -17,6 +17,7 @@
 <style>
 .container-display{
     display: flex;
+    background-color: white;
 }
 
 .container-image{

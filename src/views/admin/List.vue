@@ -51,9 +51,7 @@ function triSurname() {
 
 <template>
     
-    <div v-if="userJson">
-        <Header :surname=userJson.user.surname  :name=userJson.user.name :espace=espace :message=message />
-    </div>
+
     <div class="container-table">
         <div class="container-search">
             <input type="text" v-model="input" placeholder="Prénom" class="search-bar" />
@@ -72,9 +70,34 @@ function triSurname() {
             <tbody class="table-body">
                 <template v-if="users">
                         <tr v-for="user in users" :key = "user">
-                            <router-link :to="{path :`/admin/users/profile/${user.idSTOW.low}`}">
-                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && userClic.userProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())">{{ user.surname }}</td>
-                            </router-link>
+                            
+                            
+                            <div class="container-user-enlisted">
+                                <td class="user-enlisted" v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && userClic.userProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())"><img :src="user.avatar" alt="user avatar" width="80">
+                                    <div class="container-for-column">
+                                        <div class="container-user-description">
+                                            <router-link :to="{path :`/admin/users/profile/${user.idSTOW.low}`}">
+                                            <div class="user-description-name">
+                                                <p>{{ user.surname +" "+ user.name }}</p>
+                                            </div>
+                                            </router-link>
+                                            
+                                        </div>
+                                        <div class="container-user-details">
+                                            <div class="user-description-activity">
+                                                <ul class="list-unstyled text-grey">
+                                                    <li><i class="fa fa-filter pr-1" aria-hidden="true"></i>Développeur front-end &nbsp;</li>
+                                                    <li><i class="fa fa-clock-o pr-1"></i>Derniere activitée:&nbsp;<p>{{ user.lastInteraction ? (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] : 'Pas d\'activité' }}</p>
+                                            </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <!-- <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && userClic.userProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())">{{ user.surname }}</td> -->
+
+                            </div>
+                            
                             <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && userClic.userProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())">{{ user.name }}</td>
                             <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && userClic.userProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())">
                                <div v-if="user.lastInteraction" >
@@ -106,13 +129,13 @@ function triSurname() {
 <style scoped>
 
 .container-table {
-    background-color: rgb(230, 230, 230);
+    /* background-color: rgb(230, 230, 230); */
 }
 
 .search-bar {
     width: 25%;
     height: 40px;
-    border-radius: 25px;
+    /* border-radius: 25px; */
 }
 
 .container-search {
@@ -136,17 +159,73 @@ function triSurname() {
 }
 
 .table-head-impair {
-    background-color: rgba(87 , 176, 192, 0.2);
+    background-color: #bdd0f9;
 }
 
 .table-head-pair{
-    background-color: rgb(211, 211, 211);
-}
-
-.table-body td{
-    width: 25%;
+    background-color: #e6ebfe;
 }
 
 
+.table-body {
+    background-color: #e6ebfe;
+}
 
+
+.user-enlisted {
+    display: flex;
+    flex-direction: row;
+   
+}
+
+.user-enlisted img{
+    border-radius: 50%;
+    margin: 10px;
+}
+
+.container-user-enlisted {
+    width: 60vw;
+
+}
+
+.user-description{
+    display: flex;
+    margin-left: 20px;
+}
+
+.container-user-description{
+    display: flex;
+    margin-bottom: 20px;
+    color: rgb(187, 187, 187);
+}
+.container-user-details{
+    display: flex;
+    width: 100%;
+    font-size: 0.8em;
+    color: #646f79;
+}
+
+.container-for-column{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    justify-content: center;
+}
+
+.user-description-name{
+    display: flex;
+    width: 100%;
+}
+
+p{
+    margin: 0;
+}
+
+.list-unstyled{
+    display: flex;
+}
+
+.list-unstyled li{
+    display: flex;
+}
 </style>
