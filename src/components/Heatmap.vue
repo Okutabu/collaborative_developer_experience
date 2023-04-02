@@ -8,61 +8,301 @@ const props = defineProps({
 
 })
 
-/*
-HeatMap struct: {
-name: ["string", 
-              "string"
-            ],
-data: [ 
-        [date, value, taille],
-]
-}
-*/
-
 const objName = [
-"Stephen Williams",
-"David Stuart",
-"Amanda Davis",
-"Lynn Willis",
-"Mitchell Boyd"
+"Monday",
+"Tuesday",
+"Wednesday",
+"Thursday",
+"Friday",
+"Saturday",
+"Sunday"
 ]
 
 const obj =[ 
   [
-    ["03-07 GMT", 10],
-    ["03-08 GMT", 1],
-    ["03-09 GMT", 19],
-    ["03-10 GMT", 5],
-    ["03-11 GMT", 5]
+    {
+        x: 'Jan',
+        y: 22
+      }, {
+        x: 'Feb',
+        y: 29
+      }, {
+        x: 'Mar',
+        y: 13
+      }, {
+        x: 'Apr',
+        y: 32
+      },{
+        x: 'May',
+        y: 22
+      }, {
+        x: 'Jun',
+        y: 29
+      }, {
+        x: 'Jul',
+        y: 13
+      }, {
+        x: 'Aug',
+        y: 32
+      },
+      {
+        x: 'Sep',
+        y: 22
+      }, {
+        x: 'Oct',
+        y: 29
+      }, {
+        x: 'Nov',
+        y: 13
+      }, {
+        x: 'Dec',
+        y: 32
+      }
+
   ],
   [
-    ["03-07 GMT", 10],
-    ["03-08 GMT", 1],
-    ["03-09 GMT", 19],
-    ["03-10 GMT", 5],
-    ["03-11 GMT", 5]
+    {
+        x: 'Jan',
+        y: 12
+      }, {
+        x: 'Feb',
+        y: 19
+      }, {
+        x: 'Mar',
+        y: 3
+      }, {
+        x: 'Apr',
+        y: 22
+      },{
+        x: 'May',
+        y: 12
+      }, {
+        x: 'Jun',
+        y: 19
+      }, {
+        x: 'Jul',
+        y: 3
+      }, {
+        x: 'Aug',
+        y: 22
+      },
+      {
+        x: 'Sep',
+        y: 12
+      }, {
+        x: 'Oct',
+        y: 19
+      }, {
+        x: 'Nov',
+        y: 3
+      }, {
+        x: 'Dec',
+        y: 22
+      }
+
   ],
   [
-    ["03-07 GMT", 10],
-    ["03-08 GMT", 1],
-    ["03-09 GMT", 19],
-    ["03-10 GMT", 5],
-    ["03-11 GMT", 5]
+    {
+        x: 'Jan',
+        y: 2
+      }, {
+        x: 'Feb',
+        y: 9
+      }, {
+        x: 'Mar',
+        y: 23
+      }, {
+        x: 'Apr',
+        y: 12
+      },{
+        x: 'May',
+        y: 2
+      }, {
+        x: 'Jun',
+        y: 9
+      }, {
+        x: 'Jul',
+        y: 23
+      }, {
+        x: 'Aug',
+        y: 12
+      },
+      {
+        x: 'Sep',
+        y: 2
+      }, {
+        x: 'Oct',
+        y: 9
+      }, {
+        x: 'Nov',
+        y: 23
+      }, {
+        x: 'Dec',
+        y: 12
+      }
+
   ],
   [
-    ["03-07 GMT", 10],
-    ["03-08 GMT", 1],
-    ["03-09 GMT", 19],
-    ["03-10 GMT", 5],
-    ["03-11 GMT", 5]
+    {
+        x: 'Jan',
+        y: 12
+      }, {
+        x: 'Feb',
+        y: 19
+      }, {
+        x: 'Mar',
+        y: 3
+      }, {
+        x: 'Apr',
+        y: 22
+      },{
+        x: 'May',
+        y: 12
+      }, {
+        x: 'Jun',
+        y: 19
+      }, {
+        x: 'Jul',
+        y: 3
+      }, {
+        x: 'Aug',
+        y: 22
+      },
+      {
+        x: 'Sep',
+        y: 12
+      }, {
+        x: 'Oct',
+        y: 19
+      }, {
+        x: 'Nov',
+        y: 3
+      }, {
+        x: 'Dec',
+        y: 22
+      }
   ],
   [
-    ["03-07 GMT", 10],
-    ["03-08 GMT", 1],
-    ["03-09 GMT", 19],
-    ["03-10 GMT", 5],
-    ["03-11 GMT", 5]
-  ]
+    {
+        x: 'Jan',
+        y: 2
+      }, {
+        x: 'Feb',
+        y: 9
+      }, {
+        x: 'Mar',
+        y: 23
+      }, {
+        x: 'Apr',
+        y: 12
+      },{
+        x: 'May',
+        y: 2
+      }, {
+        x: 'Jun',
+        y: 9
+      }, {
+        x: 'Jul',
+        y: 23
+      }, {
+        x: 'Aug',
+        y: 12
+      },
+      {
+        x: 'Sep',
+        y: 2
+      }, {
+        x: 'Oct',
+        y: 9
+      }, {
+        x: 'Nov',
+        y: 23
+      }, {
+        x: 'Dec',
+        y: 12
+      }
+  ],
+  [
+    {
+        x: 'Jan',
+        y: 12
+      }, {
+        x: 'Feb',
+        y: 19
+      }, {
+        x: 'Mar',
+        y: 3
+      }, {
+        x: 'Apr',
+        y: 22
+      },{
+        x: 'May',
+        y: 12
+      }, {
+        x: 'Jun',
+        y: 19
+      }, {
+        x: 'Jul',
+        y: 3
+      }, {
+        x: 'Aug',
+        y: 22
+      },
+      {
+        x: 'Sep',
+        y: 12
+      }, {
+        x: 'Oct',
+        y: 19
+      }, {
+        x: 'Nov',
+        y: 3
+      }, {
+        x: 'Dec',
+        y: 22
+      }
+  ],
+  [
+    {
+        x: 'Jan',
+        y: 2
+      }, {
+        x: 'Feb',
+        y: 9
+      }, {
+        x: 'Mar',
+        y: 23
+      }, {
+        x: 'Apr',
+        y: 12
+      },{
+        x: 'May',
+        y: 2
+      }, {
+        x: 'Jun',
+        y: 9
+      }, {
+        x: 'Jul',
+        y: 23
+      }, {
+        x: 'Aug',
+        y: 12
+      },
+      {
+        x: 'Sep',
+        y: 2
+      }, {
+        x: 'Oct',
+        y: 9
+      }, {
+        x: 'Nov',
+        y: 23
+      }, {
+        x: 'Dec',
+        y: 12
+      }
+  ],
+
 ]
 
 function associateNamesWithObj(objName, obj) {
@@ -97,13 +337,20 @@ var chartOptions = {
         enabled: false
     },
     xaxis: {
-        type: 'datetime',
+        type: 'category',
         categories: [
-            "03-07",
-            "03-08",
-            "03-09",
-            "03-10",
-            "03-11"
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
         ]
     },
     };
