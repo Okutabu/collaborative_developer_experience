@@ -10,7 +10,6 @@ export const useAdminStore = defineStore({
     state: () => ({
         stats: {},
         users: {},
-        userClic: {},
         usersDotUsers: [],
         desc: false
     }),

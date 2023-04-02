@@ -201,6 +201,7 @@ export function loadMirageInDev() {
                                         },
                                         "mail": "Elizabeth.Brown@email.com",
                                         "surname": "Brown",
+                                        "topTag": "flutter",
                                         "name": "Elizabeth",
                                         "avatar": "https://www.gravatar.com/avatar/58745021dbc7642c62e9a67eccb94ddf?s=256&d=identicon&r=PG",
                                         "pseudo": "Jaydeep Khamar"
