@@ -296,7 +296,7 @@ export function loadMirageInDev() {
                                 "error": 0
                             }
                         });
-                        this.get(`${this.namespace}/admin/users/sort/lastInteraction`, () => {
+                        this.get(`${this.namespace}/admin/users/sort/lastInteraction/desc`, () => {
                             return {
                                 "answer": "Users found",
                                 "users": [
