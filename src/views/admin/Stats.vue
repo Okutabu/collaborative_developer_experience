@@ -7,6 +7,7 @@ import { ref } from "vue";
 
 import CalendarHeatmap from '@/components/CalendarHeatmap.vue';
 import { data } from '../../data';
+import KProgress from 'k-progress';
 
 var endDate    = new Date('2023-03-27');
 var orientation= 'horizontal';
@@ -88,6 +89,7 @@ const userJson = JSON.parse(user)
                     
                 </tr>
                 <tr>
+                    <k-progress :value="stats.nbNodes" :max="200000" :color="'#00b894'" :stroke="10" :size="100" :show-value="true" :show-text="true" :text="stats.nbNodes + ' / 200000'"></k-progress>
                     <td>Nombre de noeuds(max 200 000)</td>
                     <td>{{ stats.nbNodes }}</td>
                 </tr>
