@@ -11,7 +11,6 @@ import UserCarCollaborative from '../../components/UserCarCollaborative.vue';
 
 
 
-
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
 
@@ -137,7 +136,8 @@ const showComponent2 = ref(true)
                                 <td class="user-enlisted"><img :src="collab.properties.avatar" alt="user avatar" width="80">
                                     <div class="container-for-column">
                                         <div class="container-user-description">
-                                            <!-- <router-link :to="{path :`/admin/users/profile/${user.idSTOW.low}`}"> -->
+                                            
+                                            <!-- <router-link :to="{path :`/admin/users/profile/${collab.properties.idSTOW.low}`}"> -->
                                             <div class="user-description-name">
                                                 <p>{{ collab.properties.surname +" "+ collab.properties.name }}</p>
                                             </div>

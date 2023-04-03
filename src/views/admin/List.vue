@@ -73,13 +73,17 @@ function triSurname() {
                             <div class="container-user-enlisted">
                                 <td class="user-enlisted" v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && user.topTag.toLowerCase().includes(inputTag.toLowerCase())"><img :src="user.avatar" alt="user avatar" width="80">
                                     <div class="container-for-column">
-                                        <div class="container-user-description">
+                                        <div v-if="user.topTag" class="container-user-description">
                                             <router-link :to="{path :`/admin/users/profile/${user.idSTOW.low}`}">
                                             <div class="user-description-name">
                                                 <p>{{ user.surname +" "+ user.name }}</p>
                                             </div>
                                             </router-link>
-                                            
+                                        </div>
+                                        <div v-else class="container-user-description">
+                                            <div class="user-description-name">
+                                                <p>{{ user.surname +" "+ user.name }}</p>
+                                            </div>
                                         </div>
                                         <div class="container-user-details">
                                             <div class="user-description-activity">

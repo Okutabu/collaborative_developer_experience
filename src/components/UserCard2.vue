@@ -22,7 +22,7 @@ const date = new Date(props.lastInteract * 1000).toLocaleString().split(',')[0];
           </div>
           <div class="info">
             <p class="bold name">{{ nom || 'loading...' }}</p>
-            <p class="speciality">Point fort : {{ reco || 'loading...' }}</p>
+            <p class="speciality"><i class="fa fa-graduation-cap "></i>&nbsp;{{ reco || 'loading...' }}</p>
             <p class="lastInteract">Dernière interaction : {{ date || 'loading...' }}</p>
           </div>
         </div>
