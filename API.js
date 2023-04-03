@@ -532,8 +532,8 @@ requêtes GET pour le filtrage :
 // pour convertir un timeStamp en String
 function convertTimeStampToString(intDate){
 
-    let date = new Date(intDate * 1000).toLocaleDateString().split('/')
-    let string = `${date[2]}-${date[1]}-${date[0]}`;
+    let date = new Date(intDate * 1000).toLocaleDateString().split('/');
+    let string = `${date[2]}-${date[1]}-${date[0]}T23:00:00Z`;
     return string;
 }
 
