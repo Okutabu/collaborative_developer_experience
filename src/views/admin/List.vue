@@ -76,13 +76,13 @@ function triSurname() {
                                         <div v-if="user.topTag" class="container-user-description">
                                             <router-link :to="{path :`/admin/users/profile/${user.idSTOW.low}`}">
                                             <div class="user-description-name">
-                                                <p>{{ user.surname +" "+ user.name }}</p>
+                                                <p class="link-name-surname">{{ user.surname +" "+ user.name }}</p>
                                             </div>
                                             </router-link>
                                         </div>
                                         <div v-else class="container-user-description">
                                             <div class="user-description-name">
-                                                <p>{{ user.surname +" "+ user.name }}</p>
+                                                <p class="link-name-surname">{{ user.surname +" "+ user.name }}</p>
                                             </div>
                                         </div>
                                         <div class="container-user-details">
@@ -144,7 +144,11 @@ function triSurname() {
 .search-bar {
     width: 25%;
     height: 40px;
-    /* border-radius: 25px; */
+    border-radius: 5px;
+    border: 1px solid rgb(87, 176, 192);
+    outline: none;
+    padding-left: 10px;
+    margin: 10px;
 }
 
 .container-search {
@@ -193,7 +197,7 @@ function triSurname() {
 }
 
 .container-user-enlisted {
-    width: 60vw;
+    width: 40vw;
 
 }
 
@@ -237,4 +241,11 @@ p{
 .list-unstyled li{
     display: flex;
 }
+
+.link-name-surname{
+    color: #646f79;
+    text-decoration: none;
+
+}
+
 </style>

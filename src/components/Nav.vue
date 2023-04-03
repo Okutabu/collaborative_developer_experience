@@ -43,13 +43,6 @@ const ToggleMenu = () => {
             </div>
 
             <div class="flex"></div>
-            
-            <div class="menu" @click="authStore.logout()">
-                <RouterLink to="/logout" class="button" >
-                    <span class="material-icons">logout</span>
-                    <span class="text">Logout</span>
-                </RouterLink>
-            </div>
         </aside>
     </div>
     <div v-else>
