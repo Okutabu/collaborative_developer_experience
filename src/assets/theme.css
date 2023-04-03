@@ -56,7 +56,9 @@
 
   :root {
 	--primary: #8099f6;
-	--primary-alt: #22c55e;
+	--primary-hover: #5147F1;
+	--primary-alt: #A59FF7;
+	--primary-alt-hover: #9465F1;
 	--grey: #64748b;
 	--dark: #1e293b;
 	--dark-alt: #334155;
