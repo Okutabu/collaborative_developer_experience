@@ -222,7 +222,7 @@ function toogleComponent() {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(101deg, rgba(236,255,250,1) 0%, rgba(255,246,255,1) 48%, rgba(227,255,254,1) 100%); 
+    background: linear-gradient(101deg, rgb(116, 208, 183) 0%, rgb(92, 60, 232) 48%, rgb(23, 190, 185) 100%); 
 	background-size: 400% 400%;
 	animation: gradient 15s ease infinite;
     z-index: 1;
