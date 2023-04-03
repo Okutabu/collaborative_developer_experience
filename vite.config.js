@@ -20,7 +20,7 @@ export default defineConfig({
 	build  : {
 		sourcemap    : true,
 		lib          : {
-			entry   : path.resolve(__dirname, 'src/index.ts'),
+			entry   : path.resolve(__dirname, 'src/main.js'),
 			name    : 'CalendarHeatmap',
 			fileName: format => `vue3-calendar-heatmap.${format}.js`
 		},
