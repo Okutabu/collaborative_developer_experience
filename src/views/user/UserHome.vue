@@ -130,7 +130,7 @@ function toogleComponent() {
                 <table class="table table-striped">
                     <thead class="table-head">
                         <tr>
-                            <th class="table-head-impair">Vous avez collaborez sur StackOverflow avec ses developpeur PTC ! </th>
+                            <th class="table-head-impair">Vous avez collaboré sur StackOverflow avec ces developpeurs PTC ! </th>
                         </tr>
                     </thead>
                     <tbody class="table-body">
