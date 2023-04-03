@@ -1,13 +1,16 @@
 <script setup>
+
 import { useAdminStore } from '@/stores';
 import { storeToRefs } from 'pinia';
 import Donut from './Donut.vue';
-import Header from '../../components/Header.vue';
 import { ref } from "vue"; 
 
+import CalendarHeatmap from '@/components/CalendarHeatmap.vue';
+import { data } from '../../data';
 
-
-import CalendarHeatmap from '@/components/Heatmap.vue';
+const values     = data;
+var endDate    = new Date('2021-08-01');
+var orientation= 'horizontal';
 
 
 const adminStore = useAdminStore();
@@ -26,11 +29,15 @@ const userJson = JSON.parse(user)
 
 <template>
 
-    <CalendarHeatmap />
 
-    <div v-if="userJson">
-        <Header :surname=userJson.user.surname  :name=userJson.user.name :espace=espace :message=message />
-    </div>
+<div>
+		<calendar-heatmap :values="values" :end-date="endDate" :style="{'max-width': orientation === 'vertical' ? '145px' :  '675px'}" :round="2"
+						  :vertical="orientation === 'vertical'"/>
+		<br>
+		
+	</div>
+
+    
     <div class="container-table">
         <!-- <Donut :technoInteraction=stats.topTags /> 
 
