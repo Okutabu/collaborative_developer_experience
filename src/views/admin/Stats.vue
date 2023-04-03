@@ -27,63 +27,71 @@ const userJson = JSON.parse(user)
 </script>
 
 <template>
-    
-    <div class="container-table">
-        <!-- <Donut :technoInteraction=stats.topTags /> 
+    <div>
+        <div class="container-table">
+            <div class="container-heatmap">
+                    <p class="text">Taux de contributions des developpeurs</p>
+                <calendar-heatmap class="heatmap-component" :values="InteractionDates" :end-date="endDate" :style="{'max-width': orientation === 'vertical' ? '145px' :  '800px'}" :round="2"
+                                :vertical="orientation === 'vertical'"/>
+            
+            </div>
+            <!-- <Donut :technoInteraction=stats.topTags /> 
 
 
-        <p> nb tags : {{ stats.nbTags }}</p>
-        <p> nb utilisateurs : {{ stats.nbUsers }}</p>
-        <p> top tags : {{ stats.topTags }}</p>
+            <p> nb tags : {{ stats.nbTags }}</p>
+            <p> nb utilisateurs : {{ stats.nbUsers }}</p>
+            <p> top tags : {{ stats.topTags }}</p>
+            
+            <p>nbInteractions : {{ stats.nbInteractions }}</p>
+            <p>nbAnswers : {{  stats.nbAnswers }}</p>
+            <p>nbActiveUsers : {{  stats.nbActiveUsers }}</p>
+            <p>tagsWithMostUsers : {{ stats.tagsWithMostUsers }}</p>
+            -->
+            
+                    
+            <table class="table-body">
+                <tr>
+                    <td>Le nombre de tags différents</td>
+                    <td>{{ stats.nbTags }}</td>
+                </tr>
+                <tr>
+                    <td>Le nombre d'utilisateurs</td>
+                    <td>{{ stats.nbUsers }}</td>
+                </tr>
+                <tr>
+                    <td>Les tags avec le plus d'interactions</td>   
+                    <div v-for="tag in stats.topTags" class="container-tags">
+                        <td>{{ tag.tag + " : " + tag.nbInteractions }}</td>
+                    </div>
+                </tr>
+                <tr>
+                    <td>Le nombre d'interactions totales</td>
+                    <td>{{ stats.nbInteractions }}</td>
+                </tr>
+                <tr>
+                    <td>Le nombre de réponses totales</td>
+                    <td>{{ stats.nbAnswers }}</td>
+                </tr>
+                <tr>
+                    <td>Le nombre d'utilisateurs actifs</td>
+                    <td>{{  stats.nbActiveUsers }}</td>
+                </tr>
+                <tr>
+                    <td>Les tags avec le plus d'utilisateurs qui ont intéragit dessus</td>
+                    <div v-for="tag in stats.tagsWithMostUsers" class="container-tags">
+                        <td>{{ tag.tag + " : " + tag.nbInteractions }}</td>
+                    </div>
+                </tr>
+                <tr>
+                    <td>Date de debut/fin du collecteur </td>
+                    <td>2023-01-02  to  2023-03-30</td>
+                    
+                </tr>
+
+            </table>
+            
+        </div>
         
-        <p>nbInteractions : {{ stats.nbInteractions }}</p>
-        <p>nbAnswers : {{  stats.nbAnswers }}</p>
-        <p>nbActiveUsers : {{  stats.nbActiveUsers }}</p>
-        <p>tagsWithMostUsers : {{ stats.tagsWithMostUsers }}</p>
-        -->
-        
-                
-        <table class="table-body">
-            <tr>
-                <td>Le nombre de tags différents</td>
-                <td>{{ stats.nbTags }}</td>
-            </tr>
-            <tr>
-                <td>Le nombre d'utilisateurs</td>
-                <td>{{ stats.nbUsers }}</td>
-            </tr>
-            <tr>
-                <td>Les tags avec le plus d'interactions</td>   
-                <div v-for="tag in stats.topTags" class="container-tags">
-                    <td>{{ tag.tag + " : " + tag.nbInteractions }}</td>
-                </div>
-            </tr>
-            <tr>
-                <td>Le nombre d'interactions totales</td>
-                <td>{{ stats.nbInteractions }}</td>
-            </tr>
-            <tr>
-                <td>Le nombre de réponses totales</td>
-                <td>{{ stats.nbAnswers }}</td>
-            </tr>
-            <tr>
-                <td>Le nombre d'utilisateurs actifs</td>
-                <td>{{  stats.nbActiveUsers }}</td>
-            </tr>
-            <tr>
-                <td>Les tags avec le plus d'utilisateurs qui ont intéragit dessus</td>
-                <div v-for="tag in stats.tagsWithMostUsers" class="container-tags">
-                    <td>{{ tag.tag + " : " + tag.nbInteractions }}</td>
-                </div>
-            </tr>
-
-        </table>
-        <div class="container-heatmap">
-		<calendar-heatmap :values="InteractionDates" :end-date="endDate" :style="{'max-width': orientation === 'vertical' ? '145px' :  '675px'}" :round="2"
-						  :vertical="orientation === 'vertical'"/>
-		<br>
-		
-	    </div>
     </div>
 
 
@@ -94,9 +102,9 @@ const userJson = JSON.parse(user)
 <style scoped>
 
 .container-table {
-    background-color: rgb(230, 230, 230);
+    background-color: rgb(248, 249, 250);
     padding: 30px;
-    height: 660px;
+    height: 100%
 }
 .table-body td{
     width: 25%;
@@ -117,9 +125,23 @@ const userJson = JSON.parse(user)
 }
 
 .container-heatmap {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
 
-    align-items: center;
-    margin-top: 50px;
+.heatmap-component {
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    max-width: 800;
+    max-height: 800px;
+}
+
+.text {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
 </style>

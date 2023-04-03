@@ -56,6 +56,10 @@ function onClick(userParam) {
 const showComponent1 = ref(true)
 const showComponent2 = ref(true)
 
+function toogleComponent() {
+    showComponent1.value = !showComponent1.value
+    showComponent2.value = !showComponent2.value
+}
 
 </script>
 
@@ -163,9 +167,6 @@ const showComponent2 = ref(true)
                     </tbody>
                 </table>
             </div>
-
-
-
 
     </div>
 
@@ -321,23 +322,7 @@ const showComponent2 = ref(true)
 .list-unstyled li{
     display: flex;
 }
-.bouton-scroll-down{
-    margin-top: 1em;
-    margin-bottom: 1em;
-    margin-left: 1em;
-    margin-right: 1em;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    padding-left: 1em;
-    padding-right: 1em;
-    border-radius: 30px;
-    background-color: #e6ebfe;
-    border: none;
-    font-size: 1em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
+
 
 
 </style>

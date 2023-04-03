@@ -14,6 +14,7 @@ const ToggleMenu = () => {
 </script>
 
 <template>
+  <div class="container-nav">
     <div v-if="$route.path.startsWith('/admin')">
         <aside :class="`${is_expanded ? 'is-expanded' : ''}`" v-show="authStore.user">
             <div class="logo">
@@ -79,10 +80,15 @@ const ToggleMenu = () => {
             </div>
         </aside>
     </div>
+  </div>
 </template>
 
 
 <style scoped>
+
+.container-nav {
+}
+
 aside {
   display: flex;
   flex-direction: column;
@@ -93,6 +99,7 @@ aside {
   min-height: 100vh;
   padding: 1rem;
   transition: 0.2s ease-in-out;
+
 }
 aside .flex {
   flex: 0.9 0.9 0%;
