@@ -61,7 +61,6 @@ function triSurname() {
             <thead class="table-head">
                 <tr>
                     <th class="table-head-impair">First Name <button class="sort-button" @click=triSurname()><i class="fa fa-sort"></i></button></th>
-                    <th class="table-head-pair">Last Name <button class="sort-button" @click=triName()><i class="fa fa-sort"></i></button></th>
                     <th class="table-head-impair">Last activity <button class="sort-button" @click=triLastActivity()><i class="fa fa-sort"></i></button></th>
                     <th class="table-head-pair">Top Tags</th>
                 </tr>
@@ -97,7 +96,7 @@ function triSurname() {
 
                             </div>
                             
-                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && user.topTag.toLowerCase().includes(inputTag.toLowerCase())">{{ user.name }}</td>
+                            
                             <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && user.topTag.toLowerCase().includes(inputTag.toLowerCase())">
                                <div v-if="user.lastInteraction" >
                                     {{ (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}
@@ -106,7 +105,14 @@ function triSurname() {
                                     Inactif
                                 </div>
                             </td>
-                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && user.topTag.toLowerCase().includes(inputTag.toLowerCase())">{{ user.topTag }}</td>
+                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && user.topTag.toLowerCase().includes(inputTag.toLowerCase())">
+                               <div v-if="user.topTag" >
+                                    {{ user.topTag }}
+                                </div>
+                                <div v-else>
+                                    Inactif
+                                </div>
+                            </td>
                         
                         </tr>
                 </template>
