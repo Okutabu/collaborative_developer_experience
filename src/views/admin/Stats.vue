@@ -8,14 +8,14 @@ import { ref } from "vue";
 import CalendarHeatmap from '@/components/CalendarHeatmap.vue';
 import { data } from '../../data';
 
-const values     = data;
-var endDate    = new Date('2021-08-01');
+var endDate    = new Date('2023-03-27');
 var orientation= 'horizontal';
 
 
 const adminStore = useAdminStore();
-const { stats } = storeToRefs(adminStore);
+const { stats, InteractionDates } = storeToRefs(adminStore);
 adminStore.getStats();
+adminStore.getInteractionDates();
 
 const espace = ref('d\'administration')
 const message = ref('Découvrez toutes les statistiques de la plateforme !')
@@ -23,20 +23,12 @@ const message = ref('Découvrez toutes les statistiques de la plateforme !')
 const user = localStorage.getItem('user')
 const userJson = JSON.parse(user)
 
+console.log(InteractionDates)
 
 
 </script>
 
 <template>
-
-
-<div>
-		<calendar-heatmap :values="values" :end-date="endDate" :style="{'max-width': orientation === 'vertical' ? '145px' :  '675px'}" :round="2"
-						  :vertical="orientation === 'vertical'"/>
-		<br>
-		
-	</div>
-
     
     <div class="container-table">
         <!-- <Donut :technoInteraction=stats.topTags /> 
@@ -84,6 +76,14 @@ const userJson = JSON.parse(user)
 
         </table>
     </div>
+
+
+    <div>
+		<calendar-heatmap :values="InteractionDates" :end-date="endDate" :style="{'max-width': orientation === 'vertical' ? '145px' :  '675px'}" :round="2"
+						  :vertical="orientation === 'vertical'"/>
+		<br>
+		
+	</div>
 
 </template>
 
