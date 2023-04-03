@@ -14,29 +14,34 @@ export const useRecoStore = defineStore({
         usersReco : JSON.parse(localStorage.getItem('usersReco')),
         usersRecoSimilarity: JSON.parse(localStorage.getItem('usersRecoSimilarity')),
         usersRecoQuestion: JSON.parse(localStorage.getItem('usersRecoQuestion')),
+        collaborated: JSON.parse(localStorage.getItem('collaborated')),
         returnUrl: null
     }),
     actions: {
         async getRecommandedUsers() {
             try {
-
                 var user = this.user;
                 console.log(user.user.idSTOW);
-                const usersReco = await fetchWrapper.get(`${baseUrl}/${user.user.idSTOW.low}/similarity/answer`);
-                const usersRecoSimilarity = await fetchWrapper.get(`${baseUrl}/${user.user.idSTOW.low}/similarity/cosinus`);
-                const usersRecoQuestion = await fetchWrapper.get(`${baseUrl}/${user.user.idSTOW.low}/similarity/question`);
+                const usersReco = await fetchWrapper.get(`${baseUrl}/${user.user.idSTOW}/similarity/answer`);
+                const usersRecoSimilarity = await fetchWrapper.get(`${baseUrl}/${user.user.idSTOW}/similarity/cosinus`);
+                const usersRecoQuestion = await fetchWrapper.get(`${baseUrl}/${user.user.idSTOW}/similarity/question`);
+                console.log("OK");
+                const collaborated = await fetchWrapper.get(`${baseUrl}/${user.user.idSTOW}/interactedWithMe`);
+                console.log("OK2");
                 
                 // update pinia state
                 this.usersReco = usersReco;
                 this.usersRecoSimilarity = usersRecoSimilarity;
                 this.usersRecoQuestion = usersRecoQuestion;
+                this.collaborated = collaborated;
 
-                console.log(usersReco);
+                console.log(collaborated);
 
                 // store user details and jwt in local storage to keep user logged in between page refreshes
                 localStorage.setItem('usersReco', JSON.stringify(usersReco));
                 localStorage.setItem('usersRecoSimilarity', JSON.stringify(usersRecoSimilarity));
                 localStorage.setItem('usersRecoQuestion', JSON.stringify(usersRecoQuestion));
+                localStorage.setItem('collaborated', JSON.stringify(collaborated));
 
             } catch (error) {
                 const alertStore = useAlertStore();

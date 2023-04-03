@@ -44,7 +44,7 @@ const date = (new Date(props.lastInteract* 1000)).toLocaleString().split(',')[0]
     background-color: aliceblue;
     border-radius: 25px;
     width: 800px;
-    height: 400px;
+    height: 450px;
     box-shadow: 0 0 10px 0 rgba(151, 144, 144, 0.2);
     margin-bottom: 20px;
     font-family: sans-serif;
