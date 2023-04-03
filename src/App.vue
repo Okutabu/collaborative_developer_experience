@@ -29,7 +29,7 @@ const authStore = useAuthStore();
 @import '@/assets/theme.css';
 
 body{
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 
 .container-workspace{
