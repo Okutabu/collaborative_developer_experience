@@ -87,6 +87,15 @@ const userJson = JSON.parse(user)
                     <td>2023-01-02  to  2023-03-30</td>
                     
                 </tr>
+                <tr>
+                    <td>Nombre de noeuds(max 200 000)</td>
+                    <td>{{ stats.nbNodes }}</td>
+                </tr>
+
+                <tr>
+                    <td>Nombre de relations(max 400 000)</td>
+                    <td>{{ stats.nbRelations}}</td>
+                </tr>
 
             </table>
             
