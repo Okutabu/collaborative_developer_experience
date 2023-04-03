@@ -24,7 +24,6 @@ const date = new Date(props.lastInteract * 1000).toLocaleString().split(',')[0];
             <p class="bold name">{{ nom || 'loading...' }}</p>
             <p class="speciality">Point fort : {{ reco || 'loading...' }}</p>
             <p class="lastInteract">Dernière interaction : {{ date || 'loading...' }}</p>
-            <button class="btn-contact">Profil</button>
           </div>
         </div>
       </div>
@@ -87,22 +86,6 @@ const date = new Date(props.lastInteract * 1000).toLocaleString().split(',')[0];
   font-size: 14px;
   color: #888888;
 }
-
-.btn-contact {
-  margin-top: 20px;
-  padding: 10px 20px;
-  border-radius: 20px;
-  background-color: rgb(87, 176, 192);
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-}
-
 .btn-contact:hover {
   background-color: rgb(234, 51, 75);
 }
