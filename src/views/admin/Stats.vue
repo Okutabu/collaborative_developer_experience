@@ -23,9 +23,7 @@ const message = ref('Découvrez toutes les statistiques de la plateforme !')
 const user = localStorage.getItem('user')
 const userJson = JSON.parse(user)
 
-console.log(InteractionDates)
-
-
+        
 </script>
 
 <template>
@@ -44,6 +42,7 @@ console.log(InteractionDates)
         <p>tagsWithMostUsers : {{ stats.tagsWithMostUsers }}</p>
         -->
         
+                
         <table class="table-body">
             <tr>
                 <td>Le nombre de tags différents</td>
@@ -54,8 +53,10 @@ console.log(InteractionDates)
                 <td>{{ stats.nbUsers }}</td>
             </tr>
             <tr>
-                <td>Les tags avec le plus d'interactions</td>
-                <td>{{ stats.topTags }}</td>
+                <td>Les tags avec le plus d'interactions</td>   
+                <div v-for="tag in stats.topTags" class="container-tags">
+                    <td>{{ tag.tag + " : " + tag.nbInteractions }}</td>
+                </div>
             </tr>
             <tr>
                 <td>Le nombre d'interactions totales</td>
@@ -71,19 +72,22 @@ console.log(InteractionDates)
             </tr>
             <tr>
                 <td>Les tags avec le plus d'utilisateurs qui ont intéragit dessus</td>
-                <td>{{  stats.tagsWithMostUsers }}</td>
+                <div v-for="tag in stats.tagsWithMostUsers" class="container-tags">
+                    <td>{{ tag.tag + " : " + tag.nbInteractions }}</td>
+                </div>
             </tr>
 
         </table>
-    </div>
-
-
-    <div>
+        <div class="container-heatmap">
 		<calendar-heatmap :values="InteractionDates" :end-date="endDate" :style="{'max-width': orientation === 'vertical' ? '145px' :  '675px'}" :round="2"
 						  :vertical="orientation === 'vertical'"/>
 		<br>
 		
-	</div>
+	    </div>
+    </div>
+
+
+    
 
 </template>
 
@@ -105,7 +109,17 @@ console.log(InteractionDates)
     text-align: center;
 }
 
+.container-tags {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
 
+.container-heatmap {
 
+    align-items: center;
+    margin-top: 50px;
+}
 
 </style>
