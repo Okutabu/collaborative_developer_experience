@@ -118,7 +118,7 @@ console.log(usersRecoSimilarity);
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    /* background-color: rgb(230, 230, 230); */
+    /* background-color: #B6C9FF; */
     padding-top: 50px;
  
 
@@ -143,7 +143,7 @@ console.log(usersRecoSimilarity);
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background: linear-gradient(101deg, rgba(236,255,250,1) 0%, rgba(255,246,255,1) 48%, rgba(227,255,254,1) 100%); 
 	background-size: 400% 400%;
 	animation: gradient 15s ease infinite;
     z-index: 1;

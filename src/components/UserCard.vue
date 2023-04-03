@@ -25,7 +25,7 @@ const date = (new Date(props.lastInteract* 1000)).toLocaleString().split(',')[0]
                 </div>
                 <div class="info">
                     <p class="bold name">{{ nom || 'loading...' }}</p>
-                    <p class="speciality">point fort : {{ reco || 'loading...' }}</p>
+                    <p class="speciality"><i class="fa fa-graduation-cap "></i> {{ reco || 'loading...' }}</p>
                     <p class="lastInteract" >Dernière interaction : {{ date || 'loading...' }}</p>
                 </div>
                 
@@ -41,9 +41,9 @@ const date = (new Date(props.lastInteract* 1000)).toLocaleString().split(',')[0]
 
 <style scoped>
   .container_user_card {
-    background-color: white;
+    background-color: aliceblue;
     border-radius: 25px;
-    width: 500px;
+    width: 800px;
     height: 400px;
     box-shadow: 0 0 10px 0 rgba(151, 144, 144, 0.2);
     margin-bottom: 20px;
