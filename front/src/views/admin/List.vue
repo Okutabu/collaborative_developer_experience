@@ -57,7 +57,7 @@ function triSurname() {
             <input type="text" v-model="inputName" placeholder="Nom" class="search-bar" />
             <input type="text" v-model="inputTag" placeholder="Rechercher un tag" class="search-bar search-tag" />
         </div>
-        <table class="table table-striped">
+        <table class="table table-bordered">
             <thead class="table-head">
                 <tr>
                     <th class="table-head-impair">First Name <button class="sort-button" @click=triSurname()><i class="fa fa-sort"></i></button></th>
