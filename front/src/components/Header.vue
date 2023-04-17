@@ -52,7 +52,6 @@ export default {
 .header {
     display: flex;
     align-items: center;
-    background-color: aliceblue;
     width: 100%;
 }
 

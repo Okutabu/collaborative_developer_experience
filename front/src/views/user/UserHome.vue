@@ -258,7 +258,6 @@ function toogleComponent() {
 /*couleur rose du logo PTC (234, 51, 75) */
 
 .container-home{
-    background-color: aliceblue;
     animation: reveal 1s cubic-bezier(.17,.67,.4,1.02); 
 }
 
