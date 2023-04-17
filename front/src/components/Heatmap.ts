@@ -35,7 +35,7 @@ export type TooltipFormatter = (item: CalendarItem, unit: string) => string;
 
 export class Heatmap {
 
-	static readonly DEFAULT_RANGE_COLOR_LIGHT = [ '#ebedf0', '#dae2ef', '#c0ddf9', '#73b3f3', '#3886e1', '#17459e' ];
+	static readonly DEFAULT_RANGE_COLOR_LIGHT = [ '#f1f5f9', '#e6ebfe', '#bdd0f9', '#9db1ff', '#7d98ff', '#577aff' ];
 	static readonly DEFAULT_RANGE_COLOR_DARK  = [ '#1f1f22', '#1e334a', '#1d466c', '#1d5689', '#1d69ac', '#1B95D1' ];
 	// other color candidates
 	// static readonly DEFAULT_RANGE_COLOR_LIGHT = [ '#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39' ];
