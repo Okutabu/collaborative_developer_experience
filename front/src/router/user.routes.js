@@ -1,4 +1,4 @@
-import { Layout, Home, Statistics } from '@/views/user';
+import { Layout, Home, Statistics, UserPreferences } from '@/views/user';
 
 
 export default {
@@ -7,6 +7,7 @@ export default {
     children: [
         { path: '/overview', component: Home },
         { path: '/statistics', component: Statistics },
+        { path: '/preferences', component: UserPreferences},
         { path: '', redirect: '/overview'}
     ]
 };

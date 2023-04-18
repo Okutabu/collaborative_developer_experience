@@ -68,6 +68,10 @@ const ToggleMenu = () => {
                     <span class="material-icons">insights</span>
                     <span class="text">Statistics</span>
                 </RouterLink>
+                <RouterLink to="/preferences" class="button">
+                    <span class="material-icons">settings</span>
+                    <span class="text">Préférences</span>
+                </RouterLink>
             </div>
 
             <div class="flex"></div>
