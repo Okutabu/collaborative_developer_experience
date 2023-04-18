@@ -5,6 +5,7 @@ import { Home } from '@/views';
 import accountRoutes from './account.routes';
 import adminRoutes from './admin.routes';
 import userRoutes from './user.routes';
+import marketingRoutes from './marketing.routes';
 
 export const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,6 +15,7 @@ export const router = createRouter({
         { ...accountRoutes },
         { ...userRoutes},
         { ...adminRoutes },
+        { ...marketingRoutes },
         // catch all redirect to home page
         { path: '/:pathMatch(.*)*', redirect: '/user' },
         // catch home page to userOverview
