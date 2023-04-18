@@ -40,9 +40,9 @@ export function loadMirageInDev() {
                                         "nbInteractions": 41
                                     }
                                 ],
-                                "nbInteractions": 871,
+                                "nbInteractions": 1478,
                                 "nbAnswers": 863,
-                                "nbActiveUsers": 871,
+                                "nbActiveUsers": 106,
                                 "tagsWithMostUsers": [
                                     {
                                         "tag": "python",

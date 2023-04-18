@@ -20,9 +20,17 @@ adminStore.getInteractionDates();
 
     <div class="container-stats">
         <div class="container-month-review">
-            nombre de question posées
-
-            nombre de question repondues
+            <div>Avril</div>
+            <div class="container-nbQuestion">
+                nombre de question posées
+            {{ stats.nbInteractions - stats.nbAnswers }}
+            </div>
+            
+            <div class="container-nbReponse">
+                nombre de question repondues
+            {{ stats.nbAnswers }}
+            </div>
+            
         </div>
         <div class="container-trimestre-review">
             <div class="container-heatmap">
@@ -32,14 +40,34 @@ adminStore.getInteractionDates();
             </div>
         </div>
         <div class="container-global-review">
-            nombre d'utilisateur actifs (donuts)
+            <div class="container-active-user">
+                <p>nombre d'utilisateur actifs (donuts)</p>
+                {{ stats.nbActiveUsers }}
+                {{ stats.nbUsers }}
+            </div>
+            
+            <div class="container-techno-cloud">
+                <p>nuage des techno utilisées</p>
+                {{ stats.topTags }}
+            </div>
 
-            nuage des techno utilisées
         </div>
     </div>
 
 </template>
 
-<style>
+<style scoped>
+
+.container-month-review {
+   margin: 20px;
+}
+
+.container-trimestre-review {
+   margin: 20px;
+}
+
+.container-global-review {
+   margin: 20px;
+}
 
 </style>
