@@ -6,7 +6,7 @@ let users = JSON.parse(localStorage.getItem(usersKey)) || [];
 
 export function loadMirageInDev() {
 
-        if (import.meta.env.MODE === "development a") {
+        if (import.meta.env.MODE === "development") {
             loadMirage().then(({ Server }) => {
                 return new Server({
                     routes() {
