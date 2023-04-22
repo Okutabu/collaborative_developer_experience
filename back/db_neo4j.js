@@ -592,6 +592,24 @@ const user63 =
         }
     }
 
+    async function getNbUserIHelped(idSTOW){
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `MATCH (u:User {idSTOW:$idSTOW })-[:ANSWERED]-(q:Question)-[:ASKED]-(u2:User)
+                             WHERE u <> u2
+                             RETURN COUNT(u2) as nbUsers`;
+        
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete, {idSTOW})
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong [ getNbUserIHelped ]:  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
 
 
 
@@ -611,7 +629,7 @@ const user63 =
         // console.log(non);
         // console.log(oui[1]._fields[0]);
     
-        const oui = await getNbAnswersUser(7297700);
+        const oui = await getNbUserIHelped(6676512);
     
         console.log(oui[0]._fields);
         //console.log(oui);
