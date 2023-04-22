@@ -296,6 +296,7 @@ app.get('/user/:idSTOW/interactedWithMe', (req, res) => {
 	})();
 });
 
+
 app.get('/user/:idSTOW/delete', (req, res) => {
 
     const idSTOW = parseInt(req.params.idSTOW);
