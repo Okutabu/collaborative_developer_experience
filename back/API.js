@@ -315,24 +315,13 @@ app.get('/user/:idSTOW/statistics', (req, res) => {
         else{
 
 			const tabTopTags = [];
-
 			for(let i = 0; i < 5; i++) {
 				var infos = {
-					tag: topTags[i]._fields[0].properties.title,
-					nbInteractions: topTags[i]._fields[1].low
+					tag: topTags[i]._fields[1].properties.title,
+					nbInteractions: topTags[i]._fields[2].low
 				};
                 tabTopTags.push(infos);
             }
-		
-			const tabTagsUsers = [];
-			for(let i = 0; i < 5; i++){
-				var infos = {
-					tag: tagsWithMostUsers[i]._fields[0].properties.title,
-					nbInteractions: tagsWithMostUsers[i]._fields[1].low
-				};
-                tabTagsUsers.push(infos);
-
-			}
 			
             res.status(200).send({
 				answer: "Statistics found",
