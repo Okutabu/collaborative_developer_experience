@@ -592,9 +592,9 @@ const user63 =
         // console.log(non);
         // console.log(oui[1]._fields[0]);
     
-        const oui = await getUserTopTags(7297700);
+        const oui = await getNbQuestionsUser(7297700);
     
-        console.log(oui[0]._fields[2]);
+        console.log(oui[0]._fields);
         //console.log(oui);
 
     } catch (error) {
