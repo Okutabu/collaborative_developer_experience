@@ -290,6 +290,67 @@ app.get('/user/:idSTOW/interactedWithMe', (req, res) => {
 });
 
 
+app.get('/user/:idSTOW/statistics', (req, res) => {
+
+    const idSTOW = parseInt(req.params.idSTOW);
+
+    (async() => {
+        
+        const dates = await db.getInteractionDatesUser(idSTOW);
+		const topTags = await db.getUserTopTags(idSTOW);
+        const profile = await db.getUserProficiency(idSTOW);
+		const nbQuestions = await db.getNbQuestionsUser(idSTOW);
+		const nbAnswers = await db.getNbAnswersUser(idSTOW);
+        const nbHelped = await db.getNbUserIHelped(idSTOW);
+        const nbHelper = await db.getNbUserWhoHelpedMe(idSTOW);
+
+        //teste si le tableau est vide
+        if(!dates.length || !topTags.length || !profile.length || !nbQuestions || !nbAnswers || !nbHelped || !nbHelper){
+            res.status(404).send({
+                answer: "Statistics not found",
+                users: [],
+                error: -1
+            });
+        }
+        else{
+
+			const tabTopTags = [];
+
+			for(let i = 0; i < 5; i++) {
+				var infos = {
+					tag: topTags[i]._fields[0].properties.title,
+					nbInteractions: topTags[i]._fields[1].low
+				};
+                tabTopTags.push(infos);
+            }
+		
+			const tabTagsUsers = [];
+			for(let i = 0; i < 5; i++){
+				var infos = {
+					tag: tagsWithMostUsers[i]._fields[0].properties.title,
+					nbInteractions: tagsWithMostUsers[i]._fields[1].low
+				};
+                tabTagsUsers.push(infos);
+
+			}
+			
+            res.status(200).send({
+				answer: "Statistics found",
+				topTags: tabTopTags,
+				nbAnswers: nbAnswers[0]._fields[0].low,
+				nbQuestions: nbQuestions[0]._fields[0].low,
+                nbHelper: nbHelper[0]._fields[0].low,
+                nbHelped: nbHelped[0]._fields[0].low,
+				dates,
+                profile,
+				error: 0
+			});
+        }
+    })();
+});
+
+
+
 
 app.get('/admin/statistics', (req, res) => {
 
