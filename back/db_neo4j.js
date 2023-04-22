@@ -535,6 +535,25 @@ const user63 =
     }
 
 
+    async function getInteractionDatesUser(idSTOW){
+
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `MATCH (u:User {idSTOW:$idSTOW})-[r]-(q)
+                             RETURN r.dateInteraction`;
+        
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete, {idSTOW})
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong [ getInteractionDatesUser ]:  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
 
 
 // (async()=>{
