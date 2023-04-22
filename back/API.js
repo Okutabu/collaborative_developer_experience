@@ -592,6 +592,45 @@ function convertTimeStampToString(intDate){
 }
 
 
+// pour convertir les dates au bon format pour le HEATMAP
+function formateDateForHeatMap(neo4jDates){
+
+    let dates = [];
+
+    //créé la liste de dates en string
+    for(let res of neo4jDates){
+        let date = convertTimeStampToString(res._fields[0].low);
+        dates.push(date);	
+    }
+
+    let dicoDate = {};
+    // créé un grand dictionnaire avec les dates et leurs nb d'intéraction
+    for(let date of dates){
+
+        if(dicoDate[date] == undefined){
+            dicoDate[date] = 0;
+        }
+    }
+
+    // on incrémente le nb d'intéractions par date
+    for(let date of dates){
+        dicoDate[date]++;
+    }
+
+    let allDates = [];
+
+    // transformation en liste d'objet pour le composant vue
+    for(let elem in dicoDate){
+        let objet = {
+            date : elem,
+            count : dicoDate[elem]
+        }
+        allDates.push(objet);
+    }
+
+    return allDates;
+}
+
 // renvoit la liste des dates d'interactions ainsi que leur nombres
 // peut être revoir le collecteur, il y a des dates d'intéraction inférieur à la date données en paramètre
 app.get('/admin/InteractionDates', (req, res) => {
@@ -612,38 +651,8 @@ app.get('/admin/InteractionDates', (req, res) => {
 		else{
 
 			let allRequests = dateQuestions.concat(dateAnswers);
-			let dates = [];
-
-			//créé la liste de dates en string
-			for(let res of allRequests){
-				let date = convertTimeStampToString(res._fields[0].low);
-				dates.push(date);	
-			}
-
-			let dicoDate = {};
-			// créé un grand dictionnaire avec les dates et leurs nb d'intéraction
-			for(let date of dates){
-
-				if(dicoDate[date] == undefined){
-					dicoDate[date] = 0;
-				}
-			}
-		
-			// on incrémente le nb d'intéractions par date
-			for(let date of dates){
-				dicoDate[date]++;
-			}
-
-			let allDates = [];
-
-			// transformation en liste d'objet pour le composant vue
-			for(let elem in dicoDate){
-				let objet = {
-					date : elem,
-					count : dicoDate[elem]
-				}
-				allDates.push(objet);
-			}
+			
+            let allDates = formateDateForHeatMap(allRequests);
 
 			res.status(200).send({
                 answer: "Dates found",
