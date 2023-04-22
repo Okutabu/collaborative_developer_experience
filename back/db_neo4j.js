@@ -573,6 +573,25 @@ const user63 =
         }
     }
 
+    async function getNbAnswersUser(idSTOW){
+
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `MATCH (u:User {idSTOW:$idSTOW})-[r:ANSWERED]-(q)
+                             RETURN count(r) as nbQuestions`;
+        
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete, {idSTOW})
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong [ getNbAnswersUser ]:  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
 
 
 
@@ -592,7 +611,7 @@ const user63 =
         // console.log(non);
         // console.log(oui[1]._fields[0]);
     
-        const oui = await getNbQuestionsUser(7297700);
+        const oui = await getNbAnswersUser(7297700);
     
         console.log(oui[0]._fields);
         //console.log(oui);
@@ -610,5 +629,5 @@ module.exports = {
     createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags, getUsers,
     getUsersSorted, getNbOfActiveUsers, getNbQuestions, getNbAnswers, getNbInteractions, getTagsWithMostUsers, getTagAdmin,
     getInteractionDates, getUsersWhoInteractedWithMe, getUsersSortedByLastInteraction, getNbNodes, getNbRelations,
-    getInteractionDatesUser
+    getInteractionDatesUser, getNbQuestionsUser, getNbAnswersUser
 }
