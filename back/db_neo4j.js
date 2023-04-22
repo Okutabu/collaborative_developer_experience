@@ -554,6 +554,27 @@ const user63 =
         }
     }
 
+    async function getNbQuestionsUser(idSTOW){
+
+        const session = driver.session({ database: 'neo4j' });
+
+        try{
+            const requete = `MATCH (u:User {idSTOW:$idSTOW})-[r:ASKED]-(q)
+                             RETURN count(r) as nbQuestions`;
+        
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete, {idSTOW})
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong [ getNbQuestionsUser ]:  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
+
+
+
 
 
 (async()=>{
@@ -571,9 +592,9 @@ const user63 =
         // console.log(non);
         // console.log(oui[1]._fields[0]);
     
-        const oui = await getInteractionDatesUser(7297700);
+        const oui = await getUserTopTags(7297700);
     
-        console.log(oui[1]._fields[0].low);
+        console.log(oui[0]._fields[2]);
         //console.log(oui);
 
     } catch (error) {
