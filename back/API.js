@@ -330,7 +330,7 @@ app.get('/user/:idSTOW/statistics', (req, res) => {
 				nbQuestions: nbQuestions[0]._fields[0].low,
                 nbHelper: nbHelper[0]._fields[0].low,
                 nbHelped: nbHelped[0]._fields[0].low,
-				dates,
+				dates: formateDateForHeatMap(dates),
                 profile,
 				error: 0
 			});
