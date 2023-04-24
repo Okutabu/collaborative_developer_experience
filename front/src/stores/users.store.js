@@ -9,7 +9,8 @@ export const useUsersStore = defineStore({
     id: 'users',
     state: () => ({
         users: {},
-        user: {}
+        user: {},
+        stats: {}
     }),
     actions: {
         async register(user) {
@@ -60,6 +61,20 @@ export const useUsersStore = defineStore({
             const authStore = useAuthStore();
             if (id === authStore.user.id) {
                 authStore.logout();
+            }
+        },
+        async getUserStats(id) {
+            try {
+                console.log("test1");
+                var res = await fetchWrapper.get(`${baseUrl}/${id}/statistics`);
+                console.log("allo")
+                res = JSON.parse(JSON.stringify(res));
+                this.stats = res;
+                console.log("test");
+            }
+            catch (error) {
+                const alertStore = useAlertStore();
+                alertStore.error(error);                
             }
         }
     }
