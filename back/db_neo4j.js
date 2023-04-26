@@ -514,6 +514,32 @@ async function deleteUser(idSTOW){
     }
 }
 
+async function modifyUser(idSTOW, name, surname, email, newIDSTOW){
+    const session = driver.session({ database: 'neo4j' });
+
+    try{
+
+        const requete = `MATCH(u:User {idSTOW: $idSTOW}) 
+                            SET 
+                            u.idSTOW = $newIDSTOW,
+                            u.mail = $email,
+                            u.name = $name,
+                            u.surname = $surname
+                            `;
+                        
+        const writeResult = await session.executeWrite(tx =>
+            tx.run(requete, { idSTOW, name, surname, email, newIDSTOW })
+        );
+
+        return writeResult.summary.counters._stats.nodesDeleted;
+
+    }catch(error){
+        console.error(`Something went wrong [ deleteUser ]:  ${error}`);
+    }finally{
+        await session.close();
+    }
+}
+
 
 
 // (async()=>{
@@ -547,5 +573,5 @@ async function deleteUser(idSTOW){
 module.exports = {
     createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags, getUsers,
     getUsersSorted, getNbOfActiveUsers, getNbQuestions, getNbAnswers, getNbInteractions, getTagsWithMostUsers, getTagAdmin,
-    getInteractionDates, getUsersWhoInteractedWithMe, getUsersSortedByLastInteraction, getNbNodes, getNbRelations, deleteUser
+    getInteractionDates, getUsersWhoInteractedWithMe, getUsersSortedByLastInteraction, getNbNodes, getNbRelations, deleteUser, modifyUser
 }

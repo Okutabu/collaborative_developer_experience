@@ -18,7 +18,7 @@ const schema = Yup.object().shape({
     mail: Yup.string()
         .required('Mail is required')
         .email('Mail must be a valid email'),
-    idSTOW: Yup.string()
+    newIDSTOW: Yup.string()
         .required('ID STOW is required')
 });
 
@@ -40,8 +40,12 @@ async function onSubmit(values) {
     const usersStore = useUsersStore();
     const alertStore = useAlertStore();
     try {
-        console.log("onSubmit")
-        console.log(values)
+
+        // Ajouter une propriété
+        values.idSTOW = userJson.user.idSTOW; 
+        
+        await usersStore.updateUser(values);
+        localStorage.removeItem('user');
     } catch (error) { 
         alertStore.error(error);
     }
@@ -63,17 +67,17 @@ async function onSubmit(values) {
                 </div>
                 <div class="form-group">
                     <label>First Name</label>
-                    <Field name="surname" type="text" class="form-control" :class="{ 'is-invalid': errors.firstName }" :value=userJson.user.name />
+                    <Field name="surname" type="text" class="form-control" :class="{ 'is-invalid': errors.firstName }" :value=userJson.user.surname />
                     <div class="invalid-feedback">{{ errors.firstName }}</div>
                 </div>
                 <div class="form-group">
                     <label>Last Name</label>
-                    <Field name="name" type="text" class="form-control" :class="{ 'is-invalid': errors.lastName }" :value=userJson.user.surname />
+                    <Field name="name" type="text" class="form-control" :class="{ 'is-invalid': errors.lastName }" :value=userJson.user.name />
                     <div class="invalid-feedback">{{ errors.lastName }}</div>
                 </div>
                 <div class="form-group">
                     <label>Id Stack Overflow</label>
-                    <Field name="idSTOW" type="integer" class="form-control" :class="{ 'is-invalid': errors.idSTOW }" :value=userJson.user.idSTOW />
+                    <Field name="newIDSTOW" type="integer" class="form-control" :class="{ 'is-invalid': errors.idSTOW }" :value=userJson.user.idSTOW />
                     <div class="invalid-feedback">{{ errors.idSTOW }}</div>
                 </div>
                 <div class="form-group">

@@ -107,6 +107,41 @@ app.post('/user/register', (req, res) => {
 });
 
 
+app.post('/user/update', (req, res) => {
+
+    console.log(req.body)
+    const idSTOW = req.body.idSTOW;
+    const name = req.body.name;
+    const surname = req.body.surname;
+    const mail = req.body.mail;
+    const newIDSTOW  = parseInt(req.body.newIDSTOW);
+
+    
+    if(!name){
+        res.status(404).send({
+            answer: "User not created",
+            user: null,
+            error: -1
+        });
+    }
+    
+    user ={
+        name,
+        surname,
+        mail,
+        newIDSTOW
+    }
+
+    db.modifyUser(idSTOW, name, surname, mail, newIDSTOW);
+
+    res.send({
+        answer: `${name} was modify successfuly`,
+        user: user,
+        error: 0
+    });
+});
+
+
 app.get('/user/:idSTOW/similarity/cosinus', (req, res) => {
     // faire les tests avec 6309
 
