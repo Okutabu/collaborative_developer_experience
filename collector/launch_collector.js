@@ -134,17 +134,18 @@ async function setNamesSurnamesMails(){
     //console.log("Collecting from ", new Date(START_STR), " to ", new Date(END_STR));
     console.log("Collecting from ", new Date(START*1000), " to ", new Date(END*1000));
     //await start_collector_first_time();
+
+    console.log("Récupération de tous les éléments et insertion dans la DB");
     await new_db();
 
+    console.log("Récupération des pseudo et avatar");
+    await update_db();
+
+    console.log("Ajout des noms et prénoms");
+    await setNamesSurnamesMails();
+    await db.setAllTopTags(users.list_id);
+    await db.setAllInteractions(users.list_id);
     
-    // console.log("Récupération de tous les éléments et insertion dans la DB");
-    // //await new_db();
-    // console.log("Récupération des pseudo et avatar");
-    // await update_db();
-    // console.log("Ajout des noms et prénoms");
-    // await setNamesSurnamesMails();
-    // await db.setAllTopTags(users.list_id);
-    // await db.setAllInteractions(users.list_id);
     await db.driver.close();
     
 })();
