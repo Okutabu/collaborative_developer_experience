@@ -290,6 +290,35 @@ app.get('/user/:idSTOW/interactedWithMe', (req, res) => {
 });
 
 
+app.get('/user/:idSTOW/help', (req, res) => {
+
+    const idSTOW = parseInt(req.params.idSTOW);
+
+    (async() => {
+
+        const profile = await db.getUserProficiency(idSTOW);
+
+        if(!profile.length){
+            res.status(404).send({
+                answer: "No user to help",
+                user: [],
+                error: -1
+            });
+        }
+        else{
+
+            let info = [];
+
+            res.status(200).send({
+                answer: "User to help",
+                user: info,
+                error: 0
+            });
+        }
+
+    })();
+});
+
 
 app.get('/admin/statistics', (req, res) => {
 
