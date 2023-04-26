@@ -20,21 +20,24 @@ adminStore.getInteractionDates();
 
 <template>
 
+    <div class="container-title">
+        <h1>Le Futur De La Collboration <br><span>Sur CDE</span></h1>   
+    </div>
     <div class="container-stats">
-        <div>Avril</div>
         <div class="stats-container">
             <div class="stat-container">
                 <div class="stat-circle">
                     <p class="stat-value">{{ stats.nbInteractions - stats.nbAnswers }}</p>
                 </div>
                 <p class="stat-label">nombre de question posées</p>
-                <p>Ce dernier mois, c'est {{ stats.nbInteractions - stats.nbAnswers }} questions qui ont été posé</p>
+                <p class="stat-p">Ce dernier mois, c'est {{ stats.nbInteractions - stats.nbAnswers }} questions qui ont été posé sur stackoverflow par les developpeur PTC inscrit sur la plateforme</p>
             </div>
             <div class="stat-container">
                 <div class="stat-circle">
                     <p class="stat-value">{{ stats.nbAnswers }}</p>
                 </div>
-                <p class="stat-label">nombre de question repondues</p>
+                <p class="stat-label">nombre de réponses</p>
+                <p class="stat-p">Ce dernier mois, c'est {{ stats.nbAnswers }} réponses sur stackoverflow par les developpeur PTC inscrit sur la plateforme</p>
             </div>
         </div>
         <div class="container-trimestre-review">
@@ -65,16 +68,33 @@ adminStore.getInteractionDates();
 <style scoped>
 
 
-/* div {
+/* div, p{
     border: 1px solid black;
 } */
+
+.container-title {
+    display: flex;
+    justify-content: center;
+}
+
+.container-title h1 {
+    font-size: 45px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 80px;
+}
+
+.container-title h1 span {
+    color: #25B3C3;
+}
 
 .container-stats {
     margin: 20px;
 }
 .stats-container {
-  display: flex;
-  justify-content: space-around;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-around;
 
 }
 
@@ -94,7 +114,6 @@ adminStore.getInteractionDates();
   height: 150px;
   border-radius: 50%;
   background-color: #25B3C3;
-  /* FF0044 */
   margin-right: 10px;
 }
 
@@ -133,6 +152,11 @@ adminStore.getInteractionDates();
     align-items: center;
     justify-content: center;
     width: 30%;
+}
+
+.stat-p {
+    width: 40%;
+    text-align: center;
 }
 
 
