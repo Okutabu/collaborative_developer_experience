@@ -46,6 +46,9 @@ const ToggleMenu = () => {
             <div class="flex"></div>
         </aside>
     </div>
+    <div v-if="$route.path.startsWith('/marketing')">
+
+    </div>
     <div v-else>
         <aside :class="`${is_expanded ? 'is-expanded' : ''}`" v-show="authStore.user">
             <div class="logo">
