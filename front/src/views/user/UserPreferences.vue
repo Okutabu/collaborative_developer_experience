@@ -62,7 +62,7 @@ async function onSubmit(values) {
             <Form :validation-schema="schema" v-slot="{ errors, isSubmitting }">
                 <div class="form-group">
                     <label>Email</label>
-                    <Field name="mail" type="mail" class="form-control" :class="{ 'is-invalid': errors.mail }" value="test@gmail.com" />
+                    <Field name="mail" type="mail" class="form-control" :class="{ 'is-invalid': errors.mail }" :value=userJson.user.mail />
                     <div class="invalid-feedback">{{ errors.mail }}</div>
                 </div>
                 <div class="form-group">
