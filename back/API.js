@@ -53,12 +53,14 @@ app.post('/user/login', (req, res) => {
             });
         }
         else{
+            //console.log(data[0]._fields[0]);
             const user = {
                 name: data[0]._fields[0].properties.name,
                 surname: data[0]._fields[0].properties.surname,
                 avatar: data[0]._fields[0].properties.avatar,
                 pseudo: data[0]._fields[0].properties.pseudo,
-                idSTOW: id
+                idSTOW: id,
+                mail: data[0]._fields[0].properties.mail
             }
         
             res.status(200).send({
