@@ -297,9 +297,9 @@ app.get('/user/:idSTOW/help', (req, res) => {
     (async() => {
 
         const profile = await db.getUserProficiency(idSTOW);
-        const questions = await db.getUserToHelp(idSTOW);
+        const reqQuestions = await db.getQuestionsUserToHelp(idSTOW);
 
-        if(!profile.length || !questions.length){
+        if(!profile.length || !reqQuestions.length){
             res.status(404).send({
                 answer: "No user to help",
                 user: [],
@@ -307,12 +307,27 @@ app.get('/user/:idSTOW/help', (req, res) => {
             });
         }
         else{
+            console.log(profile);
+            let questions = [];
 
-            let info = [];
+            for(let question of reqQuestions){
+                let objQ = {
+                    title : question._fields[0].properties.title,
+                    tags : question._fields[1],
+                    urlQuestion : `https://stackoverflow.com/questions/${question._fields[0].properties.idQuestion.low}`
+                }
 
+                questions.push(objQ);
+            }
+            let urlProfile = "";
+    
             res.status(200).send({
                 answer: "User to help",
-                user: info,
+                user: {
+                        profile,
+                        urlProfile,
+                        questions
+                      },
                 error: 0
             });
         }

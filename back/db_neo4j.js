@@ -534,7 +534,7 @@ const user63 =
         }
     }
 
-    async function getUserToHelp(idSTOW){
+    async function getQuestionsUserToHelp(idSTOW){
         const session = driver.session({ database: 'neo4j' });
 
         try{
@@ -548,7 +548,7 @@ const user63 =
             );
             return readResult.records;
         }catch(error){
-            console.error(`Something went wrong [ getUserToHelp ]:  ${error}`);
+            console.error(`Something went wrong [ getQuestionsUserToHelp ]:  ${error}`);
         } finally {
             await session.close();
         }
@@ -589,5 +589,6 @@ const user63 =
 module.exports = {
     createUser, connectUser, getUserTopTags, getUserProficiency, getNbTags, getNbUsers, getTopTags, getUsers,
     getUsersSorted, getNbOfActiveUsers, getNbQuestions, getNbAnswers, getNbInteractions, getTagsWithMostUsers, getTagAdmin,
-    getInteractionDates, getUsersWhoInteractedWithMe, getUsersSortedByLastInteraction, getNbNodes, getNbRelations, getUserToHelp
+    getInteractionDates, getUsersWhoInteractedWithMe, getUsersSortedByLastInteraction, getNbNodes, getNbRelations,
+    getQuestionsUserToHelp
 }
