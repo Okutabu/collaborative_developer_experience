@@ -534,36 +534,55 @@ const user63 =
         }
     }
 
+    async function getUserToHelp(idSTOW){
+        const session = driver.session({ database: 'neo4j' });
 
-
-
-// (async()=>{
-
-//     try {
+        try{
+            const requete = `MATCH (u:User {idSTOW:$idSTOW})--(q)--(t)
+                             WITH q, collect(t.title) AS tags
+                             RETURN q, tags
+                             LIMIT 5`;
         
-//         // const oui = await getUsersSorted("surname", "DESC");
-    
-//         // console.log(oui[0]._fields[0].properties);
-//         // //console.log(oui);
+            const readResult =  await session.executeRead(tx =>
+                tx.run(requete, {idSTOW})
+            );
+            return readResult.records;
+        }catch(error){
+            console.error(`Something went wrong [ getUserToHelp ]:  ${error}`);
+        } finally {
+            await session.close();
+        }
+    }
 
-//         // const non = await getInteractionDates("ASKED");
-//         // const oui = await getInteractionDates("ANSWERED");
 
-//         // console.log(non);
-//         // console.log(oui[1]._fields[0]);
-    
-//         const oui = await getUserProficiency(6309);
-    
-//         console.log(oui);
-//         //console.log(oui);
 
-//     } catch (error) {
-//         console.error(`Something went wrong: ${error}`);
-//     } finally {
-//     // Don't forget to close the driver connection when you're finished with it.
-//         await driver.close();
-//     }
-// })();
+(async()=>{
+
+    try {
+        
+        // const oui = await getUsersSorted("surname", "DESC");
+    
+        // console.log(oui[0]._fields[0].properties);
+        // //console.log(oui);
+
+        // const non = await getInteractionDates("ASKED");
+        // const oui = await getInteractionDates("ANSWERED");
+
+        // console.log(non);
+        // console.log(oui[1]._fields[0]);
+    
+        const oui = await getUserProficiency(6309);
+    
+        console.log(oui);
+        //console.log(oui);
+
+    } catch (error) {
+        console.error(`Something went wrong: ${error}`);
+    } finally {
+    // Don't forget to close the driver connection when you're finished with it.
+        await driver.close();
+    }
+})();
 
 
 module.exports = {

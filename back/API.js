@@ -315,7 +315,6 @@ app.get('/user/:idSTOW/help', (req, res) => {
                 error: 0
             });
         }
-
     })();
 });
 
