@@ -96,16 +96,16 @@ async function new_db(){
     let nodes = requete.get_users_tags_questions(profiles);
     console.log(nodes);
 
-    // console.log("+-------------------------------------------------------+");
-    // console.log("|   STEP 3 - Insertion de tous les noeuds dans la BDD   |");
-    // console.log("+-------------------------------------------------------+");
+    console.log("+-------------------------------------------------------+");
+    console.log("|   STEP 3 - Insertion de tous les noeuds dans la BDD   |");
+    console.log("+-------------------------------------------------------+");
 
-    // await db.insert_nodes_user_question_tag(nodes);
+    await db.insert_nodes_user_question_tag(nodes);
 
-    // console.log("+-------------------------------------------------------+");
-    // console.log("| STEP 4 - Création de toutes les relations dans la BDD |")
-    // console.log("+-------------------------------------------------------+");
-    // await create_links(profiles);
+    console.log("+-------------------------------------------------------+");
+    console.log("| STEP 4 - Création de toutes les relations dans la BDD |")
+    console.log("+-------------------------------------------------------+");
+    await create_links(profiles);
 }
 
 
@@ -131,11 +131,12 @@ async function setNamesSurnamesMails(){
 
 (async() => {
 
+    //console.log("Collecting from ", new Date(START_STR), " to ", new Date(END_STR));
+    console.log("Collecting from ", new Date(START*1000), " to ", new Date(END*1000));
     //await start_collector_first_time();
     await new_db();
 
-    //console.log("Collecting from ", new Date(START_STR), " to ", new Date(END_STR));
-    console.log("Collecting from ", new Date(START*1000), " to ", new Date(END*1000));
+    
     // console.log("Récupération de tous les éléments et insertion dans la DB");
     // //await new_db();
     // console.log("Récupération des pseudo et avatar");
