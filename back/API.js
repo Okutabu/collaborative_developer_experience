@@ -297,8 +297,9 @@ app.get('/user/:idSTOW/help', (req, res) => {
     (async() => {
 
         const profile = await db.getUserProficiency(idSTOW);
+        const questions = await db.getUserToHelp(idSTOW);
 
-        if(!profile.length){
+        if(!profile.length || !questions.length){
             res.status(404).send({
                 answer: "No user to help",
                 user: [],
