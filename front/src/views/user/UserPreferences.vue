@@ -19,15 +19,12 @@ const schema = Yup.object().shape({
         .required('Mail is required')
         .email('Mail must be a valid email'),
     idSTOW: Yup.string()
-        .required('ID STOW is required'),
-    acceptTerms: Yup.bool()
-                .required('Accept Ts & Cs is required')
+        .required('ID STOW is required')
 });
 
 async function onDelete() {
     const usersStore = useUsersStore();
     const alertStore = useAlertStore();
-    console.log("bro wtf")
     try {
         await usersStore.deleteUser(userJson.user.idSTOW);
         localStorage.removeItem('user');
@@ -55,11 +52,10 @@ async function onSubmit(values) {
 
 <template>
     <h2>Préférences de l'utilisateur</h2>
-    {{ userJson.user }}
     <div class="card container-form">
         <h4 class="card-header">Register</h4>
         <div class="card-body">
-            <Form :validation-schema="schema" v-slot="{ errors, isSubmitting }">
+            <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
                 <div class="form-group">
                     <label>Email</label>
                     <Field name="mail" type="mail" class="form-control" :class="{ 'is-invalid': errors.mail }" :value=userJson.user.mail />
