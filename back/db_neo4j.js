@@ -538,7 +538,7 @@ const user63 =
         const session = driver.session({ database: 'neo4j' });
 
         try{
-            const requete = `MATCH (u:User {idSTOW:$idSTOW})--(q)--(t)
+            const requete = `MATCH (u:User {idSTOW:$idSTOW})-[:ASKED]-(q)--(t)
                              WITH q, collect(t.title) AS tags
                              RETURN q, tags
                              LIMIT 5`;

@@ -307,7 +307,7 @@ app.get('/user/:idSTOW/help', (req, res) => {
             });
         }
         else{
-            console.log(profile);
+            //console.log(profile[0].idSTOW);
             let questions = [];
 
             for(let question of reqQuestions){
@@ -319,13 +319,13 @@ app.get('/user/:idSTOW/help', (req, res) => {
 
                 questions.push(objQ);
             }
-            let urlProfile = "";
+            let urlProfile = `https://stackoverflow.com/users/${profile[0].idSTOW}`;
     
             res.status(200).send({
                 answer: "User to help",
                 user: {
-                        profile,
                         urlProfile,
+                        profile,
                         questions
                       },
                 error: 0
