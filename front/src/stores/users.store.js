@@ -33,6 +33,20 @@ export const useUsersStore = defineStore({
                 this.user = { error };
             }
         },
+        async deleteUser(id) {
+            try {
+                const authStore = useAuthStore();
+                var res = await fetchWrapper.get(`${baseUrl}/${id}/delete`);
+                res = JSON.parse(JSON.stringify(res));
+                if (id === authStore.user.id) {
+                    authStore.logout();
+                }
+            }
+            catch (error) {
+                const alertStore = useAlertStore();
+                alertStore.error(error);                
+            }
+        },
         async update(id, params) {
             await fetchWrapper.put(`${baseUrl}/${id}`, params);
 
@@ -61,6 +75,7 @@ export const useUsersStore = defineStore({
             if (id === authStore.user.id) {
                 authStore.logout();
             }
-        }
+        },
+        
     }
 });
