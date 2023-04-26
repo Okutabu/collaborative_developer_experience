@@ -47,6 +47,14 @@ Un tableau de users à renvoyer
         }
     ]
 }
+
+à modifier en =>
+{
+    "typePost": "answer",
+    "question": { "idQuestion": 75131252, "title": "Comment faire du go sur github avec gopath ?"  }, 
+    "dateInteraction": 1673848584,
+    "tags": [ 'go', 'github', 'path', 'oh-my-zsh', 'gopath' ]
+}
 */
 
 //Permet de temporiser une requête
