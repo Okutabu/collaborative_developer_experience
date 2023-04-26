@@ -76,9 +76,15 @@ async function get_questions_tags_async(postid, posttype){
     if (data.items == undefined){
         return [];
     }
+
+    let question = {
+        idQuestion: postid,
+        title: data.items[0].title
+    }
+
     let activities = {
         typePost : posttype,
-        idQuestion: postid,
+        question,
         dateInteraction : data.items[0].creation_date,
         tags : data.items[0].tags
     }
@@ -289,7 +295,7 @@ function get_users_tags_questions(userProfil){
                     allTags = infos.tags.concat(activity.tags);
                     infos.tags = allTags;
 
-                    infos.questions.push(activity.idQuestion);
+                    infos.questions.push(activity.question);
                 }
             );
         }

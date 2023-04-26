@@ -48,13 +48,13 @@ async function create_links(profils){
     "activities": [
         {
             "typePost": "answer",
-            "idQuestion": 75131252,
+            "question": { "idQuestion": 75131252, "title": "Comment faire du go sur github avec gopath ?"  }, 
             "dateInteraction": 1673848584,
             "tags": [ 'go', 'github', 'path', 'oh-my-zsh', 'gopath' ]
         },
         {
             "typePost": "answer",
-            "idQuestion": 75131252,
+            "question": { "idQuestion": 75131252, "title": "Comment faire du go sur github avec gopath ?"  }, 
             "dateInteraction": 1673848584,
             "tags": [ 'go', 'github', 'path', 'oh-my-zsh', 'gopath' ]
         }
@@ -94,18 +94,18 @@ async function new_db(){
     console.log("|         STEP 2 - Création des noeuds                  |");
     console.log("+-------------------------------------------------------+");
     let nodes = requete.get_users_tags_questions(profiles);
-    //console.log((await nodes).questions);
+    console.log(nodes);
 
-    console.log("+-------------------------------------------------------+");
-    console.log("|   STEP 3 - Insertion de tous les noeuds dans la BDD   |");
-    console.log("+-------------------------------------------------------+");
+    // console.log("+-------------------------------------------------------+");
+    // console.log("|   STEP 3 - Insertion de tous les noeuds dans la BDD   |");
+    // console.log("+-------------------------------------------------------+");
 
-    await db.insert_nodes_user_question_tag(nodes);
+    // await db.insert_nodes_user_question_tag(nodes);
 
-    console.log("+-------------------------------------------------------+");
-    console.log("| STEP 4 - Création de toutes les relations dans la BDD |")
-    console.log("+-------------------------------------------------------+");
-    await create_links(profiles);
+    // console.log("+-------------------------------------------------------+");
+    // console.log("| STEP 4 - Création de toutes les relations dans la BDD |")
+    // console.log("+-------------------------------------------------------+");
+    // await create_links(profiles);
 }
 
 
@@ -132,7 +132,7 @@ async function setNamesSurnamesMails(){
 (async() => {
 
     //await start_collector_first_time();
-    await update_db();
+    await new_db();
 
     //console.log("Collecting from ", new Date(START_STR), " to ", new Date(END_STR));
     console.log("Collecting from ", new Date(START*1000), " to ", new Date(END*1000));
