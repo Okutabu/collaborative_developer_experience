@@ -67,17 +67,17 @@ async function create_links(profils){
 
         for(let activity of profil.activities){
 
-            if(activity.idQuestion != undefined){
+            if(activity.question.idQuestion != undefined){
                 
                 let typePost = activity.typePost;
                              
                 if(typePost == "answer"){
-                    await db.create_answered_link(id, activity.idQuestion, activity.dateInteraction);
+                    await db.create_answered_link(id, activity.question.idQuestion, activity.dateInteraction);
                 }
                 if(typePost == "question"){
-                    await db.create_asked_link(id, activity.idQuestion, activity.dateInteraction);
+                    await db.create_asked_link(id, activity.question.idQuestion, activity.dateInteraction);
                 }
-                await db.create_has_topic_link(activity.tags, activity.idQuestion);
+                await db.create_has_topic_link(activity.tags, activity.question.idQuestion);
             }
         }
     }
@@ -94,7 +94,7 @@ async function new_db(){
     console.log("|         STEP 2 - Création des noeuds                  |");
     console.log("+-------------------------------------------------------+");
     let nodes = requete.get_users_tags_questions(profiles);
-    console.log(nodes);
+    //console.log(nodes);
 
     console.log("+-------------------------------------------------------+");
     console.log("|   STEP 3 - Insertion de tous les noeuds dans la BDD   |");

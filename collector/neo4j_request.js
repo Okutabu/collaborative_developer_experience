@@ -118,13 +118,14 @@ async function insert_questions(allQuestions) {
     try {
         for (let i = 0; i < allQuestions.length; i++ ) {
 
-            let id = allQuestions[i].idQuestion;
-            let title = allQuestions[i].title;
+            if (allQuestions[i] != undefined) {
 
-            //console.log(`Inserting Question : ${question}`);
-            console.log(`[ Inserting question ] : ${id}`);
+                let id = allQuestions[i].idQuestion;
+                let title = allQuestions[i].title;
 
-            if (question != undefined) {
+                //console.log(`Inserting Question : ${question}`);
+                console.log(`[ Inserting question ] : ${id}`);
+
                 const requete = `MERGE (q:Question { idQuestion: toInteger($id), title:$title } )`;
 
                 const writeResult = await session.executeWrite(tx =>
