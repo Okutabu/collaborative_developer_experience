@@ -39,7 +39,7 @@ app.post('/user/login', (req, res) => {
         const data = await db.connectUser(id);
         //teste si le tableau est vide
         if(!data.length){
-            res.status(200).send({
+            res.send({
                 answer: "User not found",
                 user : [],
                 error: -1
@@ -74,7 +74,7 @@ app.post('/user/register', (req, res) => {
 
     
     if(!name){
-        res.status(404).send({
+        res.send({
             answer: "User not created",
             user: null,
             error: -1
@@ -108,7 +108,7 @@ app.get('/user/:idSTOW/similarity/cosinus', (req, res) => {
         //console.log(data)
         //teste si le tableau est vide
         if(!data.length){
-            res.status(200).send({
+            res.send({
                 answer: "Users not found",
                 users: [],
                 error: -1
@@ -151,7 +151,7 @@ app.get('/user/:idSTOW/similarity/answer', (req, res) => {
 
         //teste si le tableau est vide
         if(!data.length){
-            res.status(200).send({
+            res.send({
                 answer: "Users not found",
                 users: [],
                 error: -1
@@ -195,7 +195,7 @@ app.get('/user/:idSTOW/similarity/question', (req, res) => {
         
         //teste si le tableau est vide
         if(!data.length){
-            res.status(200).send({
+            res.send({
                 answer: "Not found",
                 users: [],
                 error: -1
@@ -237,7 +237,7 @@ app.get('/user/:idSTOW/proficiency', (req, res) => {
     (async() => {
 
         if(!idSTOW){
-            res.status(404).send({
+            res.send({
                 answer: "Profile not found",
                 userProfile: null,
                 error: -1
@@ -306,7 +306,7 @@ app.get('/user/:idSTOW/statistics', (req, res) => {
 
         //teste si le tableau est vide
         if(!dates.length || !topTags.length || !profile.length || !nbQuestions || !nbAnswers || !nbHelped || !nbHelper){
-            res.status(404).send({
+            res.send({
                 answer: "Statistics not found",
                 users: [],
                 error: -1
@@ -357,7 +357,7 @@ app.get('/admin/statistics', (req, res) => {
 
         //teste si le tableau est vide
         if(!nbTags.length || !nbUsers.length || !topTags || !activeUsers || !nbQuestions || !nbAnswers || !nbInteractions || !tagsWithMostUsers || !nbNodes || !nbRelations){
-            res.status(404).send({
+            res.send({
                 answer: "Statistics not found",
                 users: [],
                 error: -1
@@ -412,7 +412,7 @@ app.get('/admin/users', (req, res) => {
 
 		if(!neo4jUsers.length){
 
-			res.status(404).send({
+			res.send({
                 answer: "Users not found",
                 users: [],
                 error: -1
@@ -421,7 +421,6 @@ app.get('/admin/users', (req, res) => {
 		else{
 
 			let allUsers = [];
-			let users;
 			//oui[2]._fields[0].properties
 			for(let i = 0; i < neo4jUsers.length; i++){
 
@@ -454,7 +453,7 @@ app.get('/admin/users/sort/:attribute', (req, res) => {
 	//traitement des erreurs
 	if(errorParameters(attribute)){
 
-		res.status(404).send({
+		res.send({
 			answer: "Users not found, there may be is an error in the parameters",
 			users: [],
 			error: -1
@@ -479,7 +478,7 @@ app.get('/admin/users/sort/:attribute', (req, res) => {
 
 			if(!neo4jUsers.length){
 
-				res.status(404).send({
+				res.send({
 					answer: "Users not found",
 					users: [],
 					error: -1
@@ -513,7 +512,7 @@ app.get('/admin/users/sort/:attribute/desc', (req, res) => {
 	//traitement des erreurs
 	if(errorParameters(attribute)){
 
-		res.status(404).send({
+		res.send({
 			answer: "Users not found, there may be is an error in the parameters",
 			users: [],
 			error: -1
@@ -539,7 +538,7 @@ app.get('/admin/users/sort/:attribute/desc', (req, res) => {
 
 			if(!neo4jUsers.length){
 
-				res.status(404).send({
+				res.send({
 					answer: "Users not found",
 					users: [],
 					error: -1
@@ -642,7 +641,7 @@ app.get('/admin/InteractionDates', (req, res) => {
 
 		if(!dateQuestions.length && !dateAnswers.length ){
 
-			res.status(404).send({
+			res.send({
                 answer: "Dates not found",
                 dates: [],
                 error: -1
