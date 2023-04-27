@@ -51,7 +51,7 @@ toHelpStore.getDataToHelp(route.params.id);
     </div>    
 </template>
 
-<style>
+<style scoped>
 
 .titre{
     text-align: center;

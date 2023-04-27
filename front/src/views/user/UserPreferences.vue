@@ -60,6 +60,7 @@ console.log(userJson)
 
 
 <template>
+    <div class="container-user-preferences">
     <h2 class="titre">Préférences de l'utilisateur</h2>
     <div class="card container-form">
         <h4 class="card-header">Mes informations</h4>
@@ -139,9 +140,14 @@ console.log(userJson)
             </Form>
         </div>
     </div>
+    </div>
 </template>
 
 <style scoped>
+
+.container-user-preferences{
+    animation: reveal 1s cubic-bezier(.17,.67,.4,1.02); 
+}
 .root{
     position: relative;
 }
