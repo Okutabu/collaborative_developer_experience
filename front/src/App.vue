@@ -17,10 +17,10 @@ const handleScroll = () => {
   
   // si on scroll vers le bas et que la hauteur est inferieur à 1000px
   if (scrollY > prevScrollY) {
-    console.log(`Scroll down: ${scrollY + windowHeight}px`);  
+    // console.log(`Scroll down: ${scrollY + windowHeight}px`);  
     document.querySelector('.container-nav').style.transform = 'translateY(' + scrollY + 'px)';
   } else {
-    console.log(`Scroll up: ${scrollY}px`);
+    // console.log(`Scroll up: ${scrollY}px`);
     document.querySelector('.container-nav').style.transform = 'translateY(' + scrollY + 'px)';
 
   }

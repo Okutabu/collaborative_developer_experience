@@ -54,12 +54,26 @@ function onClick(userParam) {
 
 
 const showComponent1 = ref(true)
-const showComponent2 = ref(true)
+const showComponent2 = ref(false)
 
 function toogleComponent() {
     showComponent1.value = !showComponent1.value
     showComponent2.value = !showComponent2.value
 }
+
+//  showComponent2 = true si l'item collaborated est dans le local storage
+if (localStorage.getItem('collaborated') == 'true') {
+    showComponent2.value = true
+}
+
+var interval = setInterval(function() {
+    if (localStorage.getItem('collaborated') != null) {
+        if( JSON.parse(localStorage.getItem('collaborated')).answer == "Users found" ){
+            showComponent2.value = ref(true)
+        }
+        clearInterval(interval);
+    }
+}, 100);
 
 </script>
 

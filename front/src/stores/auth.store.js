@@ -45,6 +45,7 @@ export const useAuthStore = defineStore({
             localStorage.removeItem('usersReco');
             localStorage.removeItem('usersRecoSimilarity');
             localStorage.removeItem('usersRecoQuestion');
+            localStorage.removeItem('collaborated');
             window.location.reload();
         }
     }
