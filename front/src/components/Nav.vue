@@ -16,7 +16,7 @@ const ToggleMenu = () => {
 <template>
   <div class="container-nav">
     <div v-if="$route.path.startsWith('/admin')">
-        <aside :class="`${is_expanded ? 'is-expanded' : ''}`" v-show="authStore.user">
+        <aside :class="`${is_expanded ? 'is-expanded' : ''}`">
             <div class="logo">
                 <img :src="logoURL" alt="Vue" /> 
             </div>
