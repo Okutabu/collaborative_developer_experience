@@ -33,7 +33,7 @@ toHelpStore.getDataToHelp(route.params.id);
 
             <!-- affiche une liste de questions avec le nom de la question et un bouton pour acceder à l'url de la quesiton -->
             <ul>
-            <li v-for="question in userToHelp.user.questions">
+            <li v-for="question in userToHelp.user.questions" class="li-userHelp">
                 <div class="question-wrapper">
                     <div class="question-title" v-html="question.title"></div>
                     <div id="container">
@@ -51,7 +51,11 @@ toHelpStore.getDataToHelp(route.params.id);
     </div>    
 </template>
 
-<style scoped>
+<style>
+
+.container-card{
+  background-color: white;
+}
 
 .titre{
     text-align: center;
@@ -95,16 +99,11 @@ toHelpStore.getDataToHelp(route.params.id);
 	margin: 0 auto;
 }
 
-ol {
-	list-style: none;
-	padding: 0;
-}
-
-li + li {
+.li-userHelp + .li-userHelp {
 	margin-top: 1rem;
 }
 
-li {
+.li-userHelp {
 	display: flex;
 	align-items: center;
 	gap: 1rem;
@@ -124,7 +123,7 @@ li {
   --black: #424cda;
 }
 
-button, button.learn-more {
+button.learn-more {
   position: relative;
   display: inline-block;
   cursor: pointer;
@@ -202,16 +201,16 @@ button.learn-more .button-text {
   
 }
 
-button:hover .circle {
+button.learn-more:hover .circle {
   width: 100%;
 }
 
-button:hover .circle .icon.arrow {
+button.learn-more:hover .circle .icon.arrow {
   background: var(--white);
   transform: translate(1rem, 0);
 }
 
-button:hover .button-text {
+button.learn-more:hover .button-text {
   color: var(--white);
   text-decoration: none;
 }
