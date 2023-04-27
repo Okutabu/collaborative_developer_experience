@@ -4,6 +4,9 @@ import * as Yup from 'yup';
 import { useUsersStore, useAlertStore } from '@/stores';
 import { router } from '@/router';
 
+import { ref } from 'vue';
+const isOpen = ref(false)
+
 
 
 const temp = localStorage.getItem('user')
@@ -57,7 +60,7 @@ async function onSubmit(values) {
 <template>
     <h2>Préférences de l'utilisateur</h2>
     <div class="card container-form">
-        <h4 class="card-header">Register</h4>
+        <h4 class="card-header">Mes informations</h4>
         <div class="card-body">
             <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
                 <div class="form-group">
@@ -85,10 +88,22 @@ async function onSubmit(values) {
                         <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
                         Modifier les informations
                     </button>
-                    <button class="btn btn-primary btn-delete" @click="onDelete" :disabled="isSubmitting">
+
+                    <!-- <button class="btn btn-primary btn-delete" @click="onDelete" :disabled="isSubmitting">
                         <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
                         Supprimer le compte
+                    </button> -->
+                    <button @click="isOpen = true">
+                        Supprimer mon compte
                     </button>
+                    {{ console.log(isOpen) }}
+                    <div class="modal" v-if="isOpen">
+                        <div>
+                            <h2>Oh my lord !</h2>
+                            <p>Attention à vous la team</p>
+                            <button @click="isOpen = false">Close</button>
+                        </div>
+                    </div>
 
                 </div>
             </Form>
@@ -97,6 +112,9 @@ async function onSubmit(values) {
 </template>
 
 <style scoped>
+.root{
+    position: relative;
+}
 
 .card{
     border-radius: 15px;
@@ -145,5 +163,6 @@ async function onSubmit(values) {
     transition: all 0.3s ease-in-out;
     background-color: #27afea;
 }
+
 
 </style>
