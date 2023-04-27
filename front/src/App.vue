@@ -51,12 +51,21 @@ onBeforeUnmount(() => {
 //   }
 // });
 
+const moveContainerHome = (is_expanded) => {
+  console.log("event received");
+    if(is_expanded){
+        document.querySelector('.container-home').style.transform = 'translateX(250px)';
+    }else{
+        document.querySelector('.container-home').style.transform = 'translateX(0px)';
+    }
+}
+
 </script>
 
 <template>
     <div class="app-container" :class="authStore.user && 'bg-light'">
         <div class="container-nav">
-            <Nav />
+            <Nav @toggle-menu="moveContainerHome"/>
         </div>
         
         <Alert />
@@ -80,7 +89,7 @@ body{
 
 .container-workspace{
     width: 100%;
-    
+    background-color: white;
 }
 
 

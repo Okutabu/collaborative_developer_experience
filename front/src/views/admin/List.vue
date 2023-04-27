@@ -137,10 +137,6 @@ function triSurname() {
 
 <style scoped>
 
-.container-table {
-    /* background-color: rgb(230, 230, 230); */
-}
-
 .search-bar {
     width: 25%;
     height: 40px;

@@ -11,6 +11,7 @@ const ToggleMenu = () => {
 	is_expanded.value = !is_expanded.value
 	localStorage.setItem("is_expanded", is_expanded.value)
 }
+
 </script>
 
 <template>
@@ -90,19 +91,28 @@ const ToggleMenu = () => {
 }
 
 aside {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   background-color: var(--dark);
   color: var(--light);
   width: calc(2rem + 32px);
   overflow: hidden;
   min-height: 100vh;
   padding: 1rem;
+  -webkit-transition: 0.2s ease-in-out;
+  -o-transition: 0.2s ease-in-out;
   transition: 0.2s ease-in-out;
 
 }
 aside .flex {
-  flex: 0.9 0.9 0%;
+  -webkit-box-flex: 0.9;
+      -ms-flex: 0.9 0.9 0%;
+          flex: 0.9 0.9 0%;
 }
 aside .logo {
   margin-bottom: 1rem;
@@ -111,27 +121,41 @@ aside .logo img {
   width: 2rem;
 }
 aside .menu-toggle-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: flex-end;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   margin-bottom: 1rem;
   position: relative;
   top: 0;
+  -webkit-transition: 0.2s ease-in-out;
+  -o-transition: 0.2s ease-in-out;
   transition: 0.2s ease-in-out;
 }
 aside .menu-toggle-wrap .menu-toggle {
+  -webkit-transition: 0.2s ease-in-out;
+  -o-transition: 0.2s ease-in-out;
   transition: 0.2s ease-in-out;
 }
 aside .menu-toggle-wrap .menu-toggle .material-icons {
   font-size: 2rem;
   color: var(--light);
+  -webkit-transition: 0.2s ease-out;
+  -o-transition: 0.2s ease-out;
   transition: 0.2s ease-out;
 }
 aside .menu-toggle-wrap .menu-toggle:hover .material-icons {
   color: var(--primary);
-  transform: translateX(0.5rem);
+  -webkit-transform: translateX(0.5rem);
+      -ms-transform: translateX(0.5rem);
+          transform: translateX(0.5rem);
 }
 aside h3, aside .button .text {
   opacity: 0;
+  -webkit-transition: opacity 0.3s ease-in-out;
+  -o-transition: opacity 0.3s ease-in-out;
   transition: opacity 0.3s ease-in-out;
 }
 aside h3 {
@@ -144,19 +168,29 @@ aside .menu {
   margin: 0 -1rem;
 }
 aside .menu .button {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   text-decoration: none;
+  -webkit-transition: 0.2s ease-in-out;
+  -o-transition: 0.2s ease-in-out;
   transition: 0.2s ease-in-out;
   padding: 0.5rem 1rem;
 }
 aside .menu .button .material-icons {
   font-size: 2rem;
   color: var(--light);
+  -webkit-transition: 0.2s ease-in-out;
+  -o-transition: 0.2s ease-in-out;
   transition: 0.2s ease-in-out;
 }
 aside .menu .button .text {
   color: var(--light);
+  -webkit-transition: 0.2s ease-in-out;
+  -o-transition: 0.2s ease-in-out;
   transition: 0.2s ease-in-out;
 }
 aside .menu .button:hover {
@@ -174,6 +208,8 @@ aside .menu .button.router-link-exact-active .material-icons, aside .menu .butto
 }
 aside .footer {
   opacity: 0;
+  -webkit-transition: opacity 0.3s ease-in-out;
+  -o-transition: opacity 0.3s ease-in-out;
   transition: opacity 0.3s ease-in-out;
 }
 aside .footer p {
@@ -187,7 +223,9 @@ aside.is-expanded .menu-toggle-wrap {
   top: -3rem;
 }
 aside.is-expanded .menu-toggle-wrap .menu-toggle {
-  transform: rotate(-180deg);
+  -webkit-transform: rotate(-180deg);
+      -ms-transform: rotate(-180deg);
+          transform: rotate(-180deg);
 }
 aside.is-expanded h3, aside.is-expanded .button .text {
   opacity: 1;

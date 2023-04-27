@@ -4,10 +4,10 @@ import { ref, onMounted, onUnmounted } from 'vue';
 
 import { useAuthStore } from '@/stores';
 import { useRecoStore } from '@/stores';
-import UserCardSimplified from '../../components/UserCardSimplified.vue';
 import Header from '../../components/Header.vue';
 import UserCard from '../../components/UserCard.vue';
 import UserCarCollaborative from '../../components/UserCarCollaborative.vue';
+import UserRightCard from '../../components/UserRightCard.vue';
 
 
 
@@ -66,6 +66,9 @@ function toogleComponent() {
 
 
 <template>
+    <div class="super-container-home">
+
+    
     <div class="container-home">
         <Transition name="slide-fade">
             <div v-if="headerdisapear">
@@ -127,7 +130,7 @@ function toogleComponent() {
                 </div>
 
                 <div v-if="showComponent2" key="component2" class="container-list-collaboration" >
-                <table class="table table-striped">
+                <table class="table ">
                     <thead class="table-head">
                         <tr>
                             <th class="table-head-impair">Vous avez collaboré sur StackOverflow avec ces developpeurs PTC ! </th>
@@ -167,9 +170,11 @@ function toogleComponent() {
                     </tbody>
                 </table>
             </div>
-
+            
     </div>
-
+    <!-- <UserRightCard :surname="user.user.surname"  :name="user.user.name" :avatar="user.user.avatar" :techno="user.user.techno" :lastInteract="user.user.lastInteract"/> -->
+</div>
+    
 
     
     
@@ -178,6 +183,7 @@ function toogleComponent() {
 
 <style scoped>
 
+
 .container-similarities {
     display: flex;
     flex-direction: row;
@@ -185,6 +191,7 @@ function toogleComponent() {
     align-items: center;
     /* background-color: #B6C9FF; */
     padding-top: 50px;
+    width: 100%;
  
 
 }
@@ -301,18 +308,6 @@ function toogleComponent() {
     width: 100%;
 }
 
-.table-head-impair {
-    background-color: #bdd0f9;
-}
-
-.table-head-pair{
-    background-color: #e6ebfe;
-}
-
-
-.table-body {
-    background-color: #e6ebfe;
-}
 
 .list-unstyled{
     display: flex;
