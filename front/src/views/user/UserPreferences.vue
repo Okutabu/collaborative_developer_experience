@@ -46,6 +46,7 @@ async function onSubmit(values) {
         values.idSTOW = userJson.user.idSTOW; 
         
         await usersStore.updateUser(values);
+        await router.push('/overview');
 
     } catch (error) { 
         alertStore.error(error);
