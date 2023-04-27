@@ -109,7 +109,7 @@ app.post('/user/register', (req, res) => {
 
 app.post('/user/update', (req, res) => {
 
-    console.log(req.body)
+    //console.log(req.body)
     const ancienidSTOW = req.body.idSTOW;
     const name = req.body.name;
     const surname = req.body.surname;
