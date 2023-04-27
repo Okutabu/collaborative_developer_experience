@@ -12,7 +12,7 @@ const userStore = useUsersStore();
 const { stats } = storeToRefs(userStore);
 userStore.getUserStats(6309);
 
-var endDate = new Date('2023-03-27');
+var endDate = new Date('2023-04-27');
 var orientation = 'horizontal';
 
 </script>
@@ -100,27 +100,32 @@ body {
 .container-stat{
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
+    /* align-items: center; */
 }
 .title {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 50px;
+    margin: 3%;
 }
 
 .table-body{
-    margin:2%;
+    margin:1%;
+    /* padding: 15%; */
+    width: 98%;
     border: 1px solid black;
 }
+
 .table-body td {
-    width: 25%;
-    padding: 5%;
+    width: 50%;
+    /* padding: 5%; */
     text-align: left;
+    height: 20%;
 }
 .table-body tr {
-    height: 50px;
+    /* height: 2%; */
     border-bottom: 1px solid rgb(200, 200, 200);
     border-top: 1px solid rgb(200, 200, 200);
     text-align: center;
@@ -140,6 +145,7 @@ body {
     justify-content: space-evenly;
     border: 1px solid black;
     padding: 2.5%;
+    height: 10%;
 }
 
 .container-heatmap{
@@ -154,7 +160,7 @@ body {
 .container-card{
     border: 1px solid black;
     padding: 1%;
-    width: 35%;
+    width: 50%;
     align-items: center;
 }
 .podium  {
@@ -162,7 +168,7 @@ body {
     align-items: flex-end;
     border: 1px solid black;
     padding: 1%;
-    width: 35%;
+    width: 50%;
 }
 .podium__item {
     width: 200px;
