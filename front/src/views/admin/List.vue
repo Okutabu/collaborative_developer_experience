@@ -167,16 +167,16 @@ function triSurname() {
 }
 
 .table-head-impair {
-    background-color: #bdd0f9;
+    background-color: white;
 }
 
 .table-head-pair{
-    background-color: #e6ebfe;
+    background-color: white;
 }
 
 
 .table-body {
-    background-color: #e6ebfe;
+    background-color: white;
 }
 
 

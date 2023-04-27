@@ -138,7 +138,7 @@ const { stats, InteractionDates } = storeToRefs(adminStore);
 .stat-value {
   font-size: 36px;
   font-weight: bold;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .stat-label {
