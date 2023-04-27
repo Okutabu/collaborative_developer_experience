@@ -1,6 +1,13 @@
 <template>
     <div class="user-card">
-      <img :src="user.users[0][0].avatar" alt="User Avatar" class="user-avatar">
+      <button class="user-button">
+          <div class="user-avatar-container">
+              <img :src="user.users[0][0].avatar" alt="User Avatar" class="user-avatar">
+              <!-- ajoute un icon de telephone derrière l'image -->
+              <i class="fa fa-phone" style="font-size:36px;color:white"></i>
+          </div>
+      </button>
+
       <div class="user-details">
         <h2 class="user-name">{{ user.users[0][0].pseudo }}</h2>
         <div class="user-skill">
@@ -9,14 +16,16 @@
         <div class="user-actions">
           <!-- affiche cette div si le props bouton a la valeur "help" -->
           <div v-if="bouton === 'contact'">
-            <button class="btn btn-primary" @click="helpPage"> <i class="fa fa-paper-plane-o"></i>&nbsp; {{ bouton }} </button>
+            <a :href="profilSTOW" target="_blank">
+              <button class="btn btn-primary" @click="helpPage"> <i class="fa fa-paper-plane-o"></i>&nbsp; profil STOW </button>
+            </a>
           </div>
           <div v-else>
             <RouterLink :to="{path :`/help/${user.users[0][0].idSTOW}`}">
               <button class="btn btn-primary" @click="helpPage"> <i class="fa fa-handshake-o"></i>&nbsp; {{ bouton }} </button>
             </RouterLink>
           </div>
-          <button class="btn btn-secondary" @click="viewProfile">View Profile</button>
+          <button class="btn btn-secondary">Details</button>
         </div>
       </div>
     </div>
@@ -25,6 +34,7 @@
   <script>
 
   import { RouterLink } from 'vue-router' 
+  import { ref } from 'vue'
 
   export default {
     name: 'UserCard',
@@ -46,12 +56,15 @@
       helpPage() {
         console.log("renvoie vers la page d'aide")
         console.log(this.user.users[0][0].idSTOW)
-      },
-      viewProfile() {
-        // TODO: Implement view profile functionality
+      }
+    },
+    computed: {
+      profilSTOW() {
+        return `https://stackoverflow.com/users/${this.user.users[0][0].idSTOW}`
       }
     }
   }
+  
   </script>
   
   <style>
@@ -64,6 +77,9 @@
     border-radius: 8px;
     padding: 16px;
     box-shadow: 2px 2px 4px rgba(59, 110, 204, 0.3);
+
+    /* place la balise <i> sur la basile <img> */
+    
   }
 
   .user-card:hover {
@@ -75,12 +91,72 @@
   }
   
   .user-avatar {
-    width: 80px;
-    height: 80px;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     border-radius: 50%;
-    margin-right: 16px;
+}
+
+  .user-avatar:hover {
+    box-shadow: 4px 4px 8px rgba(59, 110, 204, 0.3);
+    transform: translateX(-2%);
+    transform: translateY(-2%);
+    transition: all 0.2s ease-in-out;
+
+    filter: brightness(30%);
+
   }
+  .user-button {
+    position: relative;
+    display: inline-block;
+}
+
+  .user-avatar-container {
+      position: relative;
+      width: 80px;
+      height: 80px;
+  }
+
+  .user-avatar {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      filter: brightness(100%);
+      transition: filter 0.2s ease-in-out;
+  }
+
+  .fa-phone {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      margin: auto;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+      padding-top: 25px;
+  }
+
+  .user-avatar-container:hover .fa-phone {
+      opacity: 1;
+  }
+
+  .user-avatar-container:hover .user-avatar {
+      filter: brightness(30%);
+  }
+
+  .user-avatar:hover {
+      box-shadow: 4px 4px 8px rgba(59, 110, 204, 0.3);
+      transform: translate(-2%, -2%);
+      transition: all 0.2s ease-in-out;
+  }
+
   
   .user-details {
     flex: 1;

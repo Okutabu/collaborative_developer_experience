@@ -36,6 +36,9 @@ onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll);
 });
 
+
+
+
 // Set the threshold value (in pixels)
 // const threshold = 2000;
 
@@ -72,6 +75,13 @@ onBeforeUnmount(() => {
 <style>
 @import '@/assets/base.css';
 @import '@/assets/theme.css';
+
+* {
+    -webkit-print-color-adjust: exact !important;   /* Chrome, Safari 6 – 15.3, Edge */
+    color-adjust: exact !important;                 /* Firefox 48 – 96 */
+    print-color-adjust: exact !important;           /* Firefox 97+, Safari 15.4+ */
+}
+
 
 body{
     /* overflow: hidden; */

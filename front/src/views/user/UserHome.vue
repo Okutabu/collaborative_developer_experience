@@ -47,6 +47,7 @@ const typeQuestion = ref('To help')
 
 const userSelected = ref(null);
 const headerdisapear = ref(true);
+const showHeader = ref(true);
 
 function onClick(userParam) {
     userSelected.value = userParam;
@@ -64,16 +65,17 @@ function toogleComponent() {
     showComponent2.value = !showComponent2.value
 }
 
-//  showComponent2 = true si l'item collaborated est dans le local storage
-if (localStorage.getItem('collaborated') == 'true') {
-    showComponent2.value = true
+if (localStorage.getItem('collaborated') != null) {
+    showHeader.value = false;
 }
+
 
 var interval = setInterval(function() {
     if (localStorage.getItem('collaborated') != null) {
         if( JSON.parse(localStorage.getItem('collaborated')).answer == "Users found" ){
             showComponent2.value = ref(true)
         }
+        headerdisapear.value = false;
         clearInterval(interval);
     }
 }, 100);
@@ -84,11 +86,13 @@ var interval = setInterval(function() {
 
 <template>
     <div class="container-home">
-        <Transition name="slide-fade">
-            <div v-if="headerdisapear">
-                <Header :surname=user.user.surname  :name=user.user.name />
-            </div>
-        </Transition>
+        <div v-if="showHeader">
+            <Transition name="slide-fade">
+                <div v-if="headerdisapear">
+                    <Header :surname=user.user.surname  :name=user.user.name />
+                </div>
+            </Transition>
+        </div>
         <div class="container" ref="container" @scroll="handleScroll">
             <!-- Votre contenu ici -->
         </div>
