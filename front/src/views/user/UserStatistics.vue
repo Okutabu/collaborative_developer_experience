@@ -10,7 +10,7 @@ const userJson = JSON.parse(temp)
 
 const userStore = useUsersStore();
 const { stats } = storeToRefs(userStore);
-userStore.getUserStats(6309);
+userStore.getUserStats(userJson.user.idSTOW);
 
 var endDate = new Date('2023-04-27');
 var orientation = 'horizontal';
