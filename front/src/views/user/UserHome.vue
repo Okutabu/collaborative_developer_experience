@@ -4,10 +4,10 @@ import { ref, onMounted, onUnmounted } from 'vue';
 
 import { useAuthStore } from '@/stores';
 import { useRecoStore } from '@/stores';
-import UserCardSimplified from '../../components/UserCardSimplified.vue';
 import Header from '../../components/Header.vue';
 import UserCard from '../../components/UserCard.vue';
 import UserCarCollaborative from '../../components/UserCarCollaborative.vue';
+import UserRightCard from '../../components/UserRightCard.vue';
 
 
 const help = ref(null);
@@ -85,6 +85,9 @@ var interval = setInterval(function() {
 
 
 <template>
+    <div class="super-container-home">
+
+    
     <div class="container-home">
         <div v-if="showHeader">
             <Transition name="slide-fade">
@@ -146,7 +149,7 @@ var interval = setInterval(function() {
                 </div>
 
                 <div v-if="showComponent2" key="component2" class="container-list-collaboration" >
-                <table class="table table-striped">
+                <table class="table ">
                     <thead class="table-head">
                         <tr>
                             <th class="table-head-impair">Vous avez collaboré sur StackOverflow avec ces developpeurs PTC ! </th>
@@ -186,9 +189,11 @@ var interval = setInterval(function() {
                     </tbody>
                 </table>
             </div>
-
+            
     </div>
-
+    <!-- <UserRightCard :surname="user.user.surname"  :name="user.user.name" :avatar="user.user.avatar" :techno="user.user.techno" :lastInteract="user.user.lastInteract"/> -->
+</div>
+    
 
     
     
@@ -197,6 +202,7 @@ var interval = setInterval(function() {
 
 <style scoped>
 
+
 .container-similarities {
     display: flex;
     flex-direction: row;
@@ -204,6 +210,7 @@ var interval = setInterval(function() {
     align-items: center;
     /* background-color: #B6C9FF; */
     padding-top: 50px;
+    width: 100%;
  
 
 }
@@ -320,18 +327,6 @@ var interval = setInterval(function() {
     width: 100%;
 }
 
-.table-head-impair {
-    background-color: #bdd0f9;
-}
-
-.table-head-pair{
-    background-color: #e6ebfe;
-}
-
-
-.table-body {
-    background-color: #e6ebfe;
-}
 
 .list-unstyled{
     display: flex;

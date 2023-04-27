@@ -20,10 +20,12 @@
     "pinia": "^2.0.28",
     "primevue": "^3.27.0",
     "vee-validate": "^4.5.11",
+    "vite-plugin-vuetify": "^1.0.2",
     "vue": "^3.2.47",
     "vue-calendar-heatmap": "^0.8.4",
     "vue-router": "^4.1.6",
     "vue3-apexcharts": "^1.4.1",
+    "vuetify": "^3.2.1",
     "yup": "^0.32.11"
   },
   "devDependencies": {
