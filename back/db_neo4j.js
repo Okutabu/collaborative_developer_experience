@@ -398,11 +398,10 @@ async function getUsersSortedByLastInteraction(DESC = "") {
   const session = driver.session({ database: "neo4j" });
 
   try {
-    const requete = `MATCH (u:User)-[i]-(q:Question)
-                        UNWIND i.dateInteraction AS dates
-                        WITH u, max(dates) AS date
-                        RETURN u
-                        ORDER BY date ${DESC}`;
+    const requete = `MATCH (u:User)
+                      WHERE u.lastInteraction IS NOT NULL
+                      return u 
+                      ORDER BY u.lastInteraction ${DESC}`;
 
     const readResult = await session.executeRead((tx) => tx.run(requete));
     return readResult.records;
