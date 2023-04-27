@@ -222,7 +222,7 @@ body {
 .podium .first {
     min-height: 300px;
     /* background: rgb(255, 172, 37); */
-    background: #ff0044;
+    background: #577aff;
     opacity: 1;
     /* background:
         linear-gradient(333deg,
@@ -236,10 +236,12 @@ body {
     min-height: 235px;
     background: #8099f6;
     opacity: 0.7;
+    
 }
 
 .podium .third {
     min-height: 175px;
     background: #25b2c3;
     opacity: 0.7;
-}</style>
+}
+</style>
