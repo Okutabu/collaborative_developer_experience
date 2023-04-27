@@ -265,7 +265,7 @@ app.get('/user/:idSTOW/interactedWithMe', (req, res) => {
 		const users = await db.getUsersWhoInteractedWithMe(idSTOW);
 		//console.log(users);
 		if(!users.length){
-			res.status(404).send({
+			res.send({
                 answer: "Nobody has interacted with this user",
                 users: [],
                 error: -1
