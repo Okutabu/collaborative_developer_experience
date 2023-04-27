@@ -14,14 +14,11 @@ toHelpStore.getDataToHelp(route.params.id);
 
 
 
-
-
-
 </script>
 
 <template>
 
-    <h1>Vous êtes le profil parfait pour aider {{ userToHelp.user.profile[0].pseudo }} !</h1>
+    <h1 class="titre">Vous êtes le profil parfait pour aider {{ userToHelp.user.profile[0].pseudo }} !</h1>
 
     <!-- Affiche le profil de l'utilisateur qui a besoin d'aide -->
     <div class="container-profile-">
@@ -34,13 +31,31 @@ toHelpStore.getDataToHelp(route.params.id);
     <ul>
         <div class="list-row" v-for="question in userToHelp.user.questions">
             <li>{{ question.title }}</li>
-            <a :href="question.urlQuestion" target="_blank"><button class="btn btn-primary">Accéder à la question</button></a>
+            <a :href="question.urlQuestion" target="_blank" class="question"><button class="btn btn-primary">Accéder à la question</button></a>
         </div>
     </ul>
 
+    
 
 </template>
 
 <style>
+
+.titre{
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+
+.list-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    
+}
+
+
 
 </style>
