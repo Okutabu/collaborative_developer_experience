@@ -7,11 +7,15 @@
             <p><i class="fa fa-graduation-cap "></i> {{ user.users[0][1][0].techno }}</p>
         </div>
         <div class="user-actions">
-          <!-- router link vers l'url /help/user.idSTOW -->
-          <RouterLink :to="{path :`/help/${user.users[0][0].idSTOW}`}">
-            <button class="btn btn-primary" @click="helpPage"> <i class="fa fa-paper-plane-o"></i>&nbsp; Aide ce dev  </button>
-          </RouterLink>
-          
+          <!-- affiche cette div si le props bouton a la valeur "help" -->
+          <div v-if="bouton === 'contact'">
+            <button class="btn btn-primary" @click="helpPage"> <i class="fa fa-paper-plane-o"></i>&nbsp; {{ bouton }} </button>
+          </div>
+          <div v-else>
+            <RouterLink :to="{path :`/help/${user.users[0][0].idSTOW}`}">
+              <button class="btn btn-primary" @click="helpPage"> <i class="fa fa-paper-plane-o"></i>&nbsp; {{ bouton }} </button>
+            </RouterLink>
+          </div>
           <button class="btn btn-secondary" @click="viewProfile">View Profile</button>
         </div>
       </div>
@@ -30,6 +34,10 @@
         required: true
       },
       type: {
+        type: String,
+        required: true
+      },
+      bouton: {
         type: String,
         required: true
       }

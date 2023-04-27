@@ -11,6 +11,8 @@ import UserCarCollaborative from '../../components/UserCarCollaborative.vue';
 
 
 const help = ref(null);
+const contact = ref("contact")
+const aide = ref("aide ce dev");
 
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
@@ -97,7 +99,7 @@ var interval = setInterval(function() {
                         <div class="container-raw-cosinus-similarity" v-if="usersRecoSimilarity">
                             <span class="categorie-recommendation">Utilisateurs similaires à vous</span>
                             <div @click="onClick(usersRecoSimilarity.users)">
-                                <UserCarCollaborative :user="usersRecoSimilarity" :type="typeSimilaire"/>
+                                <UserCarCollaborative :user="usersRecoSimilarity" :type="typeSimilaire" :bouton="contact" />
                             </div>
                         </div>
                         <div v-else>
@@ -109,7 +111,7 @@ var interval = setInterval(function() {
                         <div class="container-similarity-tag-answers" v-if="usersReco">
                             <span class="categorie-recommendation">Utilisateurs qui repondent à vos questions</span>
                             <div @click="onClick(usersReco.users)">
-                                <UserCarCollaborative :user="usersReco" :type="typeReponse"/>
+                                <UserCarCollaborative :user="usersReco" :type="typeReponse" :bouton="contact" />
                             </div>
                         </div>
                         <div v-else>
@@ -121,7 +123,7 @@ var interval = setInterval(function() {
                         <div class="container-similarity-tag-questions" v-if="usersRecoQuestion">
                             <span class="categorie-recommendation">Utilisateurs que vous pouvez aider</span>
                             <div @click="onClick(usersRecoQuestion.users)">
-                                <UserCarCollaborative :user="usersRecoQuestion" :type="typeQuestion"/>
+                                <UserCarCollaborative :user="usersRecoQuestion" :type="typeQuestion" :bouton="aide" />
                             </div>
                         </div>
                         <div v-else>
