@@ -192,12 +192,13 @@ body {
     align-items: flex-end;
     /* border: 1px solid black; */
     padding: 1%;
-    padding-left: 10%;
+    padding-left: 7%;
     width: 50%;
+    padding-bottom: 50px;
 }
 
 .podium__item {
-    width: 200px;
+    width: 150px;
 }
 
 .podium__rank {
@@ -218,11 +219,11 @@ body {
 
 .podium__number {
     width: 27px;
-    height: 75px;
+    height: 40px;
 }
 
 .podium .first {
-    min-height: 300px;
+    min-height: 250px;
     /* background: rgb(255, 172, 37); */
     background: #577aff;
     opacity: 1;
@@ -235,14 +236,14 @@ body {
 }
 
 .podium .second {
-    min-height: 235px;
+    min-height: 200px;
     background: #8099f6;
     opacity: 0.7;
     
 }
 
 .podium .third {
-    min-height: 175px;
+    min-height: 150px;
     background: #25b2c3;
     opacity: 0.7;
 }
