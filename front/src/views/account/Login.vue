@@ -2,8 +2,15 @@
 import { Form, Field } from 'vee-validate';
 import * as Yup from 'yup';
 
+import { useAdminStore } from '@/stores';
+import { storeToRefs } from 'pinia';
+
 import { useAuthStore } from '@/stores';
 import { useRecoStore } from '@/stores';
+
+const adminStore = useAdminStore();
+adminStore.getStats();
+adminStore.getInteractionDates();
 
 const schema = Yup.object().shape({
     idSTOW: Yup.number().required('Cannot Log in without an ID')

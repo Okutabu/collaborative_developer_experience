@@ -40,12 +40,11 @@ export const useAuthStore = defineStore({
         },
         logout() {
             this.user = null;
-            localStorage.removeItem('user');
             router.push('/account/login');
-            localStorage.removeItem('usersReco');
-            localStorage.removeItem('usersRecoSimilarity');
-            localStorage.removeItem('usersRecoQuestion');
-            localStorage.removeItem('collaborated');
+
+            // Vide le local storage
+            localStorage.clear();
+
             window.location.reload();
         }
     }
