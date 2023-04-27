@@ -41,7 +41,7 @@ async function insert_tags(allTags) {
         for (let tag of allTags) {
 
             //console.log(`Inserting Tag : ${tag}`);
-            console.log(`[ Inserting tag ] : ${tag}`);
+            //console.log(`[ Inserting tag ] : ${tag}`);
 
             const requete = `MERGE (t:Tag { title: $tag })`;
 
@@ -92,7 +92,7 @@ async function insert_users(allUsers) {
         for (let userInfo of allUsers) {
 
             //console.log(`Inserting User : ${userInfo}`);
-            console.log(`[ Inserting user ] : ${userInfo}`);
+            //console.log(`[ Inserting user ] : ${userInfo}`);
 
             const requete = `MERGE (u:User { idSTOW: toInteger($userInfo)} )`;
 
@@ -118,16 +118,18 @@ async function insert_questions(allQuestions) {
     try {
         for (let i = 0; i < allQuestions.length; i++ ) {
 
-            let question = allQuestions[i]; 
+            if (allQuestions[i] != undefined) {
 
-            //console.log(`Inserting Question : ${question}`);
-            console.log(`[ Inserting question ] : ${question}`);
+                let id = allQuestions[i].idQuestion;
+                let title = allQuestions[i].title;
 
-            if (question != undefined) {
-                const requete = `MERGE (q:Question { idQuestion: toInteger($question)} )`;
+                //console.log(`Inserting Question : ${question}`);
+                //console.log(`[ Inserting question ] : ${id}`);
+
+                const requete = `MERGE (q:Question { idQuestion: toInteger($id), title:$title } )`;
 
                 const writeResult = await session.executeWrite(tx =>
-                    tx.run(requete, { question })
+                    tx.run(requete, { id, title })
                 );
 
                 // writeResult.records.forEach(record => {
@@ -235,7 +237,7 @@ async function create_has_topic_link(tags, idQuestion){
     try {
         
         for( let tag of tags){
-            console.log(`Creating link : (:Tag {title: ${tag}})-[:HAS_TOPIC]->(:Question {idQuestion: ${idQuestion}})`);
+            // console.log(`Creating link : (:Tag {title: ${tag}})-[:HAS_TOPIC]->(:Question {idQuestion: ${idQuestion}})`);
             const requete =  `MATCH (q:Question {idQuestion: $idQuestion}), (t:Tag {title: $tag})
                               MERGE (q)-[h:HAS_TOPIC]->(t)`;
     

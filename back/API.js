@@ -289,7 +289,51 @@ app.get('/user/:idSTOW/interactedWithMe', (req, res) => {
 	})();
 });
 
+app.get('/user/:idSTOW/help', (req, res) => {
 
+    const idSTOW = parseInt(req.params.idSTOW);
+
+    (async() => {
+
+        const profile = await db.getUserProficiency(idSTOW);
+        const reqQuestions = await db.getQuestionsUserToHelp(idSTOW);
+
+        if(!profile.length || !reqQuestions.length){
+            res.send({
+                answer: "No user to help",
+                user: [],
+                error: -1
+            });
+        }
+        else{
+            //console.log(profile[0].idSTOW);
+            let questions = [];
+
+            for(let question of reqQuestions){
+                let objQ = {
+                    title : question._fields[0].properties.title,
+                    tags : question._fields[1],
+                    urlQuestion : `https://stackoverflow.com/questions/${question._fields[0].properties.idQuestion.low}`
+                }
+
+                questions.push(objQ);
+            }
+            let urlProfile = `https://stackoverflow.com/users/${profile[0].idSTOW}`;
+    
+            res.status(200).send({
+                answer: "User to help",
+                user: {
+                        urlProfile,
+                        profile,
+                        questions
+                      },
+                error: 0
+            });
+        }
+    })();
+});
+
+    
 app.get('/user/:idSTOW/statistics', (req, res) => {
 
     const idSTOW = parseInt(req.params.idSTOW);
@@ -337,8 +381,6 @@ app.get('/user/:idSTOW/statistics', (req, res) => {
         }
     })();
 });
-
-
 
 
 app.get('/admin/statistics', (req, res) => {

@@ -48,13 +48,13 @@ async function create_links(profils){
     "activities": [
         {
             "typePost": "answer",
-            "idQuestion": 75131252,
+            "question": { "idQuestion": 75131252, "title": "Comment faire du go sur github avec gopath ?"  }, 
             "dateInteraction": 1673848584,
             "tags": [ 'go', 'github', 'path', 'oh-my-zsh', 'gopath' ]
         },
         {
             "typePost": "answer",
-            "idQuestion": 75131252,
+            "question": { "idQuestion": 75131252, "title": "Comment faire du go sur github avec gopath ?"  }, 
             "dateInteraction": 1673848584,
             "tags": [ 'go', 'github', 'path', 'oh-my-zsh', 'gopath' ]
         }
@@ -67,17 +67,17 @@ async function create_links(profils){
 
         for(let activity of profil.activities){
 
-            if(activity.idQuestion != undefined){
+            if(activity.question.idQuestion != undefined){
                 
                 let typePost = activity.typePost;
                              
                 if(typePost == "answer"){
-                    await db.create_answered_link(id, activity.idQuestion, activity.dateInteraction);
+                    await db.create_answered_link(id, activity.question.idQuestion, activity.dateInteraction);
                 }
                 if(typePost == "question"){
-                    await db.create_asked_link(id, activity.idQuestion, activity.dateInteraction);
+                    await db.create_asked_link(id, activity.question.idQuestion, activity.dateInteraction);
                 }
-                await db.create_has_topic_link(activity.tags, activity.idQuestion);
+                await db.create_has_topic_link(activity.tags, activity.question.idQuestion);
             }
         }
     }
@@ -94,7 +94,7 @@ async function new_db(){
     console.log("|         STEP 2 - Création des noeuds                  |");
     console.log("+-------------------------------------------------------+");
     let nodes = requete.get_users_tags_questions(profiles);
-    //console.log((await nodes).questions);
+    //console.log(nodes);
 
     console.log("+-------------------------------------------------------+");
     console.log("|   STEP 3 - Insertion de tous les noeuds dans la BDD   |");
@@ -131,19 +131,21 @@ async function setNamesSurnamesMails(){
 
 (async() => {
 
-    //await start_collector_first_time();
-    await update_db();
-
     //console.log("Collecting from ", new Date(START_STR), " to ", new Date(END_STR));
     console.log("Collecting from ", new Date(START*1000), " to ", new Date(END*1000));
-    // console.log("Récupération de tous les éléments et insertion dans la DB");
-    // //await new_db();
-    // console.log("Récupération des pseudo et avatar");
-    // await update_db();
-    // console.log("Ajout des noms et prénoms");
-    // await setNamesSurnamesMails();
-    // await db.setAllTopTags(users.list_id);
-    // await db.setAllInteractions(users.list_id);
+    //await start_collector_first_time();
+
+    console.log("Récupération de tous les éléments et insertion dans la DB");
+    await new_db();
+
+    console.log("Récupération des pseudo et avatar");
+    await update_db();
+
+    console.log("Ajout des noms et prénoms");
+    await setNamesSurnamesMails();
+    await db.setAllTopTags(users.list_id);
+    await db.setAllInteractions(users.list_id);
+    
     await db.driver.close();
     
 })();

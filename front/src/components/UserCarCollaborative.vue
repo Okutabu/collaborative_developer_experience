@@ -7,7 +7,11 @@
             <p><i class="fa fa-graduation-cap "></i> {{ user.users[0][1][0].techno }}</p>
         </div>
         <div class="user-actions">
-          <button class="btn btn-primary" @click="sendMessage"> <i class="fa fa-paper-plane-o"></i>&nbsp; Message</button>
+          <!-- router link vers l'url /help/user.idSTOW -->
+          <RouterLink :to="{path :`/help/${user.users[0][0].idSTOW}`}">
+            <button class="btn btn-primary" @click="helpPage"> <i class="fa fa-paper-plane-o"></i>&nbsp; Aide ce dev  </button>
+          </RouterLink>
+          
           <button class="btn btn-secondary" @click="viewProfile">View Profile</button>
         </div>
       </div>
@@ -15,6 +19,9 @@
   </template>
   
   <script>
+
+  import { RouterLink } from 'vue-router' 
+
   export default {
     name: 'UserCard',
     props: {
@@ -28,8 +35,9 @@
       }
     },
     methods: {
-      sendMessage() {
-        // TODO: Implement send message functionality
+      helpPage() {
+        console.log("renvoie vers la page d'aide")
+        console.log(this.user.users[0][0].idSTOW)
       },
       viewProfile() {
         // TODO: Implement view profile functionality

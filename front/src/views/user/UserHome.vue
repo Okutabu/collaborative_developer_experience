@@ -10,6 +10,7 @@ import UserCard from '../../components/UserCard.vue';
 import UserCarCollaborative from '../../components/UserCarCollaborative.vue';
 
 
+const help = ref(null);
 
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
