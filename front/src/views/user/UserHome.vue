@@ -10,6 +10,7 @@ import UserCard from '../../components/UserCard.vue';
 import UserCarCollaborative from '../../components/UserCarCollaborative.vue';
 
 
+const help = ref(null);
 
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
@@ -60,6 +61,8 @@ function toogleComponent() {
     showComponent1.value = !showComponent1.value
     showComponent2.value = !showComponent2.value
 }
+
+
 
 </script>
 
