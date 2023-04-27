@@ -13,7 +13,7 @@
           </div>
           <div v-else>
             <RouterLink :to="{path :`/help/${user.users[0][0].idSTOW}`}">
-              <button class="btn btn-primary" @click="helpPage"> <i class="fa fa-paper-plane-o"></i>&nbsp; {{ bouton }} </button>
+              <button class="btn btn-primary" @click="helpPage"> <i class="fa fa-handshake-o"></i>&nbsp; {{ bouton }} </button>
             </RouterLink>
           </div>
           <button class="btn btn-secondary" @click="viewProfile">View Profile</button>
