@@ -27,7 +27,7 @@ export default {
         <div class="header">
             <div class="container-welcome-message text-center">
                     <h2> Bienvenue sur votre espace de collaboration</h2>
-                    <p class="text-muted">Découvrez de nouvelles relations chez PTC</p>
+                    <p class="text-muted">Nous utilisons des algorithmes de recommendations pour vous recommander des profils les plus pertinant possible</p>
             </div>
                 <!-- <div class="container-action-bar">
                     <div class="container-bell">

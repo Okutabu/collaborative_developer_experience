@@ -138,11 +138,9 @@ var interval = setInterval(function() {
                         </div>
                     </div>
 
-                    <div class="container-usercard-peek"> 
-                        <div v-if="userSelected">
+                    <div class="container-usercard-peek" v-if="userSelected"> 
+                        <div>
                             <UserCard :nom=userSelected[0][0].pseudo :techno=userSelected[0][1] :avatar=userSelected[0][0].avatar :reco=userSelected[0][1][0].techno :key=userSelected :lastInteract=userSelected[0][0].lastInteraction /> 
-                        </div>
-                        <div v-else class="waiting-clic">
                         </div>
                     </div>
                 </div>
@@ -343,6 +341,9 @@ var interval = setInterval(function() {
     display: flex;
 }
 
+.container-list-collaboration{
+    margin-top: 100px;
+}
 
 
 </style>
