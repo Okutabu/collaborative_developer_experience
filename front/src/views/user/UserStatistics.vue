@@ -26,11 +26,12 @@ var orientation = 'horizontal';
         </div>
 
         <div class="container-heatmap">
-            <h3 class="text">Mon taux de contribution</h3>
+            <!-- <h3 class="text">Mon taux de contribution</h3> -->
             <calendar-heatmap class="heatmap-component" :values="stats.dates" :end-date="endDate"
                 :style="{ 'max-width': orientation === 'vertical' ? '145px' : '800px' }" :round="2"
                 :vertical="orientation === 'vertical'" />
         </div>
+
 
         <div class="container-profile">
             <div class="container-card">
@@ -65,7 +66,7 @@ var orientation = 'horizontal';
     </div>
 
     <table class="table-body">
-        <tr>
+        <tr class="table-first">
             <td>Le nombre de questions auquelles vous avez répondu</td>
             <td>{{ stats.nbAnswers }}</td>
         </tr>
@@ -83,73 +84,85 @@ var orientation = 'horizontal';
             <td>Le nombre de personnes que vous avez aidé</td>
             <td>{{ stats.nbHelped }}</td>
         </tr>
-        <tr>
+        <tr class="table-last">
             <td>Le nombre de personnes qui vous ont aidé</td>
             <td>{{ stats.nbHelper }}</td>
         </tr>
-
     </table>
 </template>
 
 <style scoped>
-
 body {
     font-family: sans-serif;
+    font-weight: 100;
 }
 
-.container-stat{
+.container-stat {
     display: flex;
     flex-direction: column;
     justify-content: center;
     /* align-items: center; */
 }
+
 .title {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin: 3%;
+    /* font-weight: bold; */
+    /* font-size: 500; */
 }
 
-.table-body{
-    margin:1%;
+.table-body {
+    margin: 4%;
     /* padding: 15%; */
-    width: 98%;
-    border: 1px solid black;
+    width: 92%;
+    /* border: 1px solid black; */
+    background: #f1f5f9;
+    /* top: 50%;
+	left: 50%; */
+    /* height: 20%; */
+    border-collapse: collapse;
+    /* overflow: hidden; */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+
 }
 
 .table-body td {
     width: 50%;
-    /* padding: 5%; */
-    text-align: left;
-    height: 20%;
+    padding: 1%;
+    padding-left: 3%;
+    /* height: 10%; */
+    text-align: center;
+    /* background-color: rgba(255, 255, 255, 0.2); */
+    color: #000;
+    font-weight: bold;
+    /* font-size: large; */
 }
+
 .table-body tr {
-    /* height: 2%; */
+    height: 5%;
     border-bottom: 1px solid rgb(200, 200, 200);
     border-top: 1px solid rgb(200, 200, 200);
     text-align: center;
 }
 
-.container-tags{
+.container-tags {
     display: flex;
+
     /* justify-content: space-around; */
 }
 
-.container-tags td{
-    padding: 1%;
+.container-tags td {
+    width: 100%;
+    padding: 0.5%;
+    padding-left: 3%;
 }
 
-.container-profile{
-    display: flex;
-    justify-content: space-evenly;
-    border: 1px solid black;
-    padding: 2.5%;
-    height: 10%;
-}
-
-.container-heatmap{
-    border: 1px solid black;
+.container-heatmap {
+    /* border: 1px solid black; */
     padding: 2%;
 }
 
@@ -157,53 +170,76 @@ body {
     margin: auto;
 }
 
-.container-card{
-    border: 1px solid black;
+.container-profile {
+    display: flex;
+    justify-content: space-around;
+    /* border: 1px solid black; */
+    padding: 0%;
+    /* height: 10%; */
+}
+.container-card {
+    /* border: 1px solid black; */
     padding: 1%;
     width: 50%;
-    align-items: center;
+    /* align-items: center; */
+    padding-left: 15%;
 }
-.podium  {
+
+.podium {
     display: flex;
     align-items: flex-end;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     padding: 1%;
+    padding-left: 10%;
     width: 50%;
 }
+
 .podium__item {
     width: 200px;
 }
+
 .podium__rank {
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 35px;
     color: #fff;
+    border-radius: 20px 20px 2px 2px;
 }
+
 .podium_tag {
     text-align: center;
     padding: 0 .5rem;
+    font-size: 35px;
+    font-weight: bold;
 }
+
 .podium__number {
     width: 27px;
     height: 75px;
 }
+
 .podium .first {
     min-height: 300px;
-    background: rgb(255, 172, 37);
-    background:
+    /* background: rgb(255, 172, 37); */
+    background: #ff0044;
+    opacity: 1;
+    /* background:
         linear-gradient(333deg,
             rgba(255, 172, 37, 1) 0%,
             rgba(254, 207, 51, 1) 13%,
             rgba(254, 224, 51, 1) 53%,
-            rgba(255, 172, 37, 1) 100%);
+            rgba(255, 172, 37, 1) 100%); */
 }
+
 .podium .second {
-    min-height: 200px;
-    background: blue;
+    min-height: 235px;
+    background: #8099f6;
+    opacity: 0.7;
 }
+
 .podium .third {
-    min-height: 100px;
-    background: green;
-}
-</style>
+    min-height: 175px;
+    background: #25b2c3;
+    opacity: 0.7;
+}</style>
