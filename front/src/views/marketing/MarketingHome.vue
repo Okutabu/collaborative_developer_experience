@@ -19,7 +19,7 @@ const { stats, InteractionDates } = storeToRefs(adminStore);
 <template>
 
     <div class="container-title">
-        <h1>Le Futur De La Collboration <br><span>Sur CDE</span></h1>   
+        <h1>Le Futur De La Collaboration <br><span>Sur CDE</span></h1>   
     </div>
     <div class="container-stats">
         <div class="stats-container">

@@ -119,7 +119,7 @@ function triSurname() {
                         
                         </tr>
                 </template>
-                <tr v-if="users.loading">
+                <!-- <tr v-if="users.loading">
                     <td colspan="4" class="text-center">
                         <span class="spinner-border spinner-border-lg align-center"></span>
                     </td>
@@ -128,7 +128,7 @@ function triSurname() {
                     <td colspan="4">
                         <div class="text-danger">Error loading users: {{users.error}}</div>
                     </td>
-                </tr>            
+                </tr>             -->
             </tbody>
         </table>
     </div>
