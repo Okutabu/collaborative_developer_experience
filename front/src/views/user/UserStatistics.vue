@@ -22,7 +22,7 @@ var orientation = 'horizontal';
     <div class="container-stat">
 
         <div class="title">
-            <h2>Statistiques utilisateur</h2>
+            <h2>Vos statistiques</h2>
         </div>
 
         <div class="container-heatmap">
@@ -96,16 +96,28 @@ var orientation = 'horizontal';
 body {
     font-family: sans-serif;
 }
+
+.container-stat{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
 .title {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 50px;
+    margin: 50px;
+}
+
+.table-body{
+    margin:2%;
+    border: 1px solid black;
 }
 .table-body td {
     width: 25%;
     padding: 5%;
+    text-align: left;
 }
 .table-body tr {
     height: 50px;
@@ -116,7 +128,7 @@ body {
 
 .container-tags{
     display: flex;
-    justify-content: space-around;
+    /* justify-content: space-around; */
 }
 
 .container-tags td{
@@ -143,7 +155,7 @@ body {
     border: 1px solid black;
     padding: 1%;
     width: 35%;
-    /* align-items: center; */
+    align-items: center;
 }
 .podium  {
     display: flex;
