@@ -42,14 +42,13 @@ async function onDelete() {
 async function onSubmit(values) {
     const usersStore = useUsersStore();
     const alertStore = useAlertStore();
-    const authStore = useAuthStore();
     try {
 
         // Ajouter une propriété
         values.idSTOW = userJson.user.idSTOW; 
         
         await usersStore.updateUser(values);
-        //await router.push('/overview');
+        // await router.push('/overview');
 
     } catch (error) { 
         alertStore.error(error);
@@ -61,7 +60,7 @@ console.log(userJson)
 
 
 <template>
-    <h2>Préférences de l'utilisateur</h2>
+    <h2 class="titre">Préférences de l'utilisateur</h2>
     <div class="card container-form">
         <h4 class="card-header">Mes informations</h4>
         <div class="card-body">
@@ -109,8 +108,8 @@ console.log(userJson)
                     </div> -->
 
                     <div class="disclaimer" v-if="isOpen">
-                        <h2>Oh! You want to unsubscribe?</h2>
-                        <p>We hate goodbyes, But if you change yor mind, we'll always be here with something fun to share.</p>
+                        <h2>Voulez vous vraiment supprimer votre compte ?</h2>
+                        <p>Toutes vos données seront supprimées et vous n'aurez plus accès à vos recommandations</p>
                         <!-- <a href="" class="btn1" id="unsubscribe">Unsubscribe</a> -->
                         <button class="btn1" id="unsubscribe" @click="onDelete" :disabled="isSubmitting">
                         <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
@@ -179,7 +178,7 @@ console.log(userJson)
 }
 
 .btn1 {
-  background-color: #F2DD68;
+  background-color: #ed4040;
   text-decoration: none;
   padding: 15px 20px;
   font-weight: bold;
@@ -213,7 +212,7 @@ p {
 
 .emoji {
   box-sizing: border-box;
-  margin: 30px auto 20px;
+  margin : 30px 35%;
   width: 120px;
   height: 120px;
 }
@@ -224,7 +223,7 @@ p {
   position: relative;
   margin: 0 15px 30px 0;
   border-radius: 50%;
-  background: #F2DD68;
+  background: #ed4040;
   transition: 1s;
 }
 
@@ -248,7 +247,7 @@ p {
   left: 18px;
   z-index: 1;
   border-radius: 50%;
-  background: #995710;
+  background: #361d03;
 }
 
 .eye:last-child {
@@ -288,7 +287,7 @@ p {
   margin: 0 auto;
   border-radius: 0 0 70px 70px;
   overflow: hidden;
-  background: #995710;
+  background: #361d03;
   transition: 0.3s;
 }
 
@@ -317,7 +316,7 @@ p {
   margin: 0 auto;
   border-radius: 0 0 70px 70px;
   overflow: hidden;
-  background: #995710;
+  background: #361d03;
 }
 
 #unsubscribe:hover ~ .emoji .mouth{
@@ -376,5 +375,15 @@ p {
     background-color: #27afea;
 }
 
+
+.container-form{
+    margin: auto;
+}
+
+.titre{
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
 
 </style>
