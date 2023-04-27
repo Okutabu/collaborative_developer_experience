@@ -196,7 +196,7 @@ function triSurname() {
 }
 
 .container-user-enlisted {
-    width: 40vw;
+    width: auto;
 
 }
 
