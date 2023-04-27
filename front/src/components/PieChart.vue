@@ -3,14 +3,14 @@
 import VueApexCharts from "vue3-apexcharts";
 
 const props = defineProps({
-  nbUser : Number,
-  activeUser : Number
+  tag : String,
+  nbInteractions : Number
 })
 
 
 var series = []
-series.push(props.activeUser)
-series.push(props.nbUser)
+series.push(props.nbInteractions)
+series.push(props.tag)
 
 
 var ratios = {
@@ -20,7 +20,7 @@ var ratios = {
         width: 380,
         type: 'pie',
       },
-      labels: ['Team A', 'Team B'],
+      labels: ['1', '2', '3', '4', '5'],
       responsive: [{
         breakpoint: 480,
         options: {
