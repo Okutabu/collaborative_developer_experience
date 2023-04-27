@@ -11,7 +11,7 @@ export const useUsersStore = defineStore({
     state: () => ({
         users: {},
         user: {},
-        stats: {}
+        stats: JSON.parse(localStorage.getItem('stats')) || {},
     }),
     actions: {
         async register(user) {
@@ -100,6 +100,7 @@ export const useUsersStore = defineStore({
                 res = JSON.parse(JSON.stringify(res));
                 this.stats = res;
                 console.log("test");
+                localStorage.setItem('stats', JSON.stringify(res));
             }
             catch (error) {
                 const alertStore = useAlertStore();
