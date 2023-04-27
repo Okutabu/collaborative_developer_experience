@@ -10,7 +10,8 @@ import PieChart from '../../components/PieChart.vue';
 var endDate = new Date('2023-03-27');
 var orientation= 'horizontal';
 
-
+const adminStore = useAdminStore();
+const { stats, InteractionDates } = storeToRefs(adminStore);
 
 
 </script>
