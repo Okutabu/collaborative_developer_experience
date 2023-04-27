@@ -54,6 +54,7 @@ export const useUsersStore = defineStore({
                 var res = await fetchWrapper.post(`${baseUrl}/update`, values);
                 console.log(res)
                 res = JSON.parse(JSON.stringify(res));
+                localStorage.setItem('user', JSON.stringify(res));
                 this.user=res;
             }
             catch (error) {
