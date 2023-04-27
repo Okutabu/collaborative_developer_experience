@@ -97,10 +97,12 @@ body {
     font-weight: 100;
 }
 
+
 .container-stat {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    animation: reveal 1s cubic-bezier(.17,.67,.4,1.02); 
     /* align-items: center; */
 }
 
