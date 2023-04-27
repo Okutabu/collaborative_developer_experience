@@ -1,13 +1,13 @@
 <script setup>
 import { Form, Field, useSubmitForm } from 'vee-validate';
 import * as Yup from 'yup';
-import { useUsersStore, useAlertStore } from '@/stores';
+import { useUsersStore, useAlertStore, useAuthStore } from '@/stores';
 import { router } from '@/router';
 
 
 
 const temp = localStorage.getItem('user')
-const userJson = JSON.parse(temp)
+const userJson = JSON.parse(temp);
 
 
 const schema = Yup.object().shape({
@@ -39,18 +39,20 @@ async function onDelete() {
 async function onSubmit(values) {
     const usersStore = useUsersStore();
     const alertStore = useAlertStore();
+    const authStore = useAuthStore();
     try {
 
         // Ajouter une propriété
         values.idSTOW = userJson.user.idSTOW; 
         
         await usersStore.updateUser(values);
-        localStorage.removeItem('user');
+
     } catch (error) { 
         alertStore.error(error);
     }
 }
 
+console.log(userJson)
 </script>
 
 
@@ -145,5 +147,6 @@ async function onSubmit(values) {
     transition: all 0.3s ease-in-out;
     background-color: #27afea;
 }
+
 
 </style>

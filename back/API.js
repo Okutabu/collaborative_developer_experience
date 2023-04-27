@@ -99,7 +99,7 @@ app.post('/user/register', (req, res) => {
     
     db.createUser(user);
 
-    res.send({
+    res.status(200).send({
         answer: `${name} was created successfuly`,
         user: user,
         error: 0
@@ -110,11 +110,11 @@ app.post('/user/register', (req, res) => {
 app.post('/user/update', (req, res) => {
 
     console.log(req.body)
-    const idSTOW = req.body.idSTOW;
+    const ancienidSTOW = req.body.idSTOW;
     const name = req.body.name;
     const surname = req.body.surname;
     const mail = req.body.mail;
-    const newIDSTOW  = parseInt(req.body.newIDSTOW);
+    const idSTOW  = parseInt(req.body.newIDSTOW);
 
     
     if(!name){
@@ -129,12 +129,12 @@ app.post('/user/update', (req, res) => {
         name,
         surname,
         mail,
-        newIDSTOW
+        idSTOW
     }
 
-    db.modifyUser(idSTOW, name, surname, mail, newIDSTOW);
+    db.modifyUser(ancienidSTOW, name, surname, mail, idSTOW);
 
-    res.send({
+    res.status(200).send({
         answer: `${name} was modify successfuly`,
         user: user,
         error: 0
