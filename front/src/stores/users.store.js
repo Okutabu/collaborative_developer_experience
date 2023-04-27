@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 
 import { fetchWrapper } from '@/helpers';
 import { useAuthStore } from '@/stores';
+import { useAlertStore } from '@/stores';
 
 const baseUrl = `${import.meta.env.VITE_API_URL}/user`;
 
@@ -32,6 +33,34 @@ export const useUsersStore = defineStore({
                 this.user = await fetchWrapper.get(`${baseUrl}/${id}`);
             } catch (error) {
                 this.user = { error };
+            }
+        },
+        async deleteUser(id) {
+            try {
+                const authStore = useAuthStore();
+                var res = await fetchWrapper.get(`${baseUrl}/${id}/delete`);
+                res = JSON.parse(JSON.stringify(res));
+                if (id === authStore.user.id) {
+                    authStore.logout();
+                }
+            }
+            catch (error) {
+                const alertStore = useAlertStore();
+                alertStore.error(error);                
+            }
+        },
+        async updateUser(values) {
+            try {
+                const authStore = useAuthStore();
+                var res = await fetchWrapper.post(`${baseUrl}/update`, values);
+                console.log(res)
+                res = JSON.parse(JSON.stringify(res));
+                localStorage.setItem('user', JSON.stringify(res));
+                this.user=res;
+            }
+            catch (error) {
+                const alertStore = useAlertStore();
+                alertStore.error(error);                
             }
         },
         async update(id, params) {

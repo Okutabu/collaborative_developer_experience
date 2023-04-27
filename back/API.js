@@ -31,6 +31,13 @@ app.use(express.json());
 app.use(cors());
 
 
+
+// ----- [ USER ] -----
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 app.post('/user/login', (req, res) => {
 
     const id = parseInt(req.body.idSTOW);
@@ -46,12 +53,14 @@ app.post('/user/login', (req, res) => {
             });
         }
         else{
+            //console.log(data[0]._fields[0]);
             const user = {
                 name: data[0]._fields[0].properties.name,
                 surname: data[0]._fields[0].properties.surname,
                 avatar: data[0]._fields[0].properties.avatar,
                 pseudo: data[0]._fields[0].properties.pseudo,
-                idSTOW: id
+                idSTOW: id,
+                mail: data[0]._fields[0].properties.mail
             }
         
             res.status(200).send({
@@ -90,8 +99,43 @@ app.post('/user/register', (req, res) => {
     
     db.createUser(user);
 
-    res.send({
+    res.status(200).send({
         answer: `${name} was created successfuly`,
+        user: user,
+        error: 0
+    });
+});
+
+
+app.post('/user/update', (req, res) => {
+
+    //console.log(req.body)
+    const ancienidSTOW = req.body.idSTOW;
+    const name = req.body.name;
+    const surname = req.body.surname;
+    const mail = req.body.mail;
+    const idSTOW  = parseInt(req.body.newIDSTOW);
+
+    
+    if(!name){
+        res.status(404).send({
+            answer: "User not created",
+            user: null,
+            error: -1
+        });
+    }
+    
+    user ={
+        name,
+        surname,
+        mail,
+        idSTOW
+    }
+
+    db.modifyUser(ancienidSTOW, name, surname, mail, idSTOW);
+
+    res.status(200).send({
+        answer: `${name} was modify successfuly`,
         user: user,
         error: 0
     });
@@ -381,6 +425,39 @@ app.get('/user/:idSTOW/statistics', (req, res) => {
         }
     })();
 });
+
+app.get('/user/:idSTOW/delete', (req, res) => {
+
+    const idSTOW = parseInt(req.params.idSTOW);
+
+    (async() => {
+        const data = await db.deleteUser(idSTOW);
+        
+        //teste si le tableau est vide
+        if(data == 0){
+            res.status(200).send({
+                answer: "User not deleted",
+                users: [],
+                error: -1
+            });
+        }
+        else{
+           
+            res.status(200).send({
+                answer: "User deleted",
+                users: [],
+                error: 0
+            });
+        }
+    })();
+});
+
+
+
+// ----- [ ADMIN ] -----
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 app.get('/admin/statistics', (req, res) => {

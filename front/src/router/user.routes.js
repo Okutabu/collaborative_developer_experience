@@ -1,4 +1,4 @@
-import { Layout, Home, Statistics, Help } from '@/views/user';
+import { Layout, Home, Statistics, UserPreferences } from '@/views/user';
 
 
 export default {
@@ -8,6 +8,7 @@ export default {
         { path: '/overview', component: Home },
         { path: '/statistics', component: Statistics },
         { path: '/help/:id', component: Help },
+        { path: '/preferences', component: UserPreferences},
         { path: '', redirect: '/overview'}
     ]
 };
