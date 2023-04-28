@@ -17,7 +17,7 @@
           <!-- affiche cette div si le props bouton a la valeur "help" -->
           <div v-if="bouton === 'contact'">
             <a :href="profilSTOW" target="_blank">
-              <button class="btn btn-primary" @click="helpPage"> <i class="fa fa-paper-plane-o"></i>&nbsp; profil STOW </button>
+              <button class="btn btn-primary" @click="helpPage"> <i class="fa fa-user"></i>&nbsp; profil STOW </button>
             </a>
           </div>
           <div v-else>
