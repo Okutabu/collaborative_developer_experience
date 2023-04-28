@@ -149,7 +149,7 @@ var interval = setInterval(function() {
                 </div>
 
                 <div v-if="showComponent2" key="component2" class="container-list-collaboration" >
-                <table class="table ">
+                <table class="table " id="handshakes">
                     <thead class="table-head">
                         <tr>
                             <th class="table-head-impair">Vous avez collaboré sur StackOverflow avec ces developpeurs PTC ! </th>
@@ -191,7 +191,7 @@ var interval = setInterval(function() {
             </div>
             
     </div>
-    <!-- <UserRightCard :surname="user.user.surname"  :name="user.user.name" :avatar="user.user.avatar" :techno="user.user.techno" :lastInteract="user.user.lastInteract"/> -->
+    <UserRightCard :id="user.user.idSTOW" :surname="user.user.surname"  :name="user.user.name" :avatar="user.user.avatar"/>
 </div>
     
 

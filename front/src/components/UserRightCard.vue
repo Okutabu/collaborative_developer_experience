@@ -1,16 +1,26 @@
 <script setup>
 import { defineProps } from 'vue';  
-import UserCard from './UserCard.vue'
+import { useUsersStore } from '@/stores';
+import { storeToRefs } from 'pinia';
+
+import UserCard3  from './UserCard3.vue';
 
 defineProps({
     name: String,
     surname: String,
     avatar: String,
-    nom: String,
-    techno: Object,
-    reco: Object,
-    lastInteract: Object
 })
+
+const temp = localStorage.getItem('user')
+const userJson = JSON.parse(temp)
+
+const userStore = useUsersStore();
+const { stats } = storeToRefs(userStore);
+userStore.getUserStats(userJson.user.idSTOW);
+
+function onLinkClick() {
+  document.getElementById('handshakes').scrollIntoView();
+}
 
 </script>
 
@@ -19,9 +29,11 @@ defineProps({
     <v-card>
       <v-layout>
         <v-navigation-drawer
+        width="450"
         expand-on-hover
-          rail
+        rail
           location="right"
+          style="background-color: #1e293b;"
         >
           <template v-slot:prepend>
             <v-list-item
@@ -29,11 +41,22 @@ defineProps({
               :prepend-avatar=avatar
               :title="`${name} ${surname}`"
               subtitle="Logged in"
+              style="color: white;"
             ></v-list-item>
           </template>
   
           <v-divider></v-divider>
-          <UserCard :name="name" :avatar="avatar" :lastInteract="lastInteract" :reco="reco" :techno="techno"/>
+
+          <UserCard3 :nom=userJson.user.pseudo :techno=stats.profile[1] :avatar=userJson.user.avatar
+                    :reco=stats.topTags[0].tag :lastInteract=stats.profile[0].lastInteraction />
+
+          <v-card-actions class="justify-center">
+            <v-btn>
+                <span class="material-icons" v-on:click="onLinkClick" style="color: white;" icon="mdi-vuetify">
+            groups
+            </span>
+            </v-btn>
+            </v-card-actions>
           
         </v-navigation-drawer>
         <v-main style="height: 250px"></v-main>
@@ -42,7 +65,6 @@ defineProps({
 </template>
 
 <style scoped>
-
 
 
 </style>
