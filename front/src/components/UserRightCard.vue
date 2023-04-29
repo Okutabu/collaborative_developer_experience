@@ -2,6 +2,7 @@
 import { defineProps } from 'vue';  
 import { useUsersStore } from '@/stores';
 import { storeToRefs } from 'pinia';
+import { ref } from 'vue';
 
 import UserCard3  from './UserCard3.vue';
 
@@ -22,6 +23,18 @@ function onLinkClick() {
   document.getElementById('handshakes').scrollIntoView();
 }
 
+const showcomponent = ref(false);
+
+var interval = setInterval(function() {
+  console.log("checking if user is logged in");
+    if (localStorage.getItem('user') != null) {
+      console.log(showcomponent);
+      showcomponent.value = true;
+      clearInterval(interval);
+    }
+}, 1000);
+
+
 </script>
 
 <template>
@@ -33,7 +46,7 @@ function onLinkClick() {
         expand-on-hover
         rail
           location="right"
-          style="background-color: #1e293b;"
+          style="background-color: white;"
         >
           <template v-slot:prepend>
             <v-list-item
@@ -41,15 +54,15 @@ function onLinkClick() {
               :prepend-avatar=avatar
               :title="`${name} ${surname}`"
               subtitle="Logged in"
-              style="color: white;"
             ></v-list-item>
           </template>
   
           <v-divider></v-divider>
 
-          <UserCard3 :nom=userJson.user.pseudo :techno=stats.profile[1] :avatar=userJson.user.avatar
-                    :reco=stats.topTags[0].tag :lastInteract=stats.profile[0].lastInteraction />
-
+          <!-- <div v-if="showcomponent"> -->
+            <UserCard3 :nom=userJson.user.pseudo :techno=stats.profile[1] :avatar=userJson.user.avatar
+                    :reco=stats.topTags[0].tag :lastInteract=stats.profile[0].lastInteraction v-if="showcomponent" />
+          <!-- </div> -->
           <v-card-actions class="justify-center">
             <v-btn>
                 <span class="material-icons" v-on:click="onLinkClick" style="color: white;" icon="mdi-vuetify">

@@ -211,6 +211,7 @@ var interval = setInterval(function() {
     /* background-color: #B6C9FF; */
     padding-top: 50px;
     width: 100%;
+    padding-right: 4%;
  
 
 }
