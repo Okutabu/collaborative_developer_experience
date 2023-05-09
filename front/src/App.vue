@@ -11,7 +11,6 @@ const authStore = useAuthStore();
 
 const handleScroll = () => {
   const scrollY = window.pageYOffset;
-  const windowHeight = window.innerHeight;
   const prevScrollY = handleScroll.prevScrollY || 0;
   
   // si on scroll vers le bas et que la hauteur est inferieur à 1000px
