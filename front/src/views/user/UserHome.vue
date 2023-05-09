@@ -18,7 +18,7 @@ const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
 
 const usersStore = useRecoStore();
-const { usersReco, usersRecoSimilarity, usersRecoQuestion, collaborated } = storeToRefs(usersStore);
+const { usersReco, usersRecoSimilarity, usersRecoQuestion, collaborated, globalQuestions } = storeToRefs(usersStore);
 
 const dataForLoadingUsersRecos = {
                                 
@@ -87,7 +87,7 @@ var interval = setInterval(function() {
 <template>
     <div class="super-container-home">
 
-    
+    {{ globalQuestions }}
     <div class="container-home">
         <div v-if="showHeader">
             <Transition name="slide-fade">
