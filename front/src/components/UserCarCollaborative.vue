@@ -13,7 +13,7 @@
             <p><i class="fa fa-graduation-cap "></i> {{ user.users[0][1][0].techno }}</p>
         </div>
         <div class="user-actions">
-          <div v-if="bouton === 'contact'">
+          <div v-if="bouton == 'contact'">
             <a :href="profilSTOW" target="_blank">
               <button class="btn btn-primary"><img src="../assets/stow-icon.png" alt="stow-icon" class="stow-icon" style="width: 30px;"> </button>
             </a>

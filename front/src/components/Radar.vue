@@ -3,7 +3,7 @@
 import VueApexCharts from "vue3-apexcharts";
 
 const props = defineProps({
-  technoratio: Array
+  technoratio: Object
 })
 
 var series = []
