@@ -90,9 +90,6 @@ const ToggleMenu = () => {
 
 <style scoped>
 
-.container-nav {
-}
-
 aside {
   display: -webkit-box;
   display: -ms-flexbox;

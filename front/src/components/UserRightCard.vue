@@ -68,7 +68,6 @@ var interval = setInterval(function() {
             </v-card-actions>
           
         </v-navigation-drawer>
-        <v-main style="height: 250px"></v-main>
       </v-layout>
     </v-card>
 </template>

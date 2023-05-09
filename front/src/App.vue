@@ -9,30 +9,6 @@ import { useAuthStore } from '@/stores';
 
 const authStore = useAuthStore();
 
-const handleScroll = () => {
-  const scrollY = window.pageYOffset;
-  const prevScrollY = handleScroll.prevScrollY || 0;
-  
-  // si on scroll vers le bas et que la hauteur est inferieur à 1000px
-  if (scrollY > prevScrollY) {
-    document.querySelector('.container-nav').style.transform = 'translateY(' + scrollY + 'px)';
-  } else {
-    document.querySelector('.container-nav').style.transform = 'translateY(' + scrollY + 'px)';
-
-  }
-  
-  handleScroll.prevScrollY = scrollY;
-}
-
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener('scroll', handleScroll);
-});
-
-
 const moveContainerHome = (is_expanded) => {
     if(is_expanded){
         document.querySelector('.container-home').style.transform = 'translateX(250px)';
@@ -72,6 +48,12 @@ const moveContainerHome = (is_expanded) => {
 .container-workspace{
     width: 100%;
     background-color: white;
+    margin-left: calc(2rem + 32px);
+}
+
+.container-nav{
+    position: fixed;
+    z-index: 100;
 }
 
 
