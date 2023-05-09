@@ -1,7 +1,6 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { useUsersStore } from '@/stores';
-import { ref } from "vue";
 import CalendarHeatmap from '@/components/CalendarHeatmap.vue';
 import UserCard2 from '../../components/UserCard2.vue';
 
@@ -26,7 +25,6 @@ var orientation = 'horizontal';
         </div>
 
         <div class="container-heatmap">
-            <!-- <h3 class="text">Mon taux de contribution</h3> -->
             <calendar-heatmap class="heatmap-component" :values="stats.dates" :end-date="endDate"
                 :style="{ 'max-width': orientation === 'vertical' ? '145px' : '800px' }" :round="2"
                 :vertical="orientation === 'vertical'" />
@@ -103,7 +101,6 @@ body {
     flex-direction: column;
     justify-content: center;
     animation: reveal 1s cubic-bezier(.17,.67,.4,1.02); 
-    /* align-items: center; */
 }
 
 .title {
@@ -112,21 +109,13 @@ body {
     align-items: center;
     justify-content: center;
     margin: 3%;
-    /* font-weight: bold; */
-    /* font-size: 500; */
 }
 
 .table-body {
     margin: 4%;
-    /* padding: 15%; */
     width: 92%;
-    /* border: 1px solid black; */
     background: #f1f5f9;
-    /* top: 50%;
-	left: 50%; */
-    /* height: 20%; */
     border-collapse: collapse;
-    /* overflow: hidden; */
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
 
@@ -136,12 +125,9 @@ body {
     width: 50%;
     padding: 1%;
     padding-left: 3%;
-    /* height: 10%; */
     text-align: center;
-    /* background-color: rgba(255, 255, 255, 0.2); */
     color: #000;
     font-weight: bold;
-    /* font-size: large; */
 }
 
 .table-body tr {
@@ -153,8 +139,6 @@ body {
 
 .container-tags {
     display: flex;
-
-    /* justify-content: space-around; */
 }
 
 .container-tags td {
@@ -164,7 +148,6 @@ body {
 }
 
 .container-heatmap {
-    /* border: 1px solid black; */
     padding: 2%;
 }
 
@@ -175,22 +158,17 @@ body {
 .container-profile {
     display: flex;
     justify-content: space-around;
-    /* border: 1px solid black; */
     padding: 0%;
-    /* height: 10%; */
 }
 .container-card {
-    /* border: 1px solid black; */
     padding: 1%;
     width: 50%;
-    /* align-items: center; */
     padding-left: 15%;
 }
 
 .podium {
     display: flex;
     align-items: flex-end;
-    /* border: 1px solid black; */
     padding: 1%;
     padding-left: 7%;
     width: 50%;
@@ -224,15 +202,8 @@ body {
 
 .podium .first {
     min-height: 250px;
-    /* background: rgb(255, 172, 37); */
     background: #577aff;
     opacity: 1;
-    /* background:
-        linear-gradient(333deg,
-            rgba(255, 172, 37, 1) 0%,
-            rgba(254, 207, 51, 1) 13%,
-            rgba(254, 224, 51, 1) 53%,
-            rgba(255, 172, 37, 1) 100%); */
 }
 
 .podium .second {

@@ -1,6 +1,5 @@
 <script setup>
 
-import { result } from "lodash";
 import VueApexCharts from "vue3-apexcharts";
 
 const props = defineProps({
@@ -320,7 +319,6 @@ const objWithName = associateNamesWithObj(objName, obj);
 console.log(objWithName);
 
 var series = objWithName;
-//series.push(objWithName.map(item=>name: result.map(item=>item.obj), data: obj})
 
 console.log(series);
 

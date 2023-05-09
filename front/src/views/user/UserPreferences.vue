@@ -92,31 +92,17 @@ console.log(userJson)
                         Modifier les informations
                     </button>
 
-                    <!-- <button class="btn btn-primary btn-delete" @click="onDelete" :disabled="isSubmitting">
-                        <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
-                        Supprimer le compte
-                    </button> -->
                     <button @click="isOpen = true" class="btn btn-primary btn-delete" :disabled="isSubmitting">
                         Supprimer mon compte
                     </button>
-                    
-                    <!-- <div class="modal" v-if="isOpen">
-                        <div>
-                            <h2>Oh my lord !</h2>
-                            <p>Attention à vous la team</p>
-                            <button @click="isOpen = false">Close</button>
-                        </div>
-                    </div> -->
 
                     <div class="disclaimer" v-if="isOpen">
                         <h2>Voulez vous vraiment supprimer votre compte ?</h2>
                         <p>Toutes vos données seront supprimées et vous n'aurez plus accès à vos recommandations</p>
-                        <!-- <a href="" class="btn1" id="unsubscribe">Unsubscribe</a> -->
                         <button class="btn1" id="unsubscribe" @click="onDelete" :disabled="isSubmitting">
                         <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
                             Supprimer le compte
                         </button>
-                        <!-- <a href="" class="btn1 btn-light" id="cancel">Cancel</a> -->
                         <button @click="isOpen = false" class="btn1 btn-light" id="cancel">
                              Cancel
                         </button>
@@ -156,25 +142,13 @@ console.log(userJson)
     position: absolute;
     top:0;
     left:0;
-    /* style video */
-    /* background-color: rgba(0, 0, 0, 0.4); */
     width: 100%;
     height: 100%;
-    /* display: flex;
-    justify-content: center; */
     align-items: center;
-
-    /* style internet*/
-    /* max-width: 500px; */
-    /* height: auto; */
-    /* margin: 50px auto;
-    padding: 60px;
-    padding-bottom: 20px; */
     background-color: #fff;
     box-sizing: border-box;
     text-align: center;
     border-radius: 10px;
-    /* box-shadow: 0px 15px 15px -12px rgba(0,0,0,0.09); */
 }
 
 .disclaimer > div {

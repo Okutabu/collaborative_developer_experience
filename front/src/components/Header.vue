@@ -1,5 +1,4 @@
 <script>
-import { defineProps } from 'vue'
 
 export default {
     name: 'Header',
@@ -29,19 +28,6 @@ export default {
                     <h2> Bienvenue sur votre espace de collaboration</h2>
                     <p class="text-muted">Nous utilisons des algorithmes de recommendations pour vous recommander des profils les plus pertinant possible</p>
             </div>
-                <!-- <div class="container-action-bar">
-                    <div class="container-bell">
-                        <b-icon icon="bell-fill" class="border rounded p-2"></b-icon>
-                    </div>
-                    <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ surname }} {{ name }}</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Mes favoris</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                    </div>
-                </div> -->
         </div>
 
 </template>

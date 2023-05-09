@@ -59,10 +59,8 @@ var interval = setInterval(function() {
   
           <v-divider></v-divider>
 
-          <!-- <div v-if="showcomponent"> -->
             <UserCard3 :nom=userJson.user.pseudo :techno=stats.profile[1] :avatar=userJson.user.avatar
                     :reco=stats.topTags[0].tag :lastInteract=stats.profile[0].lastInteraction v-if="showcomponent" />
-          <!-- </div> -->
           <v-card-actions class="justify-center">
             <v-btn>
                 <span class="material-icons" v-on:click="onLinkClick" style="color: white;" icon="mdi-vuetify">
