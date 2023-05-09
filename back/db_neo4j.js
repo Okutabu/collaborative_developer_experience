@@ -600,6 +600,23 @@ async function getNbUserWhoHelpedMe(idSTOW) {
   }
 }
 
+async function lastQuestions() {
+  const session = driver.session({ database: "neo4j" });
+
+  try {
+    const requete = `MATCH (u:User)-[i]-(q:Question)
+                      RETURN q ORDER BY i.dateInteraction
+                      DESC LIMIT 5`;
+
+    const readResult = await session.executeRead((tx) => tx.run(requete));
+    return readResult.records;
+  } catch (error) {
+    console.error(`Something went wrong [ lastQuestions ]:  ${error}`);
+  } finally {
+    await session.close();
+  }
+}
+
 // (async()=>{
 
 //     try {
@@ -664,4 +681,5 @@ module.exports = {
   getQuestionsUserToHelp,
   deleteUser,
   modifyUser,
+  lastQuestions,
 };

@@ -1,8 +1,8 @@
 //const { parseStringStyle } = require('@vue/shared');
-const express = require('express');
-const cors = require('cors');
-const db = require('./db_neo4j');
-const similarity = require('./similarityQueries');
+const express = require("express");
+const cors = require("cors");
+const db = require("./db_neo4j");
+const similarity = require("./similarityQueries");
 const app = express();
 const PORT = 8080;
 
@@ -16,13 +16,7 @@ server.on('listening', function(){
 });
 */
 
-
-app.listen(
-    PORT,
-    () => console.log(`Server alive on http://localhost:${PORT}`)
-);
-
-
+app.listen(PORT, () => console.log(`Server alive on http://localhost:${PORT}`));
 
 //midleware json, tout est transformé en json après la reception
 app.use(express.json());
@@ -30,659 +24,620 @@ app.use(express.json());
 //permet de gérer les requêtes provenant de serveurs externes
 app.use(cors());
 
-
-
 // ----- [ USER ] -----
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+app.post("/user/login", (req, res) => {
+  const id = parseInt(req.body.idSTOW);
 
-app.post('/user/login', (req, res) => {
+  (async () => {
+    const data = await db.connectUser(id);
+    //teste si le tableau est vide
+    if (!data.length) {
+      res.send({
+        answer: "User not found",
+        user: [],
+        error: -1,
+      });
+    } else {
+      //console.log(data[0]._fields[0]);
+      const user = {
+        name: data[0]._fields[0].properties.name,
+        surname: data[0]._fields[0].properties.surname,
+        avatar: data[0]._fields[0].properties.avatar,
+        pseudo: data[0]._fields[0].properties.pseudo,
+        idSTOW: id,
+        mail: data[0]._fields[0].properties.mail,
+      };
 
-    const id = parseInt(req.body.idSTOW);
-
-    (async() => {
-        const data = await db.connectUser(id);
-        //teste si le tableau est vide
-        if(!data.length){
-            res.send({
-                answer: "User not found",
-                user : [],
-                error: -1
-            });
-        }
-        else{
-            //console.log(data[0]._fields[0]);
-            const user = {
-                name: data[0]._fields[0].properties.name,
-                surname: data[0]._fields[0].properties.surname,
-                avatar: data[0]._fields[0].properties.avatar,
-                pseudo: data[0]._fields[0].properties.pseudo,
-                idSTOW: id,
-                mail: data[0]._fields[0].properties.mail
-            }
-        
-            res.status(200).send({
-                answer: "User found",
-                user : user,
-                error: 0
-            });
-        }
-    })();
+      res.status(200).send({
+        answer: "User found",
+        user: user,
+        error: 0,
+      });
+    }
+  })();
 });
 
 //post User
-app.post('/user/register', (req, res) => {
+app.post("/user/register", (req, res) => {
+  //const { id } = req.params;
+  const name = req.body.name;
+  const surname = req.body.surname;
+  const mail = req.body.mail;
+  const idSTOW = req.body.idSTOW;
 
-    //const { id } = req.params;
-    const name = req.body.name;
-    const surname = req.body.surname;
-    const mail = req.body.mail;
-    const idSTOW  = req.body.idSTOW;
-
-    
-    if(!name){
-        res.send({
-            answer: "User not created",
-            user: null,
-            error: -1
-        });
-    }
-
-    user = {
-        name,
-        surname,
-        mail,
-        idSTOW
-    }
-    
-    db.createUser(user);
-
-    res.status(200).send({
-        answer: `${name} was created successfuly`,
-        user: user,
-        error: 0
+  if (!name) {
+    res.send({
+      answer: "User not created",
+      user: null,
+      error: -1,
     });
+  }
+
+  user = {
+    name,
+    surname,
+    mail,
+    idSTOW,
+  };
+
+  db.createUser(user);
+
+  res.status(200).send({
+    answer: `${name} was created successfuly`,
+    user: user,
+    error: 0,
+  });
 });
 
+app.post("/user/update", (req, res) => {
+  //console.log(req.body)
+  const ancienidSTOW = req.body.idSTOW;
+  const name = req.body.name;
+  const surname = req.body.surname;
+  const mail = req.body.mail;
+  const idSTOW = parseInt(req.body.newIDSTOW);
 
-app.post('/user/update', (req, res) => {
-
-    //console.log(req.body)
-    const ancienidSTOW = req.body.idSTOW;
-    const name = req.body.name;
-    const surname = req.body.surname;
-    const mail = req.body.mail;
-    const idSTOW  = parseInt(req.body.newIDSTOW);
-
-    
-    if(!name){
-        res.status(404).send({
-            answer: "User not created",
-            user: null,
-            error: -1
-        });
-    }
-    
-    user ={
-        name,
-        surname,
-        mail,
-        idSTOW
-    }
-
-    db.modifyUser(ancienidSTOW, name, surname, mail, idSTOW);
-
+  if (!name && !surname && !mail && !idSTOW) {
     res.status(200).send({
-        answer: `${name} was modify successfuly`,
-        user: user,
-        error: 0
+      answer: "User not created",
+      user: null,
+      error: -1,
     });
+  }
+
+  user = {
+    name,
+    surname,
+    mail,
+    idSTOW,
+  };
+
+  db.modifyUser(ancienidSTOW, name, surname, mail, idSTOW);
+
+  res.status(200).send({
+    answer: `${name} was modify successfuly`,
+    user: user,
+    error: 0,
+  });
 });
 
+app.get("/user/:idSTOW/similarity/cosinus", (req, res) => {
+  // faire les tests avec 6309
 
-app.get('/user/:idSTOW/similarity/cosinus', (req, res) => {
-    // faire les tests avec 6309
+  const idSTOW = parseInt(req.params.idSTOW);
 
-    const idSTOW = parseInt(req.params.idSTOW);
+  (async () => {
+    const data = await similarity.cosinus_similarity(idSTOW);
+    //console.log(data)
+    //teste si le tableau est vide
+    if (!data.length) {
+      res.send({
+        answer: "Users not found",
+        users: [],
+        error: -1,
+      });
+    } else {
+      //on récupère tous les ids
+      var ids = [];
+      data.map((elem) => {
+        ids.push(elem._fields[0].properties.idSTOW);
+      });
 
-    (async() => {
-        const data = await similarity.cosinus_similarity(idSTOW);
-        //console.log(data)
-        //teste si le tableau est vide
-        if(!data.length){
-            res.send({
-                answer: "Users not found",
-                users: [],
-                error: -1
-            });
-        }
-        else{
+      //on récupère les profile de tous les
+      var users = [];
 
-            //on récupère tous les ids
-            var ids = [];
-            data.map( (elem) => {
-               ids.push(elem._fields[0].properties.idSTOW);
-            });
+      for (const id of ids) {
+        var infos = await db.getUserProficiency(id);
+        users.push(infos);
+      }
 
-
-            //on récupère les profile de tous les 
-            var users = [];
-
-            for(const id of ids){
-                var infos = await db.getUserProficiency(id);
-                users.push(infos);
-            }
-            
-            res.status(200).send({
-                answer: "Users found",
-                users: users,
-                error: 0
-            });
-        }
-    })();
+      res.status(200).send({
+        answer: "Users found",
+        users: users,
+        error: 0,
+      });
+    }
+  })();
 });
 
-app.get('/user/:idSTOW/similarity/answer', (req, res) => {
+app.get("/user/:idSTOW/similarity/answer", (req, res) => {
+  // faire les tests avec 6309
 
-    // faire les tests avec 6309
+  const idSTOW = parseInt(req.params.idSTOW);
 
-    const idSTOW = parseInt(req.params.idSTOW);
+  (async () => {
+    const data = await similarity.answer_similarity(idSTOW);
 
-    (async() => {
-        const data = await similarity.answer_similarity(idSTOW);
+    //teste si le tableau est vide
+    if (!data.length) {
+      res.send({
+        answer: "Users not found",
+        users: [],
+        error: -1,
+      });
+    } else {
+      //on récupère tous les ids
+      var ids = [];
+      data.map((elem) => {
+        ids.push(elem._fields[1].properties.idSTOW);
+      });
 
-        //teste si le tableau est vide
-        if(!data.length){
-            res.send({
-                answer: "Users not found",
-                users: [],
-                error: -1
-            });
-        }
-        else{
+      //on récupère les profile de tous les
+      var users = [];
 
-            //on récupère tous les ids
-            var ids = [];
-            data.map( (elem) => {
-               	ids.push(elem._fields[1].properties.idSTOW);
-            });
+      for (const id of ids) {
+        var infos = await db.getUserProficiency(id);
+        users.push(infos);
+      }
 
-
-            //on récupère les profile de tous les 
-            var users = [];
-
-            for(const id of ids){
-                var infos = await db.getUserProficiency(id);
-                users.push(infos);
-            }
-            
-            res.status(200).send({
-                answer: "Users found",
-                users: users,
-                error: 0
-            });
-        }
-    })();
+      res.status(200).send({
+        answer: "Users found",
+        users: users,
+        error: 0,
+      });
+    }
+  })();
 });
 
+app.get("/user/:idSTOW/similarity/question", (req, res) => {
+  // faire les tests avec 5987
 
-app.get('/user/:idSTOW/similarity/question', (req, res) => {
+  const idSTOW = parseInt(req.params.idSTOW);
 
-    // faire les tests avec 5987
+  (async () => {
+    const data = await similarity.question_similarity(idSTOW);
 
-    const idSTOW = parseInt(req.params.idSTOW);
+    //teste si le tableau est vide
+    if (!data.length) {
+      res.send({
+        answer: "Not found",
+        users: [],
+        error: -1,
+      });
+    } else {
+      //on récupère tous les ids
+      var ids = [];
+      data.map((elem) => {
+        ids.push(elem._fields[1].properties.idSTOW);
+      });
 
-    (async() => {
-        const data = await similarity.question_similarity(idSTOW);
-        
-        //teste si le tableau est vide
-        if(!data.length){
-            res.send({
-                answer: "Not found",
-                users: [],
-                error: -1
-            });
-        }
-        else{
-            
-            //on récupère tous les ids
-            var ids = [];
-            data.map( (elem) => {
-               ids.push(elem._fields[1].properties.idSTOW);
-            });
+      //on récupère les profile de tous les
+      var users = [];
 
+      for (const id of ids) {
+        var infos = await db.getUserProficiency(id);
+        users.push(infos);
+      }
 
-            //on récupère les profile de tous les 
-            var users = [];
-
-            for(const id of ids){
-                var infos = await db.getUserProficiency(id);
-                users.push(infos);
-            }
-            
-            res.status(200).send({
-                answer: "Users found",
-                users: users,
-                error: 0
-            });
-        }
-    })();
+      res.status(200).send({
+        answer: "Users found",
+        users: users,
+        error: 0,
+      });
+    }
+  })();
 });
 
+app.get("/user/:idSTOW/proficiency", (req, res) => {
+  // tester avec n'importe qui (6309 / 633440 / 714501)
 
-app.get('/user/:idSTOW/proficiency', (req, res) => {
+  const idSTOW = parseInt(req.params.idSTOW);
 
-    // tester avec n'importe qui (6309 / 633440 / 714501)
+  (async () => {
+    if (!idSTOW) {
+      res.send({
+        answer: "Profile not found",
+        userProfile: null,
+        error: -1,
+      });
+    } else {
+      const users = await db.getUserProficiency(idSTOW);
 
-    const idSTOW = parseInt(req.params.idSTOW);
-
-    (async() => {
-
-        if(!idSTOW){
-            res.send({
-                answer: "Profile not found",
-                userProfile: null,
-                error: -1
-            });
-        }
-        else{
-
-            const users = await db.getUserProficiency(idSTOW);
-            
-            res.status(200).send({
-                answer: "Profile found",
-                userProfile : users,
-                error: 0
-            });
-        }
-    })();
+      res.status(200).send({
+        answer: "Profile found",
+        userProfile: users,
+        error: 0,
+      });
+    }
+  })();
 });
 
+app.get("/user/:idSTOW/interactedWithMe", (req, res) => {
+  const idSTOW = parseInt(req.params.idSTOW);
 
-app.get('/user/:idSTOW/interactedWithMe', (req, res) => {
+  (async () => {
+    const users = await db.getUsersWhoInteractedWithMe(idSTOW);
+    //console.log(users);
+    if (!users.length) {
+      res.send({
+        answer: "Nobody has interacted with this user",
+        users: [],
+        error: -1,
+      });
+    } else {
+      let allUsers = [];
 
-	const idSTOW = parseInt(req.params.idSTOW);
+      for (var user of users) {
+        //console.log(user);
+        allUsers.push(user._fields[0]);
+      }
 
-	(async() => {
-		const users = await db.getUsersWhoInteractedWithMe(idSTOW);
-		//console.log(users);
-		if(!users.length){
-			res.send({
-                answer: "Nobody has interacted with this user",
-                users: [],
-                error: -1
-            });
-		}
-		else{
-
-			let allUsers = [];
-
-			for(var user of users){
-				//console.log(user);
-				allUsers.push(user._fields[0]);
-			}
-
-			res.status(200).send({
-                answer: "Users found",
-                users: allUsers,
-                error: 0
-            });
-		}
-	})();
+      res.status(200).send({
+        answer: "Users found",
+        users: allUsers,
+        error: 0,
+      });
+    }
+  })();
 });
 
-app.get('/user/:idSTOW/help', (req, res) => {
+app.get("/user/:idSTOW/help", (req, res) => {
+  const idSTOW = parseInt(req.params.idSTOW);
 
-    const idSTOW = parseInt(req.params.idSTOW);
+  (async () => {
+    const profile = await db.getUserProficiency(idSTOW);
+    const reqQuestions = await db.getQuestionsUserToHelp(idSTOW);
 
-    (async() => {
+    if (!profile.length || !reqQuestions.length) {
+      res.send({
+        answer: "No user to help",
+        user: [],
+        error: -1,
+      });
+    } else {
+      //console.log(profile[0].idSTOW);
+      let questions = [];
 
-        const profile = await db.getUserProficiency(idSTOW);
-        const reqQuestions = await db.getQuestionsUserToHelp(idSTOW);
+      for (let question of reqQuestions) {
+        let objQ = {
+          title: question._fields[0].properties.title,
+          tags: question._fields[1],
+          urlQuestion: `https://stackoverflow.com/questions/${question._fields[0].properties.idQuestion.low}`,
+        };
 
-        if(!profile.length || !reqQuestions.length){
-            res.send({
-                answer: "No user to help",
-                user: [],
-                error: -1
-            });
-        }
-        else{
-            //console.log(profile[0].idSTOW);
-            let questions = [];
+        questions.push(objQ);
+      }
+      let urlProfile = `https://stackoverflow.com/users/${profile[0].idSTOW}`;
 
-            for(let question of reqQuestions){
-                let objQ = {
-                    title : question._fields[0].properties.title,
-                    tags : question._fields[1],
-                    urlQuestion : `https://stackoverflow.com/questions/${question._fields[0].properties.idQuestion.low}`
-                }
-
-                questions.push(objQ);
-            }
-            let urlProfile = `https://stackoverflow.com/users/${profile[0].idSTOW}`;
-    
-            res.status(200).send({
-                answer: "User to help",
-                user: {
-                        urlProfile,
-                        profile,
-                        questions
-                      },
-                error: 0
-            });
-        }
-    })();
+      res.status(200).send({
+        answer: "User to help",
+        user: {
+          urlProfile,
+          profile,
+          questions,
+        },
+        error: 0,
+      });
+    }
+  })();
 });
 
-    
-app.get('/user/:idSTOW/statistics', (req, res) => {
+app.get("/user/:idSTOW/statistics", (req, res) => {
+  const idSTOW = parseInt(req.params.idSTOW);
 
-    const idSTOW = parseInt(req.params.idSTOW);
+  (async () => {
+    const dates = await db.getInteractionDatesUser(idSTOW);
+    const topTags = await db.getUserTopTags(idSTOW);
+    const profile = await db.getUserProficiency(idSTOW);
+    const nbQuestions = await db.getNbQuestionsUser(idSTOW);
+    const nbAnswers = await db.getNbAnswersUser(idSTOW);
+    const nbHelped = await db.getNbUserIHelped(idSTOW);
+    const nbHelper = await db.getNbUserWhoHelpedMe(idSTOW);
 
-    (async() => {
-        
-        const dates = await db.getInteractionDatesUser(idSTOW);
-		const topTags = await db.getUserTopTags(idSTOW);
-        const profile = await db.getUserProficiency(idSTOW);
-		const nbQuestions = await db.getNbQuestionsUser(idSTOW);
-		const nbAnswers = await db.getNbAnswersUser(idSTOW);
-        const nbHelped = await db.getNbUserIHelped(idSTOW);
-        const nbHelper = await db.getNbUserWhoHelpedMe(idSTOW);
+    //teste si le tableau est vide
+    if (
+      !dates.length ||
+      !topTags.length ||
+      !profile.length ||
+      !nbQuestions ||
+      !nbAnswers ||
+      !nbHelped ||
+      !nbHelper
+    ) {
+      res.send({
+        answer: "Statistics not found",
+        users: [],
+        error: -1,
+      });
+    } else {
+      const tabTopTags = [];
+      for (let i = 0; i < 5; i++) {
+        var infos = {
+          tag: topTags[i]._fields[1].properties.title,
+          nbInteractions: topTags[i]._fields[2].low,
+        };
+        tabTopTags.push(infos);
+      }
 
-        //teste si le tableau est vide
-        if(!dates.length || !topTags.length || !profile.length || !nbQuestions || !nbAnswers || !nbHelped || !nbHelper){
-            res.send({
-                answer: "Statistics not found",
-                users: [],
-                error: -1
-            });
-        }
-        else{
-
-			const tabTopTags = [];
-			for(let i = 0; i < 5; i++) {
-				var infos = {
-					tag: topTags[i]._fields[1].properties.title,
-					nbInteractions: topTags[i]._fields[2].low
-				};
-                tabTopTags.push(infos);
-            }
-			
-            res.status(200).send({
-				answer: "Statistics found",
-				topTags: tabTopTags,
-				nbAnswers: nbAnswers[0]._fields[0].low,
-				nbQuestions: nbQuestions[0]._fields[0].low,
-                nbHelper: nbHelper[0]._fields[0].low,
-                nbHelped: nbHelped[0]._fields[0].low,
-				dates: formateDateForHeatMap(dates),
-                profile,
-				error: 0
-			});
-        }
-    })();
+      res.status(200).send({
+        answer: "Statistics found",
+        topTags: tabTopTags,
+        nbAnswers: nbAnswers[0]._fields[0].low,
+        nbQuestions: nbQuestions[0]._fields[0].low,
+        nbHelper: nbHelper[0]._fields[0].low,
+        nbHelped: nbHelped[0]._fields[0].low,
+        dates: formateDateForHeatMap(dates),
+        profile,
+        error: 0,
+      });
+    }
+  })();
 });
 
-app.get('/user/:idSTOW/delete', (req, res) => {
+app.get("/user/:idSTOW/delete", (req, res) => {
+  const idSTOW = parseInt(req.params.idSTOW);
 
-    const idSTOW = parseInt(req.params.idSTOW);
+  (async () => {
+    const data = await db.deleteUser(idSTOW);
 
-    (async() => {
-        const data = await db.deleteUser(idSTOW);
-        
-        //teste si le tableau est vide
-        if(data == 0){
-            res.status(200).send({
-                answer: "User not deleted",
-                users: [],
-                error: -1
-            });
-        }
-        else{
-           
-            res.status(200).send({
-                answer: "User deleted",
-                users: [],
-                error: 0
-            });
-        }
-    })();
+    //teste si le tableau est vide
+    if (data == 0) {
+      res.status(200).send({
+        answer: "User not deleted",
+        users: [],
+        error: -1,
+      });
+    } else {
+      res.status(200).send({
+        answer: "User deleted",
+        users: [],
+        error: 0,
+      });
+    }
+  })();
 });
 
+app.get("/user/lastQuestions", (req, res) => {
+  (async () => {
+    const data = await db.lastQuestions();
 
+    //teste si le tableau est vide
+    if (data == 0) {
+      res.status(200).send({
+        answer: "Questions not found",
+        questions: [],
+        error: -1,
+      });
+    } else {
+      res.status(200).send({
+        answer: "Questions found",
+        questions: data,
+        error: 0,
+      });
+    }
+  })();
+});
 
 // ----- [ ADMIN ] -----
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+app.get("/admin/statistics", (req, res) => {
+  (async () => {
+    const nbTags = await db.getNbTags();
+    const nbUsers = await db.getNbUsers();
+    const topTags = await db.getTopTags();
+    const activeUsers = await db.getNbOfActiveUsers();
+    const nbQuestions = await db.getNbQuestions();
+    const nbAnswers = await db.getNbAnswers();
+    const nbInteractions = await db.getNbInteractions();
+    const tagsWithMostUsers = await db.getTagsWithMostUsers();
+    const nbNodes = await db.getNbNodes();
+    const nbRelations = await db.getNbRelations();
 
-app.get('/admin/statistics', (req, res) => {
+    //teste si le tableau est vide
+    if (
+      !nbTags.length ||
+      !nbUsers.length ||
+      !topTags ||
+      !activeUsers ||
+      !nbQuestions ||
+      !nbAnswers ||
+      !nbInteractions ||
+      !tagsWithMostUsers ||
+      !nbNodes ||
+      !nbRelations
+    ) {
+      res.send({
+        answer: "Statistics not found",
+        users: [],
+        error: -1,
+      });
+    } else {
+      const tabTopTags = [];
 
-    (async() => {
-        const nbTags = await db.getNbTags();
-        const nbUsers = await db.getNbUsers();
-		const topTags = await db.getTopTags();
-		const activeUsers = await db.getNbOfActiveUsers();
-		const nbQuestions = await db.getNbQuestions();
-		const nbAnswers = await db.getNbAnswers();
-		const nbInteractions = await db.getNbInteractions();
-		const tagsWithMostUsers = await db.getTagsWithMostUsers();
-        const nbNodes = await db.getNbNodes();
-        const nbRelations = await db.getNbRelations();
+      for (let i = 0; i < 5; i++) {
+        var infos = {
+          tag: topTags[i]._fields[0].properties.title,
+          nbInteractions: topTags[i]._fields[1].low,
+        };
+        tabTopTags.push(infos);
+      }
 
-        //teste si le tableau est vide
-        if(!nbTags.length || !nbUsers.length || !topTags || !activeUsers || !nbQuestions || !nbAnswers || !nbInteractions || !tagsWithMostUsers || !nbNodes || !nbRelations){
-            res.send({
-                answer: "Statistics not found",
-                users: [],
-                error: -1
-            });
-        }
-        else{
+      const tabTagsUsers = [];
+      for (let i = 0; i < 5; i++) {
+        var infos = {
+          tag: tagsWithMostUsers[i]._fields[0].properties.title,
+          nbInteractions: tagsWithMostUsers[i]._fields[1].low,
+        };
+        tabTagsUsers.push(infos);
+      }
 
-			const tabTopTags = [];
-
-			for(let i = 0; i < 5; i++) {
-				var infos = {
-					tag: topTags[i]._fields[0].properties.title,
-					nbInteractions: topTags[i]._fields[1].low
-				};
-                tabTopTags.push(infos);
-            }
-		
-			const tabTagsUsers = [];
-			for(let i = 0; i < 5; i++){
-				var infos = {
-					tag: tagsWithMostUsers[i]._fields[0].properties.title,
-					nbInteractions: tagsWithMostUsers[i]._fields[1].low
-				};
-                tabTagsUsers.push(infos);
-
-			}
-			
-            res.status(200).send({
-				answer: "Statistics found",
-				nbTags: nbTags[0]._fields[0].low,
-				nbUsers: nbUsers[0]._fields[0].low,
-				topTags: tabTopTags,
-				nbInteractions: nbInteractions[0]._fields[0].low,
-				nbAnswers: nbAnswers[0]._fields[0].low,
-				nbInteractions: nbInteractions[0]._fields[0].low,
-				nbActiveUsers: activeUsers[0]._fields[0].low,
-				tagsWithMostUsers: tabTagsUsers,
-                nbNodes: nbNodes[0]._fields[0].low,
-                nbRelations: nbRelations[0]._fields[0].low,
-				error: 0
-			});
-        }
-    })();
+      res.status(200).send({
+        answer: "Statistics found",
+        nbTags: nbTags[0]._fields[0].low,
+        nbUsers: nbUsers[0]._fields[0].low,
+        topTags: tabTopTags,
+        nbInteractions: nbInteractions[0]._fields[0].low,
+        nbAnswers: nbAnswers[0]._fields[0].low,
+        nbInteractions: nbInteractions[0]._fields[0].low,
+        nbActiveUsers: activeUsers[0]._fields[0].low,
+        tagsWithMostUsers: tabTagsUsers,
+        nbNodes: nbNodes[0]._fields[0].low,
+        nbRelations: nbRelations[0]._fields[0].low,
+        error: 0,
+      });
+    }
+  })();
 });
 
+app.get("/admin/users", (req, res) => {
+  (async () => {
+    const neo4jUsers = await db.getUsers();
 
-app.get('/admin/users', (req, res) => {
+    if (!neo4jUsers.length) {
+      res.send({
+        answer: "Users not found",
+        users: [],
+        error: -1,
+      });
+    } else {
+      let allUsers = [];
+      //oui[2]._fields[0].properties
+      for (let i = 0; i < neo4jUsers.length; i++) {
+        allUsers.push(neo4jUsers[i]._fields[0].properties);
+      }
 
-	(async() => {
-
-		const neo4jUsers = await db.getUsers();
-
-		if(!neo4jUsers.length){
-
-			res.send({
-                answer: "Users not found",
-                users: [],
-                error: -1
-            });
-		}
-		else{
-
-			let allUsers = [];
-			//oui[2]._fields[0].properties
-			for(let i = 0; i < neo4jUsers.length; i++){
-
-				allUsers.push(neo4jUsers[i]._fields[0].properties);
-			}
-
-			res.status(200).send({
-                answer: "Users found",
-                users: allUsers,
-                error: 0
-            });
-		}
-	})();
+      res.status(200).send({
+        answer: "Users found",
+        users: allUsers,
+        error: 0,
+      });
+    }
+  })();
 });
 
-
-function errorParameters(attribute){
-	
-	return !(attribute == "surname" || attribute == "name" || attribute == "lastInteraction");
+function errorParameters(attribute) {
+  return !(
+    attribute == "surname" ||
+    attribute == "name" ||
+    attribute == "lastInteraction"
+  );
 }
 
 /*
  attributs valide : "name", "surname"
  renvoyé dans l'ordre croissant
  */
-app.get('/admin/users/sort/:attribute', (req, res) => {
+app.get("/admin/users/sort/:attribute", (req, res) => {
+  var attribute = req.params.attribute;
 
-	var attribute = req.params.attribute;
+  //traitement des erreurs
+  if (errorParameters(attribute)) {
+    res.send({
+      answer: "Users not found, there may be is an error in the parameters",
+      users: [],
+      error: -1,
+    });
+  } else {
+    (async () => {
+      var neo4jUsers;
 
-	//traitement des erreurs
-	if(errorParameters(attribute)){
+      if (attribute == "name") {
+        neo4jUsers = await db.getUsersSorted(attribute);
+      }
+      if (attribute == "surname") {
+        neo4jUsers = await db.getUsersSorted(attribute);
+      }
+      if (attribute == "lastInteraction") {
+        neo4jUsers = await db.getUsersSortedByLastInteraction();
+      }
 
-		res.send({
-			answer: "Users not found, there may be is an error in the parameters",
-			users: [],
-			error: -1
-		});
+      if (!neo4jUsers.length) {
+        res.send({
+          answer: "Users not found",
+          users: [],
+          error: -1,
+        });
+      } else {
+        let allUsers = [];
 
-	}else{
+        for (let i = 0; i < neo4jUsers.length; i++) {
+          allUsers.push(neo4jUsers[i]._fields[0].properties);
+        }
 
-		(async() => {
-
-			var neo4jUsers;
-
-			if(attribute == "name"){
-				neo4jUsers = await db.getUsersSorted(attribute);
-			}
-			if(attribute == "surname"){
-				neo4jUsers = await db.getUsersSorted(attribute);
-			}
-			if(attribute == "lastInteraction"){
-				neo4jUsers = await db.getUsersSortedByLastInteraction();
-			}
-
-
-			if(!neo4jUsers.length){
-
-				res.send({
-					answer: "Users not found",
-					users: [],
-					error: -1
-				});
-			}
-			else{
-	
-				let allUsers = [];
-
-				for(let i = 0; i < neo4jUsers.length; i++){
-
-					allUsers.push(neo4jUsers[i]._fields[0].properties);
-				}
-
-				res.status(200).send({
-					answer: "Users found",
-					users: allUsers,
-					error: 0
-				});
-			}
-		})();
-	}
+        res.status(200).send({
+          answer: "Users found",
+          users: allUsers,
+          error: 0,
+        });
+      }
+    })();
+  }
 });
-
 
 // renvoit la liste dans l'ordre décroissant
-app.get('/admin/users/sort/:attribute/desc', (req, res) => {
+app.get("/admin/users/sort/:attribute/desc", (req, res) => {
+  var attribute = req.params.attribute;
 
-	var attribute = req.params.attribute;
+  //traitement des erreurs
+  if (errorParameters(attribute)) {
+    res.send({
+      answer: "Users not found, there may be is an error in the parameters",
+      users: [],
+      error: -1,
+    });
+  } else {
+    (async () => {
+      var temp;
+      var neo4jUsers;
 
-	//traitement des erreurs
-	if(errorParameters(attribute)){
+      if (attribute == "name") {
+        neo4jUsers = await db.getUsersSorted(attribute, "DESC");
+      }
+      if (attribute == "surname") {
+        neo4jUsers = await db.getUsersSorted(attribute, "DESC");
+      }
+      if (attribute == "lastInteraction") {
+        neo4jUsers = await db.getUsersSortedByLastInteraction("DESC");
+      }
 
-		res.send({
-			answer: "Users not found, there may be is an error in the parameters",
-			users: [],
-			error: -1
-		});
+      if (!neo4jUsers.length) {
+        res.send({
+          answer: "Users not found",
+          users: [],
+          error: -1,
+        });
+      } else {
+        let allUsers = [];
 
-	}else{
-
-		(async() => {
-
-			var temp;
-			var neo4jUsers;
-		
-			if(attribute == "name"){
-				neo4jUsers = await db.getUsersSorted(attribute, "DESC");
-			}
-			if(attribute == "surname"){
-				neo4jUsers = await db.getUsersSorted(attribute, "DESC");
-			}
-			if(attribute == "lastInteraction"){
-				neo4jUsers = await db.getUsersSortedByLastInteraction("DESC");
-			}
-
-
-			if(!neo4jUsers.length){
-
-				res.send({
-					answer: "Users not found",
-					users: [],
-					error: -1
-				});
-			}
-			else{
-	
-				let allUsers = [];
-	
-				for(let i = 0; i < neo4jUsers.length; i++){
-
-					allUsers.push(neo4jUsers[i]._fields[0].properties);
-	
-				}
-				res.status(200).send({
-					answer: "Users found",
-					users: allUsers,
-					error: 0
-				});
-			}
-		})();
-	}
+        for (let i = 0; i < neo4jUsers.length; i++) {
+          allUsers.push(neo4jUsers[i]._fields[0].properties);
+        }
+        res.status(200).send({
+          answer: "Users found",
+          users: allUsers,
+          error: 0,
+        });
+      }
+    })();
+  }
 });
-
-
 
 /*
 requêtes GET pour la page admin :
@@ -702,81 +657,72 @@ requêtes GET pour le filtrage :
 */
 
 // pour convertir un timeStamp en String
-function convertTimeStampToString(intDate){
-
-    let date = new Date(intDate * 1000).toLocaleDateString().split('/');
-    let string = `${date[2]}-${date[1]}-${date[0]}T23:00:00Z`;
-    return string;
+function convertTimeStampToString(intDate) {
+  let date = new Date(intDate * 1000).toLocaleDateString().split("/");
+  let string = `${date[2]}-${date[1]}-${date[0]}T23:00:00Z`;
+  return string;
 }
 
-
 // pour convertir les dates au bon format pour le HEATMAP
-function formateDateForHeatMap(neo4jDates){
+function formateDateForHeatMap(neo4jDates) {
+  let dates = [];
 
-    let dates = [];
+  //créé la liste de dates en string
+  for (let res of neo4jDates) {
+    let date = convertTimeStampToString(res._fields[0].low);
+    dates.push(date);
+  }
 
-    //créé la liste de dates en string
-    for(let res of neo4jDates){
-        let date = convertTimeStampToString(res._fields[0].low);
-        dates.push(date);	
+  let dicoDate = {};
+  // créé un grand dictionnaire avec les dates et leurs nb d'intéraction
+  for (let date of dates) {
+    if (dicoDate[date] == undefined) {
+      dicoDate[date] = 0;
     }
+  }
 
-    let dicoDate = {};
-    // créé un grand dictionnaire avec les dates et leurs nb d'intéraction
-    for(let date of dates){
+  // on incrémente le nb d'intéractions par date
+  for (let date of dates) {
+    dicoDate[date]++;
+  }
 
-        if(dicoDate[date] == undefined){
-            dicoDate[date] = 0;
-        }
-    }
+  let allDates = [];
 
-    // on incrémente le nb d'intéractions par date
-    for(let date of dates){
-        dicoDate[date]++;
-    }
+  // transformation en liste d'objet pour le composant vue
+  for (let elem in dicoDate) {
+    let objet = {
+      date: elem,
+      count: dicoDate[elem],
+    };
+    allDates.push(objet);
+  }
 
-    let allDates = [];
-
-    // transformation en liste d'objet pour le composant vue
-    for(let elem in dicoDate){
-        let objet = {
-            date : elem,
-            count : dicoDate[elem]
-        }
-        allDates.push(objet);
-    }
-
-    return allDates;
+  return allDates;
 }
 
 // renvoit la liste des dates d'interactions ainsi que leur nombres
 // peut être revoir le collecteur, il y a des dates d'intéraction inférieur à la date données en paramètre
-app.get('/admin/InteractionDates', (req, res) => {
+app.get("/admin/InteractionDates", (req, res) => {
+  (async () => {
+    const dateQuestions = await db.getInteractionDates("ANSWERED");
+    const dateAnswers = await db.getInteractionDates("ASKED");
 
-	(async() => {
+    if (!dateQuestions.length && !dateAnswers.length) {
+      res.send({
+        answer: "Dates not found",
+        dates: [],
+        error: -1,
+      });
+    } else {
+      let allRequests = dateQuestions.concat(dateAnswers);
 
-		const dateQuestions = await db.getInteractionDates("ANSWERED");
-		const dateAnswers = await db.getInteractionDates("ASKED");
+      let allDates = formateDateForHeatMap(allRequests);
 
-		if(!dateQuestions.length && !dateAnswers.length ){
-
-			res.send({
-                answer: "Dates not found",
-                dates: [],
-                error: -1
-            });
-		}
-		else{
-
-			let allRequests = dateQuestions.concat(dateAnswers);
-			
-            let allDates = formateDateForHeatMap(allRequests);
-
-			res.status(200).send({
-                answer: "Dates found",
-                dates: allDates,
-                error: 0
-            });
-		}
-	})();
+      res.status(200).send({
+        answer: "Dates found",
+        dates: allDates,
+        error: 0,
+      });
+    }
+  })();
 });
