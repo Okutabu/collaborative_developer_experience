@@ -21,7 +21,6 @@ export const useToHelpStore = defineStore({
                 this.userToHelp = res;
                 // update pinia state
                 if (this.userToHelp.error == -1){
-                    console.log("L'utilisateur n'existe pas")
                     router.push(this.returnUrl || '/');
 
                 }

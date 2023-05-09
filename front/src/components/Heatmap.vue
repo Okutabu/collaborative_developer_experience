@@ -316,11 +316,8 @@ function associateNamesWithObj(objName, obj) {
 }
 
 const objWithName = associateNamesWithObj(objName, obj);
-console.log(objWithName);
 
 var series = objWithName;
-
-console.log(series);
 
 var chartOptions = {
     

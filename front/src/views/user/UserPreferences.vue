@@ -1,12 +1,11 @@
 <script setup>
-import { Form, Field, useSubmitForm } from 'vee-validate';
+import { Form, Field } from 'vee-validate';
 import * as Yup from 'yup';
-import { useUsersStore, useAlertStore, useAuthStore } from '@/stores';
+import { useUsersStore, useAlertStore } from '@/stores';
 import { router } from '@/router';
 
 import { ref } from 'vue';
 const isOpen = ref(false);
-console.log(isOpen);
 
 
 const temp = localStorage.getItem('user')
@@ -55,7 +54,6 @@ async function onSubmit(values) {
     }
 }
 
-console.log(userJson)
 </script>
 
 

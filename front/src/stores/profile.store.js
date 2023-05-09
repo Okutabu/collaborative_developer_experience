@@ -21,7 +21,6 @@ export const useProfileStore = defineStore({
                 this.userCardValue = res;
                 // update pinia state
                 if (this.userCardValue.error == -1){
-                    console.log("L'utilisateur n'existe pas")
                     router.push(this.returnUrl || '/');
 
                 }

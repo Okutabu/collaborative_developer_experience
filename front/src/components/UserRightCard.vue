@@ -26,9 +26,7 @@ function onLinkClick() {
 const showcomponent = ref(false);
 
 var interval = setInterval(function() {
-  console.log("checking if user is logged in");
     if (localStorage.getItem('user') != null) {
-      console.log(showcomponent);
       showcomponent.value = true;
       clearInterval(interval);
     }

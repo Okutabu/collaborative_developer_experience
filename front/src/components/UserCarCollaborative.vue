@@ -15,12 +15,12 @@
         <div class="user-actions">
           <div v-if="bouton === 'contact'">
             <a :href="profilSTOW" target="_blank">
-              <button class="btn btn-primary" @click="helpPage"><img src="../assets/stow-icon.png" alt="stow-icon" class="stow-icon" style="width: 30px;"> </button>
+              <button class="btn btn-primary"><img src="../assets/stow-icon.png" alt="stow-icon" class="stow-icon" style="width: 30px;"> </button>
             </a>
           </div>
           <div v-else>
             <RouterLink :to="{path :`/help/${user.users[0][0].idSTOW}`}">
-              <button class="btn btn-primary" @click="helpPage"> <i class="fa fa-handshake-o"></i>&nbsp; {{ bouton }} </button>
+              <button class="btn btn-primary"> <i class="fa fa-handshake-o"></i>&nbsp; {{ bouton }} </button>
             </RouterLink>
           </div>
           <button class="btn btn-secondary">Details</button>
@@ -32,7 +32,6 @@
   <script>
 
   import { RouterLink } from 'vue-router' 
-  import { ref } from 'vue'
 
   export default {
     name: 'UserCard',
@@ -48,12 +47,6 @@
       bouton: {
         type: String,
         required: true
-      }
-    },
-    methods: {
-      helpPage() {
-        console.log("renvoie vers la page d'aide")
-        console.log(this.user.users[0][0].idSTOW)
       }
     },
     computed: {

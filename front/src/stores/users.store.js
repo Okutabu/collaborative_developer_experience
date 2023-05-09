@@ -53,7 +53,6 @@ export const useUsersStore = defineStore({
             try {
                 const authStore = useAuthStore();
                 var res = await fetchWrapper.post(`${baseUrl}/update`, values);
-                console.log(res)
                 res = JSON.parse(JSON.stringify(res));
                 localStorage.setItem('user', JSON.stringify(res));
                 this.user=res;
@@ -94,12 +93,9 @@ export const useUsersStore = defineStore({
         },
         async getUserStats(id) {
             try {
-                console.log("test1");
                 var res = await fetchWrapper.get(`${baseUrl}/${id}/statistics`);
-                console.log("allo")
                 res = JSON.parse(JSON.stringify(res));
                 this.stats = res;
-                console.log("test");
                 localStorage.setItem('stats', JSON.stringify(res));
             }
             catch (error) {
