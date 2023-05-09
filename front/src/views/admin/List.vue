@@ -2,14 +2,10 @@
 import { storeToRefs } from 'pinia';
 import { useAdminStore } from '@/stores';
 import { ref } from "vue";
-import Header from '../../components/Header.vue';
-import Mannequin from '@/components/Mannequin.vue';
 
 let input = ref("");
 let inputName = ref("");
 let inputTag = ref("");
-const espace = ref('d\'administration')
-const message = ref('Trouver le profil qu\'il vous faut parmis les utilisateurs CDE !')
 
 const adminStore = useAdminStore();
 const { users } = storeToRefs(adminStore);
@@ -24,15 +20,6 @@ function triLastActivity() {
         adminStore.getUsersbyLastActivityDesc();
     } else {
         adminStore.getUsersbyLastActivity();
-    }
-    adminStore.desc = !adminStore.desc;
-}
-
-function triName() {
-    if (adminStore.desc) {
-        adminStore.getUsersbyNameDesc();
-    } else {
-        adminStore.getUsersbyName();
     }
     adminStore.desc = !adminStore.desc;
 }
@@ -95,8 +82,6 @@ function triSurname() {
                                         </div>
                                     </div>
                                 </td>
-                                <!-- <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && userClic.userProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())">{{ user.surname }}</td> -->
-
                             </div>
                             
                             
@@ -119,16 +104,6 @@ function triSurname() {
                         
                         </tr>
                 </template>
-                <!-- <tr v-if="users.loading">
-                    <td colspan="4" class="text-center">
-                        <span class="spinner-border spinner-border-lg align-center"></span>
-                    </td>
-                </tr>
-                <tr v-if="users.error">
-                    <td colspan="4">
-                        <div class="text-danger">Error loading users: {{users.error}}</div>
-                    </td>
-                </tr>             -->
             </tbody>
         </table>
     </div>

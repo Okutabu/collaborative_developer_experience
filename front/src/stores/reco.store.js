@@ -21,7 +21,6 @@ export const useRecoStore = defineStore({
         async getRecommandedUsers() {
             try {
                 var user = this.user;
-                console.log(user.user.idSTOW);
                 const usersReco = await fetchWrapper.get(`${baseUrl}/${user.user.idSTOW}/similarity/answer`);
                 const usersRecoSimilarity = await fetchWrapper.get(`${baseUrl}/${user.user.idSTOW}/similarity/cosinus`);
                 const usersRecoQuestion = await fetchWrapper.get(`${baseUrl}/${user.user.idSTOW}/similarity/question`);

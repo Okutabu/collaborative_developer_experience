@@ -3,7 +3,6 @@ import { RouterLink, RouterView } from 'vue-router';
 import { onMounted, onBeforeUnmount } from 'vue';
 
 import Nav from "./components/Nav.vue";
-import Nav2 from "./components/Nav2.vue";
 import Alert from "./components/Alert.vue";
 
 import { useAuthStore } from '@/stores';    
@@ -12,15 +11,12 @@ const authStore = useAuthStore();
 
 const handleScroll = () => {
   const scrollY = window.pageYOffset;
-  const windowHeight = window.innerHeight;
   const prevScrollY = handleScroll.prevScrollY || 0;
   
   // si on scroll vers le bas et que la hauteur est inferieur à 1000px
   if (scrollY > prevScrollY) {
-    // console.log(`Scroll down: ${scrollY + windowHeight}px`);  
     document.querySelector('.container-nav').style.transform = 'translateY(' + scrollY + 'px)';
   } else {
-    // console.log(`Scroll up: ${scrollY}px`);
     document.querySelector('.container-nav').style.transform = 'translateY(' + scrollY + 'px)';
 
   }
@@ -37,25 +33,7 @@ onBeforeUnmount(() => {
 });
 
 
-
-
-// Set the threshold value (in pixels)
-// const threshold = 2000;
-
-// // Attach a scroll event listener to the window
-// window.addEventListener('scroll', function() {
-//   // Get the current scroll position
-//   const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-
-//   // Check if the scroll position is beyond the threshold
-//   if (scrollPosition > threshold) {
-//     // If it is, prevent further scrolling
-//     window.scrollTo(0, threshold);
-//   }
-// });
-
 const moveContainerHome = (is_expanded) => {
-  console.log("event received");
     if(is_expanded){
         document.querySelector('.container-home').style.transform = 'translateX(250px)';
     }else{
@@ -68,7 +46,7 @@ const moveContainerHome = (is_expanded) => {
 <template>
     <div class="app-container" :class="authStore.user && 'bg-light'">
         <div class="container-nav">
-            <Nav @toggle-menu="moveContainerHome"/>
+            <Nav @toggle-menu="moveContainerHome" />
         </div>
         
         <Alert />
@@ -90,12 +68,6 @@ const moveContainerHome = (is_expanded) => {
     color-adjust: exact !important;                 /* Firefox 48 – 96 */
     print-color-adjust: exact !important;           /* Firefox 97+, Safari 15.4+ */
 }
-
-
-body{
-    /* overflow: hidden; */
-}
-
 
 .container-workspace{
     width: 100%;

@@ -20,7 +20,6 @@ export const useAuthStore = defineStore({
             
                 // update pinia state
                 if (user.error == -1){
-                    console.log("L'utilisateur n'existe pas")
                     router.push(this.returnUrl || '/login');
 
                 }else{

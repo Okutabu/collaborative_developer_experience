@@ -26,9 +26,7 @@ function onLinkClick() {
 const showcomponent = ref(false);
 
 var interval = setInterval(function() {
-  console.log("checking if user is logged in");
     if (localStorage.getItem('user') != null) {
-      console.log(showcomponent);
       showcomponent.value = true;
       clearInterval(interval);
     }
@@ -59,10 +57,8 @@ var interval = setInterval(function() {
   
           <v-divider></v-divider>
 
-          <!-- <div v-if="showcomponent"> -->
             <UserCard3 :nom=userJson.user.pseudo :techno=stats.profile[1] :avatar=userJson.user.avatar
                     :reco=stats.topTags[0].tag :lastInteract=stats.profile[0].lastInteraction v-if="showcomponent" />
-          <!-- </div> -->
           <v-card-actions class="justify-center">
             <v-btn>
                 <span class="material-icons" v-on:click="onLinkClick" style="color: white;" icon="mdi-vuetify">

@@ -2,11 +2,8 @@
 
 import { useAdminStore } from '@/stores';
 import { storeToRefs } from 'pinia';
-import Donut from './Donut.vue';
-import { ref } from "vue"; 
 
 import CalendarHeatmap from '@/components/CalendarHeatmap.vue';
-import { data } from '../../data';
 
 var endDate    = new Date('2023-03-27');
 var orientation= 'horizontal';
@@ -17,11 +14,7 @@ const { stats, InteractionDates } = storeToRefs(adminStore);
 adminStore.getStats();
 adminStore.getInteractionDates();
 
-const espace = ref('d\'administration')
-const message = ref('Découvrez toutes les statistiques de la plateforme !')
-
 const user = localStorage.getItem('user')
-const userJson = JSON.parse(user)
 
         
 </script>
@@ -35,19 +28,6 @@ const userJson = JSON.parse(user)
                                 :vertical="orientation === 'vertical'"/>
             
             </div>
-            <!-- <Donut :technoInteraction=stats.topTags /> 
-
-
-            <p> nb tags : {{ stats.nbTags }}</p>
-            <p> nb utilisateurs : {{ stats.nbUsers }}</p>
-            <p> top tags : {{ stats.topTags }}</p>
-            
-            <p>nbInteractions : {{ stats.nbInteractions }}</p>
-            <p>nbAnswers : {{  stats.nbAnswers }}</p>
-            <p>nbActiveUsers : {{  stats.nbActiveUsers }}</p>
-            <p>tagsWithMostUsers : {{ stats.tagsWithMostUsers }}</p>
-            -->
-            
                     
             <table class="table-body">
                 <tr>

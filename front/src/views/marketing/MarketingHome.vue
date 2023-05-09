@@ -4,8 +4,6 @@ import { useAdminStore } from '@/stores';
 import { storeToRefs } from 'pinia';
 
 import CalendarHeatmap from '@/components/CalendarHeatmap.vue';
-import { data } from '../../data';
-import PieChart from '../../components/PieChart.vue';
 
 var endDate = new Date('2023-03-27');
 var orientation= 'horizontal';
@@ -45,7 +43,6 @@ const { stats, InteractionDates } = storeToRefs(adminStore);
             <div class="container-active-user">
                 <div class="stat-circle circle-rouge">
                     <p class="stat-value"> {{ stats.nbActiveUsers }}</p>
-                    <!-- <PieChart :nbUser="stats.nbUsers" :activeUser="stats.nbActiveUsers" /> -->
                 </div>
                 <p class="stat-label">nombre d'utilisateur actifs sur la plateforme</p>
             </div>
@@ -68,11 +65,6 @@ const { stats, InteractionDates } = storeToRefs(adminStore);
 </template>
 
 <style scoped>
-
-
-/* div, p{
-    border: 1px solid black;
-} */
 
 .container-title {
     display: flex;

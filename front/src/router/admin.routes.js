@@ -1,4 +1,4 @@
-import { Layout, Collecteur, List, AddEdit, Stats, Profile} from '@/views/admin';
+import { Layout, List, AddEdit, Stats, Profile} from '@/views/admin';
 
 
 export default {
@@ -10,7 +10,6 @@ export default {
         { path: 'edit/:id', component: AddEdit },
         { path: 'users/profile/:id', component: Profile},
         { path: 'stats', component: Stats},
-        { path: 'collecteur', component: Collecteur},
         { path: '', redirect: '/admin/list'}
     ]
 };

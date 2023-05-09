@@ -23,11 +23,6 @@ async function onSubmit(values) {
     const usersStore = useUsersStore();
     const alertStore = useAlertStore();
     try {
-        
-        // // Vérifier si la case à cocher est cochée
-        // if (!values.myCheckbox) {
-        //     throw new Error('You must accept the terms and conditions');
-        // }
         await usersStore.register(values);
         await router.push('/account/login');
         alertStore.success('Registration successful');

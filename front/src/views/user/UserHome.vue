@@ -97,7 +97,6 @@ var interval = setInterval(function() {
             </Transition>
         </div>
         <div class="container" ref="container" @scroll="handleScroll">
-            <!-- Votre contenu ici -->
         </div>
 
                 <div  v-if="showComponent1" key="component1">
@@ -163,11 +162,9 @@ var interval = setInterval(function() {
                                     <div class="container-for-column">
                                         <div class="container-user-description">
                                             
-                                            <!-- <router-link :to="{path :`/admin/users/profile/${collab.properties.idSTOW.low}`}"> -->
                                             <div class="user-description-name">
                                                 <p>{{ collab.properties.surname +" "+ collab.properties.name }}</p>
                                             </div>
-                                            <!-- </router-link> -->
                                             
                                         </div>
                                         <div class="container-collab.properties-details">
@@ -181,8 +178,6 @@ var interval = setInterval(function() {
                                         </div>
                                     </div>
                                 </td>
-                                <!-- <td v-if="collab.properties.name.toLowerCase().includes(inputName.toLowerCase()) && collab.properties.surname.toLowerCase().includes(input.toLowerCase()) && collab.propertiesClic.collab.propertiesProfile[1][0].techno.toLowerCase().includes(inputTag.toLowerCase())">{{ collab.properties.surname }}</td> -->
-
                             </div>                    
 
                         </tr>     
@@ -208,12 +203,9 @@ var interval = setInterval(function() {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    /* background-color: #B6C9FF; */
     padding-top: 50px;
     width: 100%;
     padding-right: 4%;
- 
-
 }
 
 .slide-fade-enter-active {
@@ -235,8 +227,6 @@ var interval = setInterval(function() {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    /* background-color: rgb(230, 230, 230); */
-    
 }
 
 .custom-spinner {
@@ -274,7 +264,6 @@ var interval = setInterval(function() {
     padding-right: 1em;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
-    /* background-color: rgba(87 , 176, 192, 0.3); */
 }
 
 .waiting-clic{
@@ -282,7 +271,6 @@ var interval = setInterval(function() {
     background-color: rgb(230, 230, 230);
     
 }
-/*couleur rose du logo PTC (234, 51, 75) */
 
 .container-home{
     animation: reveal 1s cubic-bezier(.17,.67,.4,1.02); 
