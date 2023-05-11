@@ -87,7 +87,6 @@ var interval = setInterval(function() {
 <template>
     <div class="super-container-home">
 
-    {{ globalQuestions }}
     <div class="container-home">
         <div v-if="showHeader">
             <Transition name="slide-fade">
@@ -184,7 +183,28 @@ var interval = setInterval(function() {
                     </tbody>
                 </table>
             </div>
+            <template v-if="globalQuestions">
+        <div class="Questions">
             
+            <h2 class="title">Dernieres questions sur la plateforme : </h2>
+            <!-- affiche une liste de questions avec le nom de la question et un bouton pour acceder à l'url de la quesiton -->
+            <ul>
+                <li v-for="question in globalQuestions.questions" class="li-userHelp">
+                    <div class="question-wrapper">
+                        <div class="question-title" v-html="question.title"></div>
+                        <div id="container">
+                        <button class="learn-more">
+                            <span class="circle" aria-hidden="true">
+                            <span class="icon arrow"></span>
+                            </span>
+                            <a :href="question.urlQuestion" target="_blank" class="button-text">Question</a>
+                        </button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        </template>
     </div>
     <UserRightCard :id="user.user.idSTOW" :surname="user.user.surname"  :name="user.user.name" :avatar="user.user.avatar"/>
 </div>
@@ -329,5 +349,10 @@ var interval = setInterval(function() {
     margin-top: 100px;
 }
 
+
+.Questions{
+    margin-top: 1000px;
+
+}
 
 </style>

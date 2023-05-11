@@ -32,7 +32,17 @@ var interval = setInterval(function() {
     }
 }, 1000);
 
+function scrollToSection() {
+    // Sélectionnez l'élément vers lequel vous souhaitez faire défiler la page
+    const section = document.querySelector('.Questions');
 
+    // Faites défiler la page jusqu'à la position de l'élément
+    window.scrollTo({
+      top: section.offsetTop,
+      behavior: 'smooth' // Optionnel : ajoute un effet de défilement fluide
+    });
+  }
+  
 </script>
 
 <template>
@@ -49,12 +59,12 @@ var interval = setInterval(function() {
           <template v-slot:prepend>
             <v-list-item
               lines="two"
-              :prepend-avatar=avatar
+              :prepend-avatar="avatar"
               :title="`${name} ${surname}`"
               subtitle="Logged in"
             ></v-list-item>
           </template>
-  
+
           <v-divider></v-divider>
 
             <UserCard3 :nom=userJson.user.pseudo :techno=stats.profile[1] :avatar=userJson.user.avatar
@@ -65,8 +75,8 @@ var interval = setInterval(function() {
             groups
             </span>
             </v-btn>
+            <button class="btn btn-primary" @click="scrollToSection">Acceder aux dernières questions sur la plateforme</button>
             </v-card-actions>
-          
         </v-navigation-drawer>
       </v-layout>
     </v-card>
