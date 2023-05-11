@@ -423,9 +423,21 @@ app.get("/user/lastQuestions", (req, res) => {
         error: -1,
       });
     } else {
+      let questions = [];
+
+      for (let question of data) {
+        let objQ = {
+          title: question._fields[0].properties.title,
+          tags: question._fields[1],
+          urlQuestion: `https://stackoverflow.com/questions/${question._fields[0].properties.idQuestion.low}`,
+        };
+
+        questions.push(objQ);
+      }
+
       res.status(200).send({
         answer: "Questions found",
-        questions: data,
+        questions: questions,
         error: 0,
       });
     }
