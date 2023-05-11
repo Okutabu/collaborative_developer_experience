@@ -47,7 +47,8 @@ async function onSubmit(values) {
         values.idSTOW = userJson.user.idSTOW; 
         
         await usersStore.updateUser(values);
-        // await router.push('/overview');
+        await router.push('/overview');
+        location.reload();
 
     } catch (error) { 
         alertStore.error(error);
@@ -59,7 +60,7 @@ async function onSubmit(values) {
 
 <template>
     <div class="container-user-preferences">
-    <h2 class="titre">Préférences de l'utilisateur</h2>
+    <h2 class="titre">Préférences</h2>
     <div class="card container-form">
         <h4 class="card-header">Mes informations</h4>
         <div class="card-body">
