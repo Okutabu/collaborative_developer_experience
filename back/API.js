@@ -63,7 +63,6 @@ app.post("/user/login", (req, res) => {
 
 //post User
 app.post("/user/register", (req, res) => {
-  //const { id } = req.params;
   const name = req.body.name;
   const surname = req.body.surname;
   const mail = req.body.mail;
@@ -94,7 +93,6 @@ app.post("/user/register", (req, res) => {
 });
 
 app.post("/user/update", (req, res) => {
-  //console.log(req.body)
   const ancienidSTOW = req.body.idSTOW;
   const name = req.body.name;
   const surname = req.body.surname;
@@ -126,13 +124,10 @@ app.post("/user/update", (req, res) => {
 });
 
 app.get("/user/:idSTOW/similarity/cosinus", (req, res) => {
-  // faire les tests avec 6309
-
   const idSTOW = parseInt(req.params.idSTOW);
 
   (async () => {
     const data = await similarity.cosinus_similarity(idSTOW);
-    //console.log(data)
     //teste si le tableau est vide
     if (!data.length) {
       res.send({
@@ -147,7 +142,7 @@ app.get("/user/:idSTOW/similarity/cosinus", (req, res) => {
         ids.push(elem._fields[0].properties.idSTOW);
       });
 
-      //on récupère les profile de tous les
+      //on récupère les profile de tous les utilisateurs
       var users = [];
 
       for (const id of ids) {
@@ -165,8 +160,6 @@ app.get("/user/:idSTOW/similarity/cosinus", (req, res) => {
 });
 
 app.get("/user/:idSTOW/similarity/answer", (req, res) => {
-  // faire les tests avec 6309
-
   const idSTOW = parseInt(req.params.idSTOW);
 
   (async () => {
@@ -204,8 +197,6 @@ app.get("/user/:idSTOW/similarity/answer", (req, res) => {
 });
 
 app.get("/user/:idSTOW/similarity/question", (req, res) => {
-  // faire les tests avec 5987
-
   const idSTOW = parseInt(req.params.idSTOW);
 
   (async () => {
@@ -225,7 +216,7 @@ app.get("/user/:idSTOW/similarity/question", (req, res) => {
         ids.push(elem._fields[1].properties.idSTOW);
       });
 
-      //on récupère les profile de tous les
+      //on récupère les profile de tous les utilisateurs
       var users = [];
 
       for (const id of ids) {
@@ -243,8 +234,6 @@ app.get("/user/:idSTOW/similarity/question", (req, res) => {
 });
 
 app.get("/user/:idSTOW/proficiency", (req, res) => {
-  // tester avec n'importe qui (6309 / 633440 / 714501)
-
   const idSTOW = parseInt(req.params.idSTOW);
 
   (async () => {
@@ -271,7 +260,6 @@ app.get("/user/:idSTOW/interactedWithMe", (req, res) => {
 
   (async () => {
     const users = await db.getUsersWhoInteractedWithMe(idSTOW);
-    //console.log(users);
     if (!users.length) {
       res.send({
         answer: "Nobody has interacted with this user",
@@ -282,7 +270,6 @@ app.get("/user/:idSTOW/interactedWithMe", (req, res) => {
       let allUsers = [];
 
       for (var user of users) {
-        //console.log(user);
         allUsers.push(user._fields[0]);
       }
 
@@ -309,7 +296,6 @@ app.get("/user/:idSTOW/help", (req, res) => {
         error: -1,
       });
     } else {
-      //console.log(profile[0].idSTOW);
       let questions = [];
 
       for (let question of reqQuestions) {
@@ -530,7 +516,6 @@ app.get("/admin/users", (req, res) => {
       });
     } else {
       let allUsers = [];
-      //oui[2]._fields[0].properties
       for (let i = 0; i < neo4jUsers.length; i++) {
         allUsers.push(neo4jUsers[i]._fields[0].properties);
       }
@@ -686,21 +671,21 @@ function formateDateForHeatMap(neo4jDates) {
   }
 
   let dicoDate = {};
-  // créé un grand dictionnaire avec les dates et leurs nb d'intéraction
+  // créé un grand dictionnaire avec les dates et leurs nb d'interactions
   for (let date of dates) {
     if (dicoDate[date] == undefined) {
       dicoDate[date] = 0;
     }
   }
 
-  // on incrémente le nb d'intéractions par date
+  // on incrémente le nb d'interactions par date
   for (let date of dates) {
     dicoDate[date]++;
   }
 
   let allDates = [];
 
-  // transformation en liste d'objet pour le composant vue
+  // transformation en liste d'objets pour le composant vue
   for (let elem in dicoDate) {
     let objet = {
       date: elem,
@@ -712,8 +697,7 @@ function formateDateForHeatMap(neo4jDates) {
   return allDates;
 }
 
-// renvoit la liste des dates d'interactions ainsi que leur nombres
-// peut être revoir le collecteur, il y a des dates d'intéraction inférieur à la date données en paramètre
+// renvoit la liste des dates d'interactions ainsi que leur nombre
 app.get("/admin/InteractionDates", (req, res) => {
   (async () => {
     const dateQuestions = await db.getInteractionDates("ANSWERED");

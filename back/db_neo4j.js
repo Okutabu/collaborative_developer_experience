@@ -10,14 +10,6 @@ const driver = neo4j.driver(uri, neo4j.auth.basic(user, password));
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 async function createUser(member) {
-  /*
-    const user ={
-        "name": ,
-        "surname":,
-        "mail":,
-        "idSTOW":,
-        };
-    */
   const name = member.name;
   const surname = member.surname;
   const mail = member.mail;
@@ -31,11 +23,6 @@ async function createUser(member) {
     const writeResult = await session.executeWrite((tx) =>
       tx.run(requete, { name, surname, mail, idSTOW })
     );
-    /*
-        writeResult.records.forEach(record => {
-            console.log(`Found user: ${record.get('u')}`)
-        });
-        */
   } catch (error) {
     console.error(
       `Something went wrong, User could not be inserted : ${error}`
@@ -55,11 +42,6 @@ async function connectUser(idSTOW) {
     const readResult = await session.executeRead((tx) =>
       tx.run(requete, { idSTOW })
     );
-    /*
-        readResult.records.forEach(record => {
-            console.log(`Found user: ${record.get('u')}`);
-        });
-        */
     return readResult.records;
   } catch (error) {
     console.error(`Something went wrong, wrong mail or password : ${error}`);
@@ -109,7 +91,6 @@ async function getUserLastInteraction(idSTOW) {
   }
 }
 
-//à remodifier quand tous les utilisateutrs auront des nom mail...
 async function getUserProficiency(idSTOW) {
   var res = null;
   const data = await getUserTopTags(idSTOW);
@@ -119,15 +100,14 @@ async function getUserProficiency(idSTOW) {
     var users = [];
     var technos = [];
 
-    var test = {
+    var user = {
       idSTOW: data[0]._fields[0].properties.idSTOW.low,
       pseudo: data[0]._fields[0].properties.pseudo,
       avatar: data[0]._fields[0].properties.avatar,
       lastInteraction:
         lastInteraction[0]._fields[0].properties.lastInteraction.low,
     };
-    //console.log("User : ", test);
-    users.push(test);
+    users.push(user);
     data.map((elem) => {
       var title = {
         techno: elem._fields[1].properties.title,
@@ -302,7 +282,6 @@ async function getTagAdmin(idSTOW) {
   const session = driver.session({ database: "neo4j" });
 
   try {
-    // Il faudra penser à changer id par idSTOW quand on refera la bdd
     const requete = `MATCH(u:User{idSTOW: $idSTOW})-[i:INTERACT]-(t:Tag)
                             WITH i.ratio as topTags, t, u 
                             RETURN t ORDER BY topTags DESC
@@ -616,41 +595,6 @@ async function lastQuestions() {
     await session.close();
   }
 }
-
-// (async()=>{
-
-//     try {
-
-//         // const oui = await getUsersSorted("surname", "DESC");
-
-//         // console.log(oui[0]._fields[0].properties);
-//         // //console.log(oui);
-
-//         // const non = await getInteractionDates("ASKED");
-//         // const oui = await getInteractionDates("ANSWERED");
-
-//         // console.log(non);
-//         // console.log(oui[1]._fields[0]);
-
-//         const oui = await getNbUserWhoHelpedMe(6213883);
-
-//         console.log(oui[0]._fields);
-//         const oui = await getUserToHelp(6309);
-
-//         console.log(oui[0]._fields[0].properties);
-//         console.log(oui[0]._fields[1]);
-//         //console.log(oui);
-//         const oui = await deleteUser(142536);
-
-//         console.log(oui);
-
-//     } catch (error) {
-//         console.error(`Something went wrong: ${error}`);
-//     } finally {
-//     // Don't forget to close the driver connection when you're finished with it.
-//         await driver.close();
-//     }
-// })();
 
 module.exports = {
   createUser,
