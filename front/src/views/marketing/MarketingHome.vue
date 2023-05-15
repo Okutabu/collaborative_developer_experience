@@ -65,7 +65,6 @@ const { stats, InteractionDates } = storeToRefs(adminStore);
 </template>
 
 <style scoped>
-
 .container-title {
     display: flex;
     justify-content: center;
@@ -84,6 +83,7 @@ const { stats, InteractionDates } = storeToRefs(adminStore);
 
 .container-stats {
     margin: 20px;
+    margin-right: 5%;
 }
 .stats-container {
     margin-top: 50px;

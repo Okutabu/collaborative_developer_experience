@@ -20,7 +20,7 @@ const moveContainerHome = (is_expanded) => {
 </script>
 
 <template>
-    <div class="app-container" :class="authStore.user && 'bg-light'">
+    <div class="app-container" :class="authStore.user && 'bg-white'">
         <div class="container-nav">
             <Nav @toggle-menu="moveContainerHome" />
         </div>
@@ -45,6 +45,7 @@ const moveContainerHome = (is_expanded) => {
     print-color-adjust: exact !important;           /* Firefox 97+, Safari 15.4+ */
 }
 
+
 .container-workspace{
     width: 100%;
     background-color: white;
@@ -54,6 +55,7 @@ const moveContainerHome = (is_expanded) => {
 .container-nav{
     position: fixed;
     z-index: 100;
+    background-color: white;
 }
 
 
