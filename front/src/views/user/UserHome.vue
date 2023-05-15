@@ -1,6 +1,6 @@
 <script setup>
 import { storeToRefs } from 'pinia';
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref } from 'vue';
 
 import { useAuthStore } from '@/stores';
 import { useRecoStore } from '@/stores';

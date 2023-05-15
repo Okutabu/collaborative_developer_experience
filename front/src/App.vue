@@ -1,6 +1,5 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router';
-import { onMounted, onBeforeUnmount } from 'vue';
+import { RouterView } from 'vue-router';
 
 import Nav from "./components/Nav.vue";
 import Alert from "./components/Alert.vue";
