@@ -20,7 +20,13 @@ const { stats } = storeToRefs(userStore);
 userStore.getUserStats(userJson.user.idSTOW);
 
 function onLinkClick() {
-  document.getElementById('handshakes').scrollIntoView();
+  const section = document.getElementById('handshakes');
+
+  // Faites défiler la page jusqu'à la position de l'élément
+  window.scrollTo({
+      top: section.offsetTop,
+      behavior: 'smooth' // Optionnel : ajoute un effet de défilement fluide
+    });
 }
 
 const showcomponent = ref(false);
@@ -70,13 +76,23 @@ function scrollToSection() {
             <UserCard3 :nom=userJson.user.pseudo :techno=stats.profile[1] :avatar=userJson.user.avatar
                     :reco=stats.topTags[0].tag :lastInteract=stats.profile[0].lastInteraction v-if="showcomponent" />
           <v-card-actions class="justify-center">
-            <v-btn>
-                <span class="material-icons" v-on:click="onLinkClick" style="color: white;" icon="mdi-vuetify">
-            groups
-            </span>
-            </v-btn>
-            <button class="btn btn-primary" @click="scrollToSection">Acceder aux dernières questions sur la plateforme</button>
-            </v-card-actions>
+          
+           
+            <v-list-item>
+              
+              <v-list-item-icon >
+                <i class="fa fa-circle" aria-hidden="true"></i>
+                <v-btn class="btn btn-primary" @click="onLinkClick">
+                  <i class="fa fa-users" aria-hidden="true"></i>
+                </v-btn>  
+                <v-btn class="btn btn-primary" @click="scrollToSection">
+                  <i class="fa fa-comments-o" aria-hidden="true"></i>
+                </v-btn> 
+              </v-list-item-icon>
+            </v-list-item>          
+          </v-card-actions>
+          
+            
         </v-navigation-drawer>
       </v-layout>
     </v-card>
@@ -84,5 +100,38 @@ function scrollToSection() {
 
 <style scoped>
 
+.fa-circle {
+  color: #df1907;
+  font-size: 15px;
+}
+
+.btn {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  }
+  
+  .btn-primary {
+    background-color: var(--primary);
+    color: #fff;
+    margin-right: 8px;
+    margin-left: 10px;
+  }
+
+  .btn-secondary{
+    background-color: var(--primary);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--primary-hover);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--primary-hover);
+  }
 
 </style>

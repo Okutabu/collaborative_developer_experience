@@ -363,4 +363,13 @@ var interval = setInterval(function() {
     padding-bottom: 0.5em;
 }
 
+.button-text{
+    padding-top: 30px;
+}
+
+.learn-more{
+    position: relative;
+    margin-left: 70em;
+}
+
 </style>
