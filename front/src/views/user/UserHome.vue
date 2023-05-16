@@ -8,9 +8,7 @@ import Header from '../../components/Header.vue';
 import UserCard from '../../components/UserCard.vue';
 import UserCarCollaborative from '../../components/UserCarCollaborative.vue';
 import UserRightCard from '../../components/UserRightCard.vue';
-
-import { useI18n } from 'vue-i18n';
-const { t } = useI18n();
+import CardCollection from '../../components/CardCollection.vue';
 
 
 const help = ref(null);
@@ -21,12 +19,9 @@ const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
 
 const usersStore = useRecoStore();
-const { usersReco, usersRecoSimilarity, usersRecoQuestion, collaborated, globalQuestions } = storeToRefs(usersStore);
+const { usersRecoAnswer, usersRecoSimilarity, usersRecoQuestion, collaborated, globalQuestions, usersCurrentReco } = storeToRefs(usersStore);
 
-const dataForLoadingUsersRecos = {
-                                
-                                "answer": "Users found", 
-                                "users":[ 
+const dataForLoadingUsersRecos = 
                                             [ {   
                                                 "idSTOW": { "low": 11804213, "high": 0 }, 
                                                 "pseudo": "Franck", 
@@ -38,14 +33,11 @@ const dataForLoadingUsersRecos = {
                                                     { "techno": "vercel", "ratio": 8.823529411764707 }, 
                                                     { "techno": "hls.js", "ratio": 8.823529411764707 } ] ]
                                                 
-                                            ]};
+                                            ;
 
 const dataForLoadingUsersRecosSimilarity = dataForLoadingUsersRecos;
-const dataForLoadingUsersRecosQuestion = dataForLoadingUsersRecos;
 
 const typeSimilaire = ref('Projet similaire')
-const typeReponse= ref('Helper')
-const typeQuestion = ref('To help')
 
 
 const userSelected = ref(null);
@@ -101,50 +93,29 @@ var interval = setInterval(function() {
                 </div>
             </Transition>
         </div>
-        <div class="container" ref="container" @scroll="handleScroll">
-            <!-- Votre contenu ici -->
-        </div>
-
-                <div  v-if="showComponent1" key="component1">
-                    <div class="container-similarities">
-                        
-                        <div class="container-raw-cosinus-similarity" v-if="usersRecoSimilarity">
-                            <span class="categorie-recommendation">{{t('home-similar-user')}}</span>
-                            <div @click="onClick(usersRecoSimilarity.users)">
-                                <UserCarCollaborative :user="usersRecoSimilarity" :type="typeSimilaire" :bouton="contact" />
-                            </div>
-                        </div>
-                        <div v-else>
-                            <div class="custom-spinner" role="status">
-                                <UserCarCollaborative :user="dataForLoadingUsersRecosSimilarity" :type="typeSimilaire"/>
-                                <div class="cover">&nbsp;</div>
-                            </div>
-                        </div>
-                        <div class="container-similarity-tag-answers" v-if="usersReco">
-                            <span class="categorie-recommendation">{{t('home-answer-user')}}</span>
-                            <div @click="onClick(usersReco.users)">
-                                <UserCarCollaborative :user="usersReco" :type="typeReponse" :bouton="contact" />
-                            </div>
-                        </div>
-                        <div v-else>
-                            <div class="custom-spinner" role="status">
-                                <UserCarCollaborative :user="dataForLoadingUsersRecos" :type="typeReponse"/>
-                                <div class="cover">&nbsp;</div>
-                            </div>
-                        </div>
-                        <div class="container-similarity-tag-questions" v-if="usersRecoQuestion">
-                            <span class="categorie-recommendation">{{t('home-ask-user')}}</span>
-                            <div @click="onClick(usersRecoQuestion.users)">
-                                <UserCarCollaborative :user="usersRecoQuestion" :type="typeQuestion" :bouton="aide" />
-                            </div>
-                        </div>
-                        <div v-else>
-                            <div class="custom-spinner" role="status">
-                                <UserCarCollaborative :user="dataForLoadingUsersRecosQuestion" :type="typeQuestion"/>
-                                <div class="cover">&nbsp;</div>
-                            </div>
-                        </div>
+        <div class="container" ref="container" @scroll="handleScroll"></div>
+        <div  v-if="showComponent1" key="component1">
+            <div class="container-similarities">
+                
+                <div class="container-raw-cosinus-similarity" v-if="usersRecoSimilarity && usersRecoAnswer && usersRecoQuestion && usersCurrentReco">
+                    <CardCollection/>
+                </div>
+                <div v-else class="container-spinner">
+                    <div class="custom-spinner" role="status">
+                        <UserCarCollaborative :user="dataForLoadingUsersRecosSimilarity" :type="typeSimilaire"/>
+                        <div class="cover">&nbsp;</div>
                     </div>
+                    <div class="custom-spinner" role="status">
+                        <UserCarCollaborative :user="dataForLoadingUsersRecosSimilarity" :type="typeSimilaire"/>
+                        <div class="cover">&nbsp;</div>
+                    </div>
+                    <div class="custom-spinner" role="status">
+                        <UserCarCollaborative :user="dataForLoadingUsersRecosSimilarity" :type="typeSimilaire"/>
+                        <div class="cover">&nbsp;</div>
+                    </div>
+                </div>
+                
+            </div>
 
                     <div class="container-usercard-peek" v-if="userSelected"> 
                         <div>
@@ -221,7 +192,13 @@ var interval = setInterval(function() {
 
 <style scoped>
 
-
+.container-spinner{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
 .container-similarities {
     display: flex;
     flex-direction: row;
@@ -350,12 +327,12 @@ var interval = setInterval(function() {
 }
 
 .container-list-collaboration{
-    margin-top: 100px;
+    margin: 100px;
 }
 
 
 .Questions{
-    margin-top: 50px;
+    margin: 100px;
 
 }
 

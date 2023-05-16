@@ -79,11 +79,18 @@
 
     "collabCard-stow": "Profile STOW",
     "collabCard-detail": "Details",
+    "collabCard-help": "Help this dev",
+    
     
     "loading": "Loading ...",
     "logged": "Logged in",
     "help": "Help this dev",
 
     "no-activity": "No activity",
-    "last-questions-home": "Last questions asked by PTC's developers"
+    "last-questions-home": "Last questions asked by PTC's developers",
+
+    "similarities-title": "Collaborators",
+    "similarities-category-similar": "Similar",
+    "similarities-category-canHelp": "Helper",
+    "similarities-category-canBeHelped": "helpable"
 }

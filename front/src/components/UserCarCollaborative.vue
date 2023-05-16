@@ -1,39 +1,49 @@
 <template>
-    <div class="user-card">
-      <button class="user-button">
-          <div class="user-avatar-container">
-              <img :src="user.users[0][0].avatar" alt="User Avatar" class="user-avatar">
-              <i class="fa fa-phone" style="font-size:36px;color:white"></i>
-          </div>
-      </button>
+  <div class="container-whole-card">
+      <div class="user-card">
+        <button class="user-button">
+            <div class="user-avatar-container">
+                <img :src="user[0].avatar" alt="User Avatar" class="user-avatar">
+                <!-- ajoute un icon de telephone derrière l'image -->
+                <i class="fa fa-phone" style="font-size:36px;color:white"></i>
+            </div>
+        </button>
 
-      <div class="user-details">
-        <h2 class="user-name">{{ user.users[0][0].pseudo }}</h2>
-        <div class="user-skill">
-            <p><i class="fa fa-graduation-cap "></i> {{ user.users[0][1][0].techno }}</p>
-        </div>
-        <div class="user-actions">
-          <div v-if="bouton == 'contact'">
-            <a :href="profilSTOW" target="_blank">
-              <button class="btn btn-primary"><img src="../assets/stow-icon.png" alt="stow-icon" class="stow-icon" style="width: 30px;"> </button>
-            </a>
+        <div class="user-details">
+          <h2 class="user-name">{{ user[0].pseudo }}</h2>
+          <div class="user-skill">
+              <p><i class="fa fa-graduation-cap "></i> {{ user[1][0].techno }}</p>
           </div>
-          <div v-else>
-            <RouterLink :to="{path :`/help/${user.users[0][0].idSTOW}`}">
-              <button class="btn btn-primary"> <i class="fa fa-handshake-o"></i>&nbsp; {{ bouton }} </button>
-            </RouterLink>
+          <div class="user-actions">
+            <!-- affiche cette div si le props bouton a la valeur "help" -->
+            <div v-if="bouton === 'contact'">
+              <a :href="profilSTOW" target="_blank">
+                <button class="btn btn-primary"><img src="../assets/stow-icon.png" alt="stow-icon" class="stow-icon" style="width: 30px;"> </button>
+              </a>
+            </div>
+            <div v-else>
+              <RouterLink :to="{path :`/help/${user[0].idSTOW}`}">
+                <button class="btn btn-primary" @click="helpPage"> <i class="fa fa-handshake-o"></i>&nbsp; {{ bouton }} </button>
+              </RouterLink>
+            </div>
+            <button class="btn btn-secondary">{{t('collabCard-detail')}}</button>
           </div>
-          <button class="btn btn-secondary">Details</button>
         </div>
       </div>
-    </div>
+  </div>
+
   </template>
   
   <script>
 
   import { RouterLink } from 'vue-router' 
+  import { useI18n } from 'vue-i18n';
 
   export default {
+    setup(){
+            const { t } = useI18n();
+            return { t };
+    },
     name: 'UserCard',
     props: {
       user: {
@@ -49,9 +59,15 @@
         required: true
       }
     },
+    methods: {
+      helpPage() {
+        console.log("renvoie vers la page d'aide")
+        console.log(this.user[0].idSTOW)
+      }
+    },
     computed: {
       profilSTOW() {
-        return `https://stackoverflow.com/users/${this.user.users[0][0].idSTOW}`
+        return `https://stackoverflow.com/users/${this.user[0].idSTOW}`
       }
     }
   }
@@ -59,19 +75,24 @@
   </script>
   
   <style>
+  
+
   .user-card {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: aliceblue;
     border-radius: 8px;
     padding: 16px;
-    box-shadow: 2px 2px 4px rgba(59, 110, 204, 0.3);    
+    /* box-shadow: 4px 4px 20px 20px rgba(207, 207, 207, 0.3); */
+    height: 300px;
+
+    /* place la balise <i> sur la basile <img> */
+    
   }
 
   .user-card:hover {
-    box-shadow: 4px 4px 8px rgba(59, 110, 204, 0.3);
+    /* box-shadow: 4px 4px 8px rgba(59, 110, 204, 0.3); */
     transform: translateX(-2%);
     transform: translateY(-2%);
     transition: all 0.2s ease-in-out;
@@ -81,7 +102,6 @@
   .user-avatar {
     position: relative;
     z-index: 1;
-    width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
@@ -110,7 +130,6 @@
   .user-avatar {
       position: relative;
       z-index: 0;
-      width: 100%;
       height: 100%;
       object-fit: cover;
       border-radius: 50%;
@@ -223,6 +242,13 @@
   .btn-secondary:hover {
     background-color: var(--primary-hover);
   }
+  
+  .container-whole-card {
+    display: flex;
+    align-items: center;
+  }
+
+  
   
 </style>
 

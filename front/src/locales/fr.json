@@ -79,11 +79,17 @@
 
     "collabCard-stow": "Profil STOW",
     "collabCard-detail": "Détails",
+    "collabCard-help": "Aidez ce dev",
 
     "loading": "Chargement ...",
     "logged": "Connecté",
     "help": "Aide ce dev",
 
     "no-activity": "Aucune activité",
-    "last-questions-home": "Les dernières questions posées sur StackOverflow par des développeurs PTC"
+    "last-questions-home": "Les dernières questions posées sur StackOverflow par des développeurs PTC",
+
+    "similarities-title": "Collaborators",
+    "similarities-category-similar": "Similaire",
+    "similarities-category-canHelp": "Aidant",
+    "similarities-category-canBeHelped": "A aider"
 }
