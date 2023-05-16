@@ -3,9 +3,11 @@ import { defineProps } from 'vue';
 import { useUsersStore } from '@/stores';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
-
 import UserCard3  from './UserCard3.vue';
+import { useRecoStore } from '@/stores';
 
+const usersStore = useRecoStore();
+const { collaborated } = storeToRefs(usersStore);
 
 defineProps({
     name: String,
@@ -49,6 +51,8 @@ function scrollToSection() {
       behavior: 'smooth' // Optionnel : ajoute un effet de défilement fluide
     });
   }
+
+  console.log(collaborated)
   
 </script>
 
@@ -81,10 +85,10 @@ function scrollToSection() {
            
             <v-list-item>
               
-              <v-list-item-icon >
-                <i class="fa fa-circle" aria-hidden="true"></i>
+              <v-list-item-icon v-if="collaborated">
                 <v-btn class="btn btn-primary" @click="onLinkClick">
                   <i class="fa fa-users" aria-hidden="true"></i>
+                  <i v-if="collaborated.error != -1" class="fa fa-exclamation-circle" aria-hidden="true"></i>
                 </v-btn>  
                 <v-btn class="btn btn-primary" @click="scrollToSection">
                   <i class="fa fa-comments-o" aria-hidden="true"></i>
@@ -101,15 +105,26 @@ function scrollToSection() {
 
 <style scoped>
 
-.fa-circle {
+.fa-exclamation-circle {
   color: #df1907;
-  font-size: 15px;
+  font-size: 17px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  /* Décale l'icone de 7px vers le haut et la droite */
+  transform: translate(7px, -7px);
+
+
+  
+
 }
 
 .btn {
+    position: relative;
     border: none;
     border-radius: 8px;
     padding: 8px 16px;
+    margin-top: 10px;
     font-size: 16px;
     font-weight: 500;
     cursor: pointer;

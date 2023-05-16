@@ -355,7 +355,8 @@ var interval = setInterval(function() {
 
 .learn-more{
     position: relative;
-    margin-left: 70em;
+    margin-left: 50em;
+    
 }
 
 </style>
