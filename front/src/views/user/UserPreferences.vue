@@ -160,8 +160,9 @@ async function onSubmit(values) {
   background-color: #ed4040;
   text-decoration: none;
   padding: 15px 20px;
+  margin : 30px 10px;
   font-weight: bold;
-  border-radius: 50px;
+  border-radius: 10px;
   color: #fff;
 }
 

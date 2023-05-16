@@ -61,7 +61,7 @@ var ratios = {
 <template>
 
     <div id="chart">
-        <VueApexCharts type="radar" height="400" :options="ratios" :series="series"></VueApexCharts>
+        <VueApexCharts type="radar"  width="600" height="350" :options="ratios" :series="series"></VueApexCharts>
     </div>
 
 </template>

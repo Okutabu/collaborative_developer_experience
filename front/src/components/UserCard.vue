@@ -93,4 +93,5 @@ const date = (new Date(props.lastInteract* 1000)).toLocaleString().split(',')[0]
 
 
 }
+
 </style>
