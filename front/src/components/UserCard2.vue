@@ -1,6 +1,9 @@
 <script setup>
 import { defineProps } from 'vue';
 import Radar from './Radar.vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const props = defineProps({
   nom: String,
@@ -21,9 +24,9 @@ const date = new Date(props.lastInteract * 1000).toLocaleString().split(',')[0];
             <img :src="avatar" />
           </div>
           <div class="info">
-            <p class="bold name">{{ nom || 'loading...' }}</p>
-            <p class="speciality"><i class="fa fa-graduation-cap "></i>&nbsp;{{ reco || 'loading...' }}</p>
-            <p class="lastInteract">Dernière interaction : {{ date || 'loading...' }}</p>
+            <p class="bold name">{{ nom || t('loading') }}</p>
+            <p class="speciality"><i class="fa fa-graduation-cap "></i>&nbsp;{{ reco || t('loading') }}</p>
+            <p class="lastInteract">{{t('last-activity')}} : {{ date || t('loading') }}</p>
           </div>
         </div>
       </div>

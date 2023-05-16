@@ -9,10 +9,13 @@ import UserCard from '../../components/UserCard.vue';
 import UserCarCollaborative from '../../components/UserCarCollaborative.vue';
 import UserRightCard from '../../components/UserRightCard.vue';
 
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
 
 const help = ref(null);
 const contact = ref("contact")
-const aide = ref("aide ce dev");
+const aide = ref(t('help'));
 
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
@@ -80,6 +83,9 @@ var interval = setInterval(function() {
     }
 }, 100);
 
+
+
+
 </script>
 
 
@@ -95,65 +101,68 @@ var interval = setInterval(function() {
                 </div>
             </Transition>
         </div>
-        <div class="container" ref="container" @scroll="handleScroll"></div>
-        <div  v-if="showComponent1" key="component1">
-            <div class="container-similarities">
-                
-                <div class="container-raw-cosinus-similarity" v-if="usersRecoSimilarity">
-                    <span class="categorie-recommendation">Utilisateurs similaires à vous</span>
-                    <div @click="onClick(usersRecoSimilarity.users)">
-                        <UserCarCollaborative :user="usersRecoSimilarity" :type="typeSimilaire" :bouton="contact" />
-                    </div>
-                </div>
-                <div v-else>
-                    <div class="custom-spinner" role="status">
-                        <UserCarCollaborative :user="dataForLoadingUsersRecosSimilarity" :type="typeSimilaire"/>
-                        <div class="cover">&nbsp;</div>
-                    </div>
-                </div>
-                <div class="container-similarity-tag-answers" v-if="usersReco">
-                    <span class="categorie-recommendation">Utilisateurs qui repondent à vos questions</span>
-                    <div @click="onClick(usersReco.users)">
-                        <UserCarCollaborative :user="usersReco" :type="typeReponse" :bouton="contact" />
-                    </div>
-                </div>
-                <div v-else>
-                    <div class="custom-spinner" role="status">
-                        <UserCarCollaborative :user="dataForLoadingUsersRecos" :type="typeReponse"/>
-                        <div class="cover">&nbsp;</div>
-                    </div>
-                </div>
-                <div class="container-similarity-tag-questions" v-if="usersRecoQuestion">
-                    <span class="categorie-recommendation">Utilisateurs que vous pouvez aider</span>
-                    <div @click="onClick(usersRecoQuestion.users)">
-                        <UserCarCollaborative :user="usersRecoQuestion" :type="typeQuestion" :bouton="aide" />
-                    </div>
-                </div>
-                <div v-else>
-                    <div class="custom-spinner" role="status">
-                        <UserCarCollaborative :user="dataForLoadingUsersRecosQuestion" :type="typeQuestion"/>
-                        <div class="cover">&nbsp;</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container-usercard-peek" v-if="userSelected"> 
-                <div>
-                    <UserCard :nom=userSelected[0][0].pseudo :techno=userSelected[0][1] :avatar=userSelected[0][0].avatar :reco=userSelected[0][1][0].techno :key=userSelected :lastInteract=userSelected[0][0].lastInteraction /> 
-                </div>
-            </div>
+        <div class="container" ref="container" @scroll="handleScroll">
+            <!-- Votre contenu ici -->
         </div>
 
-        <div v-if="showComponent2" key="component2" class="container-list-collaboration" >
-            <table class="table " id="handshakes">
-                <thead class="table-head">
-                    <tr>
-                        <th class="table-head-impair">Vous avez collaboré sur StackOverflow avec ces developpeurs PTC ! </th>
-                    </tr>
-                </thead>
-                <tbody class="table-body">
-                    <tr v-for="collab in collaborated.users" :key = "collab">
+                <div  v-if="showComponent1" key="component1">
+                    <div class="container-similarities">
+                        
+                        <div class="container-raw-cosinus-similarity" v-if="usersRecoSimilarity">
+                            <span class="categorie-recommendation">{{t('home-similar-user')}}</span>
+                            <div @click="onClick(usersRecoSimilarity.users)">
+                                <UserCarCollaborative :user="usersRecoSimilarity" :type="typeSimilaire" :bouton="contact" />
+                            </div>
+                        </div>
+                        <div v-else>
+                            <div class="custom-spinner" role="status">
+                                <UserCarCollaborative :user="dataForLoadingUsersRecosSimilarity" :type="typeSimilaire"/>
+                                <div class="cover">&nbsp;</div>
+                            </div>
+                        </div>
+                        <div class="container-similarity-tag-answers" v-if="usersReco">
+                            <span class="categorie-recommendation">{{t('home-answer-user')}}</span>
+                            <div @click="onClick(usersReco.users)">
+                                <UserCarCollaborative :user="usersReco" :type="typeReponse" :bouton="contact" />
+                            </div>
+                        </div>
+                        <div v-else>
+                            <div class="custom-spinner" role="status">
+                                <UserCarCollaborative :user="dataForLoadingUsersRecos" :type="typeReponse"/>
+                                <div class="cover">&nbsp;</div>
+                            </div>
+                        </div>
+                        <div class="container-similarity-tag-questions" v-if="usersRecoQuestion">
+                            <span class="categorie-recommendation">{{t('home-ask-user')}}</span>
+                            <div @click="onClick(usersRecoQuestion.users)">
+                                <UserCarCollaborative :user="usersRecoQuestion" :type="typeQuestion" :bouton="aide" />
+                            </div>
+                        </div>
+                        <div v-else>
+                            <div class="custom-spinner" role="status">
+                                <UserCarCollaborative :user="dataForLoadingUsersRecosQuestion" :type="typeQuestion"/>
+                                <div class="cover">&nbsp;</div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class="container-usercard-peek" v-if="userSelected"> 
+                        <div>
+                            <UserCard :nom=userSelected[0][0].pseudo :techno=userSelected[0][1] :avatar=userSelected[0][0].avatar :reco=userSelected[0][1][0].techno :key=userSelected :lastInteract=userSelected[0][0].lastInteraction /> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div v-if="showComponent2" key="component2" class="container-list-collaboration" >
+                <table class="table " id="handshakes">
+                    <thead class="table-head">
+                        <tr>
+                            <th class="table-head-impair">{{t('home-collaborated-with')}}</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-body">
+                        <tr v-for="collab in collaborated.users" :key = "collab">
                         <div class="container-user-enlisted">
                             <td class="user-enlisted"><img :src="collab.properties.avatar" alt="user avatar" width="80">
                                 <div class="container-for-column">
@@ -162,30 +171,31 @@ var interval = setInterval(function() {
                                         <div class="user-description-name">
                                             <p>{{ collab.properties.surname +" "+ collab.properties.name }}</p>
                                         </div>
-                                        
-                                    </div>
-                                    <div class="container-collab.properties-details">
-                                        <div class="collab.properties-description-activity">
-                                            <ul class="list-unstyled text-grey">
-                                                <li><i class="fa fa-filter pr-1" aria-hidden="true"></i>Développeur front-end &nbsp;</li>
-                                                <li><i class="fa fa-clock-o pr-1"></i>Derniere activitée:&nbsp;<p>{{ collab.properties.lastInteraction ? (new Date(collab.properties.lastInteraction.low * 1000)).toLocaleString().split(',')[0] : 'Pas d\'activité' }}</p></li>
-                                            </ul>
+                                        <div class="container-collab.properties-details">
+                                            <div class="collab.properties-description-activity">
+                                                <ul class="list-unstyled text-grey">
+                                                    <li><i class="fa fa-filter pr-1" aria-hidden="true"></i>{{t('front-end')}} &nbsp;</li>
+                                                    <li><i class="fa fa-clock-o pr-1"></i>{{t('last-activity')}}:&nbsp;<p>{{ collab.properties.lastInteraction ? (new Date(collab.properties.lastInteraction.low * 1000)).toLocaleString().split(',')[0] : 'Pas d\'activité' }}</p>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </td>
                         </div>                    
-                    </tr>     
-                </tbody>
-            </table>
-        </div>
+                        </tr>     
+                    </tbody>
+                </table>
+                <v-divider :thickness="3" class="border-opacity-50"></v-divider>
+            </div>
 
-        <v-divider :thickness="3" class="border-opacity-50"></v-divider>
+        
 
         <template v-if="globalQuestions">
             <div class="Questions">
                 
-                <h2 class="title">Les dernières questions posées sur StackOverflow par des développeurs PTC</h2>
+                <h2 class="title">{{ t('last-questions-home') }}</h2>
                 <!-- affiche une liste de questions avec le nom de la question et un bouton pour acceder à l'url de la quesiton -->
                 <ul>
                     <li v-for="question in globalQuestions.questions" class="li-userHelp">
@@ -196,7 +206,7 @@ var interval = setInterval(function() {
                                 <span class="circle" aria-hidden="true">
                                 <span class="icon arrow"></span>
                                 </span>
-                                <a :href="question.urlQuestion" target="_blank" class="button-text">Question</a>
+                                <a :href="question.urlQuestion" target="_blank" class="button-text">{{ t('question') }}</a>
                             </button>
                             </div>
                         </div>
@@ -206,12 +216,7 @@ var interval = setInterval(function() {
         </template>
     </div>
     <UserRightCard :id="user.user.idSTOW" :surname="user.user.surname"  :name="user.user.name" :avatar="user.user.avatar"/>
-</div>
-    
-
-    
-    
-
+  
 </template>
 
 <style scoped>

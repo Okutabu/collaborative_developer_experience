@@ -2,7 +2,9 @@
 import { ref } from 'vue'
 import logoURL from '../assets/ptc.png'
 import { useAuthStore } from '@/stores';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const authStore = useAuthStore();
 
 const is_expanded = ref(localStorage.getItem("is_expanded") === "true")
@@ -28,15 +30,15 @@ const ToggleMenu = () => {
                 </button>
             </div>
 
-            <h3>Menu</h3>
+            <h3>{{t('nav-menu')}}</h3>
             <div class="menu">
                 <RouterLink to="/admin/list" class="button">
                     <span class="material-icons">home</span>
-                    <span class="text">Home</span>
+                    <span class="text">{{t('nav-home')}}</span>
                 </RouterLink>
                 <RouterLink to="/admin/stats" class="button">
                     <span class="material-icons">insights</span>
-                    <span class="text">Statistiques</span>
+                    <span class="text">{{t('nav-stats')}}</span>
                 </RouterLink>
             </div>
 
@@ -58,28 +60,29 @@ const ToggleMenu = () => {
                 </button>
             </div>
 
-            <h3>Menu</h3>
+            <h3>{{t('nav-menu')}}</h3>
             <div class="menu">
                 <RouterLink to="/overview" class="button">
                     <span class="material-icons">home</span>
-                    <span class="text">Home</span>
+                    <span class="text">{{t('nav-home')}}</span>
                 </RouterLink>
                 <RouterLink to="/statistics" class="button">
                     <span class="material-icons">insights</span>
-                    <span class="text">Statistics</span>
+                    <span class="text">{{t('nav-stats')}}</span>
                 </RouterLink>
                 <RouterLink to="/preferences" class="button">
                     <span class="material-icons">settings</span>
-                    <span class="text">Préférences</span>
+                    <span class="text">{{ t('nav-pref') }}</span>
                 </RouterLink>
             </div>
+
 
             <div class="flex"></div>
             
             <div class="menu" @click="authStore.logout()">
                 <RouterLink to="/logout" class="button" >
                     <span class="material-icons">logout</span>
-                    <span class="text">Logout</span>
+                    <span class="text">{{t('nav-logout')}}</span>
                 </RouterLink>
             </div>
         </aside>

@@ -2,8 +2,10 @@
 
 import { useAdminStore } from '@/stores';
 import { storeToRefs } from 'pinia';
-
+import { useI18n } from 'vue-i18n';
 import CalendarHeatmap from '@/components/CalendarHeatmap.vue';
+
+const { t } = useI18n();
 
 var endDate = new Date('2023-03-27');
 var orientation= 'horizontal';
@@ -15,8 +17,8 @@ const { stats, InteractionDates } = storeToRefs(adminStore);
 
 <template>
 
-    <div class="container-title">
-        <h1>Le Futur De La Collaboration <br><span>Sur CDE</span></h1>   
+<div class="container-title">
+        <h1>{{t('marketing-title')}}<br><span>{{t('marketing-CDE')}}</span></h1>   
     </div>
     <div class="container-stats">
         <div class="stats-container">
@@ -24,17 +26,17 @@ const { stats, InteractionDates } = storeToRefs(adminStore);
                 <div class="stat-circle">
                     <p class="stat-value">{{ stats.nbInteractions - stats.nbAnswers }}</p>
                 </div>
-                <p class="stat-p">Ce dernier mois, c'est {{ stats.nbInteractions - stats.nbAnswers }} questions qui ont été posé sur stackoverflow par les developpeur PTC inscrit sur la plateforme</p>
+                <p class="stat-p">{{t('marketing-last-month')}}{{ stats.nbInteractions - stats.nbAnswers }}{{t('marketing-nbQuestion')}}</p>
             </div>
             <div class="stat-container">
                 <div class="stat-circle">
                     <p class="stat-value">{{ stats.nbAnswers }}</p>
                 </div>
-                <p class="stat-p">Ce dernier mois, c'est {{ stats.nbAnswers }} réponses sur stackoverflow par les developpeur PTC inscrit sur la plateforme</p>
+                <p class="stat-p">{{t('marketing-last-month')}}{{ stats.nbAnswers }}{{t('marketing-nbAnswer')}}</p>
             </div>
         </div>
         <div class="container-trimestre-review">
-            <p class="title-heatmap">Taux de collaborations des developpeur PTC </p>
+            <p class="title-heatmap">{{t('marketing-collab')}}</p>
             <div class="container-heatmap">
                 <calendar-heatmap class="heatmap-component" :values="InteractionDates" :end-date="endDate" :style="{'max-width': orientation === 'vertical' ? '145px' :  '800px'}" :round="2" :vertical="orientation === 'vertical'"/>
             </div>
@@ -44,11 +46,11 @@ const { stats, InteractionDates } = storeToRefs(adminStore);
                 <div class="stat-circle circle-rouge">
                     <p class="stat-value"> {{ stats.nbActiveUsers }}</p>
                 </div>
-                <p class="stat-label">nombre d'utilisateur actifs sur la plateforme</p>
+                <p class="stat-label">{{t('marketing-active-user')}}</p>
             </div>
             
             <div class="container-top-tags">
-                <p class="title-techno-cloud">Tags les plus utilisés</p>
+                <p class="title-techno-cloud">{{t('marketing-topTags')}}</p>
                 <div class="container-techno-cloud">
                     <div v-for="stat in stats.topTags">
                         <div class="stat-circle-tag">

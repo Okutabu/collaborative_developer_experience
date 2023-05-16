@@ -3,6 +3,9 @@ import { storeToRefs } from 'pinia';
 import { useAdminStore } from '@/stores';
 import { ref } from "vue";
 
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
 let input = ref("");
 let inputName = ref("");
 let inputTag = ref("");
@@ -40,16 +43,16 @@ function triSurname() {
 
     <div class="container-table">
         <div class="container-search">
-            <input type="text" v-model="input" placeholder="Prénom" class="search-bar" />
-            <input type="text" v-model="inputName" placeholder="Nom" class="search-bar" />
-            <input type="text" v-model="inputTag" placeholder="Rechercher un tag" class="search-bar search-tag" />
+            <input type="text" v-model="input" :placeholder="t('first-name')" class="search-bar" />
+            <input type="text" v-model="inputName" :placeholder="t('last-name')" class="search-bar" />
+            <input type="text" v-model="inputTag" :placeholder="t('find-tag')" class="search-bar search-tag" />
         </div>
         <table class="table table-bordered">
             <thead class="table-head">
                 <tr>
-                    <th class="table-head-impair">First Name <button class="sort-button" @click=triSurname()><i class="fa fa-sort"></i></button></th>
-                    <th class="table-head-impair">Last activity <button class="sort-button" @click=triLastActivity()><i class="fa fa-sort"></i></button></th>
-                    <th class="table-head-pair">Top Tags</th>
+                    <th class="table-head-impair">{{t('first-name')}} <button class="sort-button" @click=triSurname()><i class="fa fa-sort"></i></button></th>
+                    <th class="table-head-impair">{{t('last-activity')}} <button class="sort-button" @click=triLastActivity()><i class="fa fa-sort"></i></button></th>
+                    <th class="table-head-pair">{{t('top-tags')}}</th>
                 </tr>
             </thead>
             <tbody class="table-body">
@@ -74,8 +77,8 @@ function triSurname() {
                                         <div class="container-user-details">
                                             <div class="user-description-activity">
                                                 <ul class="list-unstyled text-grey">
-                                                    <li><i class="fa fa-filter pr-1" aria-hidden="true"></i>Développeur front-end &nbsp;</li>
-                                                    <li><i class="fa fa-clock-o pr-1"></i>Derniere activitée:&nbsp;<p>{{ user.lastInteraction ? (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] : 'Pas d\'activité' }}</p>
+                                                    <li><i class="fa fa-filter pr-1" aria-hidden="true"></i>{{t('front-end')}} &nbsp;</li>
+                                                    <li><i class="fa fa-clock-o pr-1"></i>{{t('last-activity')}}:&nbsp;<p>{{ user.lastInteraction ? (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] : t('no-activity') }}</p>
                                             </li>
                                                 </ul>
                                             </div>
@@ -90,7 +93,7 @@ function triSurname() {
                                     {{ (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}
                                 </div>
                                 <div v-else>
-                                    Inactif
+                                    {{t('inactive')}}
                                 </div>
                             </td>
                             <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && (!user.topTag || user.topTag.toLowerCase().includes(inputTag.toLowerCase()))">
@@ -98,7 +101,7 @@ function triSurname() {
                                     {{ user.topTag }}
                                 </div>
                                 <div v-else>
-                                    Inactif
+                                    {{t('inactive')}}
                                 </div>
                             </td>
                         

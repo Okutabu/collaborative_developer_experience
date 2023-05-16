@@ -4,6 +4,9 @@ import { storeToRefs } from 'pinia';
 import { useToHelpStore } from '@/stores';
 import { useRoute } from 'vue-router'
 import UserCard2 from '../../components/UserCard2.vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const route = useRoute()
 const toHelpStore = useToHelpStore();
@@ -18,7 +21,7 @@ toHelpStore.getDataToHelp(route.params.id);
 <template>
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 
-    <h1 class="titre">Vous êtes le profil parfait pour aider {{ userToHelp.user.profile[0].pseudo }} !</h1>
+    <h1 class="titre">{{t('help-profile')}} {{ userToHelp.user.profile[0].pseudo }} !</h1>
     <div class="container-help-user">
         
 
@@ -28,7 +31,7 @@ toHelpStore.getDataToHelp(route.params.id);
         </div>
 
         <div class="Questions">
-            <h2 class="QuestionTitre">Voici les questions que vous pouvez aider à résoudre :</h2>
+          <h2 class="QuestionTitre">{{t('help-questions')}}</h2>
 
             <!-- affiche une liste de questions avec le nom de la question et un bouton pour acceder à l'url de la quesiton -->
             <ul>
@@ -40,7 +43,7 @@ toHelpStore.getDataToHelp(route.params.id);
                         <span class="circle" aria-hidden="true">
                         <span class="icon arrow"></span>
                         </span>
-                        <a :href="question.urlQuestion" target="_blank" class="button-text">Question</a>
+                        <a :href="question.urlQuestion" target="_blank" class="button-text">{{t('question')}}</a>
                     </button>
                     </div>
                 </div>

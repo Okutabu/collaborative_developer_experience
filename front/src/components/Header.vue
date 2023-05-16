@@ -1,18 +1,25 @@
 <script>
+import { defineProps } from 'vue'
+import { useI18n } from 'vue-i18n';
+
 
 export default {
-    name: 'Header',
-    props: {
-        name: {
-            type: String,
-            required: true
+        setup(){
+            const { t } = useI18n();
+            return { t };
         },
-        surname: {
-            type: String,
-            required: true
+        name: 'Header',
+        props: {
+            name: {
+                type: String,
+                required: true
+            },
+            surname: {
+                type: String,
+                required: true
+            }
         }
-    }
-}
+    };
 
 
 
@@ -25,8 +32,8 @@ export default {
     
         <div class="header">
             <div class="container-welcome-message text-center">
-                    <h2> Bienvenue sur votre espace de collaboration</h2>
-                    <p class="text-muted">Nous utilisons des algorithmes de recommendations pour vous recommander des profils les plus pertinant possible</p>
+                    <h2>{{t('header-welcome')}}</h2>
+                    <p class="text-muted">{{t('header-message')}}</p>
             </div>
         </div>
 

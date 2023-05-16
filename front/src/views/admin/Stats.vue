@@ -2,8 +2,10 @@
 
 import { useAdminStore } from '@/stores';
 import { storeToRefs } from 'pinia';
-
+import { useI18n } from 'vue-i18n';
 import CalendarHeatmap from '@/components/CalendarHeatmap.vue';
+
+const { t } = useI18n();
 
 var endDate    = new Date('2023-03-27');
 var orientation= 'horizontal';
@@ -23,7 +25,7 @@ const user = localStorage.getItem('user')
     <div>
         <div class="container-table">
             <div class="container-heatmap">
-                    <p class="text">Taux de contributions des developpeurs</p>
+                    <p class="text">{{ t('admin-stats-title') }}</p>
                 <calendar-heatmap class="heatmap-component" :values="InteractionDates" :end-date="endDate" :style="{'max-width': orientation === 'vertical' ? '145px' :  '800px'}" :round="2"
                                 :vertical="orientation === 'vertical'"/>
             
@@ -31,49 +33,49 @@ const user = localStorage.getItem('user')
                     
             <table class="table-body">
                 <tr>
-                    <td>Le nombre de tags différents</td>
+                    <td>{{t('admin-stats-nbTags')}}</td>
                     <td>{{ stats.nbTags }}</td>
                 </tr>
                 <tr>
-                    <td>Le nombre d'utilisateurs</td>
+                    <td>{{t('admin-stats-nbUsers')}}</td>
                     <td>{{ stats.nbUsers }}</td>
                 </tr>
                 <tr>
-                    <td>Les tags avec le plus d'interactions</td>   
+                    <td>{{t('admin-stats-tagsWithMostUsers')}}</td>   
                     <div v-for="tag in stats.topTags" class="container-tags">
                         <td>{{ tag.tag + " : " + tag.nbInteractions }}</td>
                     </div>
                 </tr>
                 <tr>
-                    <td>Le nombre d'interactions totales</td>
+                    <td>{{t('admin-stats-nbInteractions')}}</td>
                     <td>{{ stats.nbInteractions }}</td>
                 </tr>
                 <tr>
-                    <td>Le nombre de réponses totales</td>
+                    <td>{{t('admin-stats-nbAnswers')}}</td>
                     <td>{{ stats.nbAnswers }}</td>
                 </tr>
                 <tr>
-                    <td>Le nombre d'utilisateurs actifs</td>
+                    <td>{{t('admin-stats-nbActiveUsers')}}</td>
                     <td>{{  stats.nbActiveUsers }}</td>
                 </tr>
                 <tr>
-                    <td>Les tags avec le plus d'utilisateurs qui ont intéragit dessus</td>
+                    <td>{{t('admin-stats-tagsWithMostInteractions')}}</td>
                     <div v-for="tag in stats.tagsWithMostUsers" class="container-tags">
                         <td>{{ tag.tag + " : " + tag.nbInteractions }}</td>
                     </div>
                 </tr>
                 <tr>
-                    <td>Date de debut/fin du collecteur </td>
+                    <td>{{t('admin-stats-collectorDates')}}</td>
                     <td>2023-01-02  to  2023-03-30</td>
                     
                 </tr>
                 <tr>
-                    <td>Nombre de noeuds(max 200 000)</td>
+                    <td>{{t('admin-stats-nbNodes')}}</td>
                     <td>{{ stats.nbNodes }}</td>
                 </tr>
 
                 <tr>
-                    <td>Nombre de relations(max 400 000)</td>
+                    <td>{{t('admin-stats-nbRelationships')}}</td>
                     <td>{{ stats.nbRelations}}</td>
                 </tr>
 

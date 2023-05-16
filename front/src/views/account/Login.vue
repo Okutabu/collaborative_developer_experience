@@ -8,6 +8,10 @@ import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores';
 import { useRecoStore } from '@/stores';
 
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
+
 const adminStore = useAdminStore();
 adminStore.getStats();
 adminStore.getInteractionDates();
@@ -28,20 +32,20 @@ async function onSubmit(values) {
 
 <template>
     <div class="card container-form">
-        <h4 class="card-header">Login</h4>
+        <h4 class="card-header">{{t('login')}}</h4>
         <div class="card-body">
             <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
                 <div class="form-group">
-                    <label>ID STOW</label>
+                    <label>{{t('idStow')}}</label>
                     <Field name="idSTOW" type="text" class="form-control" :class="{ 'is-invalid': errors.idSTOW }" />
                     <div class="invalid-feedback">{{ errors.idSTOW }}</div>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary btn-login" :disabled="isSubmitting">
                         <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
-                        Login
+                        {{t('login')}}
                     </button>
-                    <router-link to="register" class="btn btn-link btn-register">Register</router-link>
+                    <router-link to="register" class="btn btn-link btn-register">{{t('register')}}</router-link>
                 </div>
             </Form>
         </div>

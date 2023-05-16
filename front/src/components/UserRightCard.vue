@@ -6,6 +6,7 @@ import { ref } from 'vue';
 
 import UserCard3  from './UserCard3.vue';
 
+
 defineProps({
     name: String,
     surname: String,

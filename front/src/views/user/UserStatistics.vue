@@ -14,6 +14,9 @@ userStore.getUserStats(userJson.user.idSTOW);
 var endDate = new Date('2023-04-27');
 var orientation = 'horizontal';
 
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
 </script>
 
 
@@ -21,7 +24,7 @@ var orientation = 'horizontal';
     <div class="container-stat">
 
         <div class="title">
-            <h2>Vos statistiques</h2>
+            <h2>{{t('stats')}}</h2>
         </div>
 
         <div class="container-heatmap">
@@ -65,25 +68,25 @@ var orientation = 'horizontal';
 
     <table class="table-body">
         <tr class="table-first">
-            <td>Le nombre de questions auquelles vous avez répondu</td>
+            <td>{{t('stats-nbAnswer')}}</td>
             <td>{{ stats.nbAnswers }}</td>
         </tr>
         <tr>
-            <td>Le nombre de questions que vous avez posé</td>
+            <td>{{t('stats-nbQuestion')}}</td>
             <td>{{ stats.nbQuestions }}</td>
         </tr>
         <tr>
-            <td>Les tags sur lesquelles vous avez le plus intéragit</td>
+            <td>{{t('stats-topTags')}}</td>
             <div v-for="tag in stats.topTags" class="container-tags">
                 <td>{{ tag.tag + " : " + tag.nbInteractions }}</td>
             </div>
         </tr>
         <tr>
-            <td>Le nombre de personnes que vous avez aidé</td>
+            <td>{{t('stats-nbHelped')}}</td>
             <td>{{ stats.nbHelped }}</td>
         </tr>
         <tr class="table-last">
-            <td>Le nombre de personnes qui vous ont aidé</td>
+            <td>{{t('stats-nbHelper')}}</td>
             <td>{{ stats.nbHelper }}</td>
         </tr>
     </table>

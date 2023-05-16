@@ -1,0 +1,89 @@
+{
+    "last-activity" : "Dernière activité",
+    "front-end" : "Développeur front-end",
+
+    "header-welcome" : "Bienvenue sur votre espace de collaboration",
+    "header-message" : "Nous utilisons des algorithmes de recommandations pour vous recommander des profils les plus pertinant possible",
+
+    "home-similar-user" : "Utilisateurs similaires à vous",
+    "home-answer-user" : "Utilisateurs qui repondent à vos questions",
+    "home-ask-user" : "Utilisateurs que vous pouvez aider",
+    "home-collaborated-with" : "Vous avez collaboré sur StackOverflow avec ces developpeurs PTC",
+
+    "help-profile" : "Vous avez le profil parfait pour aider",
+    "help-questions" : "Voici les questions que vous pouvez aider à répondre :",
+    "question" : "Question",
+
+    "pref-user" : "Préférences",
+    "pref-informations" : "Mes informations",
+    "mail": "Email",
+    "first-name": "Prénom",
+    "last-name": "Nom",
+    "idStow": "Id Stack Overflow",
+    "pref-change": "Modifier les informations",
+    "pref-delete": "Supprimer mon compte",
+    "cancel": "Annuler",
+    "pref-disclaimer": "Voulez vous vraiment supprimer votre compte ?",
+    "pref-disclaimer-details": "Toutes vos données seront supprimées et vous n'aurez plus accès à vos recommandations.",
+
+    "stats": "Vos statistiques",
+    "stats-nbAnswer": "Le nombre de questions auquelles vous avez répondu",
+    "stats-nbQuestion": "Le nombre de questions que vous avez posé",
+    "stats-topTags": "Les tags sur lesquelles vous avez le plus intéragit",
+    "stats-nbHelped": "Le nombre de personnes que vous avez aidé",
+    "stats-nbHelper": "Le nombre de personne qui vous ont aidé",
+
+    "marketing-last-month": "Ce dernier mois, c'est ",
+    "marketing-nbQuestion": " questions qui ont été posé sur Stack Overflow par les developpeurs PTC inscrits sur la plateforme.",
+    "marketing-nbAnswer": " réponses sur Stack Overflow par les developpeurs PTC inscrits sur la plateforme.",
+    "marketing-collab": "Taux de collaborations des developpeur PTC",
+    "marketing-active-user": "Nombre d'utilisateurs actifs sur la plateforme",
+    "marketing-topTags": "Tags les plus utilisés",
+    "marketing-title": "Le Futur De La Collaboration",
+    "marketing-CDE": "Sur CDE",
+
+    "login": "Connexion",
+    "register": "S'inscrire",
+
+    "conditions": "Accepter les CGU",
+    "terms": "J'accepte que mes données Stack Overflow soient utilisées par la plateforme. Celles-ci seront utilisées uniquement par des algorithmes de recommandation et ne seront pas partagées avec des tiers.",
+
+    "yup-first-name": "Votre prénom doit être renseigné",
+    "yup-last-name": "Votre nom doit être renseigné",
+    "yup-mail": "Votre email doit être renseigné",
+    "yup-valid-mail": "Votre email doit être une adresse correcte",
+    "yup-idStow": "Votre Id Stack Overflow doit être renseigné",
+    "yup-TC": "Vous devez accepter les CGU",
+
+    "top-tags": "Top tags",
+    "find-tag": "Recherchez un tag",
+    "inactive": "Inactif",
+
+    "admin-stats-title" : "Taux de contributions des developpeurs",
+    "admin-stats-nbTags" : "Le nombre de tags différents",
+    "admin-stats-nbUsers": "Le nombre d'utilisateurs",
+    "admin-stats-tagsWithMostUsers": "Les tags avec le plus d'interactions",
+    "admin-stats-nbInteractions": "Le nombre d'interactions totales",
+    "admin-stats-nbAnswers": "Le nombre de réponses totales",
+    "admin-stats-nbActiveUsers": "Le nombre d'utilisateurs actifs",
+    "admin-stats-tagsWithMostInteractions": "Les tags avec le plus d'utilisateurs qui ont intéragit dessus",
+    "admin-stats-collectorDates": "Date de debut / fin du collecteur",
+    "admin-stats-nbNodes": "Nombre de noeuds (max 200 000)",
+    "admin-stats-nbRelationships": "Nombre de relations (max 400 000)",
+
+    "nav-home": "Accueil",
+    "nav-stats": "Statistiques",
+    "nav-pref": "Préférences",
+    "nav-logout": "Déconnexion",
+    "nav-menu": "Menu",
+
+    "collabCard-stow": "Profil STOW",
+    "collabCard-detail": "Détails",
+
+    "loading": "Chargement ...",
+    "logged": "Connecté",
+    "help": "Aide ce dev",
+
+    "no-activity": "Aucune activité",
+    "last-questions-home": "Les dernières questions posées sur StackOverflow par des développeurs PTC"
+}
