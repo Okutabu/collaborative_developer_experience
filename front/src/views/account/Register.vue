@@ -4,19 +4,23 @@ import * as Yup from 'yup';
 
 import { useUsersStore, useAlertStore } from '@/stores';
 import { router } from '@/router';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
+
 
 const schema = Yup.object().shape({
     surname: Yup.string()
-        .required('First Name is required'),
+        .required(t('yup-first-name')),
     name: Yup.string()
-        .required('Last Name is required'),
+        .required(t('yup-last-name')),
     mail: Yup.string()
-        .required('Mail is required')
-        .email('Mail must be a valid email'),
+        .required(t('yup-mail'))
+        .email(t('yup-valid-mail')),
     idSTOW: Yup.string()
-        .required('ID STOW is required'),
+        .required(t('yup-idStow')),
     acceptTerms: Yup.bool()
-                .required('Accept Ts & Cs is required')
+                .required(t('yup-TC'))
 });
 
 async function onSubmit(values) {
@@ -35,40 +39,39 @@ async function onSubmit(values) {
 
 <template>
     <div class="card container-form">
-        <h4 class="card-header">Register</h4>
+        <h4 class="card-header">{{t('register')}}</h4>
         <div class="card-body">
             <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
                 <div class="form-group">
-                    <label>Email</label>
+                    <label>{{t('mail')}}</label>
                     <Field name="mail" type="mail" class="form-control" :class="{ 'is-invalid': errors.mail }" />
                     <div class="invalid-feedback">{{ errors.mail }}</div>
                 </div>
                 <div class="form-group">
-                    <label>First Name</label>
+                    <label>{{t('first-name')}}</label>
                     <Field name="surname" type="text" class="form-control" :class="{ 'is-invalid': errors.firstName }" />
                     <div class="invalid-feedback">{{ errors.firstName }}</div>
                 </div>
                 <div class="form-group">
-                    <label>Last Name</label>
+                    <label>{{ t('last-name') }}</label>
                     <Field name="name" type="text" class="form-control" :class="{ 'is-invalid': errors.lastName }" />
                     <div class="invalid-feedback">{{ errors.lastName }}</div>
                 </div>
                 <div class="form-group">
-                    <label>Id Stack Overflow</label>
+                    <label>{{t('idStow')}}</label>
                     <Field name="idSTOW" type="integer" class="form-control" :class="{ 'is-invalid': errors.idSTOW }" />
                     <div class="invalid-feedback">{{ errors.idSTOW }}</div>
                 </div>
                 <div class="form-group form-check">
                     <Field name="acceptTerms" type="checkbox" id="acceptTerms" :value="true" class="form-check-input" :class="{ 'is-invalid': errors.acceptTerms }" />
-                    <label for="acceptTerms" class="form-check-label">Accept Terms & Conditions*</label>
-                    <p class ="h6"><small>J'accepte que mes données StackOverflow soient utilisées par la plateforme. Celles-ci seront utilisées uniquement par des algorithmes de recommandation et ne seront pas partagées avec des tiers.
-                    </small></p>
+                    <label for="acceptTerms" class="form-check-label">{{t('conditions')}}</label>
+                    <p class ="h6"><small>{{t('terms')}}</small></p>
                     <div class="invalid-feedback">{{errors.acceptTerms}}</div>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary btn-register" :disabled="isSubmitting">
                         <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
-                        Register
+                        {{t('register')}}
                     </button>
                     <router-link to="login" class="btn btn-link btn-cancel">Cancel</router-link>
                 </div>
