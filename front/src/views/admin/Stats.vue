@@ -7,7 +7,7 @@ import CalendarHeatmap from '@/components/CalendarHeatmap.vue';
 
 const { t } = useI18n();
 
-var endDate    = new Date('2023-03-27');
+var endDate    = new Date('2023-04-27');
 var orientation= 'horizontal';
 
 

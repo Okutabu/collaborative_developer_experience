@@ -10,6 +10,10 @@ import UserCarCollaborative from '../../components/UserCarCollaborative.vue';
 import UserRightCard from '../../components/UserRightCard.vue';
 import CardCollection from '../../components/CardCollection.vue';
 
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
+
 
 const help = ref(null);
 const contact = ref("contact")
