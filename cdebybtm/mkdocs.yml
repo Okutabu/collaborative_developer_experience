@@ -1,0 +1,38 @@
+site_name: CDEBYBTM
+theme: readthedocs
+nav:
+  - Home: index.md
+  - About: about.md
+  - Back:
+    - Back/api.md
+    - Back/dbNeo4J.md
+    - Back/similarite.md
+    - API: 
+      - Back/API/question.md
+      - Back/API/interactedWithMe.md
+      - Back/API/delete.md
+      - Back/API/userStatistics.md
+      - Back/API/userHelp.md
+      - Back/API/users.md
+      - Back/API/name.md
+      - Back/API/surname.md
+      - Back/API/lastInteraction.md
+      - Back/API/nameDesc.md
+      - Back/API/surnameDesc.md
+      - Back/API/lastInteractionDesc.md
+      - Back/API/InteractionDates.md
+      - Back/API/proficiency.md
+      - Back/API/cosinus.md
+      - Back/API/statistics.md
+      - Back/API/login.md
+
+  - Collecteur:
+    - Collecteur/collecteur.md
+    - Collecteur/users.md
+    - Collecteur/calculateurs.md
+    - Requetes :
+      - Collecteur/Requetes/Neo4j.md
+      - Collecteur/Requetes/STOW.md
+  - Front :
+    - Front/Front.md  
+
