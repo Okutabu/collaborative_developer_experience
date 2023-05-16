@@ -5,7 +5,7 @@ puis on vient récupèrer la liste d'activité de chaque utilisateur dans une tr
 réponse et question posé par un utilisateur et on récupère les tags liés à ceux-ci.
 
 */
-const user = require('./users')
+const user = require('./users/users')
 
 /*
 Un tableau de users à renvoyer
@@ -15,12 +15,16 @@ Un tableau de users à renvoyer
             "id": 12345,
             "activities": [
                 {
-                    "type": "question",
-                    "tags": ["javascript", "jquery", "ajax"]
+                    "typePost": "answer",
+                    "idQuestion": 75131252,
+                    "dateInteraction": 1673848584,
+                    "tags": [ 'go', 'github', 'path', 'oh-my-zsh', 'gopath' ]
                 },
                 {
-                    "type": "answer",
-                    "tags": ["python", "django", "orm"]
+                    "typePost": "answer",
+                    "idQuestion": 75131252,
+                    "dateInteraction": 1673848584,
+                    "tags": [ 'go', 'github', 'path', 'oh-my-zsh', 'gopath' ]
                 }
             ]
         },
@@ -28,16 +32,28 @@ Un tableau de users à renvoyer
             "id": 67890,
             "activities": [
                 {
-                    "type": "question",
-                    "tags": ["c#", "asp.net", "mvc"]
+                    "typePost": "answer",
+                    "idQuestion": 75131252,
+                    "dateInteraction": 1673848584,
+                    "tags": [ 'go', 'github', 'path', 'oh-my-zsh', 'gopath' ]
                 },
                 {
-                    "type": "answer",
-                    "tags": ["java", "spring", "rest"]
+                    "typePost": "answer",
+                    "idQuestion": 75131252,
+                    "dateInteraction": 1673848584,
+                    "tags": [ 'go', 'github', 'path', 'oh-my-zsh', 'gopath' ]
                 }
             ]
         }
     ]
+}
+
+à modifier en =>
+{
+    "typePost": "answer",
+    "question": { "idQuestion": 75131252, "title": "Comment faire du go sur github avec gopath ?"  }, 
+    "dateInteraction": 1673848584,
+    "tags": [ 'go', 'github', 'path', 'oh-my-zsh', 'gopath' ]
 }
 */
 
@@ -45,13 +61,7 @@ Un tableau de users à renvoyer
 async function sleep(time){
     await new Promise(resolve => setTimeout(resolve, time));
 }
-/*
-async function sleep(ms) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, ms);
-    });
-}
-*/
+
 
 //Version asynchrone de la fonction
 // Permet de récupérer les tags d'une question et d'insérer le résultat dans un objet.
@@ -66,11 +76,19 @@ async function get_questions_tags_async(postid, posttype){
     if (data.items == undefined){
         return [];
     }
+
+    let question = {
+        idQuestion: postid,
+        title: data.items[0].title
+    }
+
     let activities = {
         typePost : posttype,
+        question,
+        dateInteraction : data.items[0].creation_date,
         tags : data.items[0].tags
     }
-    
+    //console.log(activities);
     return activities;
 }
 
@@ -89,7 +107,9 @@ async function get_answers_tags_async(postid, posttype){
         return [];
     }
 
-    return get_questions_tags_async(data.items[0].question_id, posttype);
+    //console.log("POSTID : ", data.items[0].question_id, " POSTYPE : ", posttype, " POSTID : ", postid);
+
+    return await get_questions_tags_async(data.items[0].question_id, posttype);
 }
 
 
@@ -106,6 +126,7 @@ async function get_user_tags_async(idUser, start, end) {
     const data = await promise;
     
     if (data.items != undefined){
+        
         for (const item of data.items) {
             let id = item.post_id
             let type = item.post_type
@@ -120,7 +141,8 @@ async function get_user_tags_async(idUser, start, end) {
                     .catch(error => {
                         console.log(error);
                     });
-                } else {
+                } 
+                if(type == "question") {
                     await get_questions_tags_async(id, type)
                     .then(data => {
                         activities.push(data);
@@ -131,13 +153,12 @@ async function get_user_tags_async(idUser, start, end) {
                 }
             }
         }
-    }
-    
-    
+    }    
     return activities;
 }
 
 
+// fonction qui permet de récupérer toutes les activitées des utilisateurs
 async function get_users_tags_async(start, end){
     let users = []
 
@@ -146,15 +167,16 @@ async function get_users_tags_async(start, end){
 
     for(let i=0; i < user.list_id.length; i++){
 
-        let state = i / user.list_id.length * 100
+        let state = Math.floor(i / user.list_id.length * 100);
         console.log("Collecting datas of " + `${user.list_id[i]}` + " : "+state + " %");
+
         let userInfo =  {
             id : user.list_id[i],
             activities : await get_user_tags_async(user.list_id[i], start, end)
         }
 
         await sleep(800);
-        if (i == 20){
+        if (i % 20 == 0 && i != 0){
             await sleep(10000);
         }
         //console.log(userInfo);
@@ -164,23 +186,68 @@ async function get_users_tags_async(start, end){
     return users
 }
 
+
+
+// permet de récupérer la dernière date d'activité, va devenir obselete avec la nouvelle version de la bdd
+async function get_user_last_activity_date(userId, start, end){
+
+    res = -1;
+    try {
+
+        await sleep(2000);
+
+        const getActivities = await fetch('https://api.stackexchange.com/2.3/users/' + userId + '/timeline?fromdate=' + start + '&todate=' + end + '&site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg((')
+         .then(response => response.json());
+        
+        //console.log(getActivities);
+        
+
+        if(getActivities.items[0] != undefined){
+            
+            for(const data of getActivities.items){
+                //on prend la première activité qui est une question ou un réponse, si c'est l'acquisition d'un badge
+                //par exemple, on passe à la prochaine activité
+                if(data.post_type != undefined){
+                    //let type = data.post_type;
+                    
+                    res = data.creation_date;
+                    //console.log(`   Last activity of ${userId} : ${res}`);
+                    break;
+                }
+            }
+            
+        }
+        return res;
+        
+    } catch (error) {
+        console.error(`Error function get_user_last_activity : ${error}`);
+        return error;
+    }
+        
+}
+
 // Version asynchrone de la fonction.
 // Permet de récupérer toutes les informations d'un utilisateur.
-// Renvoie un objet user contenant le nom et l'id de l'utilisateur.
-async function get_user(id){
+// Renvoie un objet user contenant le nom et l'id de l'utilisateur ainsi que sa dernière date d'activité.
+async function get_user(id, start, end){
 
     const URL = 'https://api.stackexchange.com/2.3/users/'+ id +'?site=stackoverflow&key=djYBpvTDkmPNdHk*uNJKjg(('
 
-    console.log("GET user : " + id);
+    console.log("[ GET user ] : " + id);
 
     try {
+        await sleep(1000);
         var data = await fetch(URL).then(response => response.json());
 
         //console.log(data);
+        
+        //var date = await get_user_last_activity_date(id, start, end);
+
         var info = {
             idSTOW: data.items[0].user_id,
             pseudo: data.items[0].display_name,
-            avatar: data.items[0].profile_image
+            avatar: data.items[0].profile_image,
+            //lastInteraction: date
         };
         return info;
         
@@ -189,34 +256,68 @@ async function get_user(id){
     }
 }
 
-async function get_users(allIds){
+async function get_users(allIds, start, end){
 
     let ids = allIds.map(id => id.toString());
     let users_info = [];
 
-    for(id of ids){
-        const info = await get_user(id);
-        await sleep(1000);
+    for(let i =0; i < ids.length; i++){
+        const info = await get_user(ids[i]);
+        await sleep(2000);
         users_info.push(info);
-    }
 
+        if( i % 20 == 0 && i != 0){
+            console.log("[ TEMPORISATION ]");
+            await sleep(10000);
+        }
+    }
     return users_info;
 }
 
-/*
-(async() => {
+function get_users_tags_questions(userProfil){
+
+    let infos = {
+        tags : [],
+        questions: [],
+        ids: []
+    };
+
+    //let userProfil = await get_users_tags_async(start, end);
+
+    userProfil.map(
+        user => {
+
+            infos.ids.push(user.id);
+
+            user.activities.map(
+                activity => {
+
+                    allTags = infos.tags.concat(activity.tags);
+                    infos.tags = allTags;
+
+                    infos.questions.push(activity.question);
+                }
+            );
+        }
+    );
+
+    return infos;
+}
+
+// from 2023-03-19 to 2023-03-23
+//fromdate= 1679184000 &todate= 1679529600
+
+// (async() => {
     
-    let res = await get_user('13431819');
-    console.log(res);
+
+//     let res = await get_users_tags_async("1672904976", "1680162576");
+//     //console.log(res[0].activities);
     
-})();
-*/
+// })();
+
+
 
 
 module.exports = {
-    get_answers_tags_async, get_users, get_users_tags_async
+    get_answers_tags_async, get_users, get_users_tags_async, get_users_tags_questions
 }
-
-
-
-

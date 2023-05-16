@@ -1,19 +1,21 @@
 <script setup>
-import { defineProps } from 'vue'
-import Radar from './Radar.vue'
+import { defineProps } from 'vue';
+import Radar from './Radar.vue';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 
 
 const props = defineProps({
-  id: String,
+  nom: String,
   avatar: String,
-  pseudo: String,
-  type: String,
-  reco : String,
+  reco : String, 
   techno: Array,
-  ratio: Number,
+  lastInteract: Number,
 })
 
+const date = (new Date(props.lastInteract* 1000)).toLocaleString().split(',')[0] 
+      
 </script>
 
 <template>
@@ -21,66 +23,75 @@ const props = defineProps({
     <div class="container_user_card">
         <div class="container_user_info">
             <div class="user_description">
+                <div class="avatar">
+                    <img :src=avatar >    
+                </div>
+                <div class="info">
+                    <p class="bold name">{{ nom || t('loading') }}</p>
+                    <p class="speciality"><i class="fa fa-graduation-cap "></i> {{ reco || t('loading') }}</p>
+                    <p class="lastInteract" >{{t('last-activity')}} : {{ date || t('loading') }}</p>
+                </div>
                 
-                <img :src=avatar >
-                <p>{{ pseudo }}</p>
-                <p>{{ type }}</p>
-                <p>point fort : {{ reco }}</p>
             </div>
         </div>
-        <div class="user_stats">
-        <div> <Radar :technoratio=props.techno  /> </div>
+        <div>
+            <Radar :technoratio={techno} :ref_key={techno} /> 
         </div>
     </div>
+
 
 </template>
 
 <style scoped>
+  .container_user_card {
+    background-color: aliceblue;
+    border-radius: 25px;
+    width: 800px;
+    height: 450px;
+    box-shadow: 0 0 10px 0 rgba(151, 144, 144, 0.2);
+    margin-bottom: 20px;
+    font-family: sans-serif;
+}
+
+.bold {
+    font-weight: bold;
+}
 
 
-.container_user_info {
+.avatar {
+
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 1px solid black;
+    margin-bottom: 15px;
+    margin-right: 40px;
+    margin-top: 30px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 30%;
+    
+}
+
+.user_description {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    height: 50%;
-}
+    margin-top: 30px;
 
-.container_user_card img{
-    width: 100px;
-    height: 100px;
-}
 
-.container_user_info {
-    padding: 0;
-    margin: 0;
-    align-items: center;
-    display: flex;
-    justify-content: space-around;
-}
-
-.container_user_card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: white;
-    border-radius: 10px;
-    width: 500px;
-    height: 600px;
-    box-shadow: 0 0 10px 0 rgba(151, 144, 144, 0.2);
-    margin-bottom: 20px;
-    
-}
-
-.userdescription {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
 }
 
 </style>

@@ -4,10 +4,7 @@ import { fetchWrapper } from '@/helpers';
 import { router } from '@/router';
 import { useAlertStore } from '@/stores';
 
-const API_URL = "http://localhost:8080"
-
-//const baseUrl = `${import.meta.env.VITE_API_URL}/users`;
-const baseUrl = `${API_URL}/user`;
+const baseUrl = `${import.meta.env.VITE_API_URL}/user`;
 
 export const useAuthStore = defineStore({
     id: 'auth',
@@ -23,7 +20,6 @@ export const useAuthStore = defineStore({
             
                 // update pinia state
                 if (user.error == -1){
-                    console.log("L'utilisateur n'existe pas")
                     router.push(this.returnUrl || '/login');
 
                 }else{
@@ -32,8 +28,8 @@ export const useAuthStore = defineStore({
                     // store user details and jwt in local storage to keep user logged in between page refreshes
                     localStorage.setItem('user', JSON.stringify(user));
 
-                    // redirect to previous url or default to home page
-                    router.push(this.returnUrl || '/');
+                    // redirect to home page
+                    router.push('/');
                 }
                 
             } catch (error) {
@@ -43,11 +39,12 @@ export const useAuthStore = defineStore({
         },
         logout() {
             this.user = null;
-            localStorage.removeItem('user');
             router.push('/account/login');
-            localStorage.removeItem('usersReco');
-            localStorage.removeItem('usersRecoSimilarity');
-            localStorage.removeItem('usersRecoQuestion');
+
+            // Vide le local storage
+            localStorage.clear();
+
+            window.location.reload();
         }
     }
 });

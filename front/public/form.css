@@ -1,0 +1,35 @@
+.card{
+    border-radius: 15px;
+}
+
+.card-header{
+    border-radius: 15px 15px 0 0;
+    background-color: #bdd0fb;
+}
+
+.btn-login{
+    background-color:#4347e9;
+    border: none;
+}
+
+.btn-login:hover{
+    border: none;
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-register{
+    color: #6c97fc;
+    text-decoration: none;
+}
+
+.btn-register:hover{
+    color: rgb(87, 176, 192);
+    text-decoration: none;
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.container-form{
+    width: 70%;
+}

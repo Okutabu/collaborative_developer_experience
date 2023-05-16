@@ -1,13 +1,12 @@
-import { Layout, AdminHomePage, List, AddEdit} from '@/views/admin';
+import { Layout, List, Stats, Profile } from "@/views/admin";
 
 export default {
-    path: '/admin',
-    component: Layout,
-    children: [
-        { path: '', component: AdminHomePage },
-        { path: 'users/add', component: AddEdit },
-        { path: 'edit/:id', component: AddEdit },
-        { path: 'users', component: List }
-    ]
+  path: "/admin",
+  component: Layout,
+  children: [
+    { path: "list", component: List },
+    { path: "users/profile/:id", component: Profile },
+    { path: "stats", component: Stats },
+    { path: "", redirect: "/admin/list" },
+  ],
 };
-

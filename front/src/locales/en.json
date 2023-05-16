@@ -1,0 +1,96 @@
+{
+    "last-activity" : "Last activity",
+    "front-end" : "Front-end developer",
+
+    "header-welcome" : "Welcome on your collaboration space",
+    "header-message" : "We are using recommendation algorithms to provide to you the best matching profiles",
+    
+    "home-similar-user" : "Users similar to you",
+    "home-answer-user" : "Users who answer to your questions",
+    "home-ask-user" : "Users that you can help",
+    "home-collaborated-with" : "You have collaborated on StackOverflow with these PTC's developers",
+
+    "help-profile" : "You have the perfect profile to help ",
+    "help-questions" : "Here are the questions that you can answer :",
+    "question" : "Question",
+
+    "pref-user" : "User preferences",
+    "pref-informations" : "My informations",
+    "mail": "Email",
+    "first-name": "First Name",
+    "last-name": "Last Name",
+    "idStow": "Id Stack Overflow",
+    "pref-change": "Save changes",
+    "pref-delete": "Delete account",
+    "cancel": "Cancel",
+    "pref-disclaimer": "Do you really want to delete your account ?",
+    "pref-disclaimer-details": "All your datas will be deleted and you wont have acces to your recommandations anymore.",
+
+    "stats": "Your statistics",
+    "stats-nbAnswer": "Number of questions you have answered",
+    "stats-nbQuestion": "Number of questions you have asked",
+    "stats-topTags": "Tags you most interacted with",
+    "stats-nbHelped": "Number of people you helped",
+    "stats-nbHelper": "Number of people who helped you",
+
+    "marketing-last-month": "This last month, it's ",
+    "marketing-nbQuestion": " questions that have been asked on Stack Overflow par by PTC's developers registered on the plateform.",
+    "marketing-nbAnswer": " answers that have been sent on Stack Overflow by PTC's developers registered on the plateform.",
+    "marketing-collab": "PTC's developers collaboration rate",
+    "marketing-active-user": "Number of active users on the plateform",
+    "marketing-topTags": "Most used tags",
+    "marketing-title": "The Future Of The Collaboration",
+    "marketing-CDE": "On CDE",
+
+    "login": "Login",
+    "register": "Register",
+
+    "conditions": "Accept Terms & Conditions",
+    "terms": "I consent to my Stack Overflow data being used by the platform. These will only be used by recommendation algorithms and will not be shared with third parties.",
+
+    "yup-first-name": "First name is required",
+    "yup-last-name": "Last name is required",
+    "yup-mail": "Mail is required",
+    "yup-valid-mail": "Mail must be a valid email",
+    "yup-idStow": "Id Stack Overflow is required",
+    "yup-TC": "Accept Ts & Cs is required",
+
+    "top-tags": "Top tags",
+    "find-tag": "Find a tag",
+    "inactive": "Inactive",
+
+    "admin-stats-title" : "Developer contribution rate",
+    "admin-stats-nbTags" : "Number of different tags",
+    "admin-stats-nbUsers": "Number of users",
+    "admin-stats-tagsWithMostUsers": "Tags with most interactions",
+    "admin-stats-nbInteractions": "Number of interactions",
+    "admin-stats-nbAnswers": "Number of answers",
+    "admin-stats-nbActiveUsers": "Number of active users",
+    "admin-stats-tagsWithMostInteractions": "Tags whith most users who interacted on it",
+    "admin-stats-collectorDates": "Manifold start / end",
+    "admin-stats-nbNodes": "Nodes number (max 200 000)",
+    "admin-stats-nbRelationships": "Relationships number (max 400 000)",
+
+    "nav-home": "Home",
+    "nav-stats": "Statistics",
+    "nav-pref": "Preferences",
+    "nav-logout": "Logout",
+    "nav-menu": "Menu",
+
+    "collabCard-stow": "Profile STOW",
+    "collabCard-detail": "Details",
+    "collabCard-help": "Help this dev",
+    
+    
+    "loading": "Loading ...",
+    "logged": "Logged in",
+    "help": "Help this dev",
+
+    "no-activity": "No activity",
+    "last-questions-home": "Last questions asked by PTC's developers",
+
+    "similarities-title": "Collaborators",
+    "similarities-category-similar": "Similar",
+    "similarities-category-canHelp": "Helper",
+    "similarities-category-canBeHelped": "Helpable"
+}

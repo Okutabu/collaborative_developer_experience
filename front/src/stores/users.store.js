@@ -2,17 +2,16 @@ import { defineStore } from 'pinia';
 
 import { fetchWrapper } from '@/helpers';
 import { useAuthStore } from '@/stores';
+import { useAlertStore } from '@/stores';
 
-const API_URL = "http://localhost:8080"
-
-const baseUrl = `${import.meta.env.VITE_API_URL}/users`;
-// const baseUrl = `${API_URL}/user`;
+const baseUrl = `${import.meta.env.VITE_API_URL}/user`;
 
 export const useUsersStore = defineStore({
     id: 'users',
     state: () => ({
         users: {},
-        user: {}
+        user: {},
+        stats: JSON.parse(localStorage.getItem('stats')) || {},
     }),
     actions: {
         async register(user) {
@@ -34,6 +33,33 @@ export const useUsersStore = defineStore({
                 this.user = await fetchWrapper.get(`${baseUrl}/${id}`);
             } catch (error) {
                 this.user = { error };
+            }
+        },
+        async deleteUser(id) {
+            try {
+                const authStore = useAuthStore();
+                var res = await fetchWrapper.get(`${baseUrl}/${id}/delete`);
+                res = JSON.parse(JSON.stringify(res));
+                if (id === authStore.user.id) {
+                    authStore.logout();
+                }
+            }
+            catch (error) {
+                const alertStore = useAlertStore();
+                alertStore.error(error);                
+            }
+        },
+        async updateUser(values) {
+            try {
+                const authStore = useAuthStore();
+                var res = await fetchWrapper.post(`${baseUrl}/update`, values);
+                res = JSON.parse(JSON.stringify(res));
+                localStorage.setItem('user', JSON.stringify(res));
+                this.user=res;
+            }
+            catch (error) {
+                const alertStore = useAlertStore();
+                alertStore.error(error);                
             }
         },
         async update(id, params) {
@@ -63,6 +89,18 @@ export const useUsersStore = defineStore({
             const authStore = useAuthStore();
             if (id === authStore.user.id) {
                 authStore.logout();
+            }
+        },
+        async getUserStats(id) {
+            try {
+                var res = await fetchWrapper.get(`${baseUrl}/${id}/statistics`);
+                res = JSON.parse(JSON.stringify(res));
+                this.stats = res;
+                localStorage.setItem('stats', JSON.stringify(res));
+            }
+            catch (error) {
+                const alertStore = useAlertStore();
+                alertStore.error(error);                
             }
         }
     }

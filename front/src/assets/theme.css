@@ -53,6 +53,51 @@
       --color-text: var(--cde-c-text-dark-2);
     }
   }
+
+  :root {
+	--primary: #8099f6;
+	--primary-hover: #5147F1;
+	--primary-alt: #A59FF7;
+	--primary-alt-hover: #9465F1;
+	--grey: #64748b;
+	--dark: #1e293b;
+	--dark-alt: #334155;
+	--light: #f1f5f9;
+	--sidebar-width: 300px;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Fira sans', sans-serif;
+}
+
+body {
+	background: var(--light);
+}
+
+button {
+	cursor: pointer;
+	appearance: none;
+	border: none;
+	outline: none;
+	background: none;
+}
+
+.app {
+  display: flex;
+}
+.app main {
+  flex: 1 1 0;
+  padding: 2rem;
+}
+@media (max-width: 1024px) {
+  .app main {
+    padding-left: 6rem;
+  }
+}
+
   
   /* *,
   *::before,
