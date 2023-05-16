@@ -57,50 +57,66 @@ function scrollToSection() {
 </script>
 
 <template>
-
-    <v-card>
-      <v-layout>
-        <v-navigation-drawer
+  <v-card>
+    <v-layout>
+      <v-navigation-drawer
         width="450"
         expand-on-hover
         rail
-          location="right"
-          style="background-color: white;"
-        >
-          <template v-slot:prepend>
-            <v-list-item
-              lines="two"
-              :prepend-avatar="avatar"
-              :title="`${name} ${surname}`"
-              subtitle="Logged in"
-            ></v-list-item>
-          </template>
+        location="right"
+        style="background-color: white;"
+      >
+        <template #prepend>
+          <v-list-item
+            lines="two"
+            :prepend-avatar="avatar"
+            :title="`${name} ${surname}`"
+            subtitle="Logged in"
+          />
+        </template>
 
-          <v-divider></v-divider>
+        <v-divider />
 
-            <UserCard3 :nom=userJson.user.pseudo :techno=stats.profile[1] :avatar=userJson.user.avatar
-                    :reco=stats.topTags[0].tag :lastInteract=stats.profile[0].lastInteraction v-if="showcomponent" />
-          <v-card-actions class="justify-center">
-          
-           
-            <v-list-item>
-              
-              <v-list-item-icon v-if="collaborated">
-                <v-btn class="btn btn-primary" @click="onLinkClick">
-                  <i class="fa fa-users" aria-hidden="true"></i>
-                  <i v-if="collaborated.error != -1" class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                </v-btn>  
-                <v-btn class="btn btn-primary" @click="scrollToSection">
-                  <i class="fa fa-comments-o" aria-hidden="true"></i>
-                </v-btn> 
-              </v-list-item-icon>
-            </v-list-item>          
-          </v-card-actions>
-          
-            
-        </v-navigation-drawer>
-      </v-layout>
-    </v-card>
+        <UserCard3
+          v-if="showcomponent"
+          :nom="userJson.user.pseudo"
+          :techno="stats.profile[1]"
+          :avatar="userJson.user.avatar"
+          :reco="stats.topTags[0].tag"
+          :last-interact="stats.profile[0].lastInteraction"
+        />
+        <v-card-actions class="justify-center">
+          <v-list-item>
+            <v-list-item-icon v-if="collaborated">
+              <v-btn
+                class="btn btn-primary"
+                @click="onLinkClick"
+              >
+                <i
+                  class="fa fa-users"
+                  aria-hidden="true"
+                />
+                <i
+                  v-if="collaborated.error != -1"
+                  class="fa fa-exclamation-circle"
+                  aria-hidden="true"
+                />
+              </v-btn>  
+              <v-btn
+                class="btn btn-primary"
+                @click="scrollToSection"
+              >
+                <i
+                  class="fa fa-comments-o"
+                  aria-hidden="true"
+                />
+              </v-btn> 
+            </v-list-item-icon>
+          </v-list-item>          
+        </v-card-actions>
+      </v-navigation-drawer>
+    </v-layout>
+  </v-card>
 </template>
 
 <style scoped>

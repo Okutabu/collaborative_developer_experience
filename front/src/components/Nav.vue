@@ -19,73 +19,107 @@ const ToggleMenu = () => {
 <template>
   <div class="container-nav">
     <div v-if="$route.path.startsWith('/admin')">
-        <aside :class="`${is_expanded ? 'is-expanded' : ''}`">
-            <div class="logo">
-                <img :src="logoURL" alt="Vue" /> 
-            </div>
+      <aside :class="`${is_expanded ? 'is-expanded' : ''}`">
+        <div class="logo">
+          <img
+            :src="logoURL"
+            alt="Vue"
+          > 
+        </div>
 
-            <div class="menu-toggle-wrap">
-                <button class="menu-toggle" @click="ToggleMenu">
-                    <span class="material-icons">keyboard_double_arrow_right</span>
-                </button>
-            </div>
+        <div class="menu-toggle-wrap">
+          <button
+            class="menu-toggle"
+            @click="ToggleMenu"
+          >
+            <span class="material-icons">keyboard_double_arrow_right</span>
+          </button>
+        </div>
 
-            <h3>{{t('nav-menu')}}</h3>
-            <div class="menu">
-                <RouterLink to="/admin/list" class="button">
-                    <span class="material-icons">home</span>
-                    <span class="text">{{t('nav-home')}}</span>
-                </RouterLink>
-                <RouterLink to="/admin/stats" class="button">
-                    <span class="material-icons">insights</span>
-                    <span class="text">{{t('nav-stats')}}</span>
-                </RouterLink>
-            </div>
+        <h3>{{ t('nav-menu') }}</h3>
+        <div class="menu">
+          <RouterLink
+            to="/admin/list"
+            class="button"
+          >
+            <span class="material-icons">home</span>
+            <span class="text">{{ t('nav-home') }}</span>
+          </RouterLink>
+          <RouterLink
+            to="/admin/stats"
+            class="button"
+          >
+            <span class="material-icons">insights</span>
+            <span class="text">{{ t('nav-stats') }}</span>
+          </RouterLink>
+        </div>
 
-            <div class="flex"></div>
-        </aside>
+        <div class="flex" />
+      </aside>
     </div>
-    <div v-if="$route.path.startsWith('/marketing')">
-
-    </div>
+    <div v-if="$route.path.startsWith('/marketing')" />
     <div v-else>
-        <aside :class="`${is_expanded ? 'is-expanded' : ''}`" v-show="authStore.user">
-            <div class="logo">
-                <img :src="logoURL" alt="Vue" /> 
-            </div>
+      <aside
+        v-show="authStore.user"
+        :class="`${is_expanded ? 'is-expanded' : ''}`"
+      >
+        <div class="logo">
+          <img
+            :src="logoURL"
+            alt="Vue"
+          > 
+        </div>
 
-            <div class="menu-toggle-wrap">
-                <button class="menu-toggle" @click="ToggleMenu">
-                    <span class="material-icons">keyboard_double_arrow_right</span>
-                </button>
-            </div>
+        <div class="menu-toggle-wrap">
+          <button
+            class="menu-toggle"
+            @click="ToggleMenu"
+          >
+            <span class="material-icons">keyboard_double_arrow_right</span>
+          </button>
+        </div>
 
-            <h3>{{t('nav-menu')}}</h3>
-            <div class="menu">
-                <RouterLink to="/overview" class="button">
-                    <span class="material-icons">home</span>
-                    <span class="text">{{t('nav-home')}}</span>
-                </RouterLink>
-                <RouterLink to="/statistics" class="button">
-                    <span class="material-icons">insights</span>
-                    <span class="text">{{t('nav-stats')}}</span>
-                </RouterLink>
-                <RouterLink to="/preferences" class="button">
-                    <span class="material-icons">settings</span>
-                    <span class="text">{{ t('nav-pref') }}</span>
-                </RouterLink>
-            </div>
+        <h3>{{ t('nav-menu') }}</h3>
+        <div class="menu">
+          <RouterLink
+            to="/overview"
+            class="button"
+          >
+            <span class="material-icons">home</span>
+            <span class="text">{{ t('nav-home') }}</span>
+          </RouterLink>
+          <RouterLink
+            to="/statistics"
+            class="button"
+          >
+            <span class="material-icons">insights</span>
+            <span class="text">{{ t('nav-stats') }}</span>
+          </RouterLink>
+          <RouterLink
+            to="/preferences"
+            class="button"
+          >
+            <span class="material-icons">settings</span>
+            <span class="text">{{ t('nav-pref') }}</span>
+          </RouterLink>
+        </div>
 
 
-            <div class="flex"></div>
+        <div class="flex" />
             
-            <div class="menu" @click="authStore.logout()">
-                <RouterLink to="/logout" class="button" >
-                    <span class="material-icons">logout</span>
-                    <span class="text">{{t('nav-logout')}}</span>
-                </RouterLink>
-            </div>
-        </aside>
+        <div
+          class="menu"
+          @click="authStore.logout()"
+        >
+          <RouterLink
+            to="/logout"
+            class="button"
+          >
+            <span class="material-icons">logout</span>
+            <span class="text">{{ t('nav-logout') }}</span>
+          </RouterLink>
+        </div>
+      </aside>
     </div>
   </div>
 </template>

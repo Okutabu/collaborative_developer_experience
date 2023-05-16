@@ -16,11 +16,18 @@ profileStore.setUserProfile(route.params.id);
 
 
 <template>
-
-    <div class="container-profile-">
-        <div class="container-card"> <UserCard2 :nom=userCardValue.userProfile[0].pseudo :techno=userCardValue.userProfile[1] :avatar=userCardValue.userProfile[0].avatar  :reco=userCardValue.userProfile[1][0].techno :key=userCardValue :lastInteract=userCardValue.userProfile[0].lastInteraction /> </div>
+  <div class="container-profile-">
+    <div class="container-card">
+      <UserCard2
+        :key="userCardValue"
+        :nom="userCardValue.userProfile[0].pseudo"
+        :techno="userCardValue.userProfile[1]"
+        :avatar="userCardValue.userProfile[0].avatar"
+        :reco="userCardValue.userProfile[1][0].techno"
+        :last-interact="userCardValue.userProfile[0].lastInteraction"
+      />
     </div>
-
+  </div>
 </template>
 
 <style>

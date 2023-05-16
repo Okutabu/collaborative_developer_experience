@@ -19,38 +19,66 @@ toHelpStore.getDataToHelp(route.params.id);
 </script>
 
 <template>
-    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+  <link
+    href="https://fonts.googleapis.com/css?family=Montserrat"
+    rel="stylesheet"
+  >
 
-    <h1 class="titre">{{t('help-profile')}} {{ userToHelp.user.profile[0].pseudo }} !</h1>
-    <div class="container-help-user">
-        
+  <h1 class="titre">
+    {{ t('help-profile') }} {{ userToHelp.user.profile[0].pseudo }} !
+  </h1>
+  <div class="container-help-user">
+    <!-- Affiche le profil de l'utilisateur qui a besoin d'aide -->
+    <div class="container-profile-">
+      <div class="container-card">
+        <UserCard2
+          :key="userToHelp"
+          :nom="userToHelp.user.profile[0].pseudo"
+          :techno="userToHelp.user.profile[1]"
+          :avatar="userToHelp.user.profile[0].avatar"
+          :reco="userToHelp.user.profile[1][0].techno"
+          :last-interact="userToHelp.user.profile[0].lastInteraction"
+        />
+      </div>
+    </div>
 
-        <!-- Affiche le profil de l'utilisateur qui a besoin d'aide -->
-        <div class="container-profile-">
-            <div class="container-card"> <UserCard2 :nom=userToHelp.user.profile[0].pseudo :techno=userToHelp.user.profile[1] :avatar=userToHelp.user.profile[0].avatar  :reco=userToHelp.user.profile[1][0].techno :key=userToHelp :lastInteract=userToHelp.user.profile[0].lastInteraction /> </div>
-        </div>
+    <div class="Questions">
+      <h2 class="QuestionTitre">
+        {{ t('help-questions') }}
+      </h2>
 
-        <div class="Questions">
-          <h2 class="QuestionTitre">{{t('help-questions')}}</h2>
-
-            <!-- affiche une liste de questions avec le nom de la question et un bouton pour acceder à l'url de la quesiton -->
-            <ul>
-            <li v-for="question in userToHelp.user.questions" class="li-userHelp">
-                <div class="question-wrapper">
-                    <div class="question-title" v-html="question.title"></div>
-                    <div id="container">
-                    <button class="learn-more">
-                        <span class="circle" aria-hidden="true">
-                        <span class="icon arrow"></span>
-                        </span>
-                        <a :href="question.urlQuestion" target="_blank" class="button-text">{{t('question')}}</a>
-                    </button>
-                    </div>
-                </div>
-            </li>
-            </ul>
-        </div>
-    </div>    
+      <!-- affiche une liste de questions avec le nom de la question et un bouton pour acceder à l'url de la quesiton -->
+      <ul>
+        <li
+          v-for="question in userToHelp.user.questions"
+          :key="question"
+          class="li-userHelp"
+        >
+          <div class="question-wrapper">
+            <div
+              class="question-title"
+              v-html="question.title"
+            />
+            <div id="container">
+              <button class="learn-more">
+                <span
+                  class="circle"
+                  aria-hidden="true"
+                >
+                  <span class="icon arrow" />
+                </span>
+                <a
+                  :href="question.urlQuestion"
+                  target="_blank"
+                  class="button-text"
+                >{{ t('question') }}</a>
+              </button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>    
 </template>
 
 <style>

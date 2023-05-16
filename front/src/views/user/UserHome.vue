@@ -87,111 +87,202 @@ var interval = setInterval(function() {
 
 
 <template>
-    <div class="super-container-home">
-
+  <div class="super-container-home">
     <div class="container-home">
-        <div v-if="showHeader">
-            <Transition name="slide-fade">
-                <div v-if="headerdisapear">
-                    <Header :surname=user.user.surname  :name=user.user.name />
-                </div>
-            </Transition>
+      <div v-if="showHeader">
+        <Transition name="slide-fade">
+          <div v-if="headerdisapear">
+            <Header
+              :surname="user.user.surname"
+              :name="user.user.name"
+            />
+          </div>
+        </Transition>
+      </div>
+      <div
+        ref="container"
+        class="container"
+        @scroll="handleScroll"
+      />
+      <div
+        v-if="showComponent1"
+        key="component1"
+      >
+        <div class="container-similarities">
+          <div
+            v-if="usersRecoSimilarity && usersRecoAnswer && usersRecoQuestion && usersCurrentReco"
+            class="container-raw-cosinus-similarity"
+          >
+            <CardCollection />
+          </div>
+          <div
+            v-else
+            class="container-spinner"
+          >
+            <div
+              class="custom-spinner"
+              role="status"
+            >
+              <UserCarCollaborative
+                :user="dataForLoadingUsersRecosSimilarity"
+                :type="typeSimilaire"
+              />
+              <div class="cover">
+&nbsp;
+              </div>
+            </div>
+            <div
+              class="custom-spinner"
+              role="status"
+            >
+              <UserCarCollaborative
+                :user="dataForLoadingUsersRecosSimilarity"
+                :type="typeSimilaire"
+              />
+              <div class="cover">
+&nbsp;
+              </div>
+            </div>
+            <div
+              class="custom-spinner"
+              role="status"
+            >
+              <UserCarCollaborative
+                :user="dataForLoadingUsersRecosSimilarity"
+                :type="typeSimilaire"
+              />
+              <div class="cover">
+&nbsp;
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="container" ref="container" @scroll="handleScroll"></div>
-        <div  v-if="showComponent1" key="component1">
-            <div class="container-similarities">
-                
-                <div class="container-raw-cosinus-similarity" v-if="usersRecoSimilarity && usersRecoAnswer && usersRecoQuestion && usersCurrentReco">
-                    <CardCollection/>
-                </div>
-                <div v-else class="container-spinner">
-                    <div class="custom-spinner" role="status">
-                        <UserCarCollaborative :user="dataForLoadingUsersRecosSimilarity" :type="typeSimilaire"/>
-                        <div class="cover">&nbsp;</div>
-                    </div>
-                    <div class="custom-spinner" role="status">
-                        <UserCarCollaborative :user="dataForLoadingUsersRecosSimilarity" :type="typeSimilaire"/>
-                        <div class="cover">&nbsp;</div>
-                    </div>
-                    <div class="custom-spinner" role="status">
-                        <UserCarCollaborative :user="dataForLoadingUsersRecosSimilarity" :type="typeSimilaire"/>
-                        <div class="cover">&nbsp;</div>
-                    </div>
-                </div>
-                
-            </div>
 
-                    <div class="container-usercard-peek" v-if="userSelected"> 
-                        <div>
-                            <UserCard :nom=userSelected[0][0].pseudo :techno=userSelected[0][1] :avatar=userSelected[0][0].avatar :reco=userSelected[0][1][0].techno :key=userSelected :lastInteract=userSelected[0][0].lastInteraction /> 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
-            <div v-if="showComponent2" key="component2" class="container-list-collaboration" >
-                <table class="table " id="handshakes">
-                    <thead class="table-head">
-                        <tr>
-                            <th class="table-head-impair">{{t('home-collaborated-with')}}</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-body">
-                        <tr v-for="collab in collaborated.users" :key = "collab">
-                        <div class="container-user-enlisted">
-                            <td class="user-enlisted"><img :src="collab.properties.avatar" alt="user avatar" width="80">
-                                <div class="container-for-column">
-                                    <div class="container-user-description">
-                                        
-                                        <div class="user-description-name">
-                                            <p>{{ collab.properties.surname +" "+ collab.properties.name }}</p>
-                                        </div>
-                                        <div class="container-collab.properties-details">
-                                            <div class="collab.properties-description-activity">
-                                                <ul class="list-unstyled text-grey">
-                                                    <li><i class="fa fa-filter pr-1" aria-hidden="true"></i>{{t('front-end')}} &nbsp;</li>
-                                                    <li><i class="fa fa-clock-o pr-1"></i>{{t('last-activity')}}:&nbsp;<p>{{ collab.properties.lastInteraction ? (new Date(collab.properties.lastInteraction.low * 1000)).toLocaleString().split(',')[0] : 'Pas d\'activité' }}</p>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </div>                    
-                        </tr>     
-                    </tbody>
-                </table>
-                <v-divider :thickness="3" class="border-opacity-50"></v-divider>
-            </div>
-
-        
-
-        <template v-if="globalQuestions">
-            <div class="Questions">
-                
-                <h2 class="title">{{ t('last-questions-home') }}</h2>
-                <!-- affiche une liste de questions avec le nom de la question et un bouton pour acceder à l'url de la quesiton -->
-                <ul>
-                    <li v-for="question in globalQuestions.questions" class="li-userHelp">
-                        <div class="question-wrapper">
-                            <div class="question-title" v-html="question.title"></div>
-                            <div id="container">
-                            <button class="learn-more">
-                                <span class="circle" aria-hidden="true">
-                                <span class="icon arrow"></span>
-                                </span>
-                                <a :href="question.urlQuestion" target="_blank" class="button-text">{{ t('question') }}</a>
-                            </button>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </template>
+        <div
+          v-if="userSelected"
+          class="container-usercard-peek"
+        > 
+          <div>
+            <UserCard
+              :key="userSelected"
+              :nom="userSelected[0][0].pseudo"
+              :techno="userSelected[0][1]"
+              :avatar="userSelected[0][0].avatar"
+              :reco="userSelected[0][1][0].techno"
+              :last-interact="userSelected[0][0].lastInteraction"
+            /> 
+          </div>
+        </div>
+      </div>
     </div>
-    <UserRightCard :id="user.user.idSTOW" :surname="user.user.surname"  :name="user.user.name" :avatar="user.user.avatar"/>
-  
+        
+    <div
+      v-if="showComponent2"
+      key="component2"
+      class="container-list-collaboration"
+    >
+      <table
+        id="handshakes"
+        class="table "
+      >
+        <thead class="table-head">
+          <tr>
+            <th class="table-head-impair">
+              {{ t('home-collaborated-with') }}
+            </th>
+          </tr>
+        </thead>
+        <tbody class="table-body">
+          <tr
+            v-for="collab in collaborated.users"
+            :key="collab"
+          >
+            <div class="container-user-enlisted">
+              <td class="user-enlisted">
+                <img
+                  :src="collab.properties.avatar"
+                  alt="user avatar"
+                  width="80"
+                >
+                <div class="container-for-column">
+                  <div class="container-user-description">
+                    <div class="user-description-name">
+                      <p>{{ collab.properties.surname +" "+ collab.properties.name }}</p>
+                    </div>
+                    <div class="container-collab.properties-details">
+                      <div class="collab.properties-description-activity">
+                        <ul class="list-unstyled text-grey">
+                          <li>
+                            <i
+                              class="fa fa-filter pr-1"
+                              aria-hidden="true"
+                            />{{ t('front-end') }} &nbsp;
+                          </li>
+                          <li>
+                            <i class="fa fa-clock-o pr-1" />{{ t('last-activity') }}:&nbsp;<p>{{ collab.properties.lastInteraction ? (new Date(collab.properties.lastInteraction.low * 1000)).toLocaleString().split(',')[0] : 'Pas d\'activité' }}</p>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </div>                    
+          </tr>     
+        </tbody>
+      </table>
+      <v-divider
+        :thickness="3"
+        class="border-opacity-50"
+      />
+    </div>
+
+        
+
+    <template v-if="globalQuestions">
+      <div class="Questions">
+        <h2 class="title">
+          {{ t('last-questions-home') }}
+        </h2>
+        <!-- affiche une liste de questions avec le nom de la question et un bouton pour acceder à l'url de la quesiton -->
+        <ul>
+          <li
+            v-for="question in globalQuestions.questions"
+            :key="question"
+            class="li-userHelp"
+          >
+            <div class="question-wrapper">
+              <div
+                class="question-title"
+                v-html="question.title"
+              />
+              <div id="container">
+                <button class="learn-more">
+                  <span
+                    class="circle"
+                    aria-hidden="true"
+                  >
+                    <span class="icon arrow" />
+                  </span>
+                  <a
+                    :href="question.urlQuestion"
+                    target="_blank"
+                    class="button-text"
+                  >{{ t('question') }}</a>
+                </button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </template>
+  </div>
+  <UserRightCard
+    :id="user.user.idSTOW"
+    :surname="user.user.surname"
+    :name="user.user.name"
+    :avatar="user.user.avatar"
+  />
 </template>
 
 <style scoped>

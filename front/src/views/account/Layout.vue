@@ -1,17 +1,19 @@
 <template>
-    <div class="container-account-routes">
-        <div >
-            <div class="container-display">
-                <div class="container-image">
-                    <img src="../../../public/images/login.png" alt="">
-                </div>
-                <div class="container-white-background">
-                    <router-view></router-view>
-                </div>
-                
-            </div>
+  <div class="container-account-routes">
+    <div>
+      <div class="container-display">
+        <div class="container-image">
+          <img
+            src="../../../public/images/login.png"
+            alt=""
+          >
         </div>
+        <div class="container-white-background">
+          <router-view />
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <style>

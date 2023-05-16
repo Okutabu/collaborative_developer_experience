@@ -60,73 +60,137 @@ async function onSubmit(values) {
 
 
 <template>
-    <div class="container-user-preferences">
-        <h2 class="titre">{{t('pref-user')}}</h2>
+  <div class="container-user-preferences">
+    <h2 class="titre">
+      {{ t('pref-user') }}
+    </h2>
     <div class="card container-form">
-        <h4 class="card-header">{{ t('pref-informations') }}</h4>
-        <div class="card-body">
-            <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
-                <div class="form-group">
-                    <label>{{ t('mail') }}</label>
-                    <Field name="mail" type="mail" class="form-control" :class="{ 'is-invalid': errors.mail }" :value=userJson.user.mail />
-                    <div class="invalid-feedback">{{ errors.mail }}</div>
-                </div>
-                <div class="form-group">
-                    <label>{{t('first-name')}}</label>
-                    <Field name="surname" type="text" class="form-control" :class="{ 'is-invalid': errors.firstName }" :value=userJson.user.surname />
-                    <div class="invalid-feedback">{{ errors.firstName }}</div>
-                </div>
-                <div class="form-group">
-                    <label>{{t('last-name')}}</label>
-                    <Field name="name" type="text" class="form-control" :class="{ 'is-invalid': errors.lastName }" :value=userJson.user.name />
-                    <div class="invalid-feedback">{{ errors.lastName }}</div>
-                </div>
-                <div class="form-group">
-                    <label>{{t('idStow')}}</label>
-                    <Field name="newIDSTOW" type="integer" class="form-control" :class="{ 'is-invalid': errors.idSTOW }" :value=userJson.user.idSTOW />
-                    <div class="invalid-feedback">{{ errors.idSTOW }}</div>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary btn-modify" @click="onSubmit" :disabled="isSubmitting">
-                        <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
-                        {{ t('pref-change') }}
-                    </button>
+      <h4 class="card-header">
+        {{ t('pref-informations') }}
+      </h4>
+      <div class="card-body">
+        <Form
+          v-slot="{ errors, isSubmitting }"
+          :validation-schema="schema"
+          @submit="onSubmit"
+        >
+          <div class="form-group">
+            <label>{{ t('mail') }}</label>
+            <Field
+              name="mail"
+              type="mail"
+              class="form-control"
+              :class="{ 'is-invalid': errors.mail }"
+              :value="userJson.user.mail"
+            />
+            <div class="invalid-feedback">
+              {{ errors.mail }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label>{{ t('first-name') }}</label>
+            <Field
+              name="surname"
+              type="text"
+              class="form-control"
+              :class="{ 'is-invalid': errors.firstName }"
+              :value="userJson.user.surname"
+            />
+            <div class="invalid-feedback">
+              {{ errors.firstName }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label>{{ t('last-name') }}</label>
+            <Field
+              name="name"
+              type="text"
+              class="form-control"
+              :class="{ 'is-invalid': errors.lastName }"
+              :value="userJson.user.name"
+            />
+            <div class="invalid-feedback">
+              {{ errors.lastName }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label>{{ t('idStow') }}</label>
+            <Field
+              name="newIDSTOW"
+              type="integer"
+              class="form-control"
+              :class="{ 'is-invalid': errors.idSTOW }"
+              :value="userJson.user.idSTOW"
+            />
+            <div class="invalid-feedback">
+              {{ errors.idSTOW }}
+            </div>
+          </div>
+          <div class="form-group">
+            <button
+              class="btn btn-primary btn-modify"
+              :disabled="isSubmitting"
+              @click="onSubmit"
+            >
+              <span
+                v-show="isSubmitting"
+                class="spinner-border spinner-border-sm mr-1"
+              />
+              {{ t('pref-change') }}
+            </button>
 
-                    <button @click="isOpen = true" class="btn btn-primary btn-delete" :disabled="isSubmitting">
-                        {{t('pref-delete')}}
-                    </button>
+            <button
+              class="btn btn-primary btn-delete"
+              :disabled="isSubmitting"
+              @click="isOpen = true"
+            >
+              {{ t('pref-delete') }}
+            </button>
 
-                    <div class="disclaimer" v-if="isOpen">
-                        <h2>{{t('pref-disclaimer')}}</h2>
-                        <p>{{t('pref-disclaimer-details')}}</p>
-                        <button class="btn1" id="unsubscribe" @click="onDelete" :disabled="isSubmitting">
-                        <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
-                            {{ t('pref-delete') }}
-                        </button>
-                        <button @click="isOpen = false" class="btn1 btn-light" id="cancel">
-                            {{ t('cancel') }}
-                        </button>
+            <div
+              v-if="isOpen"
+              class="disclaimer"
+            >
+              <h2>{{ t('pref-disclaimer') }}</h2>
+              <p>{{ t('pref-disclaimer-details') }}</p>
+              <button
+                id="unsubscribe"
+                class="btn1"
+                :disabled="isSubmitting"
+                @click="onDelete"
+              >
+                <span
+                  v-show="isSubmitting"
+                  class="spinner-border spinner-border-sm mr-1"
+                />
+                {{ t('pref-delete') }}
+              </button>
+              <button
+                id="cancel"
+                class="btn1 btn-light"
+                @click="isOpen = false"
+              >
+                {{ t('cancel') }}
+              </button>
 
-                        <br>
-                        <br>
+              <br>
+              <br>
 
-                        <div class="emoji shocked">
-                            <figure class="face">
-                                <span class="eyes">
-                                    <span class="eye"></span>
-                                    <span class="eye"></span>
-                                </span>
-                                    <span class="mouth">
-                                </span>
-                            </figure>
-	                    </div>
-	                </div>
-
-                </div>
-            </Form>
-        </div>
+              <div class="emoji shocked">
+                <figure class="face">
+                  <span class="eyes">
+                    <span class="eye" />
+                    <span class="eye" />
+                  </span>
+                  <span class="mouth" />
+                </figure>
+              </div>
+            </div>
+          </div>
+        </Form>
+      </div>
     </div>
-    </div>
+  </div>
 </template>
 
 <style scoped>

@@ -39,77 +39,132 @@ function triSurname() {
 </script>
 
 <template>
-    
-
-    <div class="container-table">
-        <div class="container-search">
-            <input type="text" v-model="input" :placeholder="t('first-name')" class="search-bar" />
-            <input type="text" v-model="inputName" :placeholder="t('last-name')" class="search-bar" />
-            <input type="text" v-model="inputTag" :placeholder="t('find-tag')" class="search-bar search-tag" />
-        </div>
-        <table class="table table-bordered">
-            <thead class="table-head">
-                <tr>
-                    <th class="table-head-impair">{{t('first-name')}} <button class="sort-button" @click=triSurname()><i class="fa fa-sort"></i></button></th>
-                    <th class="table-head-impair">{{t('last-activity')}} <button class="sort-button" @click=triLastActivity()><i class="fa fa-sort"></i></button></th>
-                    <th class="table-head-pair">{{t('top-tags')}}</th>
-                </tr>
-            </thead>
-            <tbody class="table-body">
-                <template v-if="users">
-                        <tr v-for="user in users" :key = "user">
-                            <div class="container-user-enlisted">
-                                <td class="user-enlisted" v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && (!user.topTag || user.topTag.toLowerCase().includes(inputTag.toLowerCase()))"><img :src="user.avatar" alt="user avatar" width="80">
-
-                                    <div class="container-for-column">
-                                        <div v-if="user.topTag" class="container-user-description">
-                                            <router-link :to="{path :`/admin/users/profile/${user.idSTOW.low}`}">
-                                            <div class="user-description-name">
-                                                <p class="link-name-surname">{{ user.surname +" "+ user.name }}</p>
-                                            </div>
-                                            </router-link>
-                                        </div>
-                                        <div v-else class="container-user-description">
-                                            <div class="user-description-name">
-                                                <p class="link-name-surname">{{ user.surname +" "+ user.name }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="container-user-details">
-                                            <div class="user-description-activity">
-                                                <ul class="list-unstyled text-grey">
-                                                    <li><i class="fa fa-filter pr-1" aria-hidden="true"></i>{{t('front-end')}} &nbsp;</li>
-                                                    <li><i class="fa fa-clock-o pr-1"></i>{{t('last-activity')}}:&nbsp;<p>{{ user.lastInteraction ? (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] : t('no-activity') }}</p>
-                                            </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </div>
-                            
-                            
-                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && (!user.topTag || user.topTag.toLowerCase().includes(inputTag.toLowerCase()))">
-                               <div v-if="user.lastInteraction" >
-                                    {{ (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}
-                                </div>
-                                <div v-else>
-                                    {{t('inactive')}}
-                                </div>
-                            </td>
-                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && (!user.topTag || user.topTag.toLowerCase().includes(inputTag.toLowerCase()))">
-                               <div v-if="user.topTag" >
-                                    {{ user.topTag }}
-                                </div>
-                                <div v-else>
-                                    {{t('inactive')}}
-                                </div>
-                            </td>
-                        
-                        </tr>
-                </template>
-            </tbody>
-        </table>
+  <div class="container-table">
+    <div class="container-search">
+      <input
+        v-model="input"
+        type="text"
+        :placeholder="t('first-name')"
+        class="search-bar"
+      >
+      <input
+        v-model="inputName"
+        type="text"
+        :placeholder="t('last-name')"
+        class="search-bar"
+      >
+      <input
+        v-model="inputTag"
+        type="text"
+        :placeholder="t('find-tag')"
+        class="search-bar search-tag"
+      >
     </div>
+    <table class="table table-bordered">
+      <thead class="table-head">
+        <tr>
+          <th class="table-head-impair">
+            {{ t('first-name') }} <button
+              class="sort-button"
+              @click="triSurname()"
+            >
+              <i class="fa fa-sort" />
+            </button>
+          </th>
+          <th class="table-head-impair">
+            {{ t('last-activity') }} <button
+              class="sort-button"
+              @click="triLastActivity()"
+            >
+              <i class="fa fa-sort" />
+            </button>
+          </th>
+          <th class="table-head-pair">
+            {{ t('top-tags') }}
+          </th>
+        </tr>
+      </thead>
+      <tbody class="table-body">
+        <template v-if="users">
+          <tr
+            v-for="user in users"
+            :key="user"
+          >
+            <div class="container-user-enlisted">
+              <td
+                v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && (!user.topTag || user.topTag.toLowerCase().includes(inputTag.toLowerCase()))"
+                class="user-enlisted"
+              >
+                <img
+                  :src="user.avatar"
+                  alt="user avatar"
+                  width="80"
+                >
+
+                <div class="container-for-column">
+                  <div
+                    v-if="user.topTag"
+                    class="container-user-description"
+                  >
+                    <router-link :to="{path :`/admin/users/profile/${user.idSTOW.low}`}">
+                      <div class="user-description-name">
+                        <p class="link-name-surname">
+                          {{ user.surname +" "+ user.name }}
+                        </p>
+                      </div>
+                    </router-link>
+                  </div>
+                  <div
+                    v-else
+                    class="container-user-description"
+                  >
+                    <div class="user-description-name">
+                      <p class="link-name-surname">
+                        {{ user.surname +" "+ user.name }}
+                      </p>
+                    </div>
+                  </div>
+                  <div class="container-user-details">
+                    <div class="user-description-activity">
+                      <ul class="list-unstyled text-grey">
+                        <li>
+                          <i
+                            class="fa fa-filter pr-1"
+                            aria-hidden="true"
+                          />{{ t('front-end') }} &nbsp;
+                        </li>
+                        <li>
+                          <i class="fa fa-clock-o pr-1" />{{ t('last-activity') }}:&nbsp;<p>{{ user.lastInteraction ? (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] : t('no-activity') }}</p>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </div>
+                            
+                            
+            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && (!user.topTag || user.topTag.toLowerCase().includes(inputTag.toLowerCase()))">
+              <div v-if="user.lastInteraction">
+                {{ (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}
+              </div>
+              <div v-else>
+                {{ t('inactive') }}
+              </div>
+            </td>
+            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && (!user.topTag || user.topTag.toLowerCase().includes(inputTag.toLowerCase()))">
+              <div v-if="user.topTag">
+                {{ user.topTag }}
+              </div>
+              <div v-else>
+                {{ t('inactive') }}
+              </div>
+            </td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <style scoped>

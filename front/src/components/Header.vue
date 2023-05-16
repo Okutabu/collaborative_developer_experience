@@ -4,10 +4,6 @@ import { useI18n } from 'vue-i18n';
 
 
 export default {
-        setup(){
-            const { t } = useI18n();
-            return { t };
-        },
         name: 'Header',
         props: {
             name: {
@@ -18,6 +14,10 @@ export default {
                 type: String,
                 required: true
             }
+        },
+        setup(){
+            const { t } = useI18n();
+            return { t };
         }
     };
 
@@ -29,14 +29,14 @@ export default {
 
 
 <template>
-    
-        <div class="header">
-            <div class="container-welcome-message text-center">
-                    <h2>{{t('header-welcome')}}</h2>
-                    <p class="text-muted">{{t('header-message')}}</p>
-            </div>
-        </div>
-
+  <div class="header">
+    <div class="container-welcome-message text-center">
+      <h2>{{ t('header-welcome') }}</h2>
+      <p class="text-muted">
+        {{ t('header-message') }}
+      </p>
+    </div>
+  </div>
 </template>
 
 <style scoped>
