@@ -259,6 +259,20 @@ async function setAllInteractions(allUsers) {
   }
 }
 
+async function setAttributeToInactive() {
+  const session = driver.session({ database: "neo4j" });
+  try {
+    const requete = `MATCH(u:User)                             
+                      WHERE u.lastInteraction IS NULL
+                      set u.lastInteraction = 0
+                      set u.topTag = ""`;
+  } catch (error) {
+    console.error(`Erreur function setAttributeToInactive: ${error}`);
+  } finally {
+    await session.close();
+  }
+}
+
 //------------ main pour tester les fonctions ---------------------
 // (async() => {
 
@@ -296,4 +310,5 @@ module.exports = {
   set_name_surname_mail,
   setAllTopTags,
   setAllInteractions,
+  setAttributeToInactive,
 };

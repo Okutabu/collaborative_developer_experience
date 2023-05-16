@@ -132,6 +132,7 @@ async function setNamesSurnamesMails() {
   await setNamesSurnamesMails();
   await db.setAllTopTags(users.list_id);
   await db.setAllInteractions(users.list_id);
+  await db.setAttributeToInactive();
 
   await db.driver.close();
 })();
