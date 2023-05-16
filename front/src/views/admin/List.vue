@@ -59,7 +59,7 @@ function triSurname() {
                 <template v-if="users">
                         <tr v-for="user in users" :key = "user">
                             <div class="container-user-enlisted">
-                                <td class="user-enlisted" v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && (!user.topTag || user.topTag.toLowerCase().includes(inputTag.toLowerCase()))"><img :src="user.avatar" alt="user avatar" width="80">
+                                <td class="user-enlisted" v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && (user.topTag.toLowerCase().includes(inputTag.toLowerCase()))"><img :src="user.avatar" alt="user avatar" width="80">
 
                                     <div class="container-for-column">
                                         <div v-if="user.topTag" class="container-user-description">
@@ -88,15 +88,15 @@ function triSurname() {
                             </div>
                             
                             
-                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && (!user.topTag || user.topTag.toLowerCase().includes(inputTag.toLowerCase()))">
-                               <div v-if="user.lastInteraction" >
+                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && (user.topTag.toLowerCase().includes(inputTag.toLowerCase()))">
+                               <div v-if="user.lastInteraction.low != 0" >
                                     {{ (new Date(user.lastInteraction.low * 1000)).toLocaleString().split(',')[0] }}
                                 </div>
                                 <div v-else>
                                     {{t('inactive')}}
                                 </div>
                             </td>
-                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && (!user.topTag || user.topTag.toLowerCase().includes(inputTag.toLowerCase()))">
+                            <td v-if="user.name.toLowerCase().includes(inputName.toLowerCase()) && user.surname.toLowerCase().includes(input.toLowerCase()) && (user.topTag.toLowerCase().includes(inputTag.toLowerCase()))">
                                <div v-if="user.topTag" >
                                     {{ user.topTag }}
                                 </div>
