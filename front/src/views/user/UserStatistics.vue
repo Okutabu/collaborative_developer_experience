@@ -21,75 +21,105 @@ const { t } = useI18n();
 
 
 <template>
-    <div class="container-stat">
-
-        <div class="title">
-            <h2>{{t('stats')}}</h2>
-        </div>
-
-        <div class="container-heatmap">
-            <calendar-heatmap class="heatmap-component" :values="stats.dates" :end-date="endDate"
-                :style="{ 'max-width': orientation === 'vertical' ? '145px' : '800px' }" :round="2"
-                :vertical="orientation === 'vertical'" />
-        </div>
-
-
-        <div class="container-profile">
-            <div class="container-card">
-                <UserCard2 :nom=userJson.user.pseudo :techno=stats.profile[1] :avatar=userJson.user.avatar
-                    :reco=stats.topTags[0].tag :key=userCardValue :lastInteract=stats.profile[0].lastInteraction />
-            </div>
-
-
-            <div class="podium">
-                <div class="podium__item">
-                    <p class="podium_tag">{{ stats.topTags[1].tag }}</p>
-                    <div class="podium__rank second">2</div>
-                </div>
-                <div class="podium__item">
-                    <p class="podium_tag">{{ stats.topTags[0].tag }}</p>
-                    <div class="podium__rank first">
-                        <svg class="podium__number" viewBox="0 0 27.476 75.03" xmlns="http://www.w3.org/2000/svg">
-                            <g transform="matrix(1, 0, 0, 1, 214.957736, -43.117417)">
-                                <path class="st8"
-                                    d="M -198.928 43.419 C -200.528 47.919 -203.528 51.819 -207.828 55.219 C -210.528 57.319 -213.028 58.819 -215.428 60.019 L -215.428 72.819 C -210.328 70.619 -205.628 67.819 -201.628 64.119 L -201.628 117.219 L -187.528 117.219 L -187.528 43.419 L -198.928 43.419 L -198.928 43.419 Z"
-                                    style="fill: #000;" />
-                            </g>
-                        </svg>
-                    </div>
-                </div>
-                <div class="podium__item">
-                    <p class="podium_tag">{{ stats.topTags[2].tag }}</p>
-                    <div class="podium__rank third">3</div>
-                </div>
-            </div>
-        </div>
+  <div class="container-stat">
+    <div class="title">
+      <h2>{{ t('stats') }}</h2>
     </div>
 
-    <table class="table-body">
-        <tr class="table-first">
-            <td>{{t('stats-nbAnswer')}}</td>
-            <td>{{ stats.nbAnswers }}</td>
-        </tr>
-        <tr>
-            <td>{{t('stats-nbQuestion')}}</td>
-            <td>{{ stats.nbQuestions }}</td>
-        </tr>
-        <tr>
-            <td>{{t('stats-topTags')}}</td>
-            <div v-for="tag in stats.topTags" class="container-tags">
-                <td>{{ tag.tag + " : " + tag.nbInteractions }}</td>
-            </div>
-        </tr>
-        <tr>
-            <td>{{t('stats-nbHelped')}}</td>
-            <td>{{ stats.nbHelped }}</td>
-        </tr>
-        <tr class="table-last">
-            <td>{{t('stats-nbHelper')}}</td>
-            <td>{{ stats.nbHelper }}</td>
-        </tr>
-    </table>
+    <div class="container-heatmap">
+      <calendar-heatmap
+        class="heatmap-component"
+        :values="stats.dates"
+        :end-date="endDate"
+        :style="{ 'max-width': orientation === 'vertical' ? '145px' : '800px' }"
+        :round="2"
+        :vertical="orientation === 'vertical'"
+      />
+    </div>
+
+
+    <div class="container-profile">
+      <div class="container-card">
+        <UserCard2
+          :key="userCardValue"
+          :nom="userJson.user.pseudo"
+          :techno="stats.profile[1]"
+          :avatar="userJson.user.avatar"
+          :reco="stats.topTags[0].tag"
+          :last-interact="stats.profile[0].lastInteraction"
+        />
+      </div>
+
+
+      <div class="podium">
+        <div class="podium__item">
+          <p class="podium_tag">
+            {{ stats.topTags[1].tag }}
+          </p>
+          <div class="podium__rank second">
+            2
+          </div>
+        </div>
+        <div class="podium__item">
+          <p class="podium_tag">
+            {{ stats.topTags[0].tag }}
+          </p>
+          <div class="podium__rank first">
+            <svg
+              class="podium__number"
+              viewBox="0 0 27.476 75.03"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g transform="matrix(1, 0, 0, 1, 214.957736, -43.117417)">
+                <path
+                  class="st8"
+                  d="M -198.928 43.419 C -200.528 47.919 -203.528 51.819 -207.828 55.219 C -210.528 57.319 -213.028 58.819 -215.428 60.019 L -215.428 72.819 C -210.328 70.619 -205.628 67.819 -201.628 64.119 L -201.628 117.219 L -187.528 117.219 L -187.528 43.419 L -198.928 43.419 L -198.928 43.419 Z"
+                  style="fill: #000;"
+                />
+              </g>
+            </svg>
+          </div>
+        </div>
+        <div class="podium__item">
+          <p class="podium_tag">
+            {{ stats.topTags[2].tag }}
+          </p>
+          <div class="podium__rank third">
+            3
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <table class="table-body">
+    <tr class="table-first">
+      <td>{{ t('stats-nbAnswer') }}</td>
+      <td>{{ stats.nbAnswers }}</td>
+    </tr>
+    <tr>
+      <td>{{ t('stats-nbQuestion') }}</td>
+      <td>{{ stats.nbQuestions }}</td>
+    </tr>
+    <tr>
+      <td>{{ t('stats-topTags') }}</td>
+      <div
+        v-for="tag in stats.topTags"
+        :key="tag"
+        class="container-tags"
+      >
+        <td>{{ tag.tag + " : " + tag.nbInteractions }}</td>
+      </div>
+    </tr>
+    <tr>
+      <td>{{ t('stats-nbHelped') }}</td>
+      <td>{{ stats.nbHelped }}</td>
+    </tr>
+    <tr class="table-last">
+      <td>{{ t('stats-nbHelper') }}</td>
+      <td>{{ stats.nbHelper }}</td>
+    </tr>
+  </table>
 </template>
 
 <style scoped>

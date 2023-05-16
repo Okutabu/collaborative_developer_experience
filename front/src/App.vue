@@ -19,19 +19,19 @@ const moveContainerHome = (is_expanded) => {
 </script>
 
 <template>
-    <div class="app-container" :class="authStore.user && 'bg-white'">
-        <div class="container-nav">
-            <Nav @toggle-menu="moveContainerHome" />
-        </div>
-        
-        <Alert />
-        <div class="container-workspace">
-            
-            <RouterView />
-            
-            
-        </div>
+  <div
+    class="app-container"
+    :class="authStore.user && 'bg-white'"
+  >
+    <div class="container-nav">
+      <Nav @toggle-menu="moveContainerHome" />
     </div>
+        
+    <Alert />
+    <div class="container-workspace">
+      <RouterView />
+    </div>
+  </div>
 </template>
 
 <style>

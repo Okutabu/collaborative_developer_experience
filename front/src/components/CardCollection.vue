@@ -50,66 +50,99 @@ function onClick(userParam) {
 </script>
 
 <template>
-
   <div class="container-board">
     <div class="container-title">
-      <h2 class="title-section">{{t("similarities-title")}}</h2>
+      <h2 class="title-section">
+        {{ t("similarities-title") }}
+      </h2>
     </div>
     <div class="container-categories">
-        <div class="category similar" @click="swapCategoryToSimilar">
-            <div class="similar-icon-holder"><span class="material-symbols-outlined">
+      <div
+        class="category similar"
+        @click="swapCategoryToSimilar"
+      >
+        <div class="similar-icon-holder">
+          <span class="material-symbols-outlined">
             contacts
-            </span></div>
+          </span>
+        </div>
             
             &nbsp;
-            <span class="text">{{t("similarities-category-similar")}}</span>
-        </div>
-        <div class="category helper" @click="swapCategoryToHelper">
-            <div class="helper-icon-holder"><span class="material-symbols-outlined">
+        <span class="text">{{ t("similarities-category-similar") }}</span>
+      </div>
+      <div
+        class="category helper"
+        @click="swapCategoryToHelper"
+      >
+        <div class="helper-icon-holder">
+          <span class="material-symbols-outlined">
             network_intelligence_update
-            </span></div>
+          </span>
+        </div>
             
             &nbsp;
-            <span class="text">{{t("similarities-category-canHelp")}}</span>
-        </div>
-        <div class="category helpable" @click="swapCategoryToHelpable">
-            <div class="helpable-icon-holder"><span class="material-symbols-outlined">
+        <span class="text">{{ t("similarities-category-canHelp") }}</span>
+      </div>
+      <div
+        class="category helpable"
+        @click="swapCategoryToHelpable"
+      >
+        <div class="helpable-icon-holder">
+          <span class="material-symbols-outlined">
             network_intelligence_history
-            </span></div>
+          </span>
+        </div>
             
             &nbsp;
-            <span class="text">{{t("similarities-category-canBeHelped")}}</span>
-        </div>
+        <span class="text">{{ t("similarities-category-canBeHelped") }}</span>
+      </div>
     </div>
     
     <div class="container-card-collection-holder">
+      <div>
+        <Carousel
+          :items-to-show="3"
+          :wrap-around="true"
+          class="container-caroussel"
+        >
+          <Slide
+            v-for="user in usersCurrentReco.users"
+            :key="user"
+          >
+            <!-- type is irrelevant -->
 
-        <div >
+            <UserCarCollaborative
+              :user="user"
+              :type="typeSimilaire"
+              :bouton="bouton"
+              class="container-card"
+              @click="onClick(user)"
+            />
+          </Slide>
 
-            <Carousel :items-to-show="3" :wrap-around="true" class="container-caroussel">
-                <Slide v-for="user in usersCurrentReco.users" :key="user">
-                    <!-- type is irrelevant -->
-
-                    <UserCarCollaborative :user="user" :type="typeSimilaire" :bouton="bouton" class="container-card" @click="onClick(user)"/>
-                </Slide>
-
-                <template #addons>
-                <Navigation />
-                </template>
-            </Carousel>
-
-        </div>
-
+          <template #addons>
+            <Navigation />
+          </template>
+        </Carousel>
+      </div>
     </div>
 
-    <div class="container-usercard-peek" v-if="userSelected"> 
-        <div>
-            <UserCard :nom=userSelected[0].pseudo :techno=userSelected[1] :avatar=userSelected[0].avatar :reco=userSelected[1][0].techno :key=userSelected :lastInteract=userSelected[0].lastInteraction /> 
-        </div>
+    <div
+      v-if="userSelected"
+      class="container-usercard-peek"
+    > 
+      <div>
+        <UserCard
+          :key="userSelected"
+          :nom="userSelected[0].pseudo"
+          :techno="userSelected[1]"
+          :avatar="userSelected[0].avatar"
+          :reco="userSelected[1][0].techno"
+          :last-interact="userSelected[0].lastInteraction"
+        /> 
+      </div>
     </div>
-
   </div>
-
 </template>
 <style scoped>
 

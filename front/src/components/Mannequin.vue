@@ -9,9 +9,9 @@ const props = defineProps({
 </script>
 
 <template>
-    <div>
-        <p> {{props.myData}} </p>
-    </div>
+  <div>
+    <p> {{ props.myData }} </p>
+  </div>
 </template>
 
 <style>

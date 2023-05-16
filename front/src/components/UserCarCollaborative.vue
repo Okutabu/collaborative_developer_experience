@@ -1,38 +1,61 @@
 <template>
   <div class="container-whole-card">
-      <div class="user-card">
-        <button class="user-button">
-            <div class="user-avatar-container">
-                <img :src="user[0].avatar" alt="User Avatar" class="user-avatar">
-                <!-- ajoute un icon de telephone derrière l'image -->
-                <i class="fa fa-phone" style="font-size:36px;color:white"></i>
-            </div>
-        </button>
+    <div class="user-card">
+      <button class="user-button">
+        <div class="user-avatar-container">
+          <img
+            :src="user[0].avatar"
+            alt="User Avatar"
+            class="user-avatar"
+          >
+          <!-- ajoute un icon de telephone derrière l'image -->
+          <i
+            class="fa fa-phone"
+            style="font-size:36px;color:white"
+          />
+        </div>
+      </button>
 
-        <div class="user-details">
-          <h2 class="user-name">{{ user[0].pseudo }}</h2>
-          <div class="user-skill">
-              <p><i class="fa fa-graduation-cap "></i> {{ user[1][0].techno }}</p>
+      <div class="user-details">
+        <h2 class="user-name">
+          {{ user[0].pseudo }}
+        </h2>
+        <div class="user-skill">
+          <p><i class="fa fa-graduation-cap " /> {{ user[1][0].techno }}</p>
+        </div>
+        <div class="user-actions">
+          <!-- affiche cette div si le props bouton a la valeur "help" -->
+          <div v-if="bouton === 'contact'">
+            <a
+              :href="profilSTOW"
+              target="_blank"
+            >
+              <button class="btn btn-primary"><img
+                src="../assets/stow-icon.png"
+                alt="stow-icon"
+                class="stow-icon"
+                style="width: 30px;"
+              > </button>
+            </a>
           </div>
-          <div class="user-actions">
-            <!-- affiche cette div si le props bouton a la valeur "help" -->
-            <div v-if="bouton === 'contact'">
-              <a :href="profilSTOW" target="_blank">
-                <button class="btn btn-primary"><img src="../assets/stow-icon.png" alt="stow-icon" class="stow-icon" style="width: 30px;"> </button>
-              </a>
-            </div>
-            <div v-else>
-              <RouterLink :to="{path :`/help/${user[0].idSTOW}`}">
-                <button class="btn btn-primary" @click="helpPage"> <i class="fa fa-handshake-o"></i>&nbsp; {{ bouton }} </button>
-              </RouterLink>
-            </div>
-            <button class="btn btn-secondary">{{t('collabCard-detail')}}</button>
+          <div v-else>
+            <RouterLink :to="{path :`/help/${user[0].idSTOW}`}">
+              <button
+                class="btn btn-primary"
+                @click="helpPage"
+              >
+                <i class="fa fa-handshake-o" />&nbsp; {{ bouton }}
+              </button>
+            </RouterLink>
           </div>
+          <button class="btn btn-secondary">
+            {{ t('collabCard-detail') }}
+          </button>
         </div>
       </div>
+    </div>
   </div>
-
-  </template>
+</template>
   
   <script>
 
@@ -40,10 +63,6 @@
   import { useI18n } from 'vue-i18n';
 
   export default {
-    setup(){
-            const { t } = useI18n();
-            return { t };
-    },
     name: 'UserCard',
     props: {
       user: {
@@ -59,15 +78,19 @@
         required: true
       }
     },
-    methods: {
-      helpPage() {
-        console.log("renvoie vers la page d'aide")
-        console.log(this.user[0].idSTOW)
-      }
+    setup(){
+            const { t } = useI18n();
+            return { t };
     },
     computed: {
       profilSTOW() {
         return `https://stackoverflow.com/users/${this.user[0].idSTOW}`
+      }
+    },
+    methods: {
+      helpPage() {
+        console.log("renvoie vers la page d'aide")
+        console.log(this.user[0].idSTOW)
       }
     }
   }

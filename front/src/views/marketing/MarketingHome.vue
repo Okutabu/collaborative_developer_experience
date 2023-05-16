@@ -16,54 +16,81 @@ const { stats, InteractionDates } = storeToRefs(adminStore);
 </script>
 
 <template>
-
-<div class="container-title">
-        <h1>{{t('marketing-title')}}<br><span>{{t('marketing-CDE')}}</span></h1>   
+  <div class="container-title">
+    <h1>{{ t('marketing-title') }}<br><span>{{ t('marketing-CDE') }}</span></h1>   
+  </div>
+  <div class="container-stats">
+    <div class="stats-container">
+      <div class="stat-container">
+        <div class="stat-circle">
+          <p class="stat-value">
+            {{ stats.nbInteractions - stats.nbAnswers }}
+          </p>
+        </div>
+        <p class="stat-p">
+          {{ t('marketing-last-month') }}{{ stats.nbInteractions - stats.nbAnswers }}{{ t('marketing-nbQuestion') }}
+        </p>
+      </div>
+      <div class="stat-container">
+        <div class="stat-circle">
+          <p class="stat-value">
+            {{ stats.nbAnswers }}
+          </p>
+        </div>
+        <p class="stat-p">
+          {{ t('marketing-last-month') }}{{ stats.nbAnswers }}{{ t('marketing-nbAnswer') }}
+        </p>
+      </div>
     </div>
-    <div class="container-stats">
-        <div class="stats-container">
-            <div class="stat-container">
-                <div class="stat-circle">
-                    <p class="stat-value">{{ stats.nbInteractions - stats.nbAnswers }}</p>
-                </div>
-                <p class="stat-p">{{t('marketing-last-month')}}{{ stats.nbInteractions - stats.nbAnswers }}{{t('marketing-nbQuestion')}}</p>
-            </div>
-            <div class="stat-container">
-                <div class="stat-circle">
-                    <p class="stat-value">{{ stats.nbAnswers }}</p>
-                </div>
-                <p class="stat-p">{{t('marketing-last-month')}}{{ stats.nbAnswers }}{{t('marketing-nbAnswer')}}</p>
-            </div>
+    <div class="container-trimestre-review">
+      <p class="title-heatmap">
+        {{ t('marketing-collab') }}
+      </p>
+      <div class="container-heatmap">
+        <calendar-heatmap
+          class="heatmap-component"
+          :values="InteractionDates"
+          :end-date="endDate"
+          :style="{'max-width': orientation === 'vertical' ? '145px' : '800px'}"
+          :round="2"
+          :vertical="orientation === 'vertical'"
+        />
+      </div>
+    </div>
+    <div class="container-global-review">
+      <div class="container-active-user">
+        <div class="stat-circle circle-rouge">
+          <p class="stat-value">
+            {{ stats.nbActiveUsers }}
+          </p>
         </div>
-        <div class="container-trimestre-review">
-            <p class="title-heatmap">{{t('marketing-collab')}}</p>
-            <div class="container-heatmap">
-                <calendar-heatmap class="heatmap-component" :values="InteractionDates" :end-date="endDate" :style="{'max-width': orientation === 'vertical' ? '145px' :  '800px'}" :round="2" :vertical="orientation === 'vertical'"/>
-            </div>
-        </div>
-        <div class="container-global-review">
-            <div class="container-active-user">
-                <div class="stat-circle circle-rouge">
-                    <p class="stat-value"> {{ stats.nbActiveUsers }}</p>
-                </div>
-                <p class="stat-label">{{t('marketing-active-user')}}</p>
-            </div>
+        <p class="stat-label">
+          {{ t('marketing-active-user') }}
+        </p>
+      </div>
             
-            <div class="container-top-tags">
-                <p class="title-techno-cloud">{{t('marketing-topTags')}}</p>
-                <div class="container-techno-cloud">
-                    <div v-for="stat in stats.topTags">
-                        <div class="stat-circle-tag">
-                            <p class="stat-value">{{ stat.nbInteractions }}</p>
-                        </div>
-                        <p class="stat-label">{{ stat.tag }}</p>
-                    </div>  
-                </div>
+      <div class="container-top-tags">
+        <p class="title-techno-cloud">
+          {{ t('marketing-topTags') }}
+        </p>
+        <div class="container-techno-cloud">
+          <div
+            v-for="stat in stats.topTags"
+            :key="stat"
+          >
+            <div class="stat-circle-tag">
+              <p class="stat-value">
+                {{ stat.nbInteractions }}
+              </p>
             </div>
-
+            <p class="stat-label">
+              {{ stat.tag }}
+            </p>
+          </div>  
         </div>
+      </div>
     </div>
-
+  </div>
 </template>
 
 <style scoped>

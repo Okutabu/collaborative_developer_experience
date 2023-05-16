@@ -355,12 +355,14 @@ var date = "2023-02-29"
 </script>
 
 <template>
-
-    <div id="chart">
-        <VueApexCharts type="heatmap" height="350" :options="chartOptions" :series="series"></VueApexCharts>
-    </div>
-
-
+  <div id="chart">
+    <VueApexCharts
+      type="heatmap"
+      height="350"
+      :options="chartOptions"
+      :series="series"
+    />
+  </div>
 </template>
 
 

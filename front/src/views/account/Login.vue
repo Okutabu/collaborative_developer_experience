@@ -31,25 +31,49 @@ async function onSubmit(values) {
 </script>
 
 <template>
-    <div class="card container-form">
-        <h4 class="card-header">{{t('login')}}</h4>
-        <div class="card-body">
-            <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
-                <div class="form-group">
-                    <label>{{t('idStow')}}</label>
-                    <Field name="idSTOW" type="text" class="form-control" :class="{ 'is-invalid': errors.idSTOW }" />
-                    <div class="invalid-feedback">{{ errors.idSTOW }}</div>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary btn-login" :disabled="isSubmitting">
-                        <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
-                        {{t('login')}}
-                    </button>
-                    <router-link to="register" class="btn btn-link btn-register">{{t('register')}}</router-link>
-                </div>
-            </Form>
+  <div class="card container-form">
+    <h4 class="card-header">
+      {{ t('login') }}
+    </h4>
+    <div class="card-body">
+      <Form
+        v-slot="{ errors, isSubmitting }"
+        :validation-schema="schema"
+        @submit="onSubmit"
+      >
+        <div class="form-group">
+          <label>{{ t('idStow') }}</label>
+          <Field
+            name="idSTOW"
+            type="text"
+            class="form-control"
+            :class="{ 'is-invalid': errors.idSTOW }"
+          />
+          <div class="invalid-feedback">
+            {{ errors.idSTOW }}
+          </div>
         </div>
+        <div class="form-group">
+          <button
+            class="btn btn-primary btn-login"
+            :disabled="isSubmitting"
+          >
+            <span
+              v-show="isSubmitting"
+              class="spinner-border spinner-border-sm mr-1"
+            />
+            {{ t('login') }}
+          </button>
+          <router-link
+            to="register"
+            class="btn btn-link btn-register"
+          >
+            {{ t('register') }}
+          </router-link>
+        </div>
+      </Form>
     </div>
+  </div>
 </template>
 
 <style scoped>

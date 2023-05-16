@@ -1,32 +1,32 @@
-import { createApp } from "vue";
-import { createPinia } from "pinia";
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 
-import "vuetify/styles";
+import 'vuetify/styles';
 
-import App from "./App.vue";
-import { router } from "./router";
-import { createVuetify } from "vuetify";
+import App from './App.vue';
+import { router } from './router';
+import { createVuetify } from 'vuetify';
 
 // setup fake api/backend
-import { loadMirageInDev } from "./helpers";
+import { loadMirageInDev } from './helpers';
 
 // setup for internationalizing
-import { createI18n } from "vue-i18n";
-import { messages } from "./locales";
+import { createI18n } from 'vue-i18n';
+import { messages } from './locales';
 
 const language = getInitialLocale();
 
 export const i18n = createI18n({
   legacy: false,
-  locale: language, //: 'en', //getInitialLocale(),
-  fallbackLocale: "en",
-  messages,
+  locale: language, // : 'en', //getInitialLocale(),
+  fallbackLocale: 'en',
+  messages
 });
 
 // get locale based on the user's navigator location
-function getInitialLocale() {
+function getInitialLocale () {
   const navigatorLocale = navigator.language || navigator.userLanguage;
-  const languageCode = navigatorLocale.split("-")[0];
+  const languageCode = navigatorLocale.split('-')[0];
   let lang;
   if (Object.keys(messages).includes(languageCode)) {
     lang = languageCode;
@@ -45,4 +45,4 @@ app.use(createVuetify());
 app.use(createPinia());
 app.use(router);
 
-app.mount("#app");
+app.mount('#app');

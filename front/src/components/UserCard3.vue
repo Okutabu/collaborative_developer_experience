@@ -17,21 +17,30 @@ const date = new Date(props.lastInteract * 1000).toLocaleString().split(',')[0];
 </script>
 
 <template>
-    <div class="container_user_card">
-      <div class="container_user_info">
-        <div class="user_description">
-          <div class="info">
-            <p class="bold name">{{ nom || t('loading') }}</p>
-            <p class="speciality"><i class="fa fa-graduation-cap "></i>&nbsp;{{ reco || t('loading') }}</p>
-            <p class="lastInteract">{{t('last-activity')}} : {{ date || t('loading') }}</p>
-          </div>
+  <div class="container_user_card">
+    <div class="container_user_info">
+      <div class="user_description">
+        <div class="info">
+          <p class="bold name">
+            {{ nom || t('loading') }}
+          </p>
+          <p class="speciality">
+            <i class="fa fa-graduation-cap " />&nbsp;{{ reco || t('loading') }}
+          </p>
+          <p class="lastInteract">
+            {{ t('last-activity') }} : {{ date || t('loading') }}
+          </p>
         </div>
       </div>
-      <div>
-        <Radar :technoratio={techno} :ref_key={techno} /> 
-      </div>
     </div>
-  </template>
+    <div>
+      <Radar
+        :technoratio="{techno}"
+        :ref_key="{techno}"
+      /> 
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .container_user_card {
