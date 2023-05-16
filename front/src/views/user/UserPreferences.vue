@@ -5,6 +5,9 @@ import { useUsersStore, useAlertStore } from '@/stores';
 import { router } from '@/router';
 
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 const isOpen = ref(false);
 
 
@@ -14,14 +17,12 @@ const userJson = JSON.parse(temp);
 
 const schema = Yup.object().shape({
     surname: Yup.string()
-        .required('First Name is required'),
+        .required(t('yup-first-name')),
     name: Yup.string()
-        .required('Last Name is required'),
+        .required(t('yup-last-name')),
     mail: Yup.string()
-        .required('Mail is required')
-        .email('Mail must be a valid email'),
-    newIDSTOW: Yup.string()
-        .required('ID STOW is required')
+        .required(t('yup-mail'))
+        .email(t('yup-valid-mail')),
 });
 
 async function onDelete() {
@@ -60,50 +61,50 @@ async function onSubmit(values) {
 
 <template>
     <div class="container-user-preferences">
-    <h2 class="titre">Préférences</h2>
+        <h2 class="titre">{{t('pref-user')}}</h2>
     <div class="card container-form">
-        <h4 class="card-header">Mes informations</h4>
+        <h4 class="card-header">{{ t('pref-informations') }}</h4>
         <div class="card-body">
             <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors, isSubmitting }">
                 <div class="form-group">
-                    <label>Email</label>
+                    <label>{{ t('mail') }}</label>
                     <Field name="mail" type="mail" class="form-control" :class="{ 'is-invalid': errors.mail }" :value=userJson.user.mail />
                     <div class="invalid-feedback">{{ errors.mail }}</div>
                 </div>
                 <div class="form-group">
-                    <label>First Name</label>
+                    <label>{{t('first-name')}}</label>
                     <Field name="surname" type="text" class="form-control" :class="{ 'is-invalid': errors.firstName }" :value=userJson.user.surname />
                     <div class="invalid-feedback">{{ errors.firstName }}</div>
                 </div>
                 <div class="form-group">
-                    <label>Last Name</label>
+                    <label>{{t('last-name')}}</label>
                     <Field name="name" type="text" class="form-control" :class="{ 'is-invalid': errors.lastName }" :value=userJson.user.name />
                     <div class="invalid-feedback">{{ errors.lastName }}</div>
                 </div>
                 <div class="form-group">
-                    <label>Id Stack Overflow</label>
+                    <label>{{t('idStow')}}</label>
                     <Field name="newIDSTOW" type="integer" class="form-control" :class="{ 'is-invalid': errors.idSTOW }" :value=userJson.user.idSTOW />
                     <div class="invalid-feedback">{{ errors.idSTOW }}</div>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-primary btn-modify" @click="onSubmit" :disabled="isSubmitting">
                         <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
-                        Modifier les informations
+                        {{ t('pref-change') }}
                     </button>
 
                     <button @click="isOpen = true" class="btn btn-primary btn-delete" :disabled="isSubmitting">
-                        Supprimer mon compte
+                        {{t('pref-delete')}}
                     </button>
 
                     <div class="disclaimer" v-if="isOpen">
-                        <h2>Voulez vous vraiment supprimer votre compte ?</h2>
-                        <p>Toutes vos données seront supprimées et vous n'aurez plus accès à vos recommandations</p>
+                        <h2>{{t('pref-disclaimer')}}</h2>
+                        <p>{{t('pref-disclaimer-details')}}</p>
                         <button class="btn1" id="unsubscribe" @click="onDelete" :disabled="isSubmitting">
                         <span v-show="isSubmitting" class="spinner-border spinner-border-sm mr-1"></span>
-                            Supprimer le compte
+                            {{ t('pref-delete') }}
                         </button>
                         <button @click="isOpen = false" class="btn1 btn-light" id="cancel">
-                             Cancel
+                            {{ t('cancel') }}
                         </button>
 
                         <br>
